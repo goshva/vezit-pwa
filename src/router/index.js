@@ -11,6 +11,14 @@ import LayoutBackendMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
 import LayoutBackendSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
 import LandingView from "@/views/landing/LandingView.vue";
 import BaseLayout from "@/layouts/BaseLayout.vue";
+import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
+import CarsView from "@/views/partner/CarsView.vue";
+import UserView from "@/views/partner/UserView.vue";
+import BrokeEqView from "@/views/admin/BrokeEqView.vue";
+import Clients from "@/views/admin/Clients.vue";
+import ErrorsView from "@/views/admin/ErrorsView.vue";
+import ControlView from "@/views/admin/ControlView.vue";
+import DocumnetsView from "@/views/admin/DocumnetsView.vue";
 
 // Frontend: Landing
 const Landing = () => import("@/views/landing/LandingView.vue");
@@ -294,12 +302,28 @@ const routes = [
             component: EqView,
           },
           {
-            path: "messages",
-            component: MessagesView,
+            path: "beq",
+            component: BrokeEqView,
+          },
+          {
+            path: "cli",
+            component: Clients,
+          },
+          {
+            path: "err",
+            component: ErrorsView,
           },
           {
             path: "settings",
             component: SettingsView,
+          },
+          {
+            path: "control",
+            component: ControlView,
+          },
+          {
+            path: "doc",
+            component: DocumnetsView,
           },
         ],
       },
@@ -360,6 +384,23 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: "/partner",
+    component: PartnerLayout,
+    children: [
+      {
+        path: "",
+        component: UserView,
+      },
+
+      {
+        path: "cars",
+        component: CarsView,
+      },
+      
+    ]
+},
 
   /*
   |--------------------------------------------------------------------------

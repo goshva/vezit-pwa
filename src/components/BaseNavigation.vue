@@ -128,18 +128,18 @@ const routerLinks = [
   {
     id: Math.random(Date.now()),
     name: "Список нерабочего оборудования",
-    link: "/admin/messages",
+    link: "/admin/beq",
   },
 
   {
     id: Math.random(Date.now()),
     name: "Клиенты",
-    link: "/admin/settings",
+    link: "/admin/cli",
   },
   {
     id: Math.random(Date.now()),
     name: "Список системных ошибок",
-    link: "/admin/settings",
+    link: "/admin/err",
   },
   {
     id: Math.random(Date.now()),
@@ -149,12 +149,12 @@ const routerLinks = [
   {
     id: Math.random(Date.now()),
     name: "Контроль пользователей",
-    link: "/admin/settings",
+    link: "/admin/control",
   },
   {
     id: Math.random(Date.now()),
     name: "Финансы и документы",
-    link: "/admin/settings",
+    link: "/admin/doc",
   },
 ];
 </script>
