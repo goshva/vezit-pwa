@@ -303,7 +303,7 @@ const handleChangeRole = (r) => {
                     </button>
                     <button
                       class="dropdown-item d-flex align-items-center justify-content-between"
-                      @click="handleChangeRole('client')"
+                      @click="handleChangeRole('client/profile')"
                     >
                       <span class="fs-sm fw-medium">Клиент</span>
                     </button>

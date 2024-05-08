@@ -11,6 +11,7 @@ import LayoutBackendMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
 import LayoutBackendSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
 import LandingView from "@/views/landing/LandingView.vue";
 import BaseLayout from "@/layouts/BaseLayout.vue";
+
 import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
 import CarsView from "@/views/partner/CarsView.vue";
 import UserView from "@/views/partner/UserView.vue";
@@ -19,6 +20,8 @@ import Clients from "@/views/admin/Clients.vue";
 import ErrorsView from "@/views/admin/ErrorsView.vue";
 import ControlView from "@/views/admin/ControlView.vue";
 import DocumnetsView from "@/views/admin/DocumnetsView.vue";
+import ClientLayout from "@/layouts/variations/ClientLayout.vue";
+
 
 // Frontend: Landing
 const Landing = () => import("@/views/landing/LandingView.vue");
@@ -272,6 +275,11 @@ const AdsView = () => import("@/views/admin/AdsView.vue");
 const EqView = () => import("@/views/admin/EqView.vue");
 const MessagesView = () => import("@/views/admin/MessagesView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
+
+//client views
+const ClientView = () => import("@/views/client/ClientView.vue");
+const AddVideoView = () => import("@/views/client/AddVideoView.vue");
+
 // Set all routes
 const routes = [
   /*
@@ -337,6 +345,21 @@ const routes = [
       {
         path: "",
         component: LandingView,
+      },
+    ],
+  },
+
+  {
+    path: "/client",
+    component: ClientLayout,
+    children: [
+      {
+        path: "profile",
+        component: ClientView,
+      },
+      {
+        path: "addVideo",
+        component: AddVideoView,
       },
     ],
   },
