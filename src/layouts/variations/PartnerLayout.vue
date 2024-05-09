@@ -4,9 +4,10 @@ import { useTemplateStore } from "@/stores/template";
 
 // Import all layout partials
 import BaseHeader from "@/layouts/partials/Header.vue";
-import BaseSidebar from "@/layouts/partials/PartnerSidebar.vue";
+import BaseSidebar from "@/layouts/partials/Sidebar.vue";
 import BaseSideOverlay from "@/layouts/partials/SideOverlay.vue";
 import BaseFooter from "@/layouts/partials/Footer.vue";
+import PartnerNavigation from "@/components/PartnerNavigation.vue";
 
 // Component properties
 defineProps({
@@ -140,6 +141,10 @@ onMounted(() => {
         <slot name="sidebar-content"></slot>
       </template>
 
+      <template #sidebar-navigation>
+        <PartnerNavigation/>
+     </template>
+
       <slot name="sidebar"></slot>
     </BaseSidebar>
     <!-- END Sidebar -->
@@ -163,9 +168,8 @@ onMounted(() => {
 
     <!-- Main Container -->
     <div id="main-container">
+      <slot name="page-top-content"></slot>
       <RouterView />
-      <slot name="page-top-content">
-      </slot>
     </div>
     <!-- END Main Container -->
 

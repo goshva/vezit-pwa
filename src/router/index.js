@@ -21,6 +21,12 @@ import ErrorsView from "@/views/admin/ErrorsView.vue";
 import ControlView from "@/views/admin/ControlView.vue";
 import DocumnetsView from "@/views/admin/DocumnetsView.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
+import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
+import VideoView from "@/views/moder/VideoView.vue";
+import ControlUsersView from "@/views/moder/ControlUsersView.vue";
+import ControlEqView from "@/views/moder/ControlEqView.vue";
+import ResultsView from "@/views/moder/ResultsView.vue";
+import CheckVideoView from "@/views/moder/CheckVideoView.vue";
 
 
 // Frontend: Landing
@@ -340,11 +346,27 @@ const routes = [
 
   {
     path: "/moderator",
-    component: BaseLayout,
+    component: ModeratorLayout,
     children: [
       {
         path: "",
-        component: LandingView,
+        component: CheckVideoView,
+      },
+      {
+        path: "videos",
+        component: VideoView,
+      },
+      {
+        path: "users",
+        component: ControlUsersView,
+      },
+      {
+        path: "eq",
+        component: ControlEqView,
+      },
+      {
+        path: "res",
+        component: ResultsView,
       },
     ],
   },

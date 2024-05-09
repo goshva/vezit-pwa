@@ -7,6 +7,7 @@ import BaseHeader from "@/layouts/partials/Header.vue";
 import BaseSidebar from "@/layouts/partials/Sidebar.vue";
 import BaseSideOverlay from "@/layouts/partials/SideOverlay.vue";
 import BaseFooter from "@/layouts/partials/Footer.vue";
+import BaseNavigation from "@/components/BaseNavigation.vue";
 
 // Component properties
 defineProps({
@@ -139,6 +140,10 @@ onMounted(() => {
       <template #content>
         <slot name="sidebar-content"></slot>
       </template>
+
+      <template #sidebar-navigation>
+        <BaseNavigation/>
+     </template>
 
       <slot name="sidebar"></slot>
     </BaseSidebar>

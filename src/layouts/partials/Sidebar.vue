@@ -132,7 +132,9 @@ onMounted(() => {
         <slot name="content">
           <!-- Side Navigation -->
           <div class="content-side">
-            <BaseNavigation :nodes="navigation" />
+            <slot name="sidebar-navigation">
+              <BaseNavigation :nodes="navigation" />
+            </slot>
           </div>
           <!-- END Side Navigation -->
         </slot>

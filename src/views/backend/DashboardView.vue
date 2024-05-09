@@ -353,7 +353,7 @@ const newCustomersOptions = reactive({
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
                 to="/admin/eq"
               >
-                <span>View all customers</span>
+                <span>View all equipment</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -381,15 +381,15 @@ const newCustomersOptions = reactive({
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
-              <a
+              <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/admin/beq"
               >
-                <span>View all messages</span>
+                <span>View all broke</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
-              </a>
+              </RouterLink>
             </div>
           </template>
         </BaseBlock>
@@ -413,15 +413,15 @@ const newCustomersOptions = reactive({
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
-              <a
+              <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/admin/cli"
               >
-                <span>View statistics</span>
+                <span>View all clients</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
-              </a>
+              </RouterLink>
             </div>
           </template>
         </BaseBlock>
@@ -445,15 +445,15 @@ const newCustomersOptions = reactive({
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
-              <a
+              <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/admin/err"
               >
-                <span>View statistics</span>
+                <span>View all errors</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
-              </a>
+              </RouterLink>
             </div>
           </template>
         </BaseBlock>
@@ -477,15 +477,15 @@ const newCustomersOptions = reactive({
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
-              <a
+              <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/admin/settings"
               >
-                <span>View statistics</span>
+                <span>View all settings</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
-              </a>
+              </RouterLink>
             </div>
           </template>
         </BaseBlock>
@@ -509,15 +509,15 @@ const newCustomersOptions = reactive({
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
-              <a
+              <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/admin/control"
               >
-                <span>View statistics</span>
+                <span>View all users</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
-              </a>
+              </RouterLink>
             </div>
           </template>
         </BaseBlock>
@@ -541,15 +541,15 @@ const newCustomersOptions = reactive({
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
-              <a
+              <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/admin/doc"
               >
                 <span>View statistics</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
-              </a>
+              </RouterLink>
             </div>
           </template>
         </BaseBlock>
