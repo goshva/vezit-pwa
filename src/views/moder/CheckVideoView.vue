@@ -290,11 +290,7 @@ const newCustomersOptions = reactive({
       <div class="flex-grow-1 mb-1 mb-md-0">
         <BaseBlock title="Видео" class="ms-10 me-10 h-10">
             <video controls="" class="w-100"></video>
-        </BaseBlock>
-      </div>
-
-    </div>
-    <div class="mb-4">
+            <div class="mb-4">
             <button v-if="orderSearch" type="submit" class="btn w-100 btn-alt-primary">
         <i class=""></i>
         Отклонить
@@ -304,6 +300,10 @@ const newCustomersOptions = reactive({
         <i class=""></i>
         Принять
         </button>
+      </div>
+        </BaseBlock>
+      </div>
+
     </div>
   </div>
   <!-- END Hero -->
