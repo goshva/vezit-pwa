@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
 
@@ -11,28 +11,17 @@ const store = useTemplateStore();
 const router = useRouter();
 const { path } = useRoute();
 
-// let role = ref(path);
+let isShow = ref(false);
 
-// let role = computed(() => {
-//   switch (path) {
-//     case path.includes("admin"):
-//       return "Администратор";
-//       break;
-//     case path.includes("moderator"):
-//       return "Модератор";
-//       break;
-//     case path.includes("client"):
-//       return "Клиент";
-//       break;
-//     case path.includes("partner"):
-//       return "Партнёр";
-//       break;
-//   }
-// });
+onMounted(() => {
+  isShow.value = path.includes("/admin") || path.includes("/moderator");
+});
 
 const handleChangeRole = (r) => {
   router.push(`/${r}`);
 };
+
+
 
 // Reactive variables
 // const baseSearchTerm = ref("");
@@ -118,6 +107,10 @@ const handleChangeRole = (r) => {
           <!-- Right Section -->
           <div class="d-flex align-items-center">
             <slot name="content-right">
+              <div v-if="isShow">
+                <p class="m-0"><strong>5 000 </strong> ₽</p>
+              </div>
+
               <!-- User Dropdown -->
               <div class="dropdown d-inline-block ms-2">
                 <button
