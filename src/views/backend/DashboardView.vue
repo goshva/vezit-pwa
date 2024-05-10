@@ -331,38 +331,7 @@ const newCustomersOptions = reactive({
         </BaseBlock>
         <!-- END Pending Orders -->
       </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- New Customers -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">124</dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Список рабочего оборудования
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="far fa-user-circle fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/eq"
-              >
-                <span>View all equipment</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END New Customers -->
-      </div>
+      
       <div class="col-sm-6 col-xxl-3">
         <!-- Messages -->
         <BaseBlock class="d-flex flex-column h-100 mb-0">
@@ -373,7 +342,7 @@ const newCustomersOptions = reactive({
               <dl class="mb-0">
                 <dt class="fs-3 fw-bold">45</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Список нерабочего оборудования
+                  Список оборудования
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">

@@ -77,7 +77,15 @@
                   <input
                     type="text"
                     class="form-control form-control-alt form-control-lg"
-                    placeholder="Адрес"
+                    placeholder="Юридический адрес"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <input
+                    type="text"
+                    class="form-control form-control-alt form-control-lg"
+                    placeholder="Фактический адрес"
                   />
                 </div>
 
@@ -87,6 +95,21 @@
                     class="form-control form-control-alt form-control-lg"
                     placeholder="Вид деятельности"
                   />
+                </div>
+
+                <div class="mb-2">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="login-remember"
+                      name="login-remember"
+                    />
+                    <label class="form-check-label" for="login-remember"
+                      >Я согласен с договором оферты</label
+                    >
+                  </div>
                 </div>
 
                 <div class="mb-4">
@@ -99,10 +122,11 @@
                       name="login-remember"
                     />
                     <label class="form-check-label" for="login-remember"
-                      >Создать договор</label
+                      >Создать договор оферты</label
                     >
                   </div>
                 </div>
+                
                 <div class="mb-4">
                   <button type="submit" class="btn w-100 btn-alt-primary">
                     <i class=""></i>
@@ -127,6 +151,14 @@
                   <input
                     type="text"
                     class="form-control form-control-alt form-control-lg"
+                    placeholder="ФИО"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <input
+                    type="text"
+                    class="form-control form-control-alt form-control-lg"
                     placeholder="ИНН"
                   />
                 </div>
@@ -147,13 +179,6 @@
                   />
                 </div>
 
-                <div class="mb-4">
-                  <input
-                    type="text"
-                    class="form-control form-control-alt form-control-lg"
-                    placeholder="Директор(ФИО)"
-                  />
-                </div>
 
                 <div class="mb-4">
                   <input

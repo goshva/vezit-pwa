@@ -121,15 +121,10 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Список рабочего оборудования",
+    name: "Список оборудования",
     link: "/admin/eq",
   },
 
-  {
-    id: Math.random(Date.now()),
-    name: "Список нерабочего оборудования",
-    link: "/admin/beq",
-  },
 
   {
     id: Math.random(Date.now()),

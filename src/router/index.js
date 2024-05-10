@@ -316,10 +316,6 @@ const routes = [
             component: EqView,
           },
           {
-            path: "beq",
-            component: BrokeEqView,
-          },
-          {
             path: "cli",
             component: Clients,
           },
