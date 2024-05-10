@@ -283,25 +283,38 @@ const newCustomersOptions = reactive({
 
 <template>
   <!-- Hero -->
-  <div class="content">
+  <div class="video content w-75 h-50">
     <div
-      class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start"
+      class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start "
     >
       <div class="flex-grow-1 mb-1 mb-md-0">
-        <BaseBlock title="Видео" class="ms-10 me-10 h-10">
+        <BaseBlock title="Видео" class="">
             <video controls="" class="w-100"></video>
             <div class="mb-4">
-            <button v-if="orderSearch" type="submit" class="btn w-100 btn-alt-primary">
+              <div v-if="orderSearch">
+        <button type="submit" class="btn w-100 btn-alt-primary">
         <i class=""></i>
         Отклонить
         </button>
+        <div class="mt-3">
+          <input
+            type="text"
+            class="form-control form-control-alt form-control-lg"
+            placeholder="Коментарий"
+            />
+        </div>
 
+                </div>
         <button v-else type="submit" class="btn w-100 btn-primary">
         <i class=""></i>
         Принять
         </button>
       </div>
         </BaseBlock>
+        <div class="">
+          <strong>Link:</strong>
+          http://localhost:5173/#/moderator
+        </div>
       </div>
 
     </div>
@@ -509,7 +522,7 @@ const newCustomersOptions = reactive({
                     name="login-remember"
                   />
                   <label class="form-check-label" for="login-remember"
-                    >More info</label
+                    >Запрещенные вещества</label
                   >
                      </div>
                 </dt>
@@ -641,7 +654,7 @@ const newCustomersOptions = reactive({
                     name="login-remember"
                   />
                   <label class="form-check-label" for="login-remember"
-                    >Качество видео</label
+                    >Не качественная ссылка</label
                   >
                      </div>
                 </dt>
@@ -848,3 +861,4 @@ const newCustomersOptions = reactive({
   </div>
   <!-- END Page Content -->
 </template>
+
