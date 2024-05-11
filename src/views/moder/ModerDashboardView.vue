@@ -383,7 +383,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/beq"
+                to="/admin/eq"
               >
                 <span>View all broke</span>
                 <i

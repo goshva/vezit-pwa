@@ -19,8 +19,6 @@ Chart.defaults.elements.point.hoverRadius = 0;
 Chart.defaults.plugins.tooltip.radius = 3;
 Chart.defaults.plugins.legend.labels.boxWidth = 10;
 
-// Helper variables
-const orderSearch = ref(false);
 
 // Chart Earnings data
 const earningsData = reactive({
@@ -279,6 +277,18 @@ const newCustomersOptions = reactive({
     },
   },
 });
+
+
+const selectedCheckboxes = ref([]);
+const comment = ref('');
+
+const printSelectedCheckboxes = () => {
+  console.log(selectedCheckboxes.value);
+  if (comment.value.trim() !== ''){
+    console.log(comment.value)
+    comment.value = ''
+  }
+};
 </script>
 
 <template>
@@ -289,10 +299,10 @@ const newCustomersOptions = reactive({
     >
       <div class="flex-grow-1 mb-1 mb-md-0">
         <BaseBlock title="Видео" class="">
-            <video controls="" class="w-100"></video>
-            <div class="mb-4">
-              <div v-if="orderSearch">
-        <button type="submit" class="btn w-100 btn-alt-primary">
+        <video controls="" class="w-100"></video>
+        <div class="mb-4">
+        <div v-if="selectedCheckboxes.length > 0">
+        <button @click="printSelectedCheckboxes" type="submit" class="btn w-100 btn-alt-primary">
         <i class=""></i>
         Отклонить
         </button>
@@ -301,10 +311,11 @@ const newCustomersOptions = reactive({
             type="text"
             class="form-control form-control-alt form-control-lg"
             placeholder="Коментарий"
+            v-model="comment"
             />
         </div>
 
-                </div>
+        </div>
         <button v-else type="submit" class="btn w-100 btn-primary">
         <i class=""></i>
         Принять
@@ -338,15 +349,13 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    v-model="orderSearch"
-                    id="login-remember"
-                    name="login-remember"
+                    value="+18 контент"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >+18 контент</label
                   >
-                     </div>
+                  </div>
                 </dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
                 </dd>
@@ -385,9 +394,8 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    id="login-remember"
-                    name="login-remember"
+                    value="Насилие"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >Насилие</label
@@ -429,9 +437,8 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    id="login-remember"
-                    name="login-remember"
+                    value="Провокации"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >Провокации</label
@@ -448,7 +455,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/beq"
+                to="/admin/eq"
               >
                 <span>More info</span>
                 <i
@@ -473,9 +480,8 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    id="login-remember"
-                    name="login-remember"
+                    value="Религия"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >Религия</label
@@ -517,9 +523,8 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    id="login-remember"
-                    name="login-remember"
+                    value="Запрещенные вещества"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >Запрещенные вещества</label
@@ -561,9 +566,8 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    id="login-remember"
-                    name="login-remember"
+                    value="Размер видео"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >Размер видео</label
@@ -605,9 +609,8 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    id="login-remember"
-                    name="login-remember"
+                    value="Качество видео"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >Качество видео</label
@@ -649,9 +652,8 @@ const newCustomersOptions = reactive({
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
-                    id="login-remember"
-                    name="login-remember"
+                    value="Не качественная ссылка"
+                    v-model="selectedCheckboxes"
                   />
                   <label class="form-check-label" for="login-remember"
                     >Не качественная ссылка</label
