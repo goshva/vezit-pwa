@@ -46,11 +46,6 @@
           <button
             type="button"
             class="btn btn-sm btn-alt-secondary"
-            @click="
-              () => {
-                orderSearch = !orderSearch;
-              }
-            "
           >
             <i class="fa fa-search"></i>
           </button>

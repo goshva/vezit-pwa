@@ -66,13 +66,13 @@ async function onSubmit() {
       router.push("/admin/dashboard");
       break;
     case "Модератор":
-      router.push("/moderator");
+      router.push("/moderator/dashboard");
       break;
     case "Клиент":
-      router.push("/client/profile");
+      router.push("/client/dashboard");
       break;
     case "Партнёр":
-      router.push("/partner");
+      router.push("/partner/dashboard");
       break;
     case "Гость":
       router.push("/guest");

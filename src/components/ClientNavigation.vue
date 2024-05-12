@@ -109,6 +109,12 @@ function linkClicked(e, submenu) {
 const routerLinks = [
   {
     id: Math.random(Date.now()),
+    name: "Главная",
+    link: "/client/dashboard",
+  },
+
+  {
+    id: Math.random(Date.now()),
     name: "Профиль",
     link: "/client/profile",
   },
@@ -124,9 +130,6 @@ const routerLinks = [
     name: "Cтраница с загрузкой видео",
     link: "/client/addVideo",
   },
-
-
-
 ];
 </script>
 

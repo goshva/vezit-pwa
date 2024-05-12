@@ -261,20 +261,20 @@ const handleChangeRole = (r) => {
                       <span class="fs-sm fw-medium">Администратор</span>
                     </RouterLink>
                     <button
-                      @click="handleChangeRole('moderator')"
+                      @click="handleChangeRole('moderator/dashboard')"
                       class="dropdown-item d-flex align-items-center justify-content-between"
                     >
                       <span class="fs-sm fw-medium">Модератор</span>
                     </button>
                     <button
                       class="dropdown-item d-flex align-items-center justify-content-between"
-                      @click="handleChangeRole('client/profile')"
+                      @click="handleChangeRole('client/dashboard')"
                     >
                       <span class="fs-sm fw-medium">Клиент</span>
                     </button>
                     <button
                       class="dropdown-item d-flex align-items-center justify-content-between"
-                      @click="handleChangeRole('partner')"
+                      @click="handleChangeRole('partner/dashboard')"
                     >
                       <span class="fs-sm fw-medium">Партнёр</span>
                     </button>

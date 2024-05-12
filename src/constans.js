@@ -44,7 +44,7 @@ export const arr = [
   },
   {
     id: 8,
-    title: "Не качественная ссылка",
+    title: "Проблема ссылки",
     content:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat voluptas expedita aspernatur natus quo quis beatae laudantium earum voluptatum fugiat atque veritatis, maxime iure doloribus a enim magnam consectetur? Culpa unde commodi quis a aliquam exercitationem nihil neque cupiditate, accusamus in delectus consequuntur, deleniti dicta totam facilis illum libero, numquam ex quas eveniet. Quam quae consectetur fugiat doloremque exercitationem odit nostrum sapiente illo atque in ut sequi eveniet cum voluptatem, quibusdam rerum dolorum veritatis dolor sit sunt similique recusandae ab ipsam rem! Quos ratione harum non quis porro, distinctio consectetur esse odit tempore eius hic numquam nam rem cupiditate voluptate.",
   },

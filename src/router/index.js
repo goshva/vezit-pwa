@@ -21,6 +21,7 @@ import ErrorsView from "@/views/admin/ErrorsView.vue";
 import ControlView from "@/views/admin/ControlView.vue";
 import DocumnetsView from "@/views/admin/DocumnetsView.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
+
 import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
 import VideoView from "@/views/moder/VideoView.vue";
 import ControlUsersView from "@/views/moder/ControlUsersView.vue";
@@ -280,11 +281,23 @@ const AdsView = () => import("@/views/admin/AdsView.vue");
 const EqView = () => import("@/views/admin/EqView.vue");
 const MessagesView = () => import("@/views/admin/MessagesView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
+//
+
+//moderator views
+const ModeratorDashboardView = () => import("@/views/moder/DashboardView.vue");
+//
 
 //client views
+const ClientDashboardView = () => import("@/views/client/DashboardView.vue");
 const ClientView = () => import("@/views/client/ClientView.vue");
 const AddVideoView = () => import("@/views/client/AddVideoView.vue");
 const AddAdcView = () => import("@/views/client/AddAdcView.vue");
+//
+
+//partner views
+const PartnerDashboardView = () => import("@/views/partner/DashboardView.vue");
+
+// 
 
 // Set all routes
 const routes = [
@@ -341,47 +354,90 @@ const routes = [
   },
 
   {
-    path: "/moderator",
+    path: "/",
     component: ModeratorLayout,
     children: [
       {
-        path: "",
-        component: CheckVideoView,
-      },
-      {
-        path: "videos",
-        component: VideoView,
-      },
-      {
-        path: "users",
-        component: ControlUsersView,
-      },
-      {
-        path: "eq",
-        component: ControlEqView,
-      },
-      {
-        path: "res",
-        component: ResultsView,
+        path: "moderator",
+        children: [
+          {
+            path: "dashboard",
+            component: ModeratorDashboardView,
+          },
+          {
+            path: "checkVideos",
+            component: CheckVideoView,
+          },
+          {
+            path: "videos",
+            component: VideoView,
+          },
+          {
+            path: "users",
+            component: ControlUsersView,
+          },
+          {
+            path: "eq",
+            component: ControlEqView,
+          },
+          {
+            path: "res",
+            component: ResultsView,
+          },
+        ],
       },
     ],
   },
 
   {
-    path: "/client",
+    path: "/",
     component: ClientLayout,
     children: [
       {
-        path: "profile",
-        component: ClientView,
+        path: "client",
+        children: [
+          {
+            path: "dashboard",
+            component: ClientDashboardView,
+          },
+          {
+            path: "profile",
+            component: ClientView,
+          },
+          {
+            path: "addAdc",
+            component: AddAdcView,
+          },
+          {
+            path: "addVideo",
+            component: AddVideoView,
+          },
+        ],
       },
+    ],
+  },
+
+    {
+    path: "/",
+    component: PartnerLayout,
+    children: [
       {
-        path: "addAdc",
-        component: AddAdcView,
-      },
-      {
-        path: "addVideo",
-        component: AddVideoView,
+        path: 'partner',
+        children: [
+          {
+            path: 'dashboard',
+            component: PartnerDashboardView
+          },
+          {
+            path: "profile",
+            component: UserView,
+          },
+    
+          {
+            path: "cars",
+            component: CarsView,
+          },
+        ]
       },
     ],
   },
@@ -430,21 +486,7 @@ const routes = [
     ],
   },
 
-  {
-    path: "/partner",
-    component: PartnerLayout,
-    children: [
-      {
-        path: "",
-        component: UserView,
-      },
 
-      {
-        path: "cars",
-        component: CarsView,
-      },
-    ],
-  },
 
   /*
   |--------------------------------------------------------------------------

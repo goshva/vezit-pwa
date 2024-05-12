@@ -381,7 +381,7 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -429,7 +429,7 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -476,7 +476,7 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -523,7 +523,7 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -570,7 +570,7 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -617,7 +617,7 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -664,7 +664,7 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -711,16 +711,16 @@ const handleOpenModal = (id) => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
+                <dt class="fs-5 fw-bold">
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Не качественная ссылка"
+                      value="Проблема ссылки"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
-                      >Не качественная ссылка</label
+                      >Проблема ссылки</label
                     >
                   </div>
                 </dt>
@@ -782,7 +782,7 @@ const handleOpenModal = (id) => {
                 <div class="col-sm-4">
                   <dl class="mb-0">
                     <dt
-                      class="fs-3 fw-bold d-inline-flex align-items-center space-x-2"
+                      class="fs-5 fw-bold d-inline-flex align-items-center space-x-2"
                     >
                       <i class="fa fa-caret-up fs-base text-success"></i>
                       <span>2.5%</span>
@@ -795,7 +795,7 @@ const handleOpenModal = (id) => {
                 <div class="col-sm-4">
                   <dl class="mb-0">
                     <dt
-                      class="fs-3 fw-bold d-inline-flex align-items-center space-x-2"
+                      class="fs-5 fw-bold d-inline-flex align-items-center space-x-2"
                     >
                       <i class="fa fa-caret-up fs-base text-success"></i>
                       <span>3.8%</span>
@@ -806,7 +806,7 @@ const handleOpenModal = (id) => {
                 <div class="col-sm-4">
                   <dl class="mb-0">
                     <dt
-                      class="fs-3 fw-bold d-inline-flex align-items-center space-x-2"
+                      class="fs-5 fw-bold d-inline-flex align-items-center space-x-2"
                     >
                       <i class="fa fa-caret-down fs-base text-danger"></i>
                       <span>1.7%</span>
@@ -832,7 +832,7 @@ const handleOpenModal = (id) => {
                   class="block-content flex-grow-1 d-flex justify-content-between"
                 >
                   <dl class="mb-0">
-                    <dt class="fs-3 fw-bold">570</dt>
+                    <dt class="fs-5 fw-bold">570</dt>
                     <dd class="fs-sm fw-medium text-muted mb-0">
                       Total Orders
                     </dd>
@@ -863,7 +863,7 @@ const handleOpenModal = (id) => {
                   class="block-content flex-grow-1 d-flex justify-content-between"
                 >
                   <dl class="mb-0">
-                    <dt class="fs-3 fw-bold">$5,234.21</dt>
+                    <dt class="fs-5 fw-bold">$5,234.21</dt>
                     <dd class="fs-sm fw-medium text-muted mb-0">
                       Total Earnings
                     </dd>
@@ -894,7 +894,7 @@ const handleOpenModal = (id) => {
                   class="block-content flex-grow-1 d-flex justify-content-between"
                 >
                   <dl class="mb-0">
-                    <dt class="fs-3 fw-bold">264</dt>
+                    <dt class="fs-5 fw-bold">264</dt>
                     <dd class="fs-sm fw-medium text-muted mb-0">
                       New Customers
                     </dd>
