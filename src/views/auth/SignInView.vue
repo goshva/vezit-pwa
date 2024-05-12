@@ -2,10 +2,12 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
+import VueSelect from "vue-select";
 
 // Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
+import "vue-select/dist/vue-select.css";
 
 // Main store and Router
 const store = useTemplateStore();
@@ -16,6 +18,19 @@ const state = reactive({
   username: null,
   password: null,
 });
+
+//select vars
+
+const roles = ["Администратор", "Модератор", "Клиент", "Партнёр", "Гость"];
+
+const vueSelectState = reactive({
+  options: roles,
+  optionsSelected: null,
+  optionsMultiple: roles,
+  optionsMultipleSelected: null,
+});
+
+//
 
 // Validation rules
 const rules = computed(() => {
@@ -43,8 +58,26 @@ async function onSubmit() {
     return;
   }
 
-  // Go to dashboard
-  router.push({ name: "backend-pages-auth" });
+  store.setAuthHandler(true);
+  localStorage.setItem("isAuth", true);
+
+  switch (vueSelectState.optionsSelected) {
+    case "Администратор":
+      router.push("/admin/dashboard");
+      break;
+    case "Модератор":
+      router.push("/moderator");
+      break;
+    case "Клиент":
+      router.push("/client/profile");
+      break;
+    case "Партнёр":
+      router.push("/partner");
+      break;
+    case "Гость":
+      router.push("/guest");
+      break;
+  }
 }
 </script>
 
@@ -56,7 +89,7 @@ async function onSubmit() {
         <div class="col-md-8 col-lg-6 col-xl-4">
           <!-- Sign In Block -->
           <BaseBlock title="Sign In" class="mb-0">
-            <template #options>
+            <!-- <template #options>
               <RouterLink
                 :to="{ name: 'auth-reminder' }"
                 class="btn-block-option fs-sm"
@@ -68,11 +101,21 @@ async function onSubmit() {
               >
                 <i class="fa fa-user-plus"></i>
               </RouterLink>
-            </template>
+            </template> -->
 
             <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-              <h1 class="h2 mb-1">OneUI</h1>
+              <h1 class="h2 mb-1">Olhar Taxi</h1>
               <p class="fw-medium text-muted">Welcome, please login.</p>
+
+              <div>
+                <div class="mb-4">
+                  <VueSelect
+                    v-model="vueSelectState.optionsSelected"
+                    :options="vueSelectState.optionsMultiple"
+                    placeholder="Выберите роль..."
+                  ></VueSelect>
+                </div>
+              </div>
 
               <!-- Sign In Form -->
               <form @submit.prevent="onSubmit">
@@ -117,7 +160,7 @@ async function onSubmit() {
                       Please enter your password
                     </div>
                   </div>
-                  <div class="mb-4">
+                  <!-- <div class="mb-4">
                     <div class="form-check">
                       <input
                         class="form-check-input"
@@ -130,7 +173,7 @@ async function onSubmit() {
                         >Remember Me</label
                       >
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="row mb-4">
                   <div class="col-md-6 col-xl-5">

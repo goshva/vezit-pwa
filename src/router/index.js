@@ -10,6 +10,24 @@ import LayoutBackendBoxed from "@/layouts/variations/BackendBoxed.vue";
 import LayoutBackendMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
 import LayoutBackendSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
 import LandingView from "@/views/landing/LandingView.vue";
+import BaseLayout from "@/layouts/BaseLayout.vue";
+
+import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
+import CarsView from "@/views/partner/CarsView.vue";
+import UserView from "@/views/partner/UserView.vue";
+import BrokeEqView from "@/views/admin/BrokeEqView.vue";
+import Clients from "@/views/admin/Clients.vue";
+import ErrorsView from "@/views/admin/ErrorsView.vue";
+import ControlView from "@/views/admin/ControlView.vue";
+import DocumnetsView from "@/views/admin/DocumnetsView.vue";
+import ClientLayout from "@/layouts/variations/ClientLayout.vue";
+import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
+import VideoView from "@/views/moder/VideoView.vue";
+import ControlUsersView from "@/views/moder/ControlUsersView.vue";
+import ControlEqView from "@/views/moder/ControlEqView.vue";
+import ResultsView from "@/views/moder/ResultsView.vue";
+import CheckVideoView from "@/views/moder/CheckVideoView.vue";
+
 
 // Frontend: Landing
 const Landing = () => import("@/views/landing/LandingView.vue");
@@ -259,10 +277,15 @@ const Error500 = () => import("@/views/errors/500View.vue");
 const Error503 = () => import("@/views/errors/503View.vue");
 
 //admin views
-const PartnersView = () => import("@/views/admin/PartnersView.vue");
-const ProfileView = () => import("@/views/admin/ProfileView.vue");
+const AdsView = () => import("@/views/admin/AdsView.vue");
+const EqView = () => import("@/views/admin/EqView.vue");
 const MessagesView = () => import("@/views/admin/MessagesView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
+
+//client views
+const ClientView = () => import("@/views/client/ClientView.vue");
+const AddVideoView = () => import("@/views/client/AddVideoView.vue");
+
 // Set all routes
 const routes = [
   /*
@@ -285,20 +308,32 @@ const routes = [
             component: BackendDashboard,
           },
           {
-            path: "partners",
-            component: PartnersView,
+            path: "ads",
+            component: AdsView,
           },
           {
-            path: "profile",
-            component: ProfileView,
+            path: "eq",
+            component: EqView,
           },
           {
-            path: "messages",
-            component: MessagesView,
+            path: "cli",
+            component: Clients,
+          },
+          {
+            path: "err",
+            component: ErrorsView,
           },
           {
             path: "settings",
             component: SettingsView,
+          },
+          {
+            path: "control",
+            component: ControlView,
+          },
+          {
+            path: "doc",
+            component: DocumnetsView,
           },
         ],
       },
@@ -307,11 +342,42 @@ const routes = [
 
   {
     path: "/moderator",
-    component: LayoutBackend,
+    component: ModeratorLayout,
     children: [
       {
         path: "",
-        component: LandingView,
+        component: CheckVideoView,
+      },
+      {
+        path: "videos",
+        component: VideoView,
+      },
+      {
+        path: "users",
+        component: ControlUsersView,
+      },
+      {
+        path: "eq",
+        component: ControlEqView,
+      },
+      {
+        path: "res",
+        component: ResultsView,
+      },
+    ],
+  },
+
+  {
+    path: "/client",
+    component: ClientLayout,
+    children: [
+      {
+        path: "profile",
+        component: ClientView,
+      },
+      {
+        path: "addVideo",
+        component: AddVideoView,
       },
     ],
   },
@@ -359,6 +425,23 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: "/partner",
+    component: PartnerLayout,
+    children: [
+      {
+        path: "",
+        component: UserView,
+      },
+
+      {
+        path: "cars",
+        component: CarsView,
+      },
+      
+    ]
+},
 
   /*
   |--------------------------------------------------------------------------
