@@ -115,9 +115,17 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
+    name: "Рекламные компании",
+    link: "/client/addAdc",
+  },
+
+  {
+    id: Math.random(Date.now()),
     name: "Cтраница с загрузкой видео",
     link: "/client/addVideo",
   },
+
+
 
 ];
 </script>

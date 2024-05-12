@@ -28,7 +28,6 @@ import ControlEqView from "@/views/moder/ControlEqView.vue";
 import ResultsView from "@/views/moder/ResultsView.vue";
 import CheckVideoView from "@/views/moder/CheckVideoView.vue";
 
-
 // Frontend: Landing
 const Landing = () => import("@/views/landing/LandingView.vue");
 
@@ -285,6 +284,7 @@ const SettingsView = () => import("@/views/admin/SettingsView.vue");
 //client views
 const ClientView = () => import("@/views/client/ClientView.vue");
 const AddVideoView = () => import("@/views/client/AddVideoView.vue");
+const AddAdcView = () => import("@/views/client/AddAdcView.vue");
 
 // Set all routes
 const routes = [
@@ -376,6 +376,10 @@ const routes = [
         component: ClientView,
       },
       {
+        path: "addAdc",
+        component: AddAdcView,
+      },
+      {
         path: "addVideo",
         component: AddVideoView,
       },
@@ -439,9 +443,8 @@ const routes = [
         path: "cars",
         component: CarsView,
       },
-      
-    ]
-},
+    ],
+  },
 
   /*
   |--------------------------------------------------------------------------

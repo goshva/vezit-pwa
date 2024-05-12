@@ -16,7 +16,7 @@
               Юр. лицо
             </button>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <button
               class="nav-link"
               id="btabs-static-profile-tab"
@@ -28,7 +28,7 @@
             >
               Физ. лицо
             </button>
-          </li>
+          </li> -->
         </ul>
         <div class="block-content tab-content">
           <div
