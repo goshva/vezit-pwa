@@ -20,34 +20,6 @@ onMounted(() => {
 const handleChangeRole = (r) => {
   router.push(`/${r}`);
 };
-
-
-
-// Reactive variables
-// const baseSearchTerm = ref("");
-
-// // On form search submit functionality
-// function onSubmitSearch() {
-//   router.push("/backend/pages/generic/search?" + baseSearchTerm.value);
-// }
-
-// When ESCAPE key is hit close the header search section
-// function eventHeaderSearch(event) {
-//   if (event.which === 27) {
-//     event.preventDefault();
-//     store.headerSearch({ mode: "off" });
-//   }
-// }
-
-// Attach ESCAPE key event listener
-// onMounted(() => {
-//   document.addEventListener("keydown", eventHeaderSearch);
-// });
-
-// // Remove keydown event listener
-// onUnmounted(() => {
-//   document.removeEventListener("keydown", eventHeaderSearch);
-// });
 </script>
 
 <template>
@@ -107,8 +79,8 @@ const handleChangeRole = (r) => {
           <!-- Right Section -->
           <div class="d-flex align-items-center">
             <slot name="content-right">
-              <div v-if="isShow">
-                <p class="m-0"><strong>5 000 </strong> ₽</p>
+              <div class="d-inline-block" v-if="isShow">
+                <p class="m-0" id="page-header-user-dropdown"><strong>5 000 </strong> ₽</p>
               </div>
 
               <!-- User Dropdown -->
@@ -316,16 +288,6 @@ const handleChangeRole = (r) => {
                 </div>
               </div>
               <!--END Role Dropdown-->
-
-              <!-- Toggle Side Overlay -->
-              <!-- <button
-                type="button"
-                class="btn btn-sm btn-alt-secondary ms-2"
-                @click="store.sideOverlay({ mode: 'toggle' })"
-              >
-                <i class="fa fa-fw fa-list-ul fa-flip-horizontal"></i>
-              </button> -->
-              <!-- END Toggle Side Overlay -->
             </slot>
           </div>
           <!-- END Right Section -->
@@ -333,35 +295,6 @@ const handleChangeRole = (r) => {
       </div>
       <!-- END Header Content -->
 
-      <!-- Header Search -->
-      <div
-        id="page-header-search"
-        class="overlay-header bg-body-extra-light"
-        :class="{ show: store.settings.headerSearch }"
-      >
-        <div class="content-header">
-          <form class="w-100" @submit.prevent="onSubmitSearch">
-            <div class="input-group">
-              <button
-                type="button"
-                class="btn btn-alt-danger"
-                @click="store.headerSearch({ mode: 'off' })"
-              >
-                <i class="fa fa-fw fa-times-circle"></i>
-              </button>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Search or hit ESC.."
-                id="page-header-search-input"
-                name="page-header-search-input"
-                v-model="baseSearchTerm"
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-      <!-- END Header Search -->
 
       <!-- Header Loader -->
       <div

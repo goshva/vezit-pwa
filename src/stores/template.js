@@ -5,9 +5,10 @@ export const useTemplateStore = defineStore({
   id: "template",
   state: () => ({
     // App vital details
+    isAuth: false,
     app: {
-      name: "OneUI Vue Edition",
-      version: "2.7.0",
+      name: "Olhar Taxi",
+      version: "1.0.1",
       copyright: new Date().getFullYear(),
     },
 
@@ -51,6 +52,11 @@ export const useTemplateStore = defineStore({
       this.layout.sideOverlay = payload.sideOverlay;
       this.layout.footer = payload.footer;
     },
+    //Auth
+    setAuthHandler(payload) {
+      this.isAuth = payload
+    },
+    //
     // Sets sidebar visibility (open, close, toggle)
     sidebar(payload) {
       if (window.innerWidth > 991) {

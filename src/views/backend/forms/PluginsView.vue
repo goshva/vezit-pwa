@@ -88,17 +88,6 @@ const vueSelectState = reactive({
     "Vue.js",
   ],
   optionsSelected: null,
-  optionsMultiple: [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "PHP",
-    "MySQL",
-    "Ruby",
-    "Angular",
-    "React",
-    "Vue.js",
-  ],
   optionsMultipleSelected: null,
 });
 

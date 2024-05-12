@@ -1,6 +1,7 @@
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { useTemplateStore } from "@/stores/template";
+import { useRouter } from "vue-router";
 
 // Import all layout partials
 import BaseHeader from "@/layouts/partials/Header.vue";
@@ -17,6 +18,8 @@ defineProps({
     description: "If the sidebar is in Mini Nav Mode",
   },
 });
+
+const router = useRouter();
 
 // Main store
 const store = useTemplateStore();
@@ -81,8 +84,13 @@ window
     }
   });
 
+  let isLogin = localStorage.getItem("isAuth");
+
 // Remove side transitions on window resizing
 onMounted(() => {
+
+
+  isLogin ?? router.replace("/auth/signin")
   let winResize = false;
 
   window.addEventListener("resize", () => {
@@ -142,8 +150,8 @@ onMounted(() => {
       </template>
 
       <template #sidebar-navigation>
-        <BaseNavigation/>
-     </template>
+        <BaseNavigation />
+      </template>
 
       <slot name="sidebar"></slot>
     </BaseSidebar>

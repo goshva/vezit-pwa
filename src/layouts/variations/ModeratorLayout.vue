@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted } from "vue";
 import { useTemplateStore } from "@/stores/template";
+import { useRouter } from "vue-router";
 
 // Import all layout partials
 import BaseHeader from "@/layouts/partials/Header.vue";
@@ -20,6 +21,14 @@ defineProps({
 
 // Main store
 const store = useTemplateStore();
+const router = useRouter();
+
+store.setLayout({
+  header: true,
+  sidebar: true,
+  sideOverlay: true,
+  footer: false,
+});
 
 // Set default color theme
 store.setColorTheme({
@@ -81,8 +90,12 @@ window
     }
   });
 
+let isLogin = localStorage.getItem("isAuth");
+
 // Remove side transitions on window resizing
 onMounted(() => {
+  isLogin ?? router.replace("/auth/signin");
+
   let winResize = false;
 
   window.addEventListener("resize", () => {
@@ -142,8 +155,8 @@ onMounted(() => {
       </template>
 
       <template #sidebar-navigation>
-        <ModeratorNavigation/>
-     </template>
+        <ModeratorNavigation />
+      </template>
 
       <slot name="sidebar"></slot>
     </BaseSidebar>
