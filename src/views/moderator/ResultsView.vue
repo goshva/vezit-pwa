@@ -288,7 +288,7 @@ const newCustomersOptions = reactive({
       class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start"
     >
       <div class="flex-grow-1 mb-1 mb-md-0">
-        <h1 class="h3 fw-bold mb-2">Главная</h1>
+        <h1 class="h3 fw-bold mb-2">Результаты</h1>
       </div>
     </div>
   </div>
@@ -306,9 +306,9 @@ const newCustomersOptions = reactive({
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">340/500</dt>
+                <dt class="fs-3 fw-bold">50 видео</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Список машин
+                  Ожидают проверки
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -318,7 +318,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/partner/cars"
+                to="/moderator/checkVideos"
               >
                 <span>View all orders</span>
                 <i
@@ -339,9 +339,9 @@ const newCustomersOptions = reactive({
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">45</dt>
+                <dt class="fs-3 fw-bold">45 видео</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Профиль
+                  Проверенно
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -351,7 +351,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/partner/profile"
+                to="/moderator/users"
               >
                 <span>View all broke</span>
                 <i
@@ -364,28 +364,28 @@ const newCustomersOptions = reactive({
         <!-- END Messages -->
       </div>
       <div class="col-sm-6 col-xxl-3">
-        <!-- Pending Orders -->
+        <!-- Conversion Rate -->
         <BaseBlock class="d-flex flex-column h-100 mb-0">
           <template #content>
             <div
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">3435.32</dt>
+                <dt class="fs-3 fw-bold">25 видео</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Финансы
+                  Приняты
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
-                <i class="far fa-gem fs-3 text-primary"></i>
+                <i class="fa fa-chart-bar fs-3 text-primary"></i>
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/partner/finance"
+                to="/moderator/eq"
               >
-                <span>View all orders</span>
+                <span>View all clients</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -393,31 +393,31 @@ const newCustomersOptions = reactive({
             </div>
           </template>
         </BaseBlock>
-        <!-- END Pending Orders -->
+        <!-- END Conversion Rate-->
       </div>
       <div class="col-sm-6 col-xxl-3">
-        <!-- Pending Orders -->
+        <!-- Conversion Rate -->
         <BaseBlock class="d-flex flex-column h-100 mb-0">
           <template #content>
             <div
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">340/500</dt>
+                <dt class="fs-3 fw-bold">20 видео</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Техподдержка
+                  Отклонены
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
-                <i class="far fa-gem fs-3 text-primary"></i>
+                <i class="fa fa-chart-bar fs-3 text-primary"></i>
               </div>
             </div>
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/partner/support"
+                to="/moderator/res"
               >
-                <span>View all orders</span>
+                <span>View all errors</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -425,177 +425,19 @@ const newCustomersOptions = reactive({
             </div>
           </template>
         </BaseBlock>
-        <!-- END Pending Orders -->
+        <!-- END Conversion Rate-->
       </div>
-
     </div>
     <!-- END Overview -->
 
     <!-- Statistics -->
     <div class="row">
       <div class="col-xl-8 col-xxl-9 d-flex flex-column">
-        <!-- Earnings Summary -->
-        <!-- <BaseBlock
-          title="Earnings Summary"
-          class="flex-grow-1 d-flex flex-column"
-        >
-          <template #options>
-            <button type="button" class="btn-block-option">
-              <i class="si si-settings"></i>
-            </button>
-          </template>
-
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex items-center"
-            >
-              <Bar
-                :data="earningsData"
-                :options="earningsOptions"
-                class="w-100"
-              />
-            </div>
-            <div class="block-content bg-body-light">
-              <div class="row items-push text-center w-100">
-                <div class="col-sm-4">
-                  <dl class="mb-0">
-                    <dt
-                      class="fs-3 fw-bold d-inline-flex align-items-center space-x-2"
-                    >
-                      <i class="fa fa-caret-up fs-base text-success"></i>
-                      <span>2.5%</span>
-                    </dt>
-                    <dd class="fs-sm fw-medium text-muted mb-0">
-                      Customer Growth
-                    </dd>
-                  </dl>
-                </div>
-                <div class="col-sm-4">
-                  <dl class="mb-0">
-                    <dt
-                      class="fs-3 fw-bold d-inline-flex align-items-center space-x-2"
-                    >
-                      <i class="fa fa-caret-up fs-base text-success"></i>
-                      <span>3.8%</span>
-                    </dt>
-                    <dd class="fs-sm fw-medium text-muted mb-0">Page Views</dd>
-                  </dl>
-                </div>
-                <div class="col-sm-4">
-                  <dl class="mb-0">
-                    <dt
-                      class="fs-3 fw-bold d-inline-flex align-items-center space-x-2"
-                    >
-                      <i class="fa fa-caret-down fs-base text-danger"></i>
-                      <span>1.7%</span>
-                    </dt>
-                    <dd class="fs-sm fw-medium text-muted mb-0">
-                      New Products
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </template>
-        </BaseBlock> -->
-        <!-- END Earnings Summary -->
       </div>
       <div class="col-xl-4 col-xxl-3 d-flex flex-column">
         <!-- Last 2 Weeks -->
         <div class="row items-push flex-grow-1">
-          <!-- <div class="col-md-6 col-xl-12">
-            <BaseBlock class="d-flex flex-column h-100 mb-0">
-              <template #content>
-                <div
-                  class="block-content flex-grow-1 d-flex justify-content-between"
-                >
-                  <dl class="mb-0">
-                    <dt class="fs-3 fw-bold">570</dt>
-                    <dd class="fs-sm fw-medium text-muted mb-0">
-                      Total Orders
-                    </dd>
-                  </dl>
-                  <div>
-                    <div
-                      class="d-inline-block px-2 py-1 rounded-3 fs-xs fw-semibold text-danger bg-danger-light"
-                    >
-                      <i class="fa fa-caret-down me-1"></i>
-                      2.2%
-                    </div>
-                  </div>
-                </div>
-                <div class="block-content p-1 text-center overflow-hidden">
-                  <Line
-                    :data="totalOrdersData"
-                    :options="totalOrdersOptions"
-                    style="height: 90px"
-                  />
-                </div>
-              </template>
-            </BaseBlock>
-          </div> -->
-          <!-- <div class="col-md-6 col-xl-12">
-            <BaseBlock class="d-flex flex-column h-100 mb-0">
-              <template #content>
-                <div
-                  class="block-content flex-grow-1 d-flex justify-content-between"
-                >
-                  <dl class="mb-0">
-                    <dt class="fs-3 fw-bold">$5,234.21</dt>
-                    <dd class="fs-sm fw-medium text-muted mb-0">
-                      Total Earnings
-                    </dd>
-                  </dl>
-                  <div>
-                    <div
-                      class="d-inline-block px-2 py-1 rounded-3 fs-xs fw-semibold text-success bg-success-light"
-                    >
-                      <i class="fa fa-caret-up me-1"></i>
-                      4.2%
-                    </div>
-                  </div>
-                </div>
-                <div class="block-content p-1 text-center overflow-hidden">
-                  <Line
-                    :data="totalEarningsData"
-                    :options="totalEarningsOptions"
-                    style="height: 90px"
-                  />
-                </div>
-              </template>
-            </BaseBlock>
-          </div> -->
-          <div class="col-xl-12">
-            <!-- <BaseBlock class="d-flex flex-column h-100 mb-0">
-              <template #content>
-                <div
-                  class="block-content flex-grow-1 d-flex justify-content-between"
-                >
-                  <dl class="mb-0">
-                    <dt class="fs-3 fw-bold">264</dt>
-                    <dd class="fs-sm fw-medium text-muted mb-0">
-                      New Customers
-                    </dd>
-                  </dl>
-                  <div>
-                    <div
-                      class="d-inline-block px-2 py-1 rounded-3 fs-xs fw-semibold text-success bg-success-light"
-                    >
-                      <i class="fa fa-caret-up me-1"></i>
-                      9.3%
-                    </div>
-                  </div>
-                </div>
-                <div class="block-content p-1 text-center overflow-hidden">
-          
-                 <Line
-                    :data="newCustomersData"
-                    :options="newCustomersOptions"
-                    style="height: 90px"
-                  />
-                </div>
-              </template>
-            </BaseBlock> -->
+          <div class="col-xl-12">  
           </div>
         </div>
         <!-- END Last 2 Weeks -->

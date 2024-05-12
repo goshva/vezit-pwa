@@ -4,30 +4,14 @@ import NProgress from "nprogress/nprogress.js";
 
 // Main layout variations
 import LayoutSimple from "@/layouts/variations/Simple.vue";
-import LayoutLanding from "@/layouts/variations/Landing.vue";
 import LayoutBackend from "@/layouts/variations/Backend.vue";
 import LayoutBackendBoxed from "@/layouts/variations/BackendBoxed.vue";
 import LayoutBackendMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
 import LayoutBackendSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
-import LandingView from "@/views/landing/LandingView.vue";
-import BaseLayout from "@/layouts/BaseLayout.vue";
-
 import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
-import CarsView from "@/views/partner/CarsView.vue";
-import UserView from "@/views/partner/UserView.vue";
-import BrokeEqView from "@/views/admin/BrokeEqView.vue";
-import Clients from "@/views/admin/Clients.vue";
-import ErrorsView from "@/views/admin/ErrorsView.vue";
-import ControlView from "@/views/admin/ControlView.vue";
-import DocumnetsView from "@/views/admin/DocumnetsView.vue";
+import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
 
-import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
-import VideoView from "@/views/moder/VideoView.vue";
-import ControlUsersView from "@/views/moder/ControlUsersView.vue";
-import ControlEqView from "@/views/moder/ControlEqView.vue";
-import ResultsView from "@/views/moder/ResultsView.vue";
-import CheckVideoView from "@/views/moder/CheckVideoView.vue";
 
 // Frontend: Landing
 const Landing = () => import("@/views/landing/LandingView.vue");
@@ -279,12 +263,21 @@ const Error503 = () => import("@/views/errors/503View.vue");
 //admin views
 const AdsView = () => import("@/views/admin/AdsView.vue");
 const EqView = () => import("@/views/admin/EqView.vue");
-const MessagesView = () => import("@/views/admin/MessagesView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
+const ClientsView = () => import("@/views/admin/ClientsView.vue");
+const ErrorsView = () => import("@/views/admin/ErrorsView.vue");
+const ControlView = () => import("@/views/admin/ControlView.vue");
+const DocumentsView = () => import("@/views/admin/DocumentsView.vue"); 
+
 //
 
 //moderator views
-const ModeratorDashboardView = () => import("@/views/moder/DashboardView.vue");
+const ModeratorDashboardView = () => import("@/views/moderator/DashboardView.vue");
+const ListVideoView = () => import("@/views/moderator/ListVideoView.vue");
+const ResultsView = () => import("@/views/moderator/ResultsView.vue");
+const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
+const CheckListVideoView = () => import("@/views/moderator/CheckListVideoView.vue")
+
 //
 
 //client views
@@ -296,6 +289,11 @@ const AddAdcView = () => import("@/views/client/AddAdcView.vue");
 
 //partner views
 const PartnerDashboardView = () => import("@/views/partner/DashboardView.vue");
+const CarsView = () => import("@/views/partner/CarsView.vue");
+const UserView = () => import("@/views/partner/UserView.vue");
+const SupportView = () => import("@/views/partner/SupportView.vue");
+const FinanceView = () => import("@/views/partner/FinanceView.vue");
+
 
 // 
 
@@ -329,11 +327,11 @@ const routes = [
             component: EqView,
           },
           {
-            path: "cli",
-            component: Clients,
+            path: "clients",
+            component: ClientsView,
           },
           {
-            path: "err",
+            path: "error",
             component: ErrorsView,
           },
           {
@@ -345,8 +343,8 @@ const routes = [
             component: ControlView,
           },
           {
-            path: "doc",
-            component: DocumnetsView,
+            path: "documents",
+            component: DocumentsView,
           },
         ],
       },
@@ -366,22 +364,24 @@ const routes = [
           },
           {
             path: "checkVideos",
-            component: CheckVideoView,
+            children: [
+              {
+                path: "",
+                component: CheckListVideoView,
+              },
+
+              {
+                path: "id",
+                component: CheckVideoView,
+              },
+            ]
           },
           {
-            path: "videos",
-            component: VideoView,
+            path: "videosList",
+            component: ListVideoView,
           },
           {
-            path: "users",
-            component: ControlUsersView,
-          },
-          {
-            path: "eq",
-            component: ControlEqView,
-          },
-          {
-            path: "res",
+            path: "results",
             component: ResultsView,
           },
         ],
@@ -428,14 +428,25 @@ const routes = [
             path: 'dashboard',
             component: PartnerDashboardView
           },
+
+          {
+            path: "cars",
+            component: CarsView,
+          },
+
+          {
+            path: "finance",
+            component: FinanceView,
+          },
+
           {
             path: "profile",
             component: UserView,
           },
-    
+
           {
-            path: "cars",
-            component: CarsView,
+            path: "support",
+            component: SupportView,
           },
         ]
       },

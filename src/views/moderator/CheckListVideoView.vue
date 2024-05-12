@@ -1,6 +1,6 @@
 <template>
     <div class="m-5 mb-0">
-      <BaseBlock title="Список клиентов" class="mb-0">
+      <BaseBlock title="Ожидают проверки" class="mb-0">
         <template #options>
           <div class="space-x-1">
             <button
@@ -65,28 +65,6 @@
         </template>
   
         <template #content>
-          <!-- <div
-            v-if="orderSearch"
-            id="one-dashboard-search-orders"
-            class="block-content border-bottom"
-          >
-            <form @submit.prevent>
-              <div class="push">
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-alt"
-                    id="one-ecom-orders-search"
-                    name="one-ecom-orders-search"
-                    placeholder="Search all orders.."
-                  />
-                  <span class="input-group-text bg-body border-0">
-                    <i class="fa fa-search"></i>
-                  </span>
-                </div>
-              </div>
-            </form>
-          </div> -->
           <div class="block-content block-content-full">
             <div class="table-responsive">
               <table class="table table-hover table-vcenter">
@@ -97,7 +75,7 @@
                     <th>Статус</th>
                     <th class="d-none d-sm-table-cell text-center">Прогресс</th>
                     <th class="d-none d-sm-table-cell text-end">Дата</th>
-                    <th class="d-none d-sm-table-cell text-end">Цена</th>
+                    <th class="d-none d-sm-table-cell text-end">Проверять</th>
                   </tr>
                 </thead>
                 <tbody class="fs-sm">
@@ -116,8 +94,8 @@
                     </td>
                     <td>
                       <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Completed</span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
+                        >Не проверенно</span
                       >
                     </td>
                     <td class="d-none d-sm-table-cell">
@@ -139,7 +117,15 @@
                       7 min ago
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
-                      <strong>$786,81</strong>
+                      <RouterLink
+                      class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                      to="/moderator/checkVideos/id"
+                      >
+                       <span></span>
+                    <i
+                    class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                    ></i>
+                    </RouterLink>
                     </td>
                   </tr>
                   <tr>

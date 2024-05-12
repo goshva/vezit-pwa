@@ -158,7 +158,7 @@
                   <td>
                     <span
                       class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Online</span
+                      >В работе</span
                     >
                   </td>
                   <td class="d-none d-sm-table-cell">
@@ -199,7 +199,7 @@
                   <td>
                     <span
                     class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                      >Offline</span
+                      >Не в работе</span
                     >
                   </td>
                   <td class="d-none d-sm-table-cell">
@@ -239,8 +239,8 @@
                   </td>
                   <td>
                     <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Completed</span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
+                      >На ремонте</span
                     >
                   </td>
                   <td class="d-none d-sm-table-cell">
@@ -282,8 +282,8 @@
                   </td>
                   <td>
                     <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                      >Pending</span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-danger text-white"
+                      >Не исправен</span
                     >
                   </td>
                   <td class="d-none d-sm-table-cell">

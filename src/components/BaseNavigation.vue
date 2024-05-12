@@ -125,16 +125,15 @@ const routerLinks = [
     link: "/admin/eq",
   },
 
-
   {
     id: Math.random(Date.now()),
     name: "Клиенты",
-    link: "/admin/cli",
+    link: "/admin/clients",
   },
   {
     id: Math.random(Date.now()),
     name: "Список системных ошибок",
-    link: "/admin/err",
+    link: "/admin/error",
   },
   {
     id: Math.random(Date.now()),
@@ -149,7 +148,7 @@ const routerLinks = [
   {
     id: Math.random(Date.now()),
     name: "Финансы и документы",
-    link: "/admin/doc",
+    link: "/admin/documents",
   },
 ];
 </script>
