@@ -1,17 +1,9 @@
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список устройств" class="mb-0">
+    <BaseBlock title="Список рекламных компании" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button
-            type="button"
-            class="btn btn-sm btn-alt-secondary"
-            @click="
-              () => {
-                orderSearch = !orderSearch;
-              }
-            "
-          >
+          <button type="button" class="btn btn-sm btn-alt-secondary">
             <i class="fa fa-search"></i>
           </button>
           <div class="dropdown d-inline-block">
@@ -66,48 +58,41 @@
 
       <template #content>
         <!-- <div
-          v-if="orderSearch"
-          id="one-dashboard-search-orders"
-          class="block-content border-bottom"
-        >
-          <form @submit.prevent>
-            <div class="push">
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control form-control-alt"
-                  id="one-ecom-orders-search"
-                  name="one-ecom-orders-search"
-                  placeholder="Search all orders.."
-                />
-                <span class="input-group-text bg-body border-0">
-                  <i class="fa fa-search"></i>
-                </span>
+            v-if="orderSearch"
+            id="one-dashboard-search-orders"
+            class="block-content border-bottom"
+          >
+            <form @submit.prevent>
+              <div class="push">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control form-control-alt"
+                    id="one-ecom-orders-search"
+                    name="one-ecom-orders-search"
+                    placeholder="Search all orders.."
+                  />
+                  <span class="input-group-text bg-body border-0">
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
               </div>
-            </div>
-          </form>
-        </div> -->
+            </form>
+          </div> -->
         <div class="block-content block-content-full">
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th class="d-none d-xl-table-cell">Название</th>
                   <th>Статус</th>
-                  <th class="d-none d-sm-table-cell text-center">Прогресс</th>
-                  <th class="d-none d-sm-table-cell text-end">Дата</th>
-                  <th class="d-none d-sm-table-cell text-end">Цена</th>
+                  <th class="d-none d-sm-table-cell text-center">Видео</th>
+                  <th class="d-none d-sm-table-cell text-end">Ссылка</th>
+                  <th class="d-none d-sm-table-cell text-end">Бюджет</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00925
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Marie Duncan</a
@@ -143,12 +128,6 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00924
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Jack Estrada</a
@@ -180,16 +159,10 @@
                     26 min ago
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
-                    <strong>$1184,20</strong>
+                    <strong>$786,81</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00923
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Megan Fuller</a
@@ -221,16 +194,10 @@
                     19 min ago
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
-                    <strong>$2379,44</strong>
+                    <strong>$786,81</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00922
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Lisa Jenkins</a
@@ -264,16 +231,10 @@
                     13 min ago
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
-                    <strong>$458,52</strong>
+                    <strong>$786,81</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00921
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Brian Stevens</a
@@ -305,89 +266,7 @@
                     4 min ago
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
-                    <strong>$476,82</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00920
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Jesse Fisher</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Digital Nomad</p>
-                  </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                      >Pending</span
-                    >
-                  </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 23%"
-                        aria-valuenow="23"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">23%</p>
-                  </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
-                    23 min ago
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                    <strong>$1939,58</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00919
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Carol Ray</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Web developer</p>
-                  </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                      >Active</span
-                    >
-                  </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 14%"
-                        aria-valuenow="14"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">14%</p>
-                  </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
-                    15 min ago
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                    <strong>$2200,10</strong>
+                    <strong>$786,81</strong>
                   </td>
                 </tr>
               </tbody>

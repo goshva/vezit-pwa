@@ -109,6 +109,30 @@ function linkClicked(e, submenu) {
 const routerLinks = [
   {
     id: Math.random(Date.now()),
+    name: "Главная",
+    link: "/client/dashboard",
+  },
+
+  {
+    id: Math.random(Date.now()),
+    name: "Рекламные компании",
+    link: "/client/addAdc",
+  },
+
+  {
+    id: Math.random(Date.now()),
+    name: "Отчёт по эфективности",
+    link: "/client/analytics",
+  },
+
+  {
+    id: Math.random(Date.now()),
+    name: "Финансы",
+    link: "/client/finance",
+  },
+
+  {
+    id: Math.random(Date.now()),
     name: "Профиль",
     link: "/client/profile",
   },
@@ -119,6 +143,11 @@ const routerLinks = [
     link: "/client/addVideo",
   },
 
+  {
+    id: Math.random(Date.now()),
+    name: "Техподдержка",
+    link: "/client/support",
+  },
 ];
 </script>
 

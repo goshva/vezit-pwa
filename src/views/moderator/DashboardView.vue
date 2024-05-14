@@ -10,15 +10,17 @@ Chart.register(...registerables);
 // Set Global Chart.js configuration
 Chart.defaults.color = "#818d96";
 Chart.defaults.scale.grid.lineWidth = 0;
-Chart.defaults.scale.beginAtZero = true;
+// Chart.defaults.scale.beginAtZero = true;
 Chart.defaults.datasets.bar.maxBarThickness = 45;
 Chart.defaults.elements.bar.borderRadius = 4;
 Chart.defaults.elements.bar.borderSkipped = false;
 Chart.defaults.elements.point.radius = 0;
 Chart.defaults.elements.point.hoverRadius = 0;
-Chart.defaults.plugins.tooltip.radius = 3;
+// Chart.defaults.plugins.tooltip.radius = 3;
 Chart.defaults.plugins.legend.labels.boxWidth = 10;
 
+// Helper variables
+const orderSearch = ref(false);
 
 // Chart Earnings data
 const earningsData = reactive({
@@ -277,63 +279,23 @@ const newCustomersOptions = reactive({
     },
   },
 });
-
-
-const selectedCheckboxes = ref([]);
-const comment = ref('');
-
-const printSelectedCheckboxes = () => {
-  console.log(selectedCheckboxes.value);
-  if (comment.value.trim() !== ''){
-    console.log(comment.value)
-    comment.value = ''
-  }
-};
 </script>
 
 <template>
   <!-- Hero -->
-  <div class="video content w-75 h-50">
+  <div class="content">
     <div
-      class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start "
+      class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start"
     >
       <div class="flex-grow-1 mb-1 mb-md-0">
-        <BaseBlock title="Видео" class="">
-        <video controls="" class="w-100"></video>
-        <div class="mb-4">
-        <div v-if="selectedCheckboxes.length > 0">
-        <button @click="printSelectedCheckboxes" type="submit" class="btn w-100 btn-alt-primary">
-        <i class=""></i>
-        Отклонить
-        </button>
-        <div class="mt-3">
-          <input
-            type="text"
-            class="form-control form-control-alt form-control-lg"
-            placeholder="Коментарий"
-            v-model="comment"
-            />
-        </div>
-
-        </div>
-        <button v-else type="submit" class="btn w-100 btn-primary">
-        <i class=""></i>
-        Принять
-        </button>
+        <h1 class="h3 fw-bold mb-2">Главная</h1>
       </div>
-        </BaseBlock>
-        <div class="">
-          <strong>Link:</strong>
-          http://localhost:5173/#/moderator
-        </div>
-      </div>
-
     </div>
   </div>
   <!-- END Hero -->
 
   <!-- Page Content -->
-  <div class="content mt-0">
+  <div class="content">
     <!-- Overview -->
     <div class="row items-push">
       <div class="col-sm-6 col-xxl-3">
@@ -344,20 +306,9 @@ const printSelectedCheckboxes = () => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="+18 контент"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >+18 контент</label
-                  >
-                  </div>
-                </dt>
+                <dt class="fs-3 fw-bold">32/50</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
+                  Список видео
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -367,9 +318,9 @@ const printSelectedCheckboxes = () => {
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/ads"
+                to="/moderator/checkVideos"
               >
-                <span>More info</span>
+                <span>View all orders</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -379,51 +330,7 @@ const printSelectedCheckboxes = () => {
         </BaseBlock>
         <!-- END Pending Orders -->
       </div>
-      
 
-      <div class="col-sm-6 col-xxl-3">
-        <!-- New Customers -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Насилие"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >Насилие</label
-                  >
-                </div>
-                </dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="far fa-user-circle fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/eq"
-              >
-                <span>More info</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END New Customers -->
-      </div>
       <div class="col-sm-6 col-xxl-3">
         <!-- Messages -->
         <BaseBlock class="d-flex flex-column h-100 mb-0">
@@ -432,20 +339,9 @@ const printSelectedCheckboxes = () => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                    <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Провокации"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >Провокации</label
-                  >
-                     </div>
-                </dt>
+                <dt class="fs-3 fw-bold">45</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
+                  Контроль пользователей
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -455,9 +351,9 @@ const printSelectedCheckboxes = () => {
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/eq"
+                to="/moderator/users"
               >
-                <span>More info</span>
+                <span>View all broke</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -475,20 +371,9 @@ const printSelectedCheckboxes = () => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                    <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Религия"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >Религия</label
-                  >
-                     </div>
-                </dt>
+                <dt class="fs-3 fw-bold">4</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
+                  Контроль устройств
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -498,9 +383,9 @@ const printSelectedCheckboxes = () => {
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/cli"
+                to="/moderator/eq"
               >
-                <span>More info</span>
+                <span>View all clients</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -518,20 +403,9 @@ const printSelectedCheckboxes = () => {
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                    <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Запрещенные вещества"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >Запрещенные вещества</label
-                  >
-                     </div>
-                </dt>
+                <dt class="fs-3 fw-bold">1</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
+                  Результаты
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -541,9 +415,9 @@ const printSelectedCheckboxes = () => {
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/err"
+                to="/moderator/res"
               >
-                <span>More info</span>
+                <span>View all errors</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -553,136 +427,6 @@ const printSelectedCheckboxes = () => {
         </BaseBlock>
         <!-- END Conversion Rate-->
       </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- Conversion Rate -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                    <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Размер видео"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >Размер видео</label
-                  >
-                     </div>
-                </dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="fa fa-chart-bar fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/settings"
-              >
-                <span>More info</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END Conversion Rate-->
-      </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- Conversion Rate -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                    <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Качество видео"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >Качество видео</label
-                  >
-                     </div>
-                </dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="fa fa-chart-bar fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/control"
-              >
-                <span>More info</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END Conversion Rate-->
-      </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- Conversion Rate -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">
-                    <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Не качественная ссылка"
-                    v-model="selectedCheckboxes"
-                  />
-                  <label class="form-check-label" for="login-remember"
-                    >Не качественная ссылка</label
-                  >
-                     </div>
-                </dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="fa fa-chart-bar fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/doc"
-              >
-                <span>More info</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END Conversion Rate-->
-      </div>
-      
     </div>
     <!-- END Overview -->
 
@@ -850,7 +594,7 @@ const printSelectedCheckboxes = () => {
                   />
                 </div>
               </template>
-            </BaseBlock> --> 
+            </BaseBlock> -->
           </div>
         </div>
         <!-- END Last 2 Weeks -->
@@ -859,8 +603,6 @@ const printSelectedCheckboxes = () => {
     <!-- END Statistics -->
 
     <!-- Recent Orders -->
-   
   </div>
   <!-- END Page Content -->
 </template>
-

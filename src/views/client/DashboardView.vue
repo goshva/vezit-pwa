@@ -10,13 +10,13 @@ Chart.register(...registerables);
 // Set Global Chart.js configuration
 Chart.defaults.color = "#818d96";
 Chart.defaults.scale.grid.lineWidth = 0;
-Chart.defaults.scale.beginAtZero = true;
+// Chart.defaults.scale.beginAtZero = true;
 Chart.defaults.datasets.bar.maxBarThickness = 45;
 Chart.defaults.elements.bar.borderRadius = 4;
 Chart.defaults.elements.bar.borderSkipped = false;
 Chart.defaults.elements.point.radius = 0;
 Chart.defaults.elements.point.hoverRadius = 0;
-Chart.defaults.plugins.tooltip.radius = 3;
+// Chart.defaults.plugins.tooltip.radius = 3;
 Chart.defaults.plugins.legend.labels.boxWidth = 10;
 
 // Helper variables
@@ -288,9 +288,8 @@ const newCustomersOptions = reactive({
       class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start"
     >
       <div class="flex-grow-1 mb-1 mb-md-0">
-        <h1 class="h3 fw-bold mb-2">Админ панель</h1>
+        <h1 class="h3 fw-bold mb-2">Главная</h1>
       </div>
-
     </div>
   </div>
   <!-- END Hero -->
@@ -307,9 +306,9 @@ const newCustomersOptions = reactive({
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">32</dt>
+                <dt class="fs-3 fw-bold">32/50</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Список актуальных реклам
+                  Список видео
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -319,7 +318,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/ads"
+                to="/moderator/checkVideos"
               >
                 <span>View all orders</span>
                 <i
@@ -331,38 +330,7 @@ const newCustomersOptions = reactive({
         </BaseBlock>
         <!-- END Pending Orders -->
       </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- New Customers -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">124</dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Список рабочего оборудования
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="far fa-user-circle fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/eq"
-              >
-                <span>View all equipment</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END New Customers -->
-      </div>
+
       <div class="col-sm-6 col-xxl-3">
         <!-- Messages -->
         <BaseBlock class="d-flex flex-column h-100 mb-0">
@@ -373,7 +341,7 @@ const newCustomersOptions = reactive({
               <dl class="mb-0">
                 <dt class="fs-3 fw-bold">45</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Список нерабочего оборудования
+                  Контроль пользователей
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -383,7 +351,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/eq"
+                to="/moderator/users"
               >
                 <span>View all broke</span>
                 <i
@@ -405,7 +373,7 @@ const newCustomersOptions = reactive({
               <dl class="mb-0">
                 <dt class="fs-3 fw-bold">4</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Клиенты
+                  Контроль устройств
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -415,7 +383,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/cli"
+                to="/moderator/eq"
               >
                 <span>View all clients</span>
                 <i
@@ -435,9 +403,9 @@ const newCustomersOptions = reactive({
               class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
             >
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">60</dt>
+                <dt class="fs-3 fw-bold">1</dt>
                 <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Список системных ошибок
+                  Результаты
                 </dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -447,105 +415,9 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/err"
+                to="/moderator/res"
               >
                 <span>View all errors</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END Conversion Rate-->
-      </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- Conversion Rate -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">70</dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Изменение настроек оборудования
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="fa fa-chart-bar fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/settings"
-              >
-                <span>View all settings</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END Conversion Rate-->
-      </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- Conversion Rate -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">90</dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Контроль пользователей
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="fa fa-chart-bar fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/control"
-              >
-                <span>View all users</span>
-                <i
-                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
-                ></i>
-              </RouterLink>
-            </div>
-          </template>
-        </BaseBlock>
-        <!-- END Conversion Rate-->
-      </div>
-      <div class="col-sm-6 col-xxl-3">
-        <!-- Conversion Rate -->
-        <BaseBlock class="d-flex flex-column h-100 mb-0">
-          <template #content>
-            <div
-              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
-            >
-              <dl class="mb-0">
-                <dt class="fs-3 fw-bold">100</dt>
-                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
-                  Финансы и документы
-                </dd>
-              </dl>
-              <div class="item item-rounded-lg bg-body-light">
-                <i class="fa fa-chart-bar fs-3 text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-body-light rounded-bottom">
-              <RouterLink
-                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/doc"
-              >
-                <span>View statistics</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -722,7 +594,7 @@ const newCustomersOptions = reactive({
                   />
                 </div>
               </template>
-            </BaseBlock> --> 
+            </BaseBlock> -->
           </div>
         </div>
         <!-- END Last 2 Weeks -->
@@ -731,7 +603,6 @@ const newCustomersOptions = reactive({
     <!-- END Statistics -->
 
     <!-- Recent Orders -->
-   
   </div>
   <!-- END Page Content -->
 </template>

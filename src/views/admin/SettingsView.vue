@@ -65,28 +65,6 @@
       </template>
 
       <template #content>
-        <!-- <div
-          v-if="orderSearch"
-          id="one-dashboard-search-orders"
-          class="block-content border-bottom"
-        >
-          <form @submit.prevent>
-            <div class="push">
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control form-control-alt"
-                  id="one-ecom-orders-search"
-                  name="one-ecom-orders-search"
-                  placeholder="Search all orders.."
-                />
-                <span class="input-group-text bg-body border-0">
-                  <i class="fa fa-search"></i>
-                </span>
-              </div>
-            </div>
-          </form>
-        </div> -->
         <div class="block-content block-content-full">
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">

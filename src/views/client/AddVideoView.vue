@@ -1,6 +1,9 @@
+<script setup>
+import QrcodeVue from "qrcode.vue";
+</script>
 <template>
   <BaseBlock title="Данные о компании" class="m-5">
-    <div class="">
+    <div>
       <!-- Sign In Form -->
       <div class="mb-4">
         <input
@@ -61,6 +64,10 @@
       </div>
 
       <div class="mb-4">
+        <qrcode-vue value="https://example.com" size="100" level="H" />
+      </div>
+
+      <div class="mb-4">
         <div class="form-check">
           <input
             class="form-check-input"
@@ -86,5 +93,5 @@
   </BaseBlock>
   <!-- END Recent Orders -->
 </template>
-<script setup></script>
+
 <style lang="scss"></style>
