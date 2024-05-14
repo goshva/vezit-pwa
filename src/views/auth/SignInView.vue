@@ -89,20 +89,6 @@ async function onSubmit() {
         <div class="col-md-8 col-lg-6 col-xl-4">
           <!-- Sign In Block -->
           <BaseBlock title="Sign In" class="mb-0">
-            <!-- <template #options>
-              <RouterLink
-                :to="{ name: 'auth-reminder' }"
-                class="btn-block-option fs-sm"
-                >Forgot Password?</RouterLink
-              >
-              <RouterLink
-                :to="{ name: 'auth-signup' }"
-                class="btn-block-option"
-              >
-                <i class="fa fa-user-plus"></i>
-              </RouterLink>
-            </template> -->
-
             <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
               <h1 class="h2 mb-1">Olhar Taxi</h1>
               <p class="fw-medium text-muted">Welcome, please login.</p>
@@ -160,20 +146,6 @@ async function onSubmit() {
                       Please enter your password
                     </div>
                   </div>
-                  <!-- <div class="mb-4">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="login-remember"
-                        name="login-remember"
-                      />
-                      <label class="form-check-label" for="login-remember"
-                        >Remember Me</label
-                      >
-                    </div>
-                  </div> -->
                 </div>
                 <div class="row mb-4">
                   <div class="col-md-6 col-xl-5">

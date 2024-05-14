@@ -1,17 +1,9 @@
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список системных ошибок" class="mb-0">
+    <BaseBlock title="Список рекламных компании" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button
-            type="button"
-            class="btn btn-sm btn-alt-secondary"
-            @click="
-              () => {
-                orderSearch = !orderSearch;
-              }
-            "
-          >
+          <button type="button" class="btn btn-sm btn-alt-secondary">
             <i class="fa fa-search"></i>
           </button>
           <div class="dropdown d-inline-block">
@@ -65,26 +57,42 @@
       </template>
 
       <template #content>
+        <!-- <div
+            v-if="orderSearch"
+            id="one-dashboard-search-orders"
+            class="block-content border-bottom"
+          >
+            <form @submit.prevent>
+              <div class="push">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control form-control-alt"
+                    id="one-ecom-orders-search"
+                    name="one-ecom-orders-search"
+                    placeholder="Search all orders.."
+                  />
+                  <span class="input-group-text bg-body border-0">
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div> -->
         <div class="block-content block-content-full">
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th class="d-none d-xl-table-cell">Гос Номер</th>
-                  <th class="d-none d-sm-table-cell">Статус</th>
-                  <th class="d-none d-sm-table-cell">Партнер</th>
-                  <th class="d-none d-sm-table-cell">Дата</th>
+                  <th class="d-none d-xl-table-cell">Название</th>
+                  <th>Статус</th>
+                  <th class="d-none d-sm-table-cell text-center">Видео</th>
+                  <th class="d-none d-sm-table-cell text-end">Ссылка</th>
+                  <th class="d-none d-sm-table-cell text-end">Бюджет</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00925
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Marie Duncan</a
@@ -110,17 +118,16 @@
                     </div>
                     <p class="fs-xs fw-semibold mb-0">8%</p>
                   </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                  <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                  >
                     7 min ago
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <strong>$786,81</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00924
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Jack Estrada</a
@@ -146,17 +153,16 @@
                     </div>
                     <p class="fs-xs fw-semibold mb-0">6%</p>
                   </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                  <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                  >
                     26 min ago
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <strong>$786,81</strong>
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00923
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)"
                       >Megan Fuller</a
@@ -182,8 +188,85 @@
                     </div>
                     <p class="fs-xs fw-semibold mb-0">25%</p>
                   </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                  <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                  >
                     19 min ago
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <strong>$786,81</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="d-none d-xl-table-cell">
+                    <a class="fw-semibold" href="javascript:void(0)"
+                      >Lisa Jenkins</a
+                    >
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      Application Manager
+                    </p>
+                  </td>
+                  <td>
+                    <span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
+                      >Pending</span
+                    >
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <div class="progress mb-1" style="height: 5px">
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 18%"
+                        aria-valuenow="18"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <p class="fs-xs fw-semibold mb-0">18%</p>
+                  </td>
+                  <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                  >
+                    13 min ago
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <strong>$786,81</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="d-none d-xl-table-cell">
+                    <a class="fw-semibold" href="javascript:void(0)"
+                      >Brian Stevens</a
+                    >
+                    <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
+                  </td>
+                  <td>
+                    <span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
+                      >Completed</span
+                    >
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <div class="progress mb-1" style="height: 5px">
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 10%"
+                        aria-valuenow="10"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <p class="fs-xs fw-semibold mb-0">10%</p>
+                  </td>
+                  <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                  >
+                    4 min ago
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <strong>$786,81</strong>
                   </td>
                 </tr>
               </tbody>

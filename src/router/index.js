@@ -12,7 +12,6 @@ import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
 import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
 
-
 // Frontend: Landing
 const Landing = () => import("@/views/landing/LandingView.vue");
 
@@ -267,16 +266,18 @@ const SettingsView = () => import("@/views/admin/SettingsView.vue");
 const ClientsView = () => import("@/views/admin/ClientsView.vue");
 const ErrorsView = () => import("@/views/admin/ErrorsView.vue");
 const ControlView = () => import("@/views/admin/ControlView.vue");
-const DocumentsView = () => import("@/views/admin/DocumentsView.vue"); 
+const DocumentsView = () => import("@/views/admin/DocumentsView.vue");
 
 //
 
 //moderator views
-const ModeratorDashboardView = () => import("@/views/moderator/DashboardView.vue");
+const ModeratorDashboardView = () =>
+  import("@/views/moderator/DashboardView.vue");
 const ListVideoView = () => import("@/views/moderator/ListVideoView.vue");
 const ResultsView = () => import("@/views/moderator/ResultsView.vue");
 const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
-const CheckListVideoView = () => import("@/views/moderator/CheckListVideoView.vue")
+const CheckListVideoView = () =>
+  import("@/views/moderator/CheckListVideoView.vue");
 
 //
 
@@ -285,17 +286,19 @@ const ClientDashboardView = () => import("@/views/client/DashboardView.vue");
 const ClientView = () => import("@/views/client/ClientView.vue");
 const AddVideoView = () => import("@/views/client/AddVideoView.vue");
 const AddAdcView = () => import("@/views/client/AddAdcView.vue");
+const ClientSupportView = () => import("@/views/client/SupportView.vue");
+const ClientAnalyticsView = () => import("@/views/client/AnalyticsView.vue");
+const ClientFinanceView = () => import("@/views/client/FinanceView.vue");
 //
 
 //partner views
 const PartnerDashboardView = () => import("@/views/partner/DashboardView.vue");
 const CarsView = () => import("@/views/partner/CarsView.vue");
 const UserView = () => import("@/views/partner/UserView.vue");
-const SupportView = () => import("@/views/partner/SupportView.vue");
+const PartnerSupportView = () => import("@/views/partner/SupportView.vue");
 const FinanceView = () => import("@/views/partner/FinanceView.vue");
 
-
-// 
+//
 
 // Set all routes
 const routes = [
@@ -374,7 +377,7 @@ const routes = [
                 path: "id",
                 component: CheckVideoView,
               },
-            ]
+            ],
           },
           {
             path: "videosList",
@@ -412,21 +415,33 @@ const routes = [
             path: "addVideo",
             component: AddVideoView,
           },
+          {
+            path: "finance",
+            component: ClientFinanceView,
+          },
+          {
+            path: "analytics",
+            component: ClientAnalyticsView,
+          },
+          {
+            path: "support",
+            component: ClientSupportView,
+          },
         ],
       },
     ],
   },
 
-    {
+  {
     path: "/",
     component: PartnerLayout,
     children: [
       {
-        path: 'partner',
+        path: "partner",
         children: [
           {
-            path: 'dashboard',
-            component: PartnerDashboardView
+            path: "dashboard",
+            component: PartnerDashboardView,
           },
 
           {
@@ -446,9 +461,9 @@ const routes = [
 
           {
             path: "support",
-            component: SupportView,
+            component: PartnerSupportView,
           },
-        ]
+        ],
       },
     ],
   },
@@ -496,8 +511,6 @@ const routes = [
       },
     ],
   },
-
-
 
   /*
   |--------------------------------------------------------------------------
