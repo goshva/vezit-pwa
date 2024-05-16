@@ -13,4 +13,5 @@
 @import "@/assets/scss/oneui/themes/flat";
 @import "@/assets/scss/oneui/themes/modern";
 @import "@/assets/scss/oneui/themes/smooth";
+@import "../node_modules/ol/ol.css";
 </style>
