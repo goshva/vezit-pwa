@@ -1,10 +1,14 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { arr } from "@/constans.js";
+import { useRoute } from 'vue-router';
 // vue-chartjs, for more info and examples you can check out https://vue-chartjs.org/ and http://www.chartjs.org/docs/ -->
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
+
+const route = useRoute();
+console.log(route.params.id)
 
 // Set Global Chart.js configuration
 Chart.defaults.color = "#818d96";

@@ -376,7 +376,7 @@ const routes = [
               },
 
               {
-                path: "id",
+                path: ":id",
                 component: CheckVideoView,
               },
             ],
