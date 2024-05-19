@@ -137,7 +137,6 @@ const position5 = ref([47, 47]);
 const position6 = ref([46, 46]);
 
 const geoLocChange = (event) => {
-  //   console.log("AAAAA", event);
   currentPosition.value = event.target.getPosition();
   view.value?.setCenter(event.target?.getPosition());
 };
