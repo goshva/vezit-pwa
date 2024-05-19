@@ -289,6 +289,8 @@ const AddAdcView = () => import("@/views/client/AddAdcView.vue");
 const ClientSupportView = () => import("@/views/client/SupportView.vue");
 const ClientAnalyticsView = () => import("@/views/client/AnalyticsView.vue");
 const ClientFinanceView = () => import("@/views/client/FinanceView.vue");
+
+const ClientMapView = () => import("@/views/client/ClientMapView.vue");
 //
 
 //partner views
@@ -374,7 +376,7 @@ const routes = [
               },
 
               {
-                path: "id",
+                path: ":id",
                 component: CheckVideoView,
               },
             ],
@@ -426,6 +428,10 @@ const routes = [
           {
             path: "support",
             component: ClientSupportView,
+          },
+          {
+            path: "map",
+            component: ClientMapView,
           },
         ],
       },

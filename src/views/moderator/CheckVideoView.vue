@@ -1,10 +1,14 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { arr } from "@/constans.js";
+import { useRoute } from 'vue-router';
 // vue-chartjs, for more info and examples you can check out https://vue-chartjs.org/ and http://www.chartjs.org/docs/ -->
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
+
+const route = useRoute();
+console.log(route.params.id)
 
 // Set Global Chart.js configuration
 Chart.defaults.color = "#818d96";
@@ -278,11 +282,31 @@ const newCustomersOptions = reactive({
 
 const selectedCheckboxes = ref([]);
 const comment = ref("");
+const reson_obj = {
+  0: false,
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+  5: false,
+  6: false,
+  7: false,
+};
 
 const printSelectedCheckboxes = () => {
   console.log(selectedCheckboxes.value);
+  
+  // Обновляем reson_obj
+  selectedCheckboxes.value.forEach(index => {
+    if (reson_obj.hasOwnProperty(index)) {
+      reson_obj[index] = true;
+    }
+  });
+
+  console.log(reson_obj);
+
   if (comment.value.trim() !== "") {
-    console.log(comment.value);
+    console.log('Comment:', comment.value);
     comment.value = "";
   }
 };
@@ -385,7 +409,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="+18 контент"
+                      value="0"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
@@ -433,7 +457,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Насилие"
+                      value="1"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
@@ -480,7 +504,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Провокации"
+                      value="2"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
@@ -527,7 +551,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Религия"
+                      value="3"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
@@ -574,7 +598,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Запрещенные вещества"
+                      value="4"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
@@ -621,7 +645,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Размер видео"
+                      value="5"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
@@ -668,7 +692,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Качество видео"
+                      value="6"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
@@ -715,7 +739,7 @@ const handleOpenModal = (id) => {
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="Проблема ссылки"
+                      value="7"
                       v-model="selectedCheckboxes"
                     />
                     <label class="form-check-label" for="login-remember"
