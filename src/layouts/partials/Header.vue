@@ -14,7 +14,7 @@ const { path } = useRoute();
 let isShow = ref(false);
 
 onMounted(() => {
-  isShow.value = path.includes("/admin") || path.includes("/moderator");
+  isShow.value = path.includes("/moderator") || path.includes("/client") || path.includes("/partner");
 });
 
 const handleChangeRole = (r) => {

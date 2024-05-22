@@ -352,9 +352,8 @@ const handleOpenModal = (id) => {
             :href="url"
             class="btn w-100 btn-primary my-2"
           >
-            Ссылка:
             <i>
-              {{ url }}
+              Посетить сайт рекламодателя
             </i>
           </a>
           <div class="mt-3 mb-4">
