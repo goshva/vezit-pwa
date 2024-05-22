@@ -11,11 +11,6 @@ import BaseBlock from "@/components/BaseBlock.vue";
 import BaseBackground from "@/components/BaseBackground.vue";
 import BasePageHeading from "@/components/BasePageHeading.vue";
 
-//openLayers
-import "vue3-openlayers/styles.css";
-import OpenLayersMap from "vue3-openlayers";
-//
-
 // Template directives
 import clickRipple from "@/directives/clickRipple";
 
@@ -37,11 +32,6 @@ app.directive("click-ripple", clickRipple);
 // Use Pinia and Vue Router
 app.use(createPinia());
 app.use(router);
-
-const options = {
-  debug: true,
-};
-app.use(OpenLayersMap, options);
 
 // ..and finally mount it!
 app.mount("#app");
