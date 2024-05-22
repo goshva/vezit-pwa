@@ -374,11 +374,6 @@ const routes = [
             path: "checkVideos",
             children: [
               {
-                path: "",
-                component: CheckListVideoView,
-              },
-
-              {
                 path: ":id",
                 component: CheckVideoView,
               },
