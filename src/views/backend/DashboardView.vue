@@ -416,7 +416,7 @@ const newCustomersOptions = reactive({
             <div class="bg-body-light rounded-bottom">
               <RouterLink
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                to="/admin/err"
+                to="/admin/error"
               >
                 <span>View all errors</span>
                 <i
@@ -515,6 +515,39 @@ const newCustomersOptions = reactive({
                 to="/admin/doc"
               >
                 <span>View statistics</span>
+                <i
+                  class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                ></i>
+              </RouterLink>
+            </div>
+          </template>
+        </BaseBlock>
+        
+        <!-- END Conversion Rate-->
+      </div>
+      <div class="col-sm-6 col-xxl-3">
+        <!-- Conversion Rate -->
+        <BaseBlock class="d-flex flex-column h-100 mb-0">
+          <template #content>
+            <div
+              class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center"
+            >
+              <dl class="mb-0">
+                <dt class="fs-3 fw-bold">90</dt>
+                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">
+                  Техподдержка
+                </dd>
+              </dl>
+              <div class="item item-rounded-lg bg-body-light">
+                <i class="fa fa-chart-bar fs-3 text-primary"></i>
+              </div>
+            </div>
+            <div class="bg-body-light rounded-bottom">
+              <RouterLink
+                class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                to="/admin/support"
+              >
+                <span>View all questions</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>

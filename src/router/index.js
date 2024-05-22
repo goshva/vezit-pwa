@@ -267,6 +267,7 @@ const ClientsView = () => import("@/views/admin/ClientsView.vue");
 const ErrorsView = () => import("@/views/admin/ErrorsView.vue");
 const ControlView = () => import("@/views/admin/ControlView.vue");
 const DocumentsView = () => import("@/views/admin/DocumentsView.vue");
+const AdminSupportView = () => import("@/views/admin/SupportView.vue");
 
 //
 
@@ -350,6 +351,10 @@ const routes = [
           {
             path: "documents",
             component: DocumentsView,
+          },
+          {
+            path: "support",
+            component: AdminSupportView,
           },
         ],
       },
