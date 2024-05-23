@@ -1,12 +1,13 @@
 <script setup>
 import leaflet from "leaflet";
 import { onMounted } from "vue";
+
+import { useMapStore } from "@/stores/map";
+const mapStore = useMapStore();
+
 let map;
 
-let marker;
-let marker2;
-let marker3;
-let long;
+
 onMounted(() => {
   map = leaflet.map("map").setView([43, 43], 4);
   leaflet
@@ -18,18 +19,12 @@ onMounted(() => {
     })
     .addTo(map);
 
-  marker = leaflet
-    .marker([43, 43])
-    .bindPopup(`This is Littleton, CO.`)
-    .addTo(map);
-  marker2 = leaflet
-    .marker([50, 53])
-    .bindPopup("This is Littleton, CO.")
-    .addTo(map);
-  marker3 = leaflet
-    .marker([13, 20])
-    .bindPopup("This is Littleton, CO")
-    .addTo(map);
+  mapStore.ads.forEach((el) => {
+    leaflet
+      .marker(el.latlong)
+      .bindPopup(`<strong> ${el.name} </strong> <br> ${el.date}`)
+      .addTo(map);
+  });
 });
 </script>
 
@@ -39,6 +34,6 @@ onMounted(() => {
 
 <style lang="css">
 #map {
-  height: calc(100vh - 75px);
+  height: calc(100vh - 115px);
 }
 </style>

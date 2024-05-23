@@ -149,11 +149,6 @@ const routerLinks = [
     link: "/client/support",
   },
 
-  {
-    id: Math.random(Date.now()),
-    name: "Карта",
-    link: "/client/map",
-  },
 ];
 </script>
 
