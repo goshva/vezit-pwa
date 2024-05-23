@@ -45,10 +45,8 @@
     "chart.js": "^4.4.2",
     "dropzone": "^6.0.0-beta.2",
     "highlight.js": "^11.9.0",
+    "leaflet": "^1.9.4",
     "nprogress": "^0.2.0",
-    "ol": "^9.2.1",
-    "ol-contextmenu": "^5.4.0",
-    "ol-ext": "^4.0.18",
     "pinia": "^2.1.7",
     "qrcode.vue": "^3.4.1",
     "simplebar": "^6.2.5",
@@ -61,8 +59,7 @@
     "vue-flatpickr-component": "^11.0.5",
     "vue-router": "^4.3.0",
     "vue-select": "^4.0.0-beta.3",
-    "vue-star-rating": "^2.1.0",
-    "vue3-openlayers": "^9.0.0"
+    "vue-star-rating": "^2.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

@@ -72,6 +72,10 @@ watch(
 
 // Init SimpleBar (custom scrolling)
 onMounted(() => {
+  if (radioDarkMode.value !== "light") {
+    radioDarkMode.value = "light";
+    onDarkModeRadioChange();
+  }
   new SimpleBar(document.getElementById("simplebar-sidebar"));
 });
 </script>
@@ -96,16 +100,13 @@ onMounted(() => {
   >
     <slot>
       <!-- Side Header -->
-      <div class="content-header">
+      <div class="" style="background-color: white">
+        <img src="../../../assets/media/favicons/logo.png" height="55px" width="240px" class="p-1 pt-2 mb-2">
         <slot name="header">
           <!-- Logo -->
           <RouterLink :to="{ name: 'landing' }" class="fw-semibold text-dual">
             <span class="smini-visible">
               <i class="fa fa-circle-notch text-primary"></i>
-            </span>
-            <span class="smini-hide fs-5 tracking-wider">
-              Olhar
-              <span class="fw-normal">Media</span>
             </span>
           </RouterLink>
           <!-- END Logo -->

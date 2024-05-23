@@ -267,6 +267,7 @@ const ClientsView = () => import("@/views/admin/ClientsView.vue");
 const ErrorsView = () => import("@/views/admin/ErrorsView.vue");
 const ControlView = () => import("@/views/admin/ControlView.vue");
 const DocumentsView = () => import("@/views/admin/DocumentsView.vue");
+const AdminSupportView = () => import("@/views/admin/SupportView.vue");
 
 //
 
@@ -276,8 +277,8 @@ const ModeratorDashboardView = () =>
 const ListVideoView = () => import("@/views/moderator/ListVideoView.vue");
 const ResultsView = () => import("@/views/moderator/ResultsView.vue");
 const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
-const CheckListVideoView = () =>
-  import("@/views/moderator/CheckListVideoView.vue");
+// const CheckListVideoView = () =>
+//   import("@/views/moderator/CheckListVideoView.vue");
 
 //
 
@@ -289,8 +290,6 @@ const AddAdcView = () => import("@/views/client/AddAdcView.vue");
 const ClientSupportView = () => import("@/views/client/SupportView.vue");
 const ClientAnalyticsView = () => import("@/views/client/AnalyticsView.vue");
 const ClientFinanceView = () => import("@/views/client/FinanceView.vue");
-
-const ClientMapView = () => import("@/views/client/ClientMapView.vue");
 //
 
 //partner views
@@ -351,6 +350,10 @@ const routes = [
             path: "documents",
             component: DocumentsView,
           },
+          {
+            path: "support",
+            component: AdminSupportView,
+          },
         ],
       },
     ],
@@ -370,11 +373,6 @@ const routes = [
           {
             path: "checkVideos",
             children: [
-              {
-                path: "",
-                component: CheckListVideoView,
-              },
-
               {
                 path: ":id",
                 component: CheckVideoView,
@@ -428,10 +426,6 @@ const routes = [
           {
             path: "support",
             component: ClientSupportView,
-          },
-          {
-            path: "map",
-            component: ClientMapView,
           },
         ],
       },

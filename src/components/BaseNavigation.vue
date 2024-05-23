@@ -150,6 +150,11 @@ const routerLinks = [
     name: "Финансы и документы",
     link: "/admin/documents",
   },
+  {
+    id: Math.random(Date.now()),
+    name: "Tехподдержка",
+    link: "/admin/support",
+  },
 ];
 </script>
 

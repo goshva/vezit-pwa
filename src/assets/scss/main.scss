@@ -131,3 +131,9 @@
 
 // User styles (your own styles/overrides)
 @import "custom/main";
+
+
+
+.leaflet-attribution-flag {
+  display: none !important;
+}

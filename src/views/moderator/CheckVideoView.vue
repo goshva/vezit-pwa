@@ -1,14 +1,15 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { arr } from "@/constans.js";
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 // vue-chartjs, for more info and examples you can check out https://vue-chartjs.org/ and http://www.chartjs.org/docs/ -->
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
 const route = useRoute();
-console.log(route.params.id)
+const router = useRouter();
+
 
 // Set Global Chart.js configuration
 Chart.defaults.color = "#818d96";
@@ -309,6 +310,10 @@ const printSelectedCheckboxes = () => {
     console.log('Comment:', comment.value);
     comment.value = "";
   }
+  selectedCheckboxes.value = [];
+
+  router.push({ path: `/moderator/checkVideos/${parseInt(route.params.id) + 1}` });
+
 };
 
 let isShowBtn = ref(true);
@@ -352,9 +357,8 @@ const handleOpenModal = (id) => {
             :href="url"
             class="btn w-100 btn-primary my-2"
           >
-            Ссылка:
             <i>
-              {{ url }}
+              Посетить сайт рекламодателя
             </i>
           </a>
           <div class="mt-3 mb-4">
