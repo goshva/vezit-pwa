@@ -3,6 +3,7 @@ import { ref, watch, onMounted } from "vue";
 import { useTemplateStore } from "@/stores/template";
 
 import BaseNavigation from "@/components/BaseNavigation.vue";
+import logoImage from '../../../public/assets/media/favicons/logo.png';
 
 // SimpleBar, for more info and examples you can check out https://github.com/Grsmto/simplebar/tree/master/packages/simplebar-vue
 import SimpleBar from "simplebar";
@@ -101,7 +102,7 @@ onMounted(() => {
     <slot>
       <!-- Side Header -->
       <div class="" style="background-color: white">
-        <img src="../../../assets/media/favicons/logo.png" height="55px" width="240px" class="p-1 pt-2 mb-2">
+        <img :src="logoImage" height="55px" width="240px" class="p-1 pt-2 mb-2">
         <slot name="header">
           <!-- Logo -->
           <RouterLink :to="{ name: 'landing' }" class="fw-semibold text-dual">

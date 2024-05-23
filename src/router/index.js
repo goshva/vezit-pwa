@@ -277,8 +277,6 @@ const ModeratorDashboardView = () =>
 const ListVideoView = () => import("@/views/moderator/ListVideoView.vue");
 const ResultsView = () => import("@/views/moderator/ResultsView.vue");
 const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
-const CheckListVideoView = () =>
-  import("@/views/moderator/CheckListVideoView.vue");
 
 //
 
