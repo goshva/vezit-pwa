@@ -160,11 +160,40 @@ const salesOptions = reactive({
     <div class="row">
       <div class="col-6 col-md-3 col-lg-6 col-xl-3">
         <BaseBlock tag="a" link-pop content-full href="javascript:void(0)">
-          <div class="fs-sm fw-semibold text-uppercase text-muted">
-            Visitors
-          </div>
-          <div class="fs-2 fw-normal text-dark">120,580</div>
-        </BaseBlock>
+          <thead>
+                  <tr>
+                    <th>
+                      <div class="fs-1 fw-normal text-dark">Эффективность</div>
+                    </th>
+
+                  </tr>
+                  <tr>
+                    <th>
+                      <div class="fs-5 fw-normal text-dark">Переходов/Показов</div>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      <div class="fs-5 fw-normal text-dark">
+                        <strong>400/500</strong>
+                      </div>
+                    </th>
+                    <th>
+                      <span class="fs-1 fw-normal text-dark">
+                        <strong>90%</strong>
+                      </span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      <div class="fs-5 fw-normal text-dark">Оценка конверсии:</div>
+                    </th>
+                    <th>
+                      <div class="fs-5 fw-normal text-dark">отлично</div>
+                    </th>
+                  </tr>
+                </thead>
+      </BaseBlock>
       </div>
     </div>
     <!-- END Stats -->
