@@ -1,362 +1,268 @@
 <template>
-  <BaseBlock title="Создание рекламной компании" class="m-5">
-    <div>
-      <div class="mb-4">
-        <input
-          type="text"
-          class="form-control form-control-alt form-control-lg"
-          placeholder="Название компании"
-        />
-      </div>
-
-      <div class="mb-4">
-        <label class="form-label ml-2" for="example-file-input"
-          >Добавить видео</label
-        >
-        <input
-          class="form-control form-control-alt form-control-lg"
-          type="file"
-          id="example-file-input"
-        />
-      </div>
-
-      <div class="mb-4">
-        <input
-          type="text"
-          class="form-control form-control-alt form-control-lg"
-          placeholder="Добавить ссылку"
-        />
-      </div>
-
-      <div class="mb-4">
-        <button type="submit" class="btn w-100 btn-alt-primary">
-          <i class=""></i>
-          Отправить
-        </button>
-      </div>
-    </div>
-    <!-- END Sign In Form -->
-  </BaseBlock>
-  <!-- END Recent Orders -->
-
   <div class="m-5 mb-0">
-    <BaseBlock title="Список рекламных компании" class="mb-0">
+    <BaseBlock title="Рекламные компании" class="mb-0">
       <template #options>
-        <div class="space-x-1">
-          <button
-            type="button"
-            class="btn btn-sm btn-alt-secondary"
-          >
-            <i class="fa fa-search"></i>
-          </button>
-          <div class="dropdown d-inline-block">
-            <button
-              type="button"
-              class="btn btn-sm btn-alt-secondary"
-              id="dropdown-recent-orders-filters"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="fa fa-fw fa-flask"></i>
-              Filters
-              <i class="fa fa-angle-down ms-1"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters"
-            >
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                Pending
-                <span class="badge bg-primary rounded-pill">20</span>
-              </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                Active
-                <span class="badge bg-primary rounded-pill">72</span>
-              </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                Completed
-                <span class="badge bg-primary rounded-pill">890</span>
-              </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                All
-                <span class="badge bg-primary rounded-pill">997</span>
-              </a>
-            </div>
-          </div>
-        </div>
+        <button type="submit" class="btn w-100">
+          <i class=""></i>
+          Добавить РК
+        </button>
       </template>
-
       <template #content>
-        <!-- <div
-            v-if="orderSearch"
-            id="one-dashboard-search-orders"
-            class="block-content border-bottom"
-          >
-            <form @submit.prevent>
-              <div class="push">
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-alt"
-                    id="one-ecom-orders-search"
-                    name="one-ecom-orders-search"
-                    placeholder="Search all orders.."
-                  />
-                  <span class="input-group-text bg-body border-0">
-                    <i class="fa fa-search"></i>
-                  </span>
-                </div>
-              </div>
-            </form>
-          </div> -->
-        <div class="block-content block-content-full">
+        <div class="block-content block-content-full m-2">
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th class="d-none d-xl-table-cell">Название</th>
-                  <th>Статус</th>
-                  <th class="d-none d-sm-table-cell text-center">Видео</th>
-                  <th class="d-none d-sm-table-cell text-end">Ссылка</th>
-                  <th class="d-none d-sm-table-cell text-end">Бюджет</th>
+                  <th class="d-none d-xl-table-cell">Статус</th>
+                  <th>Название РК</th>
+                  <th class="d-none d-sm-table-cell">Дата начала</th>
+                  <th class="d-none d-sm-table-cell">Город</th>
+                  <th class="d-none d-sm-table-cell">Эффективность</th>
+                  <th class="d-none d-sm-table-cell">Стоимость РК</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
-                <tr>
+                <tr @click="redirectToDetail('campaign-1')" class="clickable-row">
                   <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Marie Duncan</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                  </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Completed</span
-                    >
-                  </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 8%"
-                        aria-valuenow="8"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">8%</p>
-                  </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
-                    7 min ago
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                      <strong>$786,81</strong>
-                    </td>
-                </tr>
-                <tr>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Jack Estrada</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                  </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                      >Active</span
-                    >
-                  </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 6%"
-                        aria-valuenow="6"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">6%</p>
-                  </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
-                    26 min ago
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                      <strong>$786,81</strong>
-                    </td>
-                </tr>
-                <tr>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Megan Fuller</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Web developer</p>
-                  </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Completed</span
-                    >
-                  </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 25%"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">25%</p>
-                  </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
-                    19 min ago
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                      <strong>$786,81</strong>
-                    </td>
-                </tr>
-                <tr>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Lisa Jenkins</a
-                    >
                     <p class="fs-sm fw-medium text-muted mb-0">
-                      Application Manager
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="green"
+                        class="w-3 h-3"
+                        style="width: 32px"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
                     </p>
                   </td>
                   <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                      >Pending</span
-                    >
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <strong>Магазин цветов</strong>
+                    </p>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      Описание
+                    </p>
                   </td>
                   <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 18%"
-                        aria-valuenow="18"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">18%</p>
+                    <p class="fs-xs fw-semibold mb-0">12.05.2024</p>
                   </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
-                    13 min ago
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                    Пятигорск Ессентуки Лермонтов<br/> Кисловодск Винсады Ясная поляна
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                      <strong>$786,81</strong>
-                    </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">400/500</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">
+                      5000₽
+                    </p>
+                  </td>
                 </tr>
-                <tr>
+                <tr @click="redirectToDetail('campaign-2')" class="clickable-row">
                   <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Brian Stevens</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="green"
+                        class="w-3 h-3"
+                        style="width: 32px"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    </p>
                   </td>
                   <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Completed</span
-                    >
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <strong>Магазин цветов</strong>
+                    </p>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      Описание
+                    </p>
                   </td>
                   <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 10%"
-                        aria-valuenow="10"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">10%</p>
+                    <p class="fs-xs fw-semibold mb-0">12.05.2024</p>
                   </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
-                    4 min ago
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                    Пятигорск Ессентуки Лермонтов<br/> Кисловодск Винсады Ясная поляна
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                      <strong>$786,81</strong>
-                    </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">400/500</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">
+                      5000₽
+                    </p>
+                  </td>
+                </tr>
+                <tr @click="redirectToDetail('campaign-3')" class="clickable-row">
+                  <td class="d-none d-xl-table-cell">
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="green"
+                        class="w-3 h-3"
+                        style="width: 32px"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    </p>
+                  </td>
+                  <td>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <strong>Магазин цветов</strong>
+                    </p>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      Описание
+                    </p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">12.05.2024</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                    Пятигорск Ессентуки Лермонтов<br/> Кисловодск Винсады Ясная поляна
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">400/500</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">
+                      5000₽
+                    </p>
+                  </td>
+                </tr>
+                <tr @click="redirectToDetail('campaign-4')" class="clickable-row">
+                  <td class="d-none d-xl-table-cell">
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="green"
+                        class="w-3 h-3"
+                        style="width: 32px"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    </p>
+                  </td>
+                  <td>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <strong>Магазин цветов</strong>
+                    </p>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      Описание
+                    </p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">12.05.2024</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                    Пятигорск Ессентуки Лермонтов<br/> Кисловодск Винсады Ясная поляна
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">400/500</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">
+                      5000₽
+                    </p>
+                  </td>
+                </tr>
+                <tr @click="redirectToDetail('campaign-5')" class="clickable-row">
+                  <td class="d-none d-xl-table-cell">
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="green"
+                        class="w-3 h-3"
+                        style="width: 32px"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    </p>
+                  </td>
+                  <td>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <strong>Магазин цветов</strong>
+                    </p>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      Описание
+                    </p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">12.05.2024</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                    Пятигорск Ессентуки Лермонтов<br/> Кисловодск Винсады Ясная поляна
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">400/500</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell">
+                    <p class="fs-xs fw-semibold mb-0">
+                      5000₽
+                    </p>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Photos Search Navigation">
-            <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="javascript:void(0)"
-                  tabindex="-1"
-                  aria-label="Previous"
-                >
-                  Prev
-                </a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0)">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">4</a>
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="javascript:void(0)"
-                  aria-label="Next"
-                >
-                  Next
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
       </template>
     </BaseBlock>
-    <!-- END Recent Orders -->
   </div>
 </template>
-<script setup></script>
-<style lang="scss"></style>
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const redirectToDetail = (campaignId) => {
+  router.push("/client/addAdc/1");
+};
+</script>
+
+<style lang="scss">
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clickable-row:hover {
+  background-color: #f0f0f0;
+}
+</style>

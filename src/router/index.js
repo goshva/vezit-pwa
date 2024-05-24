@@ -288,6 +288,7 @@ const AddAdcView = () => import("@/views/client/AddAdcView.vue");
 const ClientSupportView = () => import("@/views/client/SupportView.vue");
 const ClientAnalyticsView = () => import("@/views/client/AnalyticsView.vue");
 const ClientFinanceView = () => import("@/views/client/FinanceView.vue");
+const ClientCompanyView = () => import("@/views/client/ClientCompanyView.vue");
 //
 
 //partner views
@@ -407,7 +408,16 @@ const routes = [
           },
           {
             path: "addAdc",
-            component: AddAdcView,
+            children: [
+              {
+              path: "",
+              component: AddAdcView,
+              },
+              {
+                path: ":id",
+                component: ClientCompanyView,
+              }
+            ]
           },
           {
             path: "addVideo",
