@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import leaflet from "leaflet";
 import ClientMap from "@/components/ClientMap.vue";
 import { useMapStore } from "@/stores/map";
 const mapStore = useMapStore();
@@ -73,33 +72,20 @@ const handleClick = (id) => {
             class="flex-grow-1 d-flex flex-column p-2 pt-0 border border-1 border-dark border-top-0 flex-nowrap overflow-auto"
           >
             <div
-              @click="handleClick(1)"
+              v-for="el in mapStore.ads"
+              :key="el.id"
+              @click="handleClick(el.id)"
               :style="{
                 backgroundColor:
-                  1 === mapStore.selectedAd ? mapStore.selectedColor : 'white',
+                  el.id === mapStore.selectedAd ? mapStore.selectedColor : 'white',
                 'margin-inline': '-8px',
               }"
               class="cursor-pointer border-bottom border-dark d-flex justify-content-between align-items-center px-2"
             >
-              <span>Магазин цветов</span>
+              <span>{{ el.name }}</span>
               <span class="text-center"
-                >Показ <br />
-                (11:00 12.05)</span
-              >
-            </div>
-            <div
-              @click="handleClick(2)"
-              :style="{
-                backgroundColor:
-                  2 === mapStore.selectedAd ? mapStore.selectedColor : 'white',
-                'margin-inline': '-8px',
-              }"
-              class="cursor-pointer border-bottom border-dark d-flex justify-content-between align-items-center px-2"
-            >
-              <span>Магазин цветов</span>
-              <span class="text-center"
-                >Показ <br />
-                (11:00 12.05)</span
+                >{{ el.event }} <br />
+                ({{ el.date }})</span
               >
             </div>
           </div>

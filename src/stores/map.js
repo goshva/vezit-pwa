@@ -9,18 +9,24 @@ export const useMapStore = defineStore({
         name: "Web digital Studio",
         latlong: [40, 41],
         date: "23-05-2024",
+        event: 'Показ',
+        pointerColor: 'green'
       },
       {
         id: 2,
         name: "Copy club",
         latlong: [42, 42],
         date: "22-05-2024",
+        event: 'Показ',
+        pointerColor: 'yellow'
       },
       {
         id: 3,
         name: "Alfa&Omega",
         latlong: [43, 43],
         date: "21-05-2024",
+        event: 'Показ',
+        pointerColor: 'black'
       },
     ],
   }),
@@ -38,7 +44,7 @@ export const useMapStore = defineStore({
     },
     selectAd(id) {
       this.selectedAd = id;
-      this.selectedColor = "#85fff3";
+      this.selectedColor = "#d7d7d7";
     },
   },
 });
