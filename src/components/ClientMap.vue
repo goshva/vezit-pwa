@@ -1,11 +1,17 @@
 <script setup>
 import leaflet from "leaflet";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 
 import { useMapStore } from "@/stores/map";
+import { computed } from "vue";
 const mapStore = useMapStore();
 
 let map;
+const props = defineProps(["activePoint"]);
+
+let a = computed(() => {
+  return props.activePoint;
+});
 
 
 onMounted(() => {
@@ -26,6 +32,8 @@ onMounted(() => {
       .addTo(map);
   });
 });
+
+
 </script>
 
 <template>
@@ -34,6 +42,8 @@ onMounted(() => {
 
 <style lang="css">
 #map {
+  width: 100%;
   height: calc(100vh - 115px);
+  border: 2px solid black;
 }
 </style>
