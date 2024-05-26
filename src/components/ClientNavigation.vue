@@ -109,7 +109,7 @@ function linkClicked(e, submenu) {
 const routerLinks = [
   {
     id: Math.random(Date.now()),
-    name: "Главная",
+    name: "Cводка",
     link: "/client/dashboard",
   },
 
@@ -117,12 +117,6 @@ const routerLinks = [
     id: Math.random(Date.now()),
     name: "Рекламные компании",
     link: "/client/addAdc",
-  },
-
-  {
-    id: Math.random(Date.now()),
-    name: "Отчёт по эфективности",
-    link: "/client/analytics",
   },
 
   {
@@ -139,17 +133,14 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Cтраница с загрузкой видео",
-    link: "/client/addVideo",
-  },
-
-  {
-    id: Math.random(Date.now()),
-    name: "Техподдержка",
+    name: "Помощь",
     link: "/client/support",
   },
-
 ];
+
+function changeMap(lon, lat, zoom) {
+  map = leaflet.map("map").setView([112, 112], 3);
+}
 </script>
 
 <template>

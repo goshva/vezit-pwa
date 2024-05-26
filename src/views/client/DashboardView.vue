@@ -1,20 +1,31 @@
 <script setup>
-import {ref} from 'vue'
+import { ref } from "vue";
 import leaflet from "leaflet";
 import ClientMap from "@/components/ClientMap.vue";
 import { useMapStore } from "@/stores/map";
 const mapStore = useMapStore();
 
 let activePoint = ref(0);
+let lat;
+let long;
 
 const handleClick = (id) => {
+  mapStore.selectAd(id);
   mapStore.ads.forEach((el) => {
     if (el.id == id) {
-      activePoint.value = el.latlong
+      activePoint.value = el.latlong;
     }
   });
+  let name = mapStore.getAdById(id).name;
+  lat = mapStore.getAdById(id).latlong[0];
+  long = mapStore.getAdById(id).latlong[1];
+
+  mapStore.zoomTo(lat, long);
 };
 
+// function moveToMapPoint(latitude, longitude, zoomLevel) {
+//   map.setView([latitude, longitude], zoomLevel);
+// }
 </script>
 <template>
   <div class="wrapper">
@@ -63,7 +74,11 @@ const handleClick = (id) => {
           >
             <div
               @click="handleClick(1)"
-              style="margin-inline: -8px"
+              :style="{
+                backgroundColor:
+                  1 === mapStore.selectedAd ? mapStore.selectedColor : 'white',
+                'margin-inline': '-8px',
+              }"
               class="cursor-pointer border-bottom border-dark d-flex justify-content-between align-items-center px-2"
             >
               <span>Магазин цветов</span>
@@ -74,7 +89,11 @@ const handleClick = (id) => {
             </div>
             <div
               @click="handleClick(2)"
-              style="margin-inline: -8px"
+              :style="{
+                backgroundColor:
+                  2 === mapStore.selectedAd ? mapStore.selectedColor : 'white',
+                'margin-inline': '-8px',
+              }"
               class="cursor-pointer border-bottom border-dark d-flex justify-content-between align-items-center px-2"
             >
               <span>Магазин цветов</span>
@@ -97,6 +116,11 @@ const handleClick = (id) => {
   padding: 25px;
   gap: 20px;
 }
+
+.active-event {
+  background-color: blue;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
