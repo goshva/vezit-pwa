@@ -3,7 +3,7 @@ import { ref, watch, onMounted } from "vue";
 import { useTemplateStore } from "@/stores/template";
 
 import BaseNavigation from "@/components/BaseNavigation.vue";
-import logoImage from '../../../public/assets/media/favicons/logo.png';
+import logoImage from '../../assets/logo.png';
 
 // SimpleBar, for more info and examples you can check out https://github.com/Grsmto/simplebar/tree/master/packages/simplebar-vue
 import SimpleBar from "simplebar";
