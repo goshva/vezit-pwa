@@ -5,24 +5,46 @@ export const useMapStore = defineStore({
   state: () => ({
     ads: [
       {
-        id: Math.random() * 100,
+        id: 1,
         name: "Web digital Studio",
         latlong: [40, 41],
-        date: '23-05-2024',
+        date: "23-05-2024",
+        event: 'Показ',
+        pointerColor: 'green'
       },
       {
-        id: Math.random() * 100,
+        id: 2,
         name: "Copy club",
         latlong: [42, 42],
-        date: '22-05-2024',
+        date: "22-05-2024",
+        event: 'Показ',
+        pointerColor: 'yellow'
       },
       {
-        id: Math.random() * 100,
+        id: 3,
         name: "Alfa&Omega",
         latlong: [43, 43],
-        date: '21-05-2024',
+        date: "21-05-2024",
+        event: 'Показ',
+        pointerColor: 'black'
       },
     ],
   }),
-  actions: {},
+  actions: {
+    setMap(mapInstance) {
+      this.map = mapInstance;
+    },
+    zoomTo(lat, long) {
+      if (this.map) {
+        this.map.setView([lat, long], 18);
+      }
+    },
+    getAdById(id) {
+      return this.ads.find((ad) => ad.id === id);
+    },
+    selectAd(id) {
+      this.selectedAd = id;
+      this.selectedColor = "#d7d7d7";
+    },
+  },
 });
