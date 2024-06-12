@@ -35,29 +35,36 @@
                   class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)"
                 >
-                  Pending
+                  Все
+                  <span class="badge bg-primary rounded-pill">997</span>
+                </a>
+                <a
+                  class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                  href="javascript:void(0)"
+                >
+                  Не проверенные
                   <span class="badge bg-primary rounded-pill">20</span>
                 </a>
                 <a
                   class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)"
                 >
-                  Active
-                  <span class="badge bg-primary rounded-pill">72</span>
-                </a>
-                <a
-                  class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                  href="javascript:void(0)"
-                >
-                  Completed
+                  Проверенные
                   <span class="badge bg-primary rounded-pill">890</span>
                 </a>
                 <a
                   class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)"
                 >
-                  All
-                  <span class="badge bg-primary rounded-pill">997</span>
+                  Принятые
+                  <span class="badge bg-primary rounded-pill">11</span>
+                </a>
+                <a
+                    class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                    href="javascript:void(0)"
+                >
+                  Отклоненные
+                  <span class="badge bg-primary rounded-pill">700</span>
                 </a>
               </div>
             </div>
@@ -92,12 +99,10 @@
               <table class="table table-hover table-vcenter">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th class="d-none d-xl-table-cell">Название</th>
-                    <th>Статус</th>
-                    <th class="d-none d-sm-table-cell text-center">Прогресс</th>
-                    <th class="d-none d-sm-table-cell text-end">Дата</th>
-                    <th class="d-none d-sm-table-cell text-end">Цена</th>
+                    <th class="d-none d-sm-table-cell text-start">ID</th>
+                    <th class="d-none d-sm-table-cell">Статус</th>
+                    <th class="d-none d-sm-table-cell text-center">Время</th>
+                    <th class="d-none d-sm-table-cell text-end">Действие</th>
                   </tr>
                 </thead>
                 <tbody class="fs-sm">
@@ -108,33 +113,13 @@
                       </a>
                       <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
                     </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Marie Duncan</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                    </td>
                     <td>
                       <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                        >Не проверенно</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 8%"
-                          aria-valuenow="8"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">8%</p>
+                          class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
+                      >Проверено</span>
                     </td>
                     <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                      class="d-none d-sm-table-cell fw-semibold text-muted text-center"
                     >
                       7 min ago
                     </td>
@@ -144,8 +129,7 @@
                       to="/moderator"
                       >
                        <span></span>
-                    <i
-                    class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                    <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                     ></i>
                     </RouterLink>
                     </td>
@@ -157,38 +141,25 @@
                       </a>
                       <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
                     </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Jack Estrada</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                    </td>
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                        >Active</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 6%"
-                          aria-valuenow="6"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">6%</p>
+                        >Принято</span>
                     </td>
                     <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                      class="d-none d-sm-table-cell fw-semibold text-muted text-center"
                     >
                       26 min ago
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
-                      <strong>$1184,20</strong>
+                      <RouterLink
+                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                          to="/moderator"
+                      >
+                        <span></span>
+                        <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                        ></i>
+                      </RouterLink>
                     </td>
                   </tr>
                   <tr>
@@ -198,38 +169,25 @@
                       </a>
                       <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
                     </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Megan Fuller</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Web developer</p>
-                    </td>
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Completed</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 25%"
-                          aria-valuenow="25"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">25%</p>
+                        >Проверено</span>
                     </td>
                     <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                      class="d-none d-sm-table-cell fw-semibold text-muted text-center"
                     >
                       19 min ago
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
-                      <strong>$2379,44</strong>
+                      <RouterLink
+                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                          to="/moderator"
+                      >
+                        <span></span>
+                        <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                        ></i>
+                      </RouterLink>
                     </td>
                   </tr>
                   <tr>
@@ -239,40 +197,25 @@
                       </a>
                       <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
                     </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Lisa Jenkins</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">
-                        Application Manager
-                      </p>
-                    </td>
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                        >Pending</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 18%"
-                          aria-valuenow="18"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">18%</p>
+                        >Отклонено</span>
                     </td>
                     <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                      class="d-none d-sm-table-cell fw-semibold text-muted text-center"
                     >
                       13 min ago
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
-                      <strong>$458,52</strong>
+                      <RouterLink
+                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                          to="/moderator"
+                      >
+                        <span></span>
+                        <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                        ></i>
+                      </RouterLink>
                     </td>
                   </tr>
                   <tr>
@@ -282,38 +225,25 @@
                       </a>
                       <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
                     </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Brian Stevens</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                    </td>
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Completed</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 10%"
-                          aria-valuenow="10"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">10%</p>
+                        >Проверено</span>
                     </td>
                     <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                      class="d-none d-sm-table-cell fw-semibold text-muted text-center"
                     >
                       4 min ago
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
-                      <strong>$476,82</strong>
+                      <RouterLink
+                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                          to="/moderator"
+                      >
+                        <span></span>
+                        <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                        ></i>
+                      </RouterLink>
                     </td>
                   </tr>
                   <tr>
@@ -323,38 +253,25 @@
                       </a>
                       <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
                     </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Jesse Fisher</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Digital Nomad</p>
-                    </td>
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                        >Pending</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 23%"
-                          aria-valuenow="23"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">23%</p>
+                        >Отклонено</span>
                     </td>
                     <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                      class="d-none d-sm-table-cell fw-semibold text-muted text-center"
                     >
                       23 min ago
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
-                      <strong>$1939,58</strong>
+                      <RouterLink
+                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                          to="/moderator"
+                      >
+                        <span></span>
+                        <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                        ></i>
+                      </RouterLink>
                     </td>
                   </tr>
                   <tr>
@@ -364,38 +281,25 @@
                       </a>
                       <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
                     </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Carol Ray</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Web developer</p>
-                    </td>
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                        >Active</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 14%"
-                          aria-valuenow="14"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">14%</p>
+                        >Принято</span>
                     </td>
                     <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                      class="d-none d-sm-table-cell fw-semibold text-muted text-center"
                     >
                       15 min ago
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
-                      <strong>$2200,10</strong>
+                      <RouterLink
+                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                          to="/moderator"
+                      >
+                        <span></span>
+                        <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
+                        ></i>
+                      </RouterLink>
                     </td>
                   </tr>
                 </tbody>
@@ -444,6 +348,7 @@
       <!-- END Recent Orders -->
     </div>
   </template>
-  <script setup></script>
+<script setup>
+</script>
   <style lang="scss"></style>
   
