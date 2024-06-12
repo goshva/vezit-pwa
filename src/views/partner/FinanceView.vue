@@ -1,104 +1,127 @@
 <template>
-    <BaseBlock title="Данные о компании" class="m-5">
-      <div class="">
-          <!-- Sign In Form -->
-          <div class="mb-4">
-              <input
-                type="text"
-                class="form-control form-control-alt form-control-lg"
-                placeholder="ИНН"
-              />
-            </div>
+  <div class="m-5 mb-0">
+    <BaseBlock title="Финансы" class="mb-0">
+      <template #options>
+        <span class="fs-6 fw-semibold">Создать отчет</span>
+      </template>
 
-            <div class="mb-4">
-              <input
-                type="text"
-                class="form-control form-control-alt form-control-lg"
-                placeholder="ОГРН/ОГРИП"
-              />
-            </div>
-
-            <div class="mb-4">
-              <input
-                type="text"
-                class="form-control form-control-alt form-control-lg"
-                placeholder="Название компании"
-              />
-            </div>
-
-            <div class="mb-4">
-              <input
-                type="text"
-                class="form-control form-control-alt form-control-lg"
-                placeholder="Директор(ФИО)"
-              />
-            </div>
-
-            <div class="mb-4">
-              <input
-                type="text"
-                class="form-control form-control-alt form-control-lg"
-                placeholder="Юридический адрес"
-              />
-            </div>
-
-            <div class="mb-4">
-              <input
-                type="text"
-                class="form-control form-control-alt form-control-lg"
-                placeholder="Фактический адрес"
-              />
-            </div>
-
-            <div class="mb-4">
-              <input
-                type="text"
-                class="form-control form-control-alt form-control-lg"
-                placeholder="Вид деятельности"
-              />
-            </div>
-
-            <div class="mb-2">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="login-remember"
-                  name="login-remember"
-                />
-                <label class="form-check-label" for="login-remember"
-                  >Я согласен с договором оферты</label
+      <template #content>
+        <div class="block-content block-content-full">
+          <div class="table-responsive">
+            <table class="table table-hover table-vcenter">
+              <thead>
+              <tr>
+                <th>Время</th>
+                <th class="d-none d-sm-table-cell text-center">Описание</th>
+                <th class="d-none d-sm-table-cell text-end">Сумма</th>
+                <th class="d-none d-sm-table-cell text-end">Состояние</th>
+              </tr>
+              </thead>
+              <tbody class="fs-sm">
+              <tr>
+                <td>
+                  <p class="fs-sm fw-medium text-muted mb-0">
+                    11:00 12.05.2024
+                  </p>
+                </td>
+                <td class="d-none d-sm-table-cell">
+                  <p class="fs-xs fw-semibold mb-0">Вывод через СБП</p>
+                </td>
+                <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                 >
-              </div>
-            </div>
-
-            <div class="mb-4">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="login-remember"
-                  name="login-remember"
-                />
-                <label class="form-check-label" for="login-remember"
-                  >Создать договор оферты</label
+                  5000 ₽
+                </td>
+                <td class="d-none d-sm-table-cell text-end">
+                  <p class="fs-xs fw-semibold mb-0">В процессе</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="fs-sm fw-medium text-muted mb-0">
+                    12:32 12.05.2024
+                  </p>
+                </td>
+                <td class="d-none d-sm-table-cell">
+                  <p class="fs-xs fw-semibold mb-0">
+                    Вывод по номеру карты
+                  </p>
+                </td>
+                <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                 >
-              </div>
-            </div>
-            
-            <div class="mb-4">
-              <button type="submit" class="btn w-100 btn-alt-primary">
-                <i class=""></i>
-                Отправить
-              </button>
-            </div>
+                  700 ₽
+                </td>
+                <td class="d-none d-sm-table-cell text-end">
+                  <p class="fs-xs fw-semibold mb-0">Проведено</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="fs-sm fw-medium text-muted mb-0">
+                    11:00 12.05.2024
+                  </p>
+                </td>
+                <td class="d-none d-sm-table-cell">
+                  <p class="fs-xs fw-semibold mb-0">
+                    Вывод через СБП
+                  </p>
+                </td>
+                <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                >
+                  1200 ₽
+                </td>
+                <td class="d-none d-sm-table-cell text-end">
+                  <p class="fs-xs fw-semibold mb-0">Проведено</p>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
-          <!-- END Sign In Form -->
+        </div>
+        <!-- <div class="block-content block-content-full bg-body-light">
+          <nav aria-label="Photos Search Navigation">
+            <ul class="pagination pagination-sm justify-content-end mb-0">
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="javascript:void(0)"
+                  tabindex="-1"
+                  aria-label="Previous"
+                >
+                  Prev
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="javascript:void(0)">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">2</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">4</a>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="javascript:void(0)"
+                  aria-label="Next"
+                >
+                  Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div> -->
+      </template>
     </BaseBlock>
-<!-- END Recent Orders -->
-
+    <!-- END Recent Orders -->
+  </div>
 </template>
-<script setup></script>
+<script setup>
+</script>
 <style lang="scss"></style>
