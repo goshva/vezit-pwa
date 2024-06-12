@@ -193,6 +193,5 @@
 
 </template>
 <script setup>
-import ClientMap from "@/components/ClientMap.vue";
 </script>
 <style lang="scss"></style>
