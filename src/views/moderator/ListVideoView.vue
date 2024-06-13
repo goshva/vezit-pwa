@@ -125,10 +125,8 @@
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
                       <RouterLink
-                      class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                      to="/moderator"
-                      >
-                       <span></span>
+                      class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-end"
+                      to="/moderator">
                     <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                     ></i>
                     </RouterLink>
@@ -153,10 +151,8 @@
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
                       <RouterLink
-                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                          to="/moderator"
-                      >
-                        <span></span>
+                        class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-end"
+                        to="/moderator">
                         <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                         ></i>
                       </RouterLink>
@@ -181,10 +177,8 @@
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
                       <RouterLink
-                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                          to="/moderator"
-                      >
-                        <span></span>
+                        class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-end"
+                        to="/moderator">
                         <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                         ></i>
                       </RouterLink>
@@ -209,10 +203,8 @@
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
                       <RouterLink
-                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                          to="/moderator"
-                      >
-                        <span></span>
+                        class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-end"
+                        to="/moderator">
                         <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                         ></i>
                       </RouterLink>
@@ -237,10 +229,8 @@
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
                       <RouterLink
-                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                          to="/moderator"
-                      >
-                        <span></span>
+                        class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-end"
+                        to="/moderator">
                         <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                         ></i>
                       </RouterLink>
@@ -265,10 +255,8 @@
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
                       <RouterLink
-                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                          to="/moderator"
-                      >
-                        <span></span>
+                        class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-end"
+                        to="/moderator">
                         <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                         ></i>
                       </RouterLink>
@@ -293,10 +281,8 @@
                     </td>
                     <td class="d-none d-sm-table-cell text-end">
                       <RouterLink
-                          class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                          to="/moderator"
-                      >
-                        <span></span>
+                        class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-end"
+                        to="/moderator">
                         <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                         ></i>
                       </RouterLink>
