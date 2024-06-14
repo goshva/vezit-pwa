@@ -35,28 +35,28 @@
                   class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)"
                 >
-                  Pending
+                  Все
                   <span class="badge bg-primary rounded-pill">20</span>
                 </a>
                 <a
                   class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)"
                 >
-                  Active
+                  В работе
                   <span class="badge bg-primary rounded-pill">72</span>
                 </a>
                 <a
                   class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)"
                 >
-                  Completed
+                  Готово
                   <span class="badge bg-primary rounded-pill">890</span>
                 </a>
                 <a
                   class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)"
                 >
-                  All
+                  Ошибка
                   <span class="badge bg-primary rounded-pill">997</span>
                 </a>
               </div>
@@ -93,11 +93,9 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th class="d-none d-xl-table-cell">Название</th>
+                    <th class="d-none d-xl-table-cell">Партнер</th>
                     <th>Статус</th>
-                    <th class="d-none d-sm-table-cell text-center">Прогресс</th>
                     <th class="d-none d-sm-table-cell text-end">Дата</th>
-                    <th class="d-none d-sm-table-cell text-end">Цена</th>
                   </tr>
                 </thead>
                 <tbody class="fs-sm">
@@ -117,29 +115,12 @@
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Completed</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 8%"
-                          aria-valuenow="8"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">8%</p>
+                        >Готово</span>
                     </td>
                     <td
                       class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                     >
                       7 min ago
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                      <strong>$786,81</strong>
                     </td>
                   </tr>
                   <tr>
@@ -158,29 +139,12 @@
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                        >Active</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 6%"
-                          aria-valuenow="6"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">6%</p>
+                        >В работе</span>
                     </td>
                     <td
                       class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                     >
                       26 min ago
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                      <strong>$1184,20</strong>
                     </td>
                   </tr>
                   <tr>
@@ -199,29 +163,12 @@
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Completed</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 25%"
-                          aria-valuenow="25"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">25%</p>
+                        >Готово</span>
                     </td>
                     <td
                       class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                     >
                       19 min ago
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                      <strong>$2379,44</strong>
                     </td>
                   </tr>
                   <tr>
@@ -242,29 +189,12 @@
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                        >Pending</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 18%"
-                          aria-valuenow="18"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">18%</p>
+                        >Ошибка</span>
                     </td>
                     <td
                       class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                     >
                       13 min ago
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                      <strong>$458,52</strong>
                     </td>
                   </tr>
                   <tr>
@@ -283,29 +213,12 @@
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Completed</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 10%"
-                          aria-valuenow="10"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">10%</p>
+                        >Готово</span>
                     </td>
                     <td
                       class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                     >
                       4 min ago
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                      <strong>$476,82</strong>
                     </td>
                   </tr>
                   <tr>
@@ -324,29 +237,12 @@
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                        >Pending</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 23%"
-                          aria-valuenow="23"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">23%</p>
+                        >Ошибка</span>
                     </td>
                     <td
                       class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                     >
                       23 min ago
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                      <strong>$1939,58</strong>
                     </td>
                   </tr>
                   <tr>
@@ -365,29 +261,12 @@
                     <td>
                       <span
                         class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                        >Active</span
-                      >
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 14%"
-                          aria-valuenow="14"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">14%</p>
+                        >В работе</span>
                     </td>
                     <td
                       class="d-none d-sm-table-cell fw-semibold text-muted text-end"
                     >
                       15 min ago
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                      <strong>$2200,10</strong>
                     </td>
                   </tr>
                 </tbody>
