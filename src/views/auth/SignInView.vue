@@ -2,6 +2,7 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
+import axios from "axios"; // Import axios
 import VueSelect from "vue-select";
 
 // Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
@@ -15,12 +16,11 @@ const router = useRouter();
 
 // Input state variables
 const state = reactive({
-  username: null,
+  email: null,
   password: null,
 });
 
-//select vars
-
+// Select variables
 const roles = ["Администратор", "Модератор", "Клиент", "Партнёр", "Гость"];
 
 const vueSelectState = reactive({
@@ -30,12 +30,10 @@ const vueSelectState = reactive({
   optionsMultipleSelected: null,
 });
 
-//
-
 // Validation rules
 const rules = computed(() => {
   return {
-    username: {
+    email: {
       required,
       minLength: minLength(3),
     },
@@ -54,32 +52,52 @@ async function onSubmit() {
   const result = await v$.value.$validate();
 
   if (!result) {
-    // notify user form is invalid
+    // Notify user form is invalid
     return;
   }
 
-  store.setAuthHandler(true);
-  localStorage.setItem("isAuth", true);
+  try {
+    // Make the API request to login the user
+    const response = await axios.post('https://olhar.vit.ooo/api/login', {
+      email: state.email,
+      password: state.password,
+    });
 
-  switch (vueSelectState.optionsSelected) {
-    case "Администратор":
-      router.push("/admin/dashboard");
-      break;
-    case "Модератор":
-      router.push("/moderator/dashboard");
-      break;
-    case "Клиент":
-      router.push("/client/dashboard");
-      break;
-    case "Партнёр":
-      router.push("/partner/dashboard");
-      break;
-    case "Гость":
-      router.push("/guest");
-      break;
+    // Assuming the response contains a JWT token
+    const token = response.data.token;
+
+    // Store the token (in localStorage for this example)
+    localStorage.setItem('token', token);
+
+    // Optionally, set token in Vuex or Pinia store
+    store.setAuthHandler(true);
+    localStorage.setItem("isAuth", true);
+
+    // Redirect user based on role selection
+    switch (vueSelectState.optionsSelected) {
+      case "Администратор":
+        router.push("/admin/dashboard");
+        break;
+      case "Модератор":
+        router.push("/moderator/dashboard");
+        break;
+      case "Клиент":
+        router.push("/client/dashboard");
+        break;
+      case "Партнёр":
+        router.push("/partner/dashboard");
+        break;
+      case "Гость":
+        router.push("/guest");
+        break;
+    }
+  } catch (error) {
+    // Handle errors (e.g., notify the user about invalid credentials)
+    console.error("Login failed:", error);
   }
 }
 </script>
+
 
 <template>
   <!-- Page Content -->
@@ -110,20 +128,20 @@ async function onSubmit() {
                     <input
                       type="text"
                       class="form-control form-control-alt form-control-lg"
-                      id="login-username"
-                      name="login-username"
-                      placeholder="Username"
+                      id="login-email"
+                      name="login-email"
+                      placeholder="email"
                       :class="{
-                        'is-invalid': v$.username.$errors.length,
+                        'is-invalid': v$.email.$errors.length,
                       }"
-                      v-model="state.username"
-                      @blur="v$.username.$touch"
+                      v-model="state.email"
+                      @blur="v$.email.$touch"
                     />
                     <div
-                      v-if="v$.username.$errors.length"
+                      v-if="v$.email.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please enter your username
+                      Please enter your email
                     </div>
                   </div>
                   <div class="mb-4">

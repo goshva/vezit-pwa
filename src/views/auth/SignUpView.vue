@@ -2,8 +2,7 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-
-// Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
+import axios from "axios"; // Import axios
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email, sameAs } from "@vuelidate/validators";
 
@@ -57,10 +56,34 @@ async function onSubmit() {
     return;
   }
 
-  // Go to dashboard
-  router.push({ name: "backend-pages-auth" });
+  try {
+    // Make the API request to register the user
+    const response = await axios.post('https://olhar.vit.ooo/api/register', {
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      password_confirmation: state.confirmPassword
+    });
+
+    // Assuming the response contains a JWT token
+    const token = response.data.token;
+
+    // Store the token (in localStorage for this example)
+    localStorage.setItem('token', token);
+
+    // Optionally, store token in Vuex or Pinia store for easier access
+    // store.commit('setToken', token); // If using Vuex
+    // store.setToken(token); // If using Pinia
+
+    // Redirect user to the dashboard after successful registration
+    router.push("/auth/signin");
+  } catch (error) {
+    // Handle errors (e.g., notify user about the error)
+    console.error("Registration failed:", error);
+  }
 }
 </script>
+
 
 <template>
   <!-- Page Content -->
