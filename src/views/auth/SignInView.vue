@@ -2,16 +2,16 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-import axios from "axios"; // Import axios
+import { useUserStore } from "@/stores/user"; 
+import axios from "axios"; 
 import VueSelect from "vue-select";
-
-// Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import "vue-select/dist/vue-select.css";
 
-// Main store and Router
+// Main store, User store, and Router
 const store = useTemplateStore();
+const userStore = useUserStore(); // Initialize the user store
 const router = useRouter();
 
 // Input state variables
@@ -73,32 +73,47 @@ async function onSubmit() {
     store.setAuthHandler(true);
     localStorage.setItem("isAuth", true);
 
-    // Redirect user based on role selection
-    switch (vueSelectState.optionsSelected) {
-      case "Администратор":
+    // Fetch user details with the token
+    const userResponse = await axios.get('https://olhar.vit.ooo/api/me', {
+      headers: {
+        Authorization: `Bearer ${token}`, // Send the token in Authorization header
+      },
+    });
+
+    // Assuming the response contains user data
+    const user = userResponse.data;
+
+    // Set user data in the Pinia store
+    userStore.setUserData(user);
+
+    // Redirect user based on user role from the store
+    switch (userStore.userRole) {
+      case "0": // Admin
         router.push("/admin/dashboard");
         break;
-      case "Модератор":
+      case "1": // Moderator
         router.push("/moderator/dashboard");
         break;
-      case "Клиент":
+      case "2": // Client
         router.push("/client/dashboard");
         break;
-      case "Партнёр":
+      case "3": // Partner
         router.push("/partner/dashboard");
         break;
-      case "Гость":
+      case "4": // Guest
         router.push("/guest");
+        break;
+      default:
+        console.error("Unknown user role:", userStore.userRole);
+        router.push("/default"); // Redirect to a default route
         break;
     }
   } catch (error) {
-    // Handle errors (e.g., notify the user about invalid credentials)
-    console.error("Login failed:", error);
+    // Handle errors (e.g., notify the user about invalid credentials or API issues)
+    console.error("Login or user fetch failed:", error);
   }
 }
 </script>
-
-
 <template>
   <!-- Page Content -->
   <div class="hero-static d-flex align-items-center">

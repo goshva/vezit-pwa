@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-
-// Grab example data
-import notifications from "@/data/notifications";
-
+import { useUserStore } from '@/stores/user'; // Import the user store from Pinia
+const userStore = useUserStore();
+const username = computed(() => userStore.username);
+const roleName = computed(() => userStore.roleName);
 // Main store and Router
 const store = useTemplateStore();
 const router = useRouter();
@@ -17,9 +17,7 @@ onMounted(() => {
   isShow.value = path.includes("/moderator") || path.includes("/client") || path.includes("/partner");
 });
 
-const handleChangeRole = (r) => {
-  router.push(`/${r}`);
-};
+
 </script>
 
 <template>
@@ -51,27 +49,6 @@ const handleChangeRole = (r) => {
                 <i class="fa fa-fw fa-search"></i>
               </button>
               <!-- END Open Search Section -->
-
-              <!-- Search Form (visible on larger screens) -->
-              <!-- <form
-                class="d-none d-md-inline-block"
-                @submit.prevent="onSubmitSearch"
-              >
-                <div class="input-group input-group-sm">
-                  <input
-                    type="text"
-                    class="form-control form-control-alt"
-                    placeholder="Search.."
-                    id="page-header-search-input2"
-                    name="page-header-search-input2"
-                    v-model="baseSearchTerm"
-                  />
-                  <span class="input-group-text border-0">
-                    <i class="fa fa-fw fa-search"></i>
-                  </span>
-                </div>
-              </form> -->
-              <!-- END Search Form -->
             </slot>
           </div>
           <!-- END Left Section -->
@@ -99,7 +76,7 @@ const handleChangeRole = (r) => {
                     alt="Header Avatar"
                     style="width: 21px"
                   />
-                  <span class="d-none d-sm-inline-block ms-2">John</span>
+                  <span class="d-none d-sm-inline-block ms-2">{{username}}</span>
                   <i
                     class="fa fa-fw fa-angle-down d-none d-sm-inline-block opacity-50 ms-1 mt-1"
                   ></i>
@@ -116,8 +93,8 @@ const handleChangeRole = (r) => {
                       src="/assets/media/avatars/avatar10.jpg"
                       alt="Header Avatar"
                     />
-                    <p class="mt-2 mb-0 fw-medium">John Smith</p>
-                    <p class="mb-0 text-muted fs-sm fw-medium">Web Developer</p>
+                    <p class="mt-2 mb-0 fw-medium">{{ username }}</p>
+                    <p class="mb-0 text-muted fs-sm fw-medium">{{ roleName }}</p>
                   </div>
                   <div role="separator" class="dropdown-divider m-0"></div>
                   <div class="p-2">
@@ -125,7 +102,7 @@ const handleChangeRole = (r) => {
                       :to="{ name: 'auth-signin' }"
                       class="dropdown-item d-flex align-items-center justify-content-between"
                     >
-                      <span class="fs-sm fw-medium">Log Out</span>
+                      <span class="fs-sm fw-medium">Выйти</span>
                     </RouterLink>
                   </div>
                 </div>
