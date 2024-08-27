@@ -121,21 +121,10 @@ async function onSubmit() {
       <div class="row justify-content-center push">
         <div class="col-md-8 col-lg-6 col-xl-4">
           <!-- Sign In Block -->
-          <BaseBlock title="Sign In" class="mb-0">
+          <BaseBlock title="Вход" class="mb-0">
             <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-              <h1 class="h2 mb-1">Olhar Taxi</h1>
-              <p class="fw-medium text-muted">Welcome, please login.</p>
-
-              <div>
-                <div class="mb-4">
-                  <VueSelect
-                    v-model="vueSelectState.optionsSelected"
-                    :options="vueSelectState.optionsMultiple"
-                    placeholder="Выберите роль..."
-                  ></VueSelect>
-                </div>
-              </div>
-
+              <h1 class="h2 mb-1">Olhar Media</h1>
+              <p class="fw-medium text-muted">Приветствует Вас!</p>
               <!-- Sign In Form -->
               <form @submit.prevent="onSubmit">
                 <div class="py-3">
@@ -156,7 +145,7 @@ async function onSubmit() {
                       v-if="v$.email.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please enter your email
+                      Введите вашу почту
                     </div>
                   </div>
                   <div class="mb-4">
@@ -176,7 +165,7 @@ async function onSubmit() {
                       v-if="v$.password.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please enter your password
+                      введите ваш пароль
                     </div>
                   </div>
                 </div>
@@ -184,7 +173,7 @@ async function onSubmit() {
                   <div class="col-md-6 col-xl-5">
                     <button type="submit" class="btn w-100 btn-alt-primary">
                       <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i>
-                      Sign In
+                      Войти
                     </button>
                   </div>
                 </div>

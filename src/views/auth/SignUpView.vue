@@ -92,14 +92,14 @@ async function onSubmit() {
       <div class="row justify-content-center push">
         <div class="col-md-8 col-lg-6 col-xl-4">
           <!-- Sign Up Block -->
-          <BaseBlock title="Create Account" class="mb-0">
+          <BaseBlock title="Создать аккаунт" class="mb-0">
             <template #options>
               <a
                 class="btn-block-option fs-sm"
                 href="javascript:void(0)"
                 data-bs-toggle="modal"
                 data-bs-target="#one-signup-terms"
-                >View Terms</a
+                >правила использования</a
               >
               <RouterLink
                 :to="{ name: 'auth-signin' }"
@@ -110,9 +110,9 @@ async function onSubmit() {
             </template>
 
             <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-              <h1 class="h2 mb-1">OneUI</h1>
+              <h1 class="h2 mb-1">Olhar.Media</h1>
               <p class="fw-medium text-muted">
-                Please fill the following details to create a new account.
+                Заполните форму для регистрации
               </p>
 
               <!-- Sign Up Form -->
@@ -155,7 +155,7 @@ async function onSubmit() {
                       v-if="v$.email.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please enter a valid email address
+                      Введите ваш адрес электронной почты
                     </div>
                   </div>
                   <div class="mb-4">
@@ -175,7 +175,7 @@ async function onSubmit() {
                       v-if="v$.password.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please provide a password
+                      Придумайте пароль для входа
                     </div>
                   </div>
                   <div class="mb-4">
@@ -184,7 +184,7 @@ async function onSubmit() {
                       class="form-control form-control-lg form-control-alt"
                       id="signup-password-confirm"
                       name="signup-password-confirm"
-                      placeholder="Confirm Password"
+                      placeholder="Пароль еще раз"
                       :class="{
                         'is-invalid': v$.confirmPassword.$errors.length,
                       }"
@@ -195,7 +195,7 @@ async function onSubmit() {
                       v-if="v$.confirmPassword.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please confirm the password
+                      Повторите введеный пароль еще раз
                     </div>
                   </div>
                   <div class="mb-4">
@@ -212,13 +212,13 @@ async function onSubmit() {
                         @blur="v$.terms.$touch"
                       />
                       <label class="form-check-label" for="signup-terms"
-                        >I agree to Terms &amp; Conditions</label
+                        >Согласен с правилами</label
                       >
                       <div
                         v-if="v$.terms.$errors.length"
                         class="invalid-feedback animated fadeIn"
                       >
-                        You must agree to the service terms!
+                        Вы должный поставить согласие
                       </div>
                     </div>
                   </div>
@@ -226,7 +226,7 @@ async function onSubmit() {
                 <div class="row mb-4">
                   <div class="col-md-6 col-xl-5">
                     <button type="submit" class="btn w-100 btn-alt-success">
-                      <i class="fa fa-fw fa-plus me-1 opacity-50"></i> Sign Up
+                      Регистрация
                     </button>
                   </div>
                 </div>
