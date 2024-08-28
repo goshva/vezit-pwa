@@ -7,7 +7,7 @@ export const useTemplateStore = defineStore({
     // App vital details
     isAuth: false,
     app: {
-      name: "Olhar Taxi",
+      name: "Olhar Media",
       version: "1.0.1",
       copyright: new Date().getFullYear(),
     },

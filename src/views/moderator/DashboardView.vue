@@ -320,7 +320,7 @@ const newCustomersOptions = reactive({
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
                 to="/moderator/checkVideos"
               >
-                <span>View all orders</span>
+                <span>Просмотреть видео</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -353,7 +353,7 @@ const newCustomersOptions = reactive({
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
                 to="/moderator/users"
               >
-                <span>View all broke</span>
+                <span>Список пользователей</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -385,7 +385,7 @@ const newCustomersOptions = reactive({
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
                 to="/moderator/eq"
               >
-                <span>View all clients</span>
+                <span>Список клиентов</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>
@@ -417,7 +417,7 @@ const newCustomersOptions = reactive({
                 class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
                 to="/moderator/res"
               >
-                <span>View all errors</span>
+                <span>Статистика видео</span>
                 <i
                   class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"
                 ></i>

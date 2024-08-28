@@ -2,25 +2,25 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
+import { useUserStore } from "@/stores/user"; 
+import axios from "axios"; 
 import VueSelect from "vue-select";
-
-// Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import "vue-select/dist/vue-select.css";
 
-// Main store and Router
+// Main store, User store, and Router
 const store = useTemplateStore();
+const userStore = useUserStore(); // Initialize the user store
 const router = useRouter();
 
 // Input state variables
 const state = reactive({
-  username: null,
+  email: null,
   password: null,
 });
 
-//select vars
-
+// Select variables
 const roles = ["Администратор", "Модератор", "Клиент", "Партнёр", "Гость"];
 
 const vueSelectState = reactive({
@@ -30,12 +30,10 @@ const vueSelectState = reactive({
   optionsMultipleSelected: null,
 });
 
-//
-
 // Validation rules
 const rules = computed(() => {
   return {
-    username: {
+    email: {
       required,
       minLength: minLength(3),
     },
@@ -54,33 +52,68 @@ async function onSubmit() {
   const result = await v$.value.$validate();
 
   if (!result) {
-    // notify user form is invalid
+    // Notify user form is invalid
     return;
   }
 
-  store.setAuthHandler(true);
-  localStorage.setItem("isAuth", true);
+  try {
+    // Make the API request to login the user
+    const response = await axios.post('https://olhar.vit.ooo/api/login', {
+      email: state.email,
+      password: state.password,
+    });
 
-  switch (vueSelectState.optionsSelected) {
-    case "Администратор":
-      router.push("/admin/dashboard");
-      break;
-    case "Модератор":
-      router.push("/moderator/dashboard");
-      break;
-    case "Клиент":
-      router.push("/client/dashboard");
-      break;
-    case "Партнёр":
-      router.push("/partner/dashboard");
-      break;
-    case "Гость":
-      router.push("/guest");
-      break;
+    // Assuming the response contains a JWT token
+    const token = response.data.token;
+
+    // Store the token (in localStorage for this example)
+    localStorage.setItem('token', token);
+
+    // Optionally, set token in Vuex or Pinia store
+    store.setAuthHandler(true);
+    localStorage.setItem("isAuth", true);
+
+    // Fetch user details with the token
+    const userResponse = await axios.get('https://olhar.vit.ooo/api/me', {
+      headers: {
+        Authorization: `Bearer ${token}`, // Send the token in Authorization header
+      },
+    });
+
+    // Assuming the response contains user data
+    const user = userResponse.data;
+
+    // Set user data in the Pinia store
+    userStore.setUserData(user);
+
+    // Redirect user based on user role from the store
+    switch (userStore.userRole) {
+      case "0": // Admin
+        router.push("/admin/dashboard");
+        break;
+      case "1": // Moderator
+        router.push("/moderator/dashboard");
+        break;
+      case "2": // Client
+        router.push("/client/dashboard");
+        break;
+      case "3": // Partner
+        router.push("/partner/dashboard");
+        break;
+      case "4": // Guest
+        router.push("/guest");
+        break;
+      default:
+        console.error("Unknown user role:", userStore.userRole);
+        router.push("/default"); // Redirect to a default route
+        break;
+    }
+  } catch (error) {
+    // Handle errors (e.g., notify the user about invalid credentials or API issues)
+    console.error("Login or user fetch failed:", error);
   }
 }
 </script>
-
 <template>
   <!-- Page Content -->
   <div class="hero-static d-flex align-items-center">
@@ -88,21 +121,10 @@ async function onSubmit() {
       <div class="row justify-content-center push">
         <div class="col-md-8 col-lg-6 col-xl-4">
           <!-- Sign In Block -->
-          <BaseBlock title="Sign In" class="mb-0">
+          <BaseBlock title="Вход" class="mb-0">
             <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-              <h1 class="h2 mb-1">Olhar Taxi</h1>
-              <p class="fw-medium text-muted">Welcome, please login.</p>
-
-              <div>
-                <div class="mb-4">
-                  <VueSelect
-                    v-model="vueSelectState.optionsSelected"
-                    :options="vueSelectState.optionsMultiple"
-                    placeholder="Выберите роль..."
-                  ></VueSelect>
-                </div>
-              </div>
-
+              <h1 class="h2 mb-1">Olhar Media</h1>
+              <p class="fw-medium text-muted">Приветствует Вас!</p>
               <!-- Sign In Form -->
               <form @submit.prevent="onSubmit">
                 <div class="py-3">
@@ -110,20 +132,20 @@ async function onSubmit() {
                     <input
                       type="text"
                       class="form-control form-control-alt form-control-lg"
-                      id="login-username"
-                      name="login-username"
-                      placeholder="Username"
+                      id="login-email"
+                      name="login-email"
+                      placeholder="email"
                       :class="{
-                        'is-invalid': v$.username.$errors.length,
+                        'is-invalid': v$.email.$errors.length,
                       }"
-                      v-model="state.username"
-                      @blur="v$.username.$touch"
+                      v-model="state.email"
+                      @blur="v$.email.$touch"
                     />
                     <div
-                      v-if="v$.username.$errors.length"
+                      v-if="v$.email.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please enter your username
+                      Введите вашу почту
                     </div>
                   </div>
                   <div class="mb-4">
@@ -143,7 +165,7 @@ async function onSubmit() {
                       v-if="v$.password.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please enter your password
+                      введите ваш пароль
                     </div>
                   </div>
                 </div>
@@ -151,7 +173,7 @@ async function onSubmit() {
                   <div class="col-md-6 col-xl-5">
                     <button type="submit" class="btn w-100 btn-alt-primary">
                       <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i>
-                      Sign In
+                      Войти
                     </button>
                   </div>
                 </div>

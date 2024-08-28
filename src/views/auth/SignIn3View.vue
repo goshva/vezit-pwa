@@ -119,7 +119,7 @@ async function onSubmit() {
               </p>
               <h1 class="fw-bold mb-2">Sign In</h1>
               <p class="fw-medium text-muted">
-                Welcome, please login or
+                Приветствует Вас! or
                 <RouterLink :to="{ name: 'auth-signup3' }">sign up</RouterLink>
                 for a new account.
               </p>
