@@ -1,320 +1,165 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import axiosInstance from '@/services/axios.js';
+import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
+
+// State for storing equipment data
+const equipments = ref([]);
+const loading = ref(false);
+const orderSearch = ref(false);
+
+// Pagination and filtering state
+const currentPage = ref(1);
+const totalPages = ref(1);
+const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
+
+// Fetch equipment data from API
+const fetchEquipments = async (page = 1, status = '') => {
+  loading.value = true;
+  try {
+    const response = await axiosInstance.get(`/equipments`, {
+      params: {
+        page: page,
+        status: status,
+      },
+    });
+    equipments.value = response.data.data; // Adjust according to your API structure
+    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    currentPage.value = page;
+  } catch (error) {
+    console.error('Error fetching equipment:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Fetch data when component mounts
+onMounted(() => {
+  fetchEquipments();
+});
+
+// Handle filtering by status
+const applyFilter = (status) => {
+  filterStatus.value = status;
+  fetchEquipments(1, status); // Reset to first page when filtering
+};
+
+// Handle pagination
+const changePage = (page) => {
+  fetchEquipments(page, filterStatus.value);
+};
+</script>
+
 <template>
-    <div class="m-5 mb-0">
-      <BaseBlock title="Список оборудования" class="mb-0">
-        <template #options>
-          <div class="space-x-1">
+  <div class="m-5 mb-0">
+    <BaseBlock title="Список оборудования" class="mb-0">
+      <template #options>
+        <div class="space-x-1">
+          <button
+            type="button"
+            class="btn btn-sm btn-alt-secondary"
+            @click="() => { orderSearch = !orderSearch; }"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+          <div class="dropdown d-inline-block">
             <button
               type="button"
               class="btn btn-sm btn-alt-secondary"
-              @click="
-                () => {
-                  orderSearch = !orderSearch;
-                }
-              "
+              id="dropdown-recent-orders-filters"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
             >
-              <i class="fa fa-search"></i>
+              <i class="fa fa-fw fa-flask"></i>
+              Filters
+              <i class="fa fa-angle-down ms-1"></i>
             </button>
-            <div class="dropdown d-inline-block">
-              <button
-                type="button"
-                class="btn btn-sm btn-alt-secondary"
-                id="dropdown-recent-orders-filters"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="fa fa-fw fa-flask"></i>
-                Filters
-                <i class="fa fa-angle-down ms-1"></i>
-              </button>
-              <div
-                class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-                aria-labelledby="dropdown-recent-orders-filters"
-              >
-                <a
-                  class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                  href="javascript:void(0)"
-                >
-                  Все
-                  <span class="badge bg-primary rounded-pill">20</span>
-                </a>
-                <a
-                  class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                  href="javascript:void(0)"
-                >
-                  В работе
-                  <span class="badge bg-primary rounded-pill">72</span>
-                </a>
-                <a
-                  class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                  href="javascript:void(0)"
-                >
-                  Готово
-                  <span class="badge bg-primary rounded-pill">890</span>
-                </a>
-                <a
-                  class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                  href="javascript:void(0)"
-                >
-                  Ошибка
-                  <span class="badge bg-primary rounded-pill">997</span>
-                </a>
-              </div>
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('')">
+                Все
+                <span class="badge bg-primary rounded-pill">{{ equipments.length }}</span>
+              </a>
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
+                В работе
+                <span class="badge bg-primary rounded-pill">72</span>
+              </a>
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('completed')">
+                Готово
+                <span class="badge bg-primary rounded-pill">890</span>
+              </a>
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('error')">
+                Ошибка
+                <span class="badge bg-primary rounded-pill">997</span>
+              </a>
             </div>
           </div>
-        </template>
-  
-        <template #content>
-          <!-- <div
-            v-if="orderSearch"
-            id="one-dashboard-search-orders"
-            class="block-content border-bottom"
-          >
-            <form @submit.prevent>
-              <div class="push">
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-alt"
-                    id="one-ecom-orders-search"
-                    name="one-ecom-orders-search"
-                    placeholder="Search all orders.."
-                  />
-                  <span class="input-group-text bg-body border-0">
-                    <i class="fa fa-search"></i>
-                  </span>
-                </div>
-              </div>
-            </form>
-          </div> -->
-          <div class="block-content block-content-full">
-            <div class="table-responsive">
-              <table class="table table-hover table-vcenter">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th class="d-none d-xl-table-cell">Партнер</th>
-                    <th>Статус</th>
-                    <th class="d-none d-sm-table-cell text-end">Дата</th>
-                  </tr>
-                </thead>
-                <tbody class="fs-sm">
-                  <tr>
-                    <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
-                        ORD.00925
-                      </a>
-                      <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                    </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Marie Duncan</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                    </td>
-                    <td>
-                      <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Готово</span>
-                    </td>
-                    <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+        </div>
+      </template>
+
+      <template #content>
+        <div v-if="loading" class="block-content text-center">
+          <span>Загрузка...</span>
+        </div>
+        <div v-else class="block-content block-content-full">
+          <div class="table-responsive">
+            <table class="table table-hover table-vcenter">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th class="d-none d-xl-table-cell">Партнер</th>
+                  <th>Статус</th>
+                  <th class="d-none d-sm-table-cell text-end">Дата</th>
+                </tr>
+              </thead>
+              <tbody class="fs-sm">
+                <tr v-for="equipment in equipments" :key="equipment.id">
+                  <td>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ equipment.equipid }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ equipment.description }}</p>
+                  </td>
+                  <td class="d-none d-xl-table-cell">
+                    <a class="fw-semibold" href="javascript:void(0)">{{ equipment.partner_name }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ equipment.partner_role }}</p>
+                  </td>
+                  <td>
+                    <span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
+                      :class="{
+                        'bg-success-light text-success': equipment.status === 'completed',
+                        'bg-info-light text-info': equipment.status === 'in-progress',
+                        'bg-warning-light text-warning': equipment.status === 'error'
+                      }"
                     >
-                      7 min ago
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
-                        ORD.00924
-                      </a>
-                      <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                    </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Jack Estrada</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                    </td>
-                    <td>
-                      <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                        >В работе</span>
-                    </td>
-                    <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                    >
-                      26 min ago
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
-                        ORD.00923
-                      </a>
-                      <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                    </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Megan Fuller</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Web developer</p>
-                    </td>
-                    <td>
-                      <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Готово</span>
-                    </td>
-                    <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                    >
-                      19 min ago
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
-                        ORD.00922
-                      </a>
-                      <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                    </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Lisa Jenkins</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">
-                        Application Manager
-                      </p>
-                    </td>
-                    <td>
-                      <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                        >Ошибка</span>
-                    </td>
-                    <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                    >
-                      13 min ago
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
-                        ORD.00921
-                      </a>
-                      <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                    </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Brian Stevens</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                    </td>
-                    <td>
-                      <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                        >Готово</span>
-                    </td>
-                    <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                    >
-                      4 min ago
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
-                        ORD.00920
-                      </a>
-                      <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                    </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Jesse Fisher</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Digital Nomad</p>
-                    </td>
-                    <td>
-                      <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning"
-                        >Ошибка</span>
-                    </td>
-                    <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                    >
-                      23 min ago
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
-                        ORD.00919
-                      </a>
-                      <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                    </td>
-                    <td class="d-none d-xl-table-cell">
-                      <a class="fw-semibold" href="javascript:void(0)"
-                        >Carol Ray</a
-                      >
-                      <p class="fs-sm fw-medium text-muted mb-0">Web developer</p>
-                    </td>
-                    <td>
-                      <span
-                        class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                        >В работе</span>
-                    </td>
-                    <td
-                      class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                    >
-                      15 min ago
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                      {{ equipment.status === 1 ? 'В работе' : equipment.status === 0 ? 'Выключено' : 'Неизвестно' }}
+                    </span>
+                  </td>
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
+                    {{ formatDate(equipment.created_at) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="block-content block-content-full bg-body-light">
-            <nav aria-label="Photos Search Navigation">
-              <ul class="pagination pagination-sm justify-content-end mb-0">
-                <li class="page-item">
-                  <a
-                    class="page-link"
-                    href="javascript:void(0)"
-                    tabindex="-1"
-                    aria-label="Previous"
-                  >
-                    Prev
-                  </a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:void(0)">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">4</a>
-                </li>
-                <li class="page-item">
-                  <a
-                    class="page-link"
-                    href="javascript:void(0)"
-                    aria-label="Next"
-                  >
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </template>
-      </BaseBlock>
-      <!-- END Recent Orders -->
-    </div>
-  </template>
-  <script setup></script>
-  <style lang="scss"></style>
-  
+        </div>
+        <div class="block-content block-content-full bg-body-light">
+          <nav aria-label="Pagination">
+            <ul class="pagination pagination-sm justify-content-end mb-0">
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">Prev</a>
+              </li>
+              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
+              </li>
+              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)" aria-label="Next">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </template>
+    </BaseBlock>
+  </div>
+</template>
+
+<style lang="scss"></style>

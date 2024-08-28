@@ -5,6 +5,7 @@ import { useTemplateStore } from "@/stores/template";
 import axios from "axios"; // Import axios
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email, sameAs } from "@vuelidate/validators";
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Main store and Router
 const store = useTemplateStore();
@@ -58,7 +59,7 @@ async function onSubmit() {
 
   try {
     // Make the API request to register the user
-    const response = await axios.post('https://olhar.vit.ooo/api/register', {
+    const response = await axios.post(`${apiBaseUrl}/register`, {
       username: state.username,
       email: state.email,
       password: state.password,

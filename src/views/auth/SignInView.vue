@@ -9,7 +9,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import "vue-select/dist/vue-select.css";
 
-// Main store, User store, and Router
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const store = useTemplateStore();
 const userStore = useUserStore(); // Initialize the user store
 const router = useRouter();
@@ -58,7 +58,7 @@ async function onSubmit() {
 
   try {
     // Make the API request to login the user
-    const response = await axios.post('https://olhar.vit.ooo/api/login', {
+    const response = await axios.post(`${apiBaseUrl}/login`, {
       email: state.email,
       password: state.password,
     });
@@ -74,7 +74,7 @@ async function onSubmit() {
     localStorage.setItem("isAuth", true);
 
     // Fetch user details with the token
-    const userResponse = await axios.get('https://olhar.vit.ooo/api/me', {
+    const userResponse = await axios.get(`${apiBaseUrl}/me`, {
       headers: {
         Authorization: `Bearer ${token}`, // Send the token in Authorization header
       },
