@@ -1,6 +1,6 @@
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Документы" class="mb-0">
+    <BaseBlock title="Финансы" class="mb-0">
       <template #options>
         <!-- <span class="fs-6 fw-semibold">Создать отчет</span> -->
         <button type="button" class="btn btn-light">Создать отчет</button>

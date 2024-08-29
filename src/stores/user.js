@@ -19,7 +19,6 @@ export const useUserStore = defineStore('user', {
     // Action to set user data
     setUserData(userData) {
       this.username = userData.username;
-      console.log(userData.username)
       this.email = userData.email;
       this.emailVerifiedAt = userData.email_verified_at;
       this.userRole = userData.userrole;

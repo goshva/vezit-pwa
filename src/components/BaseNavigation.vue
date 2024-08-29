@@ -115,7 +115,7 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Список реклам",
+    name: "Видео",
     link: "/admin/ads",
   },
 
@@ -147,9 +147,14 @@ const routerLinks = [
   },
   {
     id: Math.random(Date.now()),
-    name: "Финансы и документы",
-    link: "/admin/documents",
+    name: "Финансы",
+    link: "/admin/finances",
   },
+  {
+    id: Math.random(Date.now()),
+    name: "Документы",
+    link: "/admin/documents",
+  },  
   {
     id: Math.random(Date.now()),
     name: "Tехподдержка",
