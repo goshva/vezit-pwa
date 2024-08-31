@@ -269,7 +269,7 @@ const ControlView = () => import("@/views/admin/ControlView.vue");
 const FinancesView = () => import("@/views/admin/FinancesView.vue");
 const DocumentsView = () => import("@/views/admin/DocumentsView.vue");
 const AdminSupportView = () => import("@/views/admin/SupportView.vue");
-
+const LocationView = () => import("@/views/admin/LocationView.vue");
 //
 
 //moderator views
@@ -358,6 +358,10 @@ const routes = [
             path: "support",
             component: AdminSupportView,
           },
+          {
+            path: "locations",
+            component: LocationView,
+          },  
         ],
       },
     ],
