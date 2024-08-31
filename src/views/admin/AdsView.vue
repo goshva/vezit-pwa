@@ -1,7 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import axiosInstance from '@/services/axios.js';
-import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
+import { ref, onMounted } from "vue";
+import axiosInstance from "@/services/axios.js";
+import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
+import OpenVideoModal from "@/components/modals/OpenVideoModal.vue";
+import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
 // State for storing video data
 const videos = ref([]);
@@ -11,10 +13,10 @@ const orderSearch = ref(false);
 // Pagination and filtering state
 const currentPage = ref(1);
 const totalPages = ref(1);
-const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
+const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch video data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/videos`, {
@@ -27,7 +29,7 @@ const fetchEquipments = async (page = 1, status = '') => {
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
-    console.error('Error fetching video:', error);
+    console.error("Error fetching video:", error);
   } finally {
     loading.value = false;
   }
@@ -48,20 +50,26 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
+
+
+const handleDelete = () => {
+  let isDelete = confirm("Вы уверены что хотите удалить файл?");
+  if(!isDelete) {
+    return;
+  }
+
+  console.log('Жаль(')
+}
+
 </script>
 
 <template>
   <div class="m-5 mb-0">
     <BaseBlock title="Список видео рекламы" class="mb-0">
       <template #options>
-        <div class="space-x-1">
-          <button
-            type="button"
-            class="btn btn-sm btn-alt-secondary"
-            @click="() => { orderSearch = !orderSearch; }"
-          >
-            <i class="fa fa-search"></i>
-          </button>
+        <div class="space-x-4">
+          <UploadVideoModal />
+
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -75,20 +83,42 @@ const changePage = (page) => {
               Filters
               <i class="fa fa-angle-down ms-1"></i>
             </button>
-            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('')">
+
+            <div
+              class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
+              aria-labelledby="dropdown-recent-orders-filters"
+            >
+              <a
+                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)"
+                @click.prevent="applyFilter('')"
+              >
                 Все
-                <span class="badge bg-primary rounded-pill">{{ videos.length }}</span>
+                <span class="badge bg-primary rounded-pill">{{
+                  videos.length
+                }}</span>
               </a>
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
+              <a
+                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)"
+                @click.prevent="applyFilter('in-progress')"
+              >
                 В работе
                 <span class="badge bg-primary rounded-pill">72</span>
               </a>
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('completed')">
+              <a
+                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)"
+                @click.prevent="applyFilter('completed')"
+              >
                 Готово
                 <span class="badge bg-primary rounded-pill">890</span>
               </a>
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('error')">
+              <a
+                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)"
+                @click.prevent="applyFilter('error')"
+              >
                 Ошибка
                 <span class="badge bg-primary rounded-pill">997</span>
               </a>
@@ -109,9 +139,9 @@ const changePage = (page) => {
                   <th>ID</th>
                   <th class="d-none d-xl-table-cell">Название</th>
                   <th>Статус</th>
-                  <th class="d-none d-sm-table-cell text-center">Прогресс</th>
+                  <th class="d-none d-sm-table-cell text-center">Модератор</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
-                  <th class="d-none d-sm-table-cell text-end">Цена</th>
+                  <th class="d-none d-sm-table-cell text-end"></th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
@@ -126,11 +156,13 @@ const changePage = (page) => {
                         'bg-danger-light text-danger': !video.enabled,
                       }"
                     >
-                      {{ video.enabled ? 'Включено' : 'Отключено' }}
+                      {{ video.enabled ? "Включено" : "Отключено" }}
                     </span>
                   </td>
-                  <td class="d-none d-sm-table-cell text-center">
-                    <div class="progress mb-1" style="height: 5px">
+                  <td class="d-none d-sm-table-cell text-start">
+                    <span>0112332</span>
+                    <p>Nurillaev Asliddin</p>
+                    <!-- <div class="progress mb-1" style="height: 5px">
                       <div
                         class="progress-bar"
                         role="progressbar"
@@ -138,14 +170,21 @@ const changePage = (page) => {
                         aria-valuemin="0"
                         aria-valuemax="100"
                       ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">{{ video.progress }}%</p>
+                    </div> -->
+                    <!-- <p class="fs-xs fw-semibold mb-0">{{ video.progress }}%</p> -->
                   </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
+                  <td
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                  >
                     {{ formatDate(video.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
-                    <strong>{{ video.price || '0' }}</strong>
+                    <div class="d-flex justify-content-evenly">
+                      <OpenVideoModal />
+                      <button class="btn btn-danger" @click="handleDelete()">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -156,13 +195,38 @@ const changePage = (page) => {
           <nav aria-label="Pagination">
             <ul class="pagination pagination-sm justify-content-end mb-0">
               <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">Prev</a>
+                <a
+                  class="page-link"
+                  href="javascript:void(0)"
+                  @click.prevent="changePage(currentPage - 1)"
+                  aria-label="Previous"
+                  >Prev</a
+                >
               </li>
-              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
+              <li
+                class="page-item"
+                v-for="page in totalPages"
+                :key="page"
+                :class="{ active: page === currentPage }"
+              >
+                <a
+                  class="page-link"
+                  href="javascript:void(0)"
+                  @click.prevent="changePage(page)"
+                  >{{ page }}</a
+                >
               </li>
-              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)" aria-label="Next">Next</a>
+              <li
+                class="page-item"
+                :class="{ disabled: currentPage === totalPages }"
+              >
+                <a
+                  class="page-link"
+                  href="javascript:void(0)"
+                  @click.prevent="changePage(currentPage + 1)"
+                  aria-label="Next"
+                  >Next</a
+                >
               </li>
             </ul>
           </nav>
