@@ -160,6 +160,11 @@ const routerLinks = [
     name: "Tехподдержка",
     link: "/admin/support",
   },
+  {
+    id: Math.random(Date.now()),
+    name: "Локации",
+    link: "/admin/locations",
+  },  
 ];
 </script>
 

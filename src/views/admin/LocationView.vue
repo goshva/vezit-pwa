@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
+import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
 
-// State for storing doc data
-const docs = ref([]);
+// State for storing location data
+const locations = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
 
@@ -13,21 +13,24 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
-// Fetch doc data from API
+// State for toggling date format
+const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
+
+// Fetch location data from API
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/docs`, {
+    const response = await axiosInstance.get(`/locations`, {
       params: {
         page: page,
         status: status,
       },
     });
-    docs.value = response.data.data; // Adjust according to your API structure
+    locations.value = response.data.data; // Adjust according to your API structure
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
-    console.error('Error fetching doc:', error);
+    console.error('Error fetching location:', error);
   } finally {
     loading.value = false;
   }
@@ -48,11 +51,21 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
+
+// Method to toggle date format
+const toggleDateFormat = () => {
+  dateFormat.value = dateFormat.value === 'elapsed' ? 'absolute' : 'elapsed';
+};
+
+// Method to format date based on the current format
+const formatDateBasedOnFormat = (dateString) => {
+  return dateFormat.value === 'elapsed' ? formatTimeElapsed(dateString) : formatDate(dateString);
+};
 </script>
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список документов" class="mb-0">
+    <BaseBlock title="Список локаций" class="mb-0">
       <template #options>
         <div class="space-x-1">
           <button
@@ -78,7 +91,7 @@ const changePage = (page) => {
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('')">
                 Все
-                <span class="badge bg-primary rounded-pill">{{ docs.length }}</span>
+                <span class="badge bg-primary rounded-pill">{{ locations.length }}</span>
               </a>
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
                 В работе
@@ -99,7 +112,7 @@ const changePage = (page) => {
 
       <template #content>
         <div v-if="loading" class="block-content text-center">
-          <span>Загрузка документов...</span>
+          <span>Загрузка...</span>
         </div>
         <div v-else class="block-content block-content-full">
           <div class="table-responsive">
@@ -108,31 +121,42 @@ const changePage = (page) => {
                 <tr>
                   <th>ID</th>
                   <th class="d-xl-table-cell">Название</th>
-                  <th>Доступ</th>
+                  <th>Статус</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
-                  <th class="d-none d-sm-table-cell text-end">Цена</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
-                <tr v-for="doc in docs" :key="doc.id">
-                  <td>{{ doc.id }}</td>
-                  <td class="d-xl-table-cell">{{ doc.filename }}</td>
+                <tr v-for="location in locations" :key="location.id">
+                  <td>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ location.id }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ location.locationid }}</p>
+                  </td>
+                  <td>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ location.locationname }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ location.locationenname }}</p>
+                  </td>                  
+                  <td class="d-none d-xl-table-cell">
+                    <a class="fw-semibold" href="javascript:void(0)">{{ location.locationname }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ location.locationenname }}</p>
+                  </td>
                   <td>
                     <span
                       class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
                       :class="{
-                        'bg-success-light text-success': doc.enabled,
-                        'bg-danger-light text-danger': !doc.enabled,
+                        'bg-success-light text-success': location.status === 'completed',
+                        'bg-info-light text-info': location.status === 'in-progress',
+                        'bg-warning-light text-warning': location.status === 'error'
                       }"
                     >
-                      {{ doc.enabled ? 'Включено' : 'Отключено' }}
+                      {{ location.status === 1 ? 'В работе' : location.status === 0 ? 'Выключено' : 'Неизвестно' }}
                     </span>
                   </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ formatDate(doc.updated_at) }}
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                    <strong>{{ doc.price || '0' }}</strong>
+                  <td 
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                    @click="toggleDateFormat"
+                    style="cursor: pointer;"
+                  >
+                    {{ formatDateBasedOnFormat(location.updated_at) }}
                   </td>
                 </tr>
               </tbody>
