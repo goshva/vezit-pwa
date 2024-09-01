@@ -121,7 +121,7 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Список оборудования",
+    name: "Оборудование",
     link: "/admin/eq",
   },
 
@@ -137,17 +137,17 @@ const routerLinks = [
   },  
   {
     id: Math.random(Date.now()),
-    name: "Список системных ошибок",
+    name: "Системные ошибоки",
     link: "/admin/error",
   },
   {
     id: Math.random(Date.now()),
-    name: "Изменение настроек оборудования",
+    name: "Обновления оборудования",
     link: "/admin/settings",
   },
   {
     id: Math.random(Date.now()),
-    name: "Контроль пользователей",
+    name: "Пользователи",
     link: "/admin/control",
   },
   {
@@ -159,7 +159,12 @@ const routerLinks = [
     id: Math.random(Date.now()),
     name: "Документы",
     link: "/admin/documents",
-  },  
+  },
+  {
+    id: Math.random(Date.now()),
+    name: "Шаблоны",
+    link: "/admin/templates",
+  },    
   {
     id: Math.random(Date.now()),
     name: "Tехподдержка",

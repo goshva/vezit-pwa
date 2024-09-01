@@ -303,9 +303,6 @@
                   class="form-control form-control-alt"
                   placeholder="Search all posts.."
                 />
-                <button class="btn btn-alt-secondary">
-                  <i class="fa fa-search"></i>
-                </button>
               </div>
             </form>
           </BaseBlock>

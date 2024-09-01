@@ -54,14 +54,11 @@ const changePage = (page) => {
     <BaseBlock title="Техническая поддержка сообщения" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => { orderSearch = !orderSearch; }">
-            <i class="fa fa-search"></i>
-          </button>
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-fw fa-flask"></i>
-              Filters
+              Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"

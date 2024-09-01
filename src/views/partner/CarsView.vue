@@ -41,17 +41,6 @@
           <BaseBlock title="Мои авто" >
       <template #options>
         <div class="space-x-1">
-          <button
-            type="button"
-            class="btn btn-sm btn-alt-secondary"
-            @click="
-              () => {
-                orderSearch = !orderSearch;
-              }
-            "
-          >
-            <i class="fa fa-search"></i>
-          </button>
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -62,7 +51,7 @@
               aria-expanded="false"
             >
               <i class="fa fa-fw fa-flask"></i>
-              Filters
+              Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
             <div
@@ -119,9 +108,6 @@
                   name="one-ecom-orders-search"
                   placeholder="Search all orders.."
                 />
-                <span class="input-group-text bg-body border-0">
-                  <i class="fa fa-search"></i>
-                </span>
               </div>
             </div>
           </form>

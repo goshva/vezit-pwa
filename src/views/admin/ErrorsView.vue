@@ -55,13 +55,6 @@ const changePage = (page) => {
     <BaseBlock title="Список системных ошибок" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button
-            type="button"
-            class="btn btn-sm btn-alt-secondary"
-            @click="() => { orderSearch = !orderSearch; }"
-          >
-            <i class="fa fa-search"></i>
-          </button>
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -72,7 +65,7 @@ const changePage = (page) => {
               aria-expanded="false"
             >
               <i class="fa fa-fw fa-flask"></i>
-              Filters
+              Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
@@ -106,9 +99,10 @@ const changePage = (page) => {
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Описание</th>
                   <th class="d-none d-xl-table-cell">Партнер</th>
                   <th>Статус</th>
+                  <th>IP</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
                 </tr>
               </thead>
@@ -116,7 +110,7 @@ const changePage = (page) => {
                 <tr v-for="update_log in cfgupdate_log" :key="update_log.id">
                   <td>
                     <a class="fw-semibold" href="javascript:void(0)">{{ update_log.equipid }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ update_log.description }}</p>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ update_log.annotation }}</p>
                   </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)">{{ update_log.partner_name }}</a>
@@ -131,9 +125,10 @@ const changePage = (page) => {
                         'bg-warning-light text-warning': update_log.status === 'error'
                       }"
                     >
-                      {{ update_log.status === 1 ? 'В работе' : update_log.status === 0 ? 'Выключено' : 'Неизвестно' }}
+                      {{ update_log.status === 1 ? 'В работе' : update_log.status === 0 ? 'Повторяется' : 'Исправленно' }}
                     </span>
                   </td>
+                  <td><p>{{ update_log.lastip }}</p></td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(update_log.created_at) }}
                   </td>

@@ -54,14 +54,11 @@ const changePage = (page) => {
     <BaseBlock title="Финансы" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => { orderSearch = !orderSearch; }">
-            <i class="fa fa-search"></i>
-          </button>
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-fw fa-flask"></i>
-              Filters
+              Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
@@ -109,7 +106,15 @@ const changePage = (page) => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="finance in finances" :key="finance.Event">
-                  <td>{{ finance.Event }}</td>
+                  <td>                    <p class="fs-sm fw-medium text-muted mb-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="red" style="width: 32px">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      </svg>
+                      Списание
+                    </p></td>
+                  
                   <td>
                     <p class="fs-sm fw-medium text-muted mb-0">
                       {{ finance.UpdatedAt }}

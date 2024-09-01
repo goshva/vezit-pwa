@@ -55,14 +55,11 @@ const changePage = (page) => {
     <BaseBlock title="Контроль пользователей" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => { orderSearch = !orderSearch; }">
-            <i class="fa fa-search"></i>
-          </button>
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-fw fa-flask"></i>
-              Filters
+              Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
@@ -100,12 +97,12 @@ const changePage = (page) => {
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
-                <th>ID</th>
-                <th class="d-none d-xl-table-cell">Наименование</th>
-                <th>Кол-во</th>
-                <th>Город</th>
-                <th>Контакты</th>
-                <th class="d-none d-sm-table-cell">Дата регистрации</th>
+                <th>Имя</th>
+                <th class="d-none d-xl-table-cell">Статус</th>
+                <th>Контакт</th>
+                <th>Дата реистрации</th>
+                <th>Последний заход</th>
+                <th class="d-none d-sm-table-cell">Блокировка</th>
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="user in users" :key="user.id">
