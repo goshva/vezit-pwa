@@ -17,7 +17,7 @@ const navigation = menu.main;
 defineProps({
   withMiniNav: {
     type: Boolean,
-    default: false,
+    default: true,
     description: "If the sidebar is in Mini Nav Mode",
   },
 });
@@ -134,7 +134,7 @@ onMounted(() => {
         <slot name="content">
           <!-- Side Navigation -->
           <div class="content-side">
-            <slot name="sidebar-navigation">
+            <slot name="sidebar-navigation" >
               <BaseNavigation :nodes="navigation" />
             </slot>
           </div>

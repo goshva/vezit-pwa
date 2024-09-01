@@ -2,7 +2,6 @@
 import { ref, onMounted } from "vue";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
-import OpenVideoModal from "@/components/modals/OpenVideoModal.vue";
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
 // State for storing video data
@@ -54,7 +53,7 @@ const changePage = (page) => {
 
 const handleDelete = () => {
   let isDelete = confirm("Вы уверены что хотите удалить файл?");
-  if(!isDelete) {
+  if (!isDelete) {
     return;
   }
 
@@ -71,54 +70,34 @@ const handleDelete = () => {
           <UploadVideoModal />
 
           <div class="dropdown d-inline-block">
-            <button
-              type="button"
-              class="btn btn-sm btn-alt-secondary"
-              id="dropdown-recent-orders-filters"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+            <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-fw fa-flask"></i>
               Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
 
-            <div
-              class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters"
-            >
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-                @click.prevent="applyFilter('')"
-              >
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
+              aria-labelledby="dropdown-recent-orders-filters">
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)" @click.prevent="applyFilter('')">
                 Все
                 <span class="badge bg-primary rounded-pill">{{
                   videos.length
-                }}</span>
+                  }}</span>
               </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-                @click.prevent="applyFilter('in-progress')"
-              >
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
                 В работе
                 <span class="badge bg-primary rounded-pill">72</span>
               </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-                @click.prevent="applyFilter('completed')"
-              >
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)" @click.prevent="applyFilter('completed')">
                 Готово
                 <span class="badge bg-primary rounded-pill">890</span>
               </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-                @click.prevent="applyFilter('error')"
-              >
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)" @click.prevent="applyFilter('error')">
                 Ошибка
                 <span class="badge bg-primary rounded-pill">997</span>
               </a>
@@ -146,16 +125,13 @@ const handleDelete = () => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td>{{ video.id }}</td>
+                  <td>{{ video.filename }}</td>
                   <td class="d-none d-xl-table-cell">{{ video.filename }}</td>
                   <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
-                      :class="{
-                        'bg-success-light text-success': video.enabled,
-                        'bg-danger-light text-danger': !video.enabled,
-                      }"
-                    >
+                    <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
+                      'bg-success-light text-success': video.enabled,
+                      'bg-danger-light text-danger': !video.enabled,
+                    }">
                       {{ video.enabled ? "Включено" : "Отключено" }}
                     </span>
                   </td>
@@ -173,17 +149,16 @@ const handleDelete = () => {
                     </div> -->
                     <!-- <p class="fs-xs fw-semibold mb-0">{{ video.progress }}%</p> -->
                   </td>
-                  <td
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
-                  >
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(video.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <OpenVideoModal />
-                      <button class="btn btn-danger" @click="handleDelete()">
-                        <i class="fa-solid fa-trash"></i>
-                      </button>
+                      <router-link :to="{ name: 'EditAd', params: { id: video.id } }">
+                        <button class="btn btn-sm btn-alt-primary">
+                          <i class="fa fa-edit"></i> Edit
+                        </button>
+                      </router-link>
                     </div>
                   </td>
                 </tr>
@@ -195,38 +170,15 @@ const handleDelete = () => {
           <nav aria-label="Pagination">
             <ul class="pagination pagination-sm justify-content-end mb-0">
               <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a
-                  class="page-link"
-                  href="javascript:void(0)"
-                  @click.prevent="changePage(currentPage - 1)"
-                  aria-label="Previous"
-                  >Prev</a
-                >
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)"
+                  aria-label="Previous">Prev</a>
               </li>
-              <li
-                class="page-item"
-                v-for="page in totalPages"
-                :key="page"
-                :class="{ active: page === currentPage }"
-              >
-                <a
-                  class="page-link"
-                  href="javascript:void(0)"
-                  @click.prevent="changePage(page)"
-                  >{{ page }}</a
-                >
+              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
               </li>
-              <li
-                class="page-item"
-                :class="{ disabled: currentPage === totalPages }"
-              >
-                <a
-                  class="page-link"
-                  href="javascript:void(0)"
-                  @click.prevent="changePage(currentPage + 1)"
-                  aria-label="Next"
-                  >Next</a
-                >
+              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)"
+                  aria-label="Next">Next</a>
               </li>
             </ul>
           </nav>

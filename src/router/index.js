@@ -328,6 +328,11 @@ const routes = [
             component: AdsView,
           },
           {
+            path: 'ads/:id',
+            name: 'EditAd',
+            component: () => import('@/views/admin/EditAdView.vue'), // Adjust the path according to your structure
+          },          
+          {
             path: "eq",
             component: EqView,
           },
