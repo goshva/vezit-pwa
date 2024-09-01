@@ -264,6 +264,7 @@ const AdsView = () => import("@/views/admin/AdsView.vue");
 const EqView = () => import("@/views/admin/EqView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
 const ClientsView = () => import("@/views/admin/ClientsView.vue");
+const PartnersView = () => import("@/views/admin/PartnersView.vue");
 const ErrorsView = () => import("@/views/admin/ErrorsView.vue");
 const ControlView = () => import("@/views/admin/ControlView.vue");
 const FinancesView = () => import("@/views/admin/FinancesView.vue");
@@ -334,6 +335,7 @@ const routes = [
             path: "clients",
             component: ClientsView,
           },
+          { path: "partners", component: PartnersView },
           {
             path: "error",
             component: ErrorsView,
@@ -361,7 +363,7 @@ const routes = [
           {
             path: "locations",
             component: LocationView,
-          },  
+          },
         ],
       },
     ],
@@ -419,8 +421,8 @@ const routes = [
             path: "addAdc",
             children: [
               {
-              path: "",
-              component: AddAdcView,
+                path: "",
+                component: AddAdcView,
               },
               {
                 path: ":id",

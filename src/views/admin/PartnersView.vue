@@ -4,7 +4,7 @@ import axiosInstance from '@/services/axios.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
 
 // State for storing location data
-const clients = ref([]);
+const partners = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
 
@@ -20,13 +20,13 @@ const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/clients`, {
+    const response = await axiosInstance.get(`/partners`, {
       params: {
         page: page,
         status: status,
       },
     });
-    clients.value = response.data.data; // Adjust according to your API structure
+    partners.value = response.data.data; // Adjust according to your API structure
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -65,7 +65,7 @@ const formatDateBasedOnFormat = (dateString) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список клиентов" class="mb-0">
+    <BaseBlock title="Список партнёров" class="mb-0">
       <template #options>
         <div class="space-x-1">
           <button
@@ -91,7 +91,7 @@ const formatDateBasedOnFormat = (dateString) => {
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('')">
                 Все
-                <span class="badge bg-primary rounded-pill">{{ clients.length }}</span>
+                <span class="badge bg-primary rounded-pill">{{ partners.length }}</span>
               </a>
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
                 В работе
@@ -112,7 +112,7 @@ const formatDateBasedOnFormat = (dateString) => {
 
       <template #content>
         <div v-if="loading" class="block-content text-center">
-          <span>Загрузка клиентов...</span>
+          <span>Загрузка партнеров...</span>
         </div>
         <div v-else class="block-content block-content-full">
           <div class="table-responsive">
@@ -127,7 +127,7 @@ const formatDateBasedOnFormat = (dateString) => {
                   </tr>
                 </thead>
               <tbody class="fs-sm">
-                <tr v-for="client in clients" :key="client.id">
+                <tr v-for="client in partners" :key="client.id">
                   <td :title="client.description">
                     <a class="fw-semibold" href="javascript:void(0)">{{ client.name }}</a>
                     <p class="fs-sm fw-medium text-muted mb-0" >{{ client.bussines }}</p>
