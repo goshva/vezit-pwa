@@ -175,6 +175,11 @@ const routerLinks = [
     name: "Локации",
     link: "/admin/locations",
   },  
+  {
+    id: Math.random(Date.now()),
+    name: "Тарифы",
+    link: "/admin/tariffs",
+  },    
 ];
 </script>
 

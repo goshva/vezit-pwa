@@ -269,9 +269,10 @@ const ErrorsView = () => import("@/views/admin/ErrorsView.vue");
 const ControlView = () => import("@/views/admin/ControlView.vue");
 const FinancesView = () => import("@/views/admin/FinancesView.vue");
 const DocumentsView = () => import("@/views/admin/DocumentsView.vue");
+const TemplatesView = () => import("@/views/admin/TemplatesView.vue");
 const AdminSupportView = () => import("@/views/admin/SupportView.vue");
 const LocationView = () => import("@/views/admin/LocationView.vue");
-//
+const TariffView = () => import("@/views/admin/TariffView.vue");
 
 //moderator views
 const ModeratorDashboardView = () =>
@@ -362,12 +363,20 @@ const routes = [
             component: DocumentsView,
           },
           {
+            path: "templates",
+            component: TemplatesView,
+          },
+          {
             path: "support",
             component: AdminSupportView,
           },
           {
             path: "locations",
             component: LocationView,
+          },
+          {
+            path: "tariffs",
+            component: TariffView,
           },
         ],
       },
