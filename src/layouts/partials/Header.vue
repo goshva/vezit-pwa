@@ -108,7 +108,60 @@ onMounted(() => {
                 </div>
               </div>
               <!-- END User Dropdown -->
-
+<!--Role Dropdown-->
+<div class="dropdown d-inline-block ms-2">
+  <button
+    type="button"
+    class="btn btn-sm btn-alt-secondary d-flex align-items-center"
+    id="page-header-user-dropdown"
+    data-bs-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <span class="d-sm-inline-block ms-2">Role</span>
+    <i
+      class="fa fa-fw fa-angle-down d-sm-inline-block opacity-50 ms-1 mt-1"
+    ></i>
+  </button>
+  <div
+    class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0"
+    aria-labelledby="page-header-user-dropdown"
+  >
+    <div class="p-2">
+      <RouterLink
+        class="dropdown-item d-flex align-items-center justify-content-between"
+        to="/admin/dashboard"
+      >
+        <span class="fs-sm fw-medium">Администратор</span>
+      </RouterLink>
+      <button
+        @click="handleChangeRole('moderator/dashboard')"
+        class="dropdown-item d-flex align-items-center justify-content-between"
+      >
+        <span class="fs-sm fw-medium">Модератор</span>
+      </button>
+      <button
+        class="dropdown-item d-flex align-items-center justify-content-between"
+        @click="handleChangeRole('client/dashboard')"
+      >
+        <span class="fs-sm fw-medium">Клиент</span>
+      </button>
+      <button
+        class="dropdown-item d-flex align-items-center justify-content-between"
+        @click="handleChangeRole('partner/dashboard')"
+      >
+        <span class="fs-sm fw-medium">Партнёр</span>
+      </button>
+      <a
+        class="dropdown-item d-flex align-items-center justify-content-between"
+        href="javascript:void(0)"
+      >
+        <span class="fs-sm fw-medium">Гость</span>
+      </a>
+    </div>
+  </div>
+</div>
+<!--END Role Dropdown-->
 
             </slot>
           </div>
