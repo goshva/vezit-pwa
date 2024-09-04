@@ -2,8 +2,8 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-import { useUserStore } from "@/stores/user"; 
-import axios from "axios"; 
+import { useUserStore } from "@/stores/user";
+import axios from "axios";
 import VueSelect from "vue-select";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
@@ -109,8 +109,7 @@ async function onSubmit() {
         break;
     }
   } catch (error) {
-    // Handle errors (e.g., notify the user about invalid credentials or API issues)
-    console.error("Login or user fetch failed:", error);
+    router.push("/auth/signup");
   }
 }
 </script>
@@ -129,42 +128,20 @@ async function onSubmit() {
               <form @submit.prevent="onSubmit">
                 <div class="py-3">
                   <div class="mb-4">
-                    <input
-                      type="text"
-                      class="form-control form-control-alt form-control-lg"
-                      id="login-email"
-                      name="login-email"
-                      placeholder="email"
-                      :class="{
+                    <input type="text" class="form-control form-control-alt form-control-lg" id="login-email"
+                      name="login-email" placeholder="email" autocomplete="email" :class="{
                         'is-invalid': v$.email.$errors.length,
-                      }"
-                      v-model="state.email"
-                      @blur="v$.email.$touch"
-                    />
-                    <div
-                      v-if="v$.email.$errors.length"
-                      class="invalid-feedback animated fadeIn"
-                    >
+                      }" v-model="state.email" @blur="v$.email.$touch" />
+                    <div v-if="v$.email.$errors.length" class="invalid-feedback animated fadeIn">
                       Введите вашу почту
                     </div>
                   </div>
                   <div class="mb-4">
-                    <input
-                      type="password"
-                      class="form-control form-control-alt form-control-lg"
-                      id="login-password"
-                      name="login-password"
-                      placeholder="Password"
-                      :class="{
+                    <input type="password" class="form-control form-control-alt form-control-lg" id="login-password"
+                      name="login-password" placeholder="Password" :class="{
                         'is-invalid': v$.password.$errors.length,
-                      }"
-                      v-model="state.password"
-                      @blur="v$.password.$touch"
-                    />
-                    <div
-                      v-if="v$.password.$errors.length"
-                      class="invalid-feedback animated fadeIn"
-                    >
+                      }" v-model="state.password" @blur="v$.password.$touch" />
+                    <div v-if="v$.password.$errors.length" class="invalid-feedback animated fadeIn">
                       введите ваш пароль
                     </div>
                   </div>

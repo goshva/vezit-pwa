@@ -17,6 +17,7 @@ const state = reactive({
   email: null,
   password: null,
   confirmPassword: null,
+  userRole: null,
   terms: null,
 });
 
@@ -42,6 +43,9 @@ const rules = computed(() => {
     terms: {
       sameAs: sameAs(true),
     },
+    userRole:{
+      required
+    }
   };
 });
 
@@ -63,7 +67,8 @@ async function onSubmit() {
       username: state.username,
       email: state.email,
       password: state.password,
-      password_confirmation: state.confirmPassword
+      password_confirmation: state.confirmPassword,
+      userrole: state.userRole,
     });
 
     // Assuming the response contains a JWT token
@@ -125,7 +130,8 @@ async function onSubmit() {
                       class="form-control form-control-lg form-control-alt"
                       id="signup-username"
                       name="signup-username"
-                      placeholder="Username"
+                      placeholder="Имя"
+                      autocomplete="off"
                       :class="{
                         'is-invalid': v$.username.$errors.length,
                       }"
@@ -146,6 +152,7 @@ async function onSubmit() {
                       id="signup-email"
                       name="signup-email"
                       placeholder="Email"
+                      autocomplete="email"
                       :class="{
                         'is-invalid': v$.email.$errors.length,
                       }"
@@ -200,6 +207,23 @@ async function onSubmit() {
                     </div>
                   </div>
                   <div class="mb-4">
+                    <select class="form-control form-control-lg form-control-alt" id="signup-userrole"
+                      v-model="state.userRole" :class="{ 'is-invalid': v$.userRole.$errors.length }"
+                      @blur="v$.userRole.$touch">
+                      <option value="" disabled>Выберите роль</option>
+                      <option value="0">Администратор</option>
+                      <option value="1">Модератор</option>
+                      <option value="2">Клиент</option>
+                      <option value="3">Партнёр</option>
+                      <option value="4r">Гость</option>
+                      <option value="5">Тех. поддержка</option>
+
+                    </select>
+                    <div v-if="v$.userRole.$errors.length" class="invalid-feedback animated fadeIn">
+                      Выберите роль
+                    </div>
+                  </div>                  
+                  <div class="mb-4">
                     <div class="form-check">
                       <input
                         class="form-check-input"
@@ -219,7 +243,7 @@ async function onSubmit() {
                         v-if="v$.terms.$errors.length"
                         class="invalid-feedback animated fadeIn"
                       >
-                        Вы должный поставить согласие
+                        Вы должны поставить согласие
                       </div>
                     </div>
                   </div>
