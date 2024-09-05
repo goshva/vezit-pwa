@@ -6,6 +6,7 @@ import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
 // State for storing video data
 const videos = ref([]);
+const total = ref(0);
 const loading = ref(false);
 const orderSearch = ref(false);
 
@@ -24,7 +25,8 @@ const fetchEquipments = async (page = 1, status = "") => {
         status: status,
       },
     });
-    videos.value = response.data.data; // Adjust according to your API structure
+    videos.value = response.data.data;
+    total.value = response.data.total;
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -51,15 +53,6 @@ const changePage = (page) => {
 };
 
 
-const handleDelete = () => {
-  let isDelete = confirm("Вы уверены что хотите удалить файл?");
-  if (!isDelete) {
-    return;
-  }
-
-  console.log('Жаль(')
-}
-
 </script>
 
 <template>
@@ -83,23 +76,18 @@ const handleDelete = () => {
                 href="javascript:void(0)" @click.prevent="applyFilter('')">
                 Все
                 <span class="badge bg-primary rounded-pill">{{
-                  videos.length
-                  }}</span>
+                  total
+                }}</span>
               </a>
+           
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
-                В работе
-                <span class="badge bg-primary rounded-pill">72</span>
+                href="javascript:void(0)" @click.prevent="applyFilter(1)">
+                Проверка
               </a>
+
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('completed')">
-                Готово
-                <span class="badge bg-primary rounded-pill">890</span>
-              </a>
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('error')">
+                href="javascript:void(0)" @click.prevent="applyFilter(2)">
                 Ошибка
-                <span class="badge bg-primary rounded-pill">997</span>
               </a>
             </div>
           </div>
@@ -115,8 +103,7 @@ const handleDelete = () => {
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th class="d-none d-xl-table-cell">Название</th>
+                  <th class="d-xl-table-cell">Название</th>
                   <th>Статус</th>
                   <th class="d-none d-sm-table-cell text-center">Модератор</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
@@ -129,11 +116,16 @@ const handleDelete = () => {
                   <td class="d-none d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': video.enabled,
-                      'bg-danger-light text-danger': !video.enabled,
+                      'bg-success-light text-success': video.status === 0,
+                      'bg-info-light text-info': video.status === 1,
+                      'bg-danger-light text-danger': video.status === 2,
+                      'bg-warning-light text-warning': video.status === 3,
+                      'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
+
                     }">
-                      {{ video.enabled ? "Включено" : "Отключено" }}
+                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ? "Отключено" : "Ошибка" }}
                     </span>
+
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
                     <span>0112332</span>

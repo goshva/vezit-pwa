@@ -8,7 +8,7 @@
         <BaseBlock title="Рекламодатели и партнеры">
           <template #options>
             <button type="button" class="btn-block-option">
-              <div class="d-inline-block" >
+              <div class="d-inline-block">
                 <p class="m-0" id="page-header-user-dropdown"> Баланс: <strong>5 000 </strong> ₽</p>
               </div>
 
@@ -35,11 +35,14 @@
             <div class="block-content">
               <div class="row items-push text-center py-3">
                 <div class="col-6 col-xl-6">
+                  <p class="m-0" id="page-header-user-dropdown"> Рекламодатели: <strong>5 000 </strong> ₽</p>
                   <form @sumbit.prevent>
                     <input type="date" class="form-control" placeholder="Search.." />
                   </form>
                 </div>
                 <div class="col-6 col-xl-6">
+                  <p class="m-0" id="page-header-user-dropdown"> Партнеры: <strong>5 000 </strong> ₽</p>
+
                   <form @sumbit.prevent>
                     <input type="date" class="form-control" placeholder="Search.." />
                   </form>
@@ -51,7 +54,7 @@
       </div>
     </div>
     <!-- END Dashboard Charts -->
-     <AdminOverview />
+    <AdminOverview />
   </div>
   <!-- END Page Content -->
 </template>

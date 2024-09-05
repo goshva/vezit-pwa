@@ -5,7 +5,7 @@
           <template #content>
             <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
               <dl class="mb-0">
-                <dt class="fs-3 fw-bold">{{ block.count }}</dt>
+                <dt class="fs-3 fw-bold">{{ block.active }} / {{ block.count }}</dt>
                 <dd class="fs-sm fw-medium text-muted mb-0">{{ block.title }}</dd>
               </dl>
               <div class="item item-rounded-lg bg-body-light">
@@ -30,6 +30,7 @@
   <script setup>
   const blocks = [
     {
+      active: 2,
       count: 32,
       title: "Список актуальных реклам",
       icon: "fa-gem",
@@ -37,49 +38,56 @@
       linkText: "View all orders"
     },
     {
-      count: 45,
+      active: 2,
+      count: 32,
       title: "Список оборудования",
       icon: "fa-paper-plane",
       link: "/admin/eq",
       linkText: "View all broke"
     },
     {
-      count: 4,
+      active: 2,
+      count: 32,
       title: "Клиенты",
       icon: "fa-chart-bar",
       link: "/admin/cli",
       linkText: "View all clients"
     },
     {
-      count: 60,
+      active: 2,
+      count: 32,
       title: "Список системных ошибок",
       icon: "fa-chart-bar",
       link: "/admin/error",
       linkText: "View all errors"
     },
     {
-      count: 70,
+      active: 2,
+      count: 32,
       title: "Изменение настроек оборудования",
       icon: "fa-chart-bar",
       link: "/admin/settings",
       linkText: "View all settings"
     },
     {
-      count: 90,
+      active: 2,
+      count: 32,
       title: "Контроль пользователей",
       icon: "fa-chart-bar",
       link: "/admin/control",
       linkText: "View all users"
     },
     {
-      count: 100,
+      active: 2,
+      count: 32,
       title: "Финансы и документы",
       icon: "fa-chart-bar",
       link: "/admin/doc",
       linkText: "View statistics"
     },
     {
-      count: 90,
+      active: 2,
+      count: 32,
       title: "Техподдержка",
       icon: "fa-chart-bar",
       link: "/admin/support",

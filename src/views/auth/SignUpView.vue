@@ -43,7 +43,7 @@ const rules = computed(() => {
     terms: {
       sameAs: sameAs(true),
     },
-    userRole:{
+    userRole: {
       required
     }
   };
@@ -100,17 +100,9 @@ async function onSubmit() {
           <!-- Sign Up Block -->
           <BaseBlock title="Создать аккаунт" class="mb-0">
             <template #options>
-              <a
-                class="btn-block-option fs-sm"
-                href="javascript:void(0)"
-                data-bs-toggle="modal"
-                data-bs-target="#one-signup-terms"
-                >правила использования</a
-              >
-              <RouterLink
-                :to="{ name: 'auth-signin' }"
-                class="btn-block-option"
-              >
+              <a class="btn-block-option fs-sm" href="javascript:void(0)" data-bs-toggle="modal"
+                data-bs-target="#one-signup-terms">правила использования</a>
+              <RouterLink :to="{ name: 'auth-signin' }" class="btn-block-option">
                 <i class="fa fa-sign-in-alt"></i>
               </RouterLink>
             </template>
@@ -125,124 +117,66 @@ async function onSubmit() {
               <form @submit.prevent="onSubmit">
                 <div class="py-3">
                   <div class="mb-4">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg form-control-alt"
-                      id="signup-username"
-                      name="signup-username"
-                      placeholder="Имя"
-                      autocomplete="off"
-                      :class="{
+                    <input type="text" class="form-control form-control-lg form-control-alt" id="signup-username"
+                      name="signup-username" placeholder="Имя" autocomplete="off" :class="{
                         'is-invalid': v$.username.$errors.length,
-                      }"
-                      v-model="state.username"
-                      @blur="v$.username.$touch"
-                    />
-                    <div
-                      v-if="v$.username.$errors.length"
-                      class="invalid-feedback animated fadeIn"
-                    >
+                      }" v-model="state.username" @blur="v$.username.$touch" />
+                    <div v-if="v$.username.$errors.length" class="invalid-feedback animated fadeIn">
                       Please enter a username
                     </div>
                   </div>
                   <div class="mb-4">
-                    <input
-                      type="email"
-                      class="form-control form-control-lg form-control-alt"
-                      id="signup-email"
-                      name="signup-email"
-                      placeholder="Email"
-                      autocomplete="email"
-                      :class="{
+                    <input type="email" class="form-control form-control-lg form-control-alt" id="signup-email"
+                      name="signup-email" placeholder="Email" autocomplete="email" :class="{
                         'is-invalid': v$.email.$errors.length,
-                      }"
-                      v-model="state.email"
-                      @blur="v$.email.$touch"
-                    />
-                    <div
-                      v-if="v$.email.$errors.length"
-                      class="invalid-feedback animated fadeIn"
-                    >
+                      }" v-model="state.email" @blur="v$.email.$touch" />
+                    <div v-if="v$.email.$errors.length" class="invalid-feedback animated fadeIn">
                       Введите ваш адрес электронной почты
                     </div>
                   </div>
                   <div class="mb-4">
-                    <input
-                      type="password"
-                      class="form-control form-control-lg form-control-alt"
-                      id="signup-password"
-                      name="signup-password"
-                      placeholder="Password"
-                      :class="{
+                    <input type="password" class="form-control form-control-lg form-control-alt" id="signup-password"
+                      name="signup-password" placeholder="Password" :class="{
                         'is-invalid': v$.password.$errors.length,
-                      }"
-                      v-model="state.password"
-                      @blur="v$.password.$touch"
-                    />
-                    <div
-                      v-if="v$.password.$errors.length"
-                      class="invalid-feedback animated fadeIn"
-                    >
+                      }" v-model="state.password" @blur="v$.password.$touch" />
+                    <div v-if="v$.password.$errors.length" class="invalid-feedback animated fadeIn">
                       Придумайте пароль для входа
                     </div>
                   </div>
                   <div class="mb-4">
-                    <input
-                      type="password"
-                      class="form-control form-control-lg form-control-alt"
-                      id="signup-password-confirm"
-                      name="signup-password-confirm"
-                      placeholder="Пароль еще раз"
-                      :class="{
+                    <input type="password" class="form-control form-control-lg form-control-alt"
+                      id="signup-password-confirm" name="signup-password-confirm" placeholder="Пароль еще раз" :class="{
                         'is-invalid': v$.confirmPassword.$errors.length,
-                      }"
-                      v-model="state.confirmPassword"
-                      @blur="v$.confirmPassword.$touch"
-                    />
-                    <div
-                      v-if="v$.confirmPassword.$errors.length"
-                      class="invalid-feedback animated fadeIn"
-                    >
+                      }" v-model="state.confirmPassword" @blur="v$.confirmPassword.$touch" />
+                    <div v-if="v$.confirmPassword.$errors.length" class="invalid-feedback animated fadeIn">
                       Повторите введеный пароль еще раз
                     </div>
                   </div>
                   <div class="mb-4">
-                    <select class="form-control form-control-lg form-control-alt" id="signup-userrole"
+                    <label class="form-label" for="subject">Выберите роль</label>
+
+                    <select  class="form-select form-control form-control-lg form-control-alt"  id="signup-userrole"
                       v-model="state.userRole" :class="{ 'is-invalid': v$.userRole.$errors.length }"
                       @blur="v$.userRole.$touch">
-                      <option value="" disabled>Выберите роль</option>
                       <option value="0">Администратор</option>
                       <option value="1">Модератор</option>
                       <option value="2">Клиент</option>
                       <option value="3">Партнёр</option>
                       <option value="4r">Гость</option>
                       <option value="5">Тех. поддержка</option>
-
                     </select>
+
                     <div v-if="v$.userRole.$errors.length" class="invalid-feedback animated fadeIn">
                       Выберите роль
                     </div>
-                  </div>                  
+                  </div>
                   <div class="mb-4">
                     <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="signup-terms"
-                        name="signup-terms"
-                        :class="{
-                          'is-invalid': v$.terms.$errors.length,
-                        }"
-                        v-model="state.terms"
-                        @blur="v$.terms.$touch"
-                      />
-                      <label class="form-check-label" for="signup-terms"
-                        >Согласен с правилами</label
-                      >
-                      <div
-                        v-if="v$.terms.$errors.length"
-                        class="invalid-feedback animated fadeIn"
-                      >
+                      <input class="form-check-input" type="checkbox" id="signup-terms" name="signup-terms" :class="{
+                        'is-invalid': v$.terms.$errors.length,
+                      }" v-model="state.terms" @blur="v$.terms.$touch" />
+                      <label class="form-check-label" for="signup-terms">Согласен с правилами</label>
+                      <div v-if="v$.terms.$errors.length" class="invalid-feedback animated fadeIn">
                         Вы должны поставить согласие
                       </div>
                     </div>
@@ -269,24 +203,13 @@ async function onSubmit() {
     </div>
 
     <!-- Terms Modal -->
-    <div
-      class="modal fade"
-      id="one-signup-terms"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="one-signup-terms"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="one-signup-terms" tabindex="-1" role="dialog" aria-labelledby="one-signup-terms"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
         <div class="modal-content">
           <BaseBlock title="Terms &amp; Conditions" transparent class="mb-0">
             <template #options>
-              <button
-                type="button"
-                class="btn-block-option"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
                 <i class="fa fa-fw fa-times"></i>
               </button>
             </template>
@@ -343,18 +266,10 @@ async function onSubmit() {
                 </p>
               </div>
               <div class="block-content block-content-full text-end bg-body">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-alt-secondary me-1"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-sm btn-alt-secondary me-1" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">
                   I Agree
                 </button>
               </div>
