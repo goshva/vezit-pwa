@@ -137,7 +137,7 @@ const routerLinks = [
   },  
   {
     id: Math.random(Date.now()),
-    name: "Системные ошибоки",
+    name: "Системные ошибки",
     link: "/admin/error",
   },
   {
