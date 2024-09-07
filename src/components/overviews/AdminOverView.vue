@@ -4,23 +4,23 @@
       v-for="(block, index) in blocks"
       :key="index"
       :block="block"
-      :statuses="statuses[block.sourceCount]"
+      :statuses="getStatusesForBlock(block.sourceCount)"
     />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted,  computed } from 'vue';
-import BaseBlockOwerView from "@/components/overviews/BaseBlockOwerView.vue"
+import { ref, onMounted, computed } from 'vue';
+import BaseBlockOwerView from "@/components/overviews/BaseBlockOwerView.vue";
 import axiosInstance from '@/services/axios.js';
 
 const loading = ref(false);
-const statuses = ref([]);
+const statuses = ref({});
 const fetchEquipments = async () => {
     loading.value = true;
     try {
         const response = await axiosInstance.get('/common-status-counts');
-        statuses.value = Object.values(response.data); // Assuming response data is an object with status_0, status_1, etc.
+        statuses.value = response.data; // Assuming response data matches the new JSON format
     } catch (error) {
         console.error('Error fetching data:', error);
     } finally {
@@ -28,14 +28,28 @@ const fetchEquipments = async () => {
     }
 };
 
+// Helper function to get the correct statuses for each block
+const getStatusesForBlock = (sourceCount) => {
+  return statuses.value[sourceCount] || {
+    status_0: null,
+    status_1: null,
+    status_2: null,
+    status_3: null,
+    status_4: null,
+    status_5: null
+  };
+};
+
 // Computed property to calculate the sum of all status values
 const statusSum = computed(() => {
-    return statuses.value.reduce((sum, status) => sum + Number(status), 0);
+  return Object.values(statuses.value).reduce((sum, statusObj) => {
+    const values = Object.values(statusObj).filter(val => val !== null);
+    return sum + values.reduce((subSum, value) => subSum + Number(value || 0), 0);
+  }, 0);
 });
 
-
 onMounted(() => {
-        fetchEquipments();
+  fetchEquipments();
 });
 
 const blocks = [
@@ -43,50 +57,49 @@ const blocks = [
     title: "Список актуальных реклам",
     icon: "fa-gem",
     link: "/admin/ads",
-    sourceCount: "video",
+    sourceCount: "videos",
   },
   {
     title: "Список оборудования",
     icon: "fa-paper-plane",
     link: "/admin/eq",
-    sourceCount: "equipment",
-
+    sourceCount: "equipments",
   },
   {
     title: "Клиенты",
     icon: "fa-chart-bar",
     link: "/admin/cli",
-    sourceCount: "client",
+    sourceCount: "clients",
   },
   {
     title: "Список системных ошибок",
     icon: "fa-chart-bar",
     link: "/admin/error",
-    sourceCount: "cfgupdate",
+    sourceCount: "cfgupdates",
   },
   {
     title: "Изменение настроек оборудования",
     icon: "fa-chart-bar",
     link: "/admin/settings",
-    sourceCount: "cfgupdate-log",
+    sourceCount: "cfgupdate_log",
   },
   {
     title: "Контроль пользователей",
     icon: "fa-chart-bar",
     link: "/admin/control",
-    sourceCount: "user",
+    sourceCount: "users",
   },
   {
     title: "Документы",
     icon: "fa-chart-bar",
     link: "/admin/doc",
-    sourceCount: "doc",
+    sourceCount: "docs",
   },
   {
     title: "Техподдержка",
     icon: "fa-chart-bar",
     link: "/admin/support",
-    sourceCount: "message",
+    sourceCount: "messages",
   }
 ];
 </script>
