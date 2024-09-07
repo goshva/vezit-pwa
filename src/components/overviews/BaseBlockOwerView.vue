@@ -4,6 +4,7 @@
             <template #content>
                 <div
                     class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
+                    {{  statuses }}
                     <dl class="mb-0">
                         <!-- Display all statuses followed by the sum and the block count -->
                         <dt class="fs-3 fw-bold">
@@ -40,7 +41,6 @@
 
 <script setup>
 import { defineProps, ref, onMounted, watch, computed } from 'vue';
-import axiosInstance from '@/services/axios.js';
 
 const loading = ref(false);
 const statuses = ref([]);
@@ -49,38 +49,21 @@ const props = defineProps({
     block: {
         type: Object,
         required: true
+    },
+    statuses: {
+        type: Object,
+        required: true
     }
 });
 
 // Function to fetch equipment status
-const fetchEquipments = async (apiUrl) => {
-    loading.value = true;
-    try {
-        const response = await axiosInstance.get(apiUrl);
-        statuses.value = Object.values(response.data); // Assuming response data is an object with status_0, status_1, etc.
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    } finally {
-        loading.value = false;
-    }
-};
 
 // Computed property to calculate the sum of all status values
 const statusSum = computed(() => {
     return statuses.value.reduce((sum, status) => sum + Number(status), 0);
 });
 
-// Watch for block prop change and fetch data
-watch(() => props.block, (newBlock) => {
-    if (newBlock && newBlock.apiUrl) {
-        fetchEquipments(newBlock.apiUrl);
-    }
-}, { immediate: true });
 
-onMounted(() => {
-    // Fetch data on component mount if block prop is already available
-    if (props.block && props.block.apiUrl) {
-        fetchEquipments(props.block.apiUrl);
-    }
-});
+
+
 </script>
