@@ -1,67 +1,12 @@
 <template>
   <!-- Page Content -->
-  <div class="content">
-
-    <!-- Dashboard Charts -->
-    <div class="row">
-      <div class="col-lg-12">
-        <BaseBlock title="Рекламодатели и партнеры">
-          <template #options>
-            <button type="button" class="btn-block-option">
-              <div class="d-inline-block">
-                <p class="m-0" id="page-header-user-dropdown"> Баланс: <strong>5 000 </strong> ₽</p>
-              </div>
-
-            </button>
-          </template>
-
-          <template #content>
-            <div class="block-content p-0 text-center overflow-hidden">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="pt-3 m-n1">
-                    <Pie :data="earningsData" :options="earningsOptions" style="height: 350px; margin: auto;" />
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="block-content p-0 text-center overflow-hidden">
-                    <div class="pt-3 m-n1">
-                      <Pie :data="salesData" :options="salesOptions" style="height: 350px; margin: auto;" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="block-content">
-              <div class="row items-push text-center py-3">
-                <div class="col-6 col-xl-6">
-                  <p class="m-0" id="page-header-user-dropdown"> Рекламодатели: <strong>5 000 </strong> ₽</p>
-                  <form @sumbit.prevent>
-                    <input type="date" class="form-control" placeholder="Search.." />
-                  </form>
-                </div>
-                <div class="col-6 col-xl-6">
-                  <p class="m-0" id="page-header-user-dropdown"> Партнеры: <strong>5 000 </strong> ₽</p>
-
-                  <form @sumbit.prevent>
-                    <input type="date" class="form-control" placeholder="Search.." />
-                  </form>
-                </div>
-              </div>
-            </div>
-          </template>
-        </BaseBlock>
-      </div>
-    </div>
-    <!-- END Dashboard Charts -->
-    <AdminOverview />
-  </div>
+  <DashboardCharts/>
   <!-- END Page Content -->
 </template>
 
 <script setup>
 import { reactive } from 'vue';
-import AdminOverview from '@/components/overviews/AdminOverView.vue';
+import DashboardCharts from '@/components/DashboardCharts.vue';
 import { Pie } from 'vue-chartjs';
 import { Chart, registerables } from 'chart.js';
 
