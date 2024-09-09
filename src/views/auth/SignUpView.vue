@@ -158,12 +158,12 @@ async function onSubmit() {
                     <select  class="form-select form-control form-control-lg form-control-alt"  id="signup-userrole"
                       v-model="state.userRole" :class="{ 'is-invalid': v$.userRole.$errors.length }"
                       @blur="v$.userRole.$touch">
-                      <option value="0">Администратор</option>
-                      <option value="1">Модератор</option>
-                      <option value="2">Клиент</option>
-                      <option value="3">Партнёр</option>
-                      <option value="4r">Гость</option>
-                      <option value="5">Тех. поддержка</option>
+                      <option value="admin">Администратор</option>
+                      <option value="moderator">Модератор</option>
+                      <option value="client">Клиент</option>
+                      <option value="partner">Партнёр</option>
+                      <option value="quest">Гость</option>
+                      <option value="support">Тех. поддержка</option>
                     </select>
 
                     <div v-if="v$.userRole.$errors.length" class="invalid-feedback animated fadeIn">

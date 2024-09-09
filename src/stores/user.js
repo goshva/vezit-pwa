@@ -47,19 +47,21 @@ export const useUserStore = defineStore('user', {
 
   getters: {
     // Example getter to check if the user is an admin (assuming user role "0" is admin)
-    isAdmin: (state) => state.userRole === '0',
+    isAdmin: (state) => state.userRole === 'admin',
     roleName: (state) => {
         switch (state.userRole) {
-          case '0':
+          case 'admin':
             return 'Администратор';
-          case '1':
+          case 'moderator':
             return 'Модератор';
-          case '2':
+          case 'client':
             return 'Клиент';
-          case '3':
+          case 'partner':
             return 'Партнёр';
-          case '4':
+          case 'quest':
             return 'Гость';
+          case 'sup[port':
+             return 'Тех. поддержка';            
           default:
             return 'Unknown'; // Fallback if userRole is not one of the expected values
         }
