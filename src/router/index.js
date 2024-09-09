@@ -331,7 +331,7 @@ const routes = [
           {
             path: 'ads/:id',
             name: 'EditAd',
-            component: () => import('@/views/admin/EditAdView.vue'), // Adjust the path according to your structure
+            component: () => import('@/views/admin/EditAdView.vue'), 
           },          
           {
             path: "eq",
@@ -480,6 +480,11 @@ const routes = [
           {
             path: "cars",
             component: CarsView,
+          },
+          {
+            path: 'cars/:id',
+            name: 'EditCar',
+            component: () => import('@/views/partner/EditCarView.vue'), 
           },
 
           {
