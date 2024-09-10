@@ -148,7 +148,7 @@ const changePage = (page) => {
                     <div class="d-flex justify-content-evenly">
                       <router-link :to="{ name: 'EditAd', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
-                          <i class="fa fa-edit"></i> Edit
+                          <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
                     </div>

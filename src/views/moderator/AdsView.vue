@@ -4,8 +4,8 @@ import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
-// State for storing car data
-const cars = ref([]);
+// State for storing video data
+const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
 const orderSearch = ref(false);
@@ -15,22 +15,22 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
 
-// Fetch car data from API
+// Fetch video data from API
 const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/partnerscars`, {
+    const response = await axiosInstance.get(`/videos`, {
       params: {
         page: page,
         status: status,
       },
     });
-    cars.value = response.data.data;
+    videos.value = response.data.data;
     total.value = response.data.total;
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
-    console.error("Error fetching car:", error);
+    console.error("Error fetching video:", error);
   } finally {
     loading.value = false;
   }
@@ -51,15 +51,15 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
+
+
 </script>
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Мои автомобили" class="mb-0">
+    <BaseBlock title="Список видео" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <UploadVideoModal />
-
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -77,7 +77,7 @@ const changePage = (page) => {
                   total
                 }}</span>
               </a>
-
+           
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                 href="javascript:void(0)" @click.prevent="applyFilter(1)">
                 Проверка
@@ -94,56 +94,59 @@ const changePage = (page) => {
 
       <template #content>
         <div v-if="loading" class="block-content text-center">
-          <span>Загрузка авто...</span>
+          <span>Загрузка...</span>
         </div>
         <div v-else class="block-content block-content-full">
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>Номер машины</th>
-                  <th class="d-xl-table-cell">Водитель</th>
+                  <th class="d-xl-table-cell">Название</th>
                   <th>Статус</th>
-                  <th class="d-none d-sm-table-cell text-center">Доходность</th>
-                  <th class="d-none d-sm-table-cell text-end">Создан</th>
+                  <th class="d-none d-sm-table-cell text-center">Модератор</th>
+                  <th class="d-none d-sm-table-cell text-end">Дата</th>
                   <th class="d-none d-sm-table-cell text-end"></th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
-                <tr v-for="car in cars" :key="car.id">
-                  <td>
-                    <span class="fw-semibold">{{ car.carModel }}</span><br>
-                    <span class="fw-bold">{{ car.carPlate }}</span>
-                  </td>
-                  <td class="d-none d-xl-table-cell">{{ car.filename }}</td>
-                  <td class="d-none d-sm-table-cell text-start">
-                    <p>Nurillaev Asliddin</p>
-                  </td>
+                <tr v-for="video in videos" :key="video.id">
+                  <td>{{ video.filename }}</td>
+                  <td class="d-none d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': car.status === 0,
-                      'bg-info-light text-info': car.status === 1,
-                      'bg-danger-light text-danger': car.status === 2,
-                      'bg-warning-light text-warning': car.status === 3,
-                      'bg-light': car.status === 4 || car.status === 5 || car.status === 6,
+                      'bg-success-light text-success': video.status === 0,
+                      'bg-info-light text-info': video.status === 1,
+                      'bg-danger-light text-danger': video.status === 2,
+                      'bg-warning-light text-warning': video.status === 3,
+                      'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
 
                     }">
-                      {{ car.status === 0 ? "Включено" : car.status === 1 ? "Ожидание" : car.status === 3 ?
-                        "Отключено" : "Ошибка" }}
+                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ? "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                    <p>1000 ₽</p>
+                  <td class="d-none d-sm-table-cell text-start">
+                    <span>0112332</span>
+                    <p>Nurillaev Asliddin</p>
+                    <!-- <div class="progress mb-1" style="height: 5px">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        :style="{ width: video.progress + '%' }"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div> -->
+                    <!-- <p class="fs-xs fw-semibold mb-0">{{ video.progress }}%</p> -->
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ formatDate(car.updated_at) }}
+                    {{ formatDate(video.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'EditCar', params: { id: car.id } }">
+                      <router-link :to="{ name: 'checkVideos', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
-                          <i class="fa fa-edit"></i>
+                          <i class="fa fa-edit"></i> 
                         </button>
                       </router-link>
                     </div>

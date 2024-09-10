@@ -276,8 +276,8 @@ const TariffView = () => import("@/views/admin/TariffView.vue");
 
 //moderator views
 const ModeratorDashboardView = () =>
-  import("@/views/moderator/DashboardView.vue");
-const ListVideoView = () => import("@/views/moderator/ListVideoView.vue");
+import("@/views/moderator/DashboardView.vue");
+const AdsModeratorView = () => import("@/views/moderator/AdsView.vue");
 const ResultsView = () => import("@/views/moderator/ResultsView.vue");
 const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
 
@@ -395,17 +395,13 @@ const routes = [
             component: ModeratorDashboardView,
           },
           {
-            path: "checkVideos",
-            children: [
-              {
-                path: ":id",
-                component: CheckVideoView,
-              },
-            ],
+            path: 'checkVideos/:id',
+            name: "checkVideos",
+            component: CheckVideoView,
           },
           {
             path: "videosList",
-            component: AdsView,
+            component: AdsModeratorView,
           },
           {
             path: "results",
