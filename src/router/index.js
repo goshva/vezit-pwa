@@ -405,7 +405,7 @@ const routes = [
           },
           {
             path: "videosList",
-            component: ListVideoView,
+            component: AdsView,
           },
           {
             path: "results",
