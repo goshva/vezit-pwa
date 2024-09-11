@@ -12,7 +12,7 @@
           </div>
           <div class="col-md-12 mb-3">
             <label for="filename" class="form-label">Ответ</label>
-            <textarea type="text" class="form-control" id="support_answer" v-model="ad.support_answer" required />
+            <textarea type="text" class="form-control" id="support_answer" v-model="ad.support_answer" required > </textarea>
           </div>
           <div class="col-md-12 text-center p-3">
             <button type="submit" class="btn btn-primary">Ответить</button>

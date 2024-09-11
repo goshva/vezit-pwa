@@ -13,10 +13,6 @@ import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
 import SupportLayout from "@/layouts/variations/SupportLayout.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
 
-// Frontend: Landing
-const Landing = () => import("@/views/landing/LandingView.vue");
-
-// Backend Boxed: Dashboard
 const BackendBoxedDashboard = () =>
   import("@/views/backend-boxed/DashboardView.vue");
 const BackendBoxedSimple1 = () =>
