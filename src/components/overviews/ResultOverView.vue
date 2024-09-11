@@ -50,25 +50,25 @@ onMounted(() => {
 
 const blocks = [
   {
-    title: "Список актуальных реклам",
+    title: "Ожидают проверки",
     icon: "fa-gem",
     link: "/admin/ads",
     sourceCount: "videos",
   },
   {
-    title: "Контроль пользователей",
+    title: "Проверено",
     icon: "fa-chart-bar",
     link: "/admin/control",
     sourceCount: "users",
   },
   {
-    title: "Список оборудования",
+    title: "Принято",
     icon: "fa-paper-plane",
     link: "/admin/eq",
     sourceCount: "equipments",
   },
   {
-    title: "Техподдержка",
+    title: "Отклонены",
     icon: "fa-chart-bar",
     link: "/admin/support",
     sourceCount: "messages",
