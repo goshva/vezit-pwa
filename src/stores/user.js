@@ -1,11 +1,12 @@
-// src/stores/user.js
 import { defineStore } from 'pinia';
+import axiosInstance from '@/services/axios.js';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     username: '',
     email: '',
     emailVerifiedAt: null,
+    balance: null,
     userRole: '',
     lastIpAddr: null,
     fullUserName: null,
@@ -21,6 +22,7 @@ export const useUserStore = defineStore('user', {
       this.username = userData.username;
       this.email = userData.email;
       this.emailVerifiedAt = userData.email_verified_at;
+      this.balance = userData.balance;
       this.userRole = userData.userrole;
       this.lastIpAddr = userData.lastipaddr;
       this.fullUserName = userData.fullusername;
@@ -36,18 +38,32 @@ export const useUserStore = defineStore('user', {
       this.email = '';
       this.emailVerifiedAt = null;
       this.userRole = '';
+      this.balance = null;
       this.lastIpAddr = null;
       this.fullUserName = null;
       this.companyName = null;
       this.companyRole = null;
       this.createdAt = '';
       this.updatedAt = '';
+    },
+
+    // New action to fetch user balance
+    async fetchUserBalance() {
+      try {
+        const response = await axiosInstance.get(`/balance`)
+        if (response.data && response.data.balance !== undefined) {
+          this.balance = response.data.balance;
+        }
+      } catch (error) {
+        console.error('Error fetching user balance:', error);
+      }
     }
   },
 
   getters: {
-    // Example getter to check if the user is an admin (assuming user role "0" is admin)
+    // Example getter to check if the user is an admin (assuming user role "admin" is admin)
     isAdmin: (state) => state.userRole === 'admin',
+
     roleName: (state) => {
         switch (state.userRole) {
           case 'admin':
@@ -58,13 +74,13 @@ export const useUserStore = defineStore('user', {
             return 'Клиент';
           case 'partner':
             return 'Партнёр';
-          case 'quest':
+          case 'guest':
             return 'Гость';
-          case 'sup[port':
+          case 'support':
              return 'Тех. поддержка';            
           default:
             return 'Unknown'; // Fallback if userRole is not one of the expected values
         }
-      },
+    },
   }
 });
