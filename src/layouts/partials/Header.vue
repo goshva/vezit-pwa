@@ -109,6 +109,10 @@ onMounted(() => {
                       @click="handleChangeRole('partner/dashboard')">
                       <span class="fs-sm fw-medium">Партнёр</span>
                     </button>
+                    <button class="dropdown-item d-flex align-items-center justify-content-between"
+                      @click="handleChangeRole('support/dashboard')">
+                      <span class="fs-sm fw-medium">Тех. поддержка</span>
+                    </button>                    
                     <a class="dropdown-item d-flex align-items-center justify-content-between"
                       href="javascript:void(0)">
                       <span class="fs-sm fw-medium">Гость</span>

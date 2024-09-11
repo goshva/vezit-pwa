@@ -10,6 +10,7 @@ import LayoutBackendMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
 import LayoutBackendSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
 import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
 import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
+import SupportLayout from "@/layouts/variations/SupportLayout.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
 
 // Frontend: Landing
@@ -281,6 +282,12 @@ const AdsModeratorView = () => import("@/views/moderator/AdsView.vue");
 const ResultsView = () => import("@/views/moderator/ResultsView.vue");
 const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
 
+const SupportDashboardView = () =>
+  import("@/views/support/DashboardView.vue");
+
+const SupportSupportView = () => import("@/views/support/SupportView.vue");
+const ResultsSupportView = () => import("@/views/support/ResultsView.vue");
+
 //
 
 //client views
@@ -406,6 +413,34 @@ const routes = [
           {
             path: "results",
             component: ResultsView,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: SupportLayout,
+    children: [
+      {
+        path: "support",
+        children: [
+          {
+            path: "dashboard",
+            component: SupportDashboardView,
+          },
+          {
+            path: "messages",
+            component: SupportSupportView,
+          },
+          {
+            path: 'messages/:id',
+            name: 'ResponseSupport',
+            component: () => import('@/views/support/ResponseMessageView.vue'), 
+          },                  
+          {
+            path: "results",
+            component: ResultsSupportView,
           },
         ],
       },
