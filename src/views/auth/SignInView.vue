@@ -104,7 +104,7 @@ async function onSubmit() {
         router.push("/guest");
         break;
         case "support": // Guest
-        router.push("/support");
+        router.push("/support/dashboard");
         break;        
       default:
         console.error("Unknown user role:", userStore.userRole);

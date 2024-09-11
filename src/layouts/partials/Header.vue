@@ -2,7 +2,9 @@
 import { ref, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-import { useUserStore } from '@/stores/user'; // Import the user store from Pinia
+import { useUserStore } from '@/stores/user'; 
+import UserBalance from "@/components/UserBalance.vue";
+
 const userStore = useUserStore();
 const username = computed(() => userStore.username);
 const roleName = computed(() => userStore.roleName);
@@ -53,9 +55,8 @@ onMounted(() => {
           <div class="d-flex align-items-center">
             <slot name="content-right">
               <div class="d-inline-block" v-if="isShow">
-                <p class="m-0" id="page-header-user-dropdown"><strong>5 000 </strong> ₽</p>
+                <UserBalance/>
               </div>
-
               <!-- User Dropdown -->
               <div class="dropdown d-inline-block ms-2">
                 <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center"
@@ -109,6 +110,10 @@ onMounted(() => {
                       @click="handleChangeRole('partner/dashboard')">
                       <span class="fs-sm fw-medium">Партнёр</span>
                     </button>
+                    <button class="dropdown-item d-flex align-items-center justify-content-between"
+                      @click="handleChangeRole('support/dashboard')">
+                      <span class="fs-sm fw-medium">Тех. поддержка</span>
+                    </button>                    
                     <a class="dropdown-item d-flex align-items-center justify-content-between"
                       href="javascript:void(0)">
                       <span class="fs-sm fw-medium">Гость</span>
