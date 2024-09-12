@@ -4,7 +4,7 @@ import axiosInstance from '@/services/axios.js';
 import LoadSettingsModal from "@/components/LoadSettingsModal.vue";
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 
-// State for storing update_log data
+// State for storing cfgupdate data
 const cfgupdates = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
@@ -14,7 +14,7 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
-// Fetch update_log data from API
+// Fetch cfgupdate data from API
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
@@ -28,7 +28,7 @@ const fetchEquipments = async (page = 1, status = '') => {
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
-    console.error('Error fetching update_log:', error);
+    console.error('Error fetching cfgupdate:', error);
   } finally {
     loading.value = false;
   }
@@ -105,30 +105,30 @@ const changePage = (page) => {
                 </tr>
               </thead>`
               <tbody class="fs-sm">
-                <tr v-for="update_log in cfgupdates" :key="update_log.id">
+                <tr v-for="cfgupdate in cfgupdates" :key="cfgupdate.id">
                   <td>
-                    <a class="fw-semibold" href="javascript:void(0)">{{ update_log.equipid }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ update_log.annotation }}</p>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ cfgupdate.ver }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ cfgupdate.dsc }}</p>
                   </td>
                   <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)">{{ update_log.partner_name }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ update_log.partner_role }}</p>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ cfgupdate.partner_name }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ cfgupdate.partner_role }}</p>
                   </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': update_log.status === 2,
-                      'bg-info-light text-info': update_log.status === 1,
-                      'bg-warning-light text-warning': update_log.status === 0
+                      'bg-success-light text-success': cfgupdate.status === 2,
+                      'bg-info-light text-info': cfgupdate.status === 1,
+                      'bg-warning-light text-warning': cfgupdate.status === 0
                     }">
-                      {{ update_log.status === 1 ? 'В работе' : update_log.status === 0 ? 'Повторяется' : 'Исправленно'
+                      {{ cfgupdate.status === 1 ? 'В работе' : cfgupdate.status === 0 ? 'Повторяется' : 'Исправленно'
                       }}
                     </span>
                   </td>
                   <td>
-                    <p>{{ update_log.lastip }}</p>
+                    <p>{{ cfgupdate.listing }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ formatDate(update_log.created_at) }}
+                    {{ formatDate(cfgupdate.created_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <LoadSettingsModal />
