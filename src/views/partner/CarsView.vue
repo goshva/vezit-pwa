@@ -55,7 +55,7 @@ const changePage = (page) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Мои автомобили" class="mb-0">
+    <BaseBlock title="Список автомобилей" class="mb-0">
       <template #options>
         <div class="space-x-4">
           <UploadVideoModal />
@@ -101,7 +101,7 @@ const changePage = (page) => {
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>Номер машины</th>
+                  <th>Рег. номер</th>
                   <th class="d-xl-table-cell">Водитель</th>
                   <th>Статус</th>
                   <th class="d-none d-sm-table-cell text-center">Доходность</th>

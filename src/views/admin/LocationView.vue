@@ -112,18 +112,17 @@ const formatDateBasedOnFormat = (dateString) => {
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th class="d-xl-table-cell">Название</th>
+                  <th>Название</th>
+                  <th class="d-xl-table-cell">Локация</th>
                   <th>Статус</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="location in locations" :key="location.id">
-                  <td>
+                  <!-- <td>
                     <a class="fw-semibold" href="javascript:void(0)">{{ location.id }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ location.locationid }}</p>
-                  </td>
+                  </td> -->
                   <td>
                     <a class="fw-semibold" href="javascript:void(0)">{{ location.locationname }}</a>
                     <p class="fs-sm fw-medium text-muted mb-0">{{ location.locationenname }}</p>

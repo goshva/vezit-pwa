@@ -112,7 +112,6 @@ const changePage = (page) => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td>{{ video.filename }}</td>
                   <td class="d-none d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
@@ -128,8 +127,9 @@ const changePage = (page) => {
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
+                    <p class="mb-0">Nurillaev Asliddin</p>
                     <span>0112332</span>
-                    <p>Nurillaev Asliddin</p>
+                    
                     <!-- <div class="progress mb-1" style="height: 5px">
                       <div
                         class="progress-bar"
