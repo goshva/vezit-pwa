@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
+import { formatRubles } from '@/services/priceConvert.js';
 
 // State for storing finance data
 const finances = ref([]);
@@ -97,38 +98,31 @@ const changePage = (page) => {
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th class="d-xl-table-cell">Событие</th>
-                  <th>Время</th>
+                  <th class="d-xl-table-cell">Вид</th>
                   <th class="d-none d-sm-table-cell text-center">Описание</th>
                   <th class="d-none d-sm-table-cell text-end">Сумма</th>
+                  <th>Время</th>
                   <th class="d-none d-sm-table-cell text-end">Статус</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="finance in finances" :key="finance.Event">
                   <td>
-                    <p v-if="parseFloat(finance.Amount) < 0" class="fs-sm fw-medium text-muted mb-0">
+                    <p v-if="parseFloat(finance.Amount) < 0" class="fs-sm fw-medium text-muted mb-0" title="Списание">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="red" style="width: 32px">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
-                      Списание
                     </p>
-                    <p v-if="parseFloat(finance.Amount) > 0" class="fs-sm fw-medium text-muted mb-0">
+                    <p v-if="parseFloat(finance.Amount) > 0" class="fs-sm fw-medium text-muted mb-0" title="Пополнение">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="green" class="w-3 h-3" style="width: 32px">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
-                      Пополнение
                     </p>
-                  </td>
-
-                  <td>
-                    <p class="fs-sm fw-medium text-muted mb-0">
-                      {{ finance.UpdatedAt }}
-                    </p>
+                    <span class="fs-sm fw-medium text-muted mb-0 text-end">{{ finance.user_name }} </span> 
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted">
                     {{ finance.Title }}
@@ -137,9 +131,13 @@ const changePage = (page) => {
                     </p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ finance.Amount }} ₽
+                    {{ formatRubles(finance.Amount) }} ₽
                   </td>
-
+                  <td>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      {{ formatDate(finance.updated_at) }}
+                    </p>
+                  </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(finance.Status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>

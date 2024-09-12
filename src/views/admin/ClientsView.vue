@@ -112,11 +112,11 @@ const formatDateBasedOnFormat = (dateString) => {
             <table class="table table-hover table-vcenter">
               <thead>
                   <tr>
-                    <th class="d-none d-xl-table-cell">Название</th>
-                    <th>Статус</th>
-                    <th class="d-none d-sm-table-cell text-center">Прогресс</th>
-                    <th class="d-none d-sm-table-cell text-end">Дата</th>
+                    <th class="d-xl-table-cell">Название</th>
+                    <th class="d-none d-sm-table-cell">Активность</th>
                     <th class="d-none d-sm-table-cell text-end">Баланс ₽</th>
+                    <th class="d-none d-sm-table-cell text-end">Статус</th>
+
                   </tr>
                 </thead>
               <tbody class="fs-sm">
@@ -128,24 +128,9 @@ const formatDateBasedOnFormat = (dateString) => {
                     <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactTel }}</p>                    
                     <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactEMail }}</p>                    
                   </td>
-                  <td>
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ client.status }}</p>
-                  </td>                  
-                  <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 18%"
-                          aria-valuenow="18"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">18%</p>
-                    </td>
+                
                   <td 
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                    class="d-none d-sm-table-cell fw-semibold text-muted"
                     @click="toggleDateFormat"
                     style="cursor: pointer;"
                   >
@@ -153,6 +138,10 @@ const formatDateBasedOnFormat = (dateString) => {
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <p class="fs-sm fw-medium text-muted mb-0">0</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
+                    <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                 </tr>
               </tbody>

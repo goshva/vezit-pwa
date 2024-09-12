@@ -4,7 +4,7 @@ import axiosInstance from '@/services/axios.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
 
 // State for storing location data
-const partners = ref([]);
+const clients = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
 
@@ -20,13 +20,13 @@ const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/partners`, {
+    const response = await axiosInstance.get(`/clients`, {
       params: {
         page: page,
         status: status,
       },
     });
-    partners.value = response.data.data; // Adjust according to your API structure
+    clients.value = response.data.data; // Adjust according to your API structure
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -65,7 +65,7 @@ const formatDateBasedOnFormat = (dateString) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список партнёров" class="mb-0">
+    <BaseBlock title="Список клиентов" class="mb-0">
       <template #options>
         <div class="space-x-1">
           <div class="dropdown d-inline-block">
@@ -84,7 +84,7 @@ const formatDateBasedOnFormat = (dateString) => {
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('')">
                 Все
-                <span class="badge bg-primary rounded-pill">{{ partners.length }}</span>
+                <span class="badge bg-primary rounded-pill">{{ clients.length }}</span>
               </a>
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
                 В работе
@@ -105,22 +105,22 @@ const formatDateBasedOnFormat = (dateString) => {
 
       <template #content>
         <div v-if="loading" class="block-content text-center">
-          <span>Загрузка партнеров...</span>
+          <span>Загрузка клиентов...</span>
         </div>
         <div v-else class="block-content block-content-full">
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
                   <tr>
-                    <th class="d-none d-xl-table-cell">Название</th>
-                    <th>Статус</th>
-                    <th class="d-none d-sm-table-cell text-center">Прогресс</th>
-                    <th class="d-none d-sm-table-cell text-end">Дата</th>
+                    <th class="d-xl-table-cell">Название</th>
+                    <th class="d-none d-sm-table-cell">Активность</th>
                     <th class="d-none d-sm-table-cell text-end">Баланс ₽</th>
+                    <th class="d-none d-sm-table-cell text-end">Статус</th>
+
                   </tr>
                 </thead>
               <tbody class="fs-sm">
-                <tr v-for="client in partners" :key="client.id">
+                <tr v-for="client in clients" :key="client.id">
                   <td :title="client.description">
                     <a class="fw-semibold" href="javascript:void(0)">{{ client.name }}</a>
                     <p class="fs-sm fw-medium text-muted mb-0" >{{ client.bussines }}</p>
@@ -128,24 +128,9 @@ const formatDateBasedOnFormat = (dateString) => {
                     <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactTel }}</p>                    
                     <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactEMail }}</p>                    
                   </td>
-                  <td>
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ client.status }}</p>
-                  </td>                  
-                  <td class="d-none d-sm-table-cell">
-                      <div class="progress mb-1" style="height: 5px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 18%"
-                          aria-valuenow="18"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <p class="fs-xs fw-semibold mb-0">18%</p>
-                    </td>
+                
                   <td 
-                    class="d-none d-sm-table-cell fw-semibold text-muted text-end"
+                    class="d-none d-sm-table-cell fw-semibold text-muted"
                     @click="toggleDateFormat"
                     style="cursor: pointer;"
                   >
@@ -153,6 +138,10 @@ const formatDateBasedOnFormat = (dateString) => {
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <p class="fs-sm fw-medium text-muted mb-0">0</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
+                    <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                 </tr>
               </tbody>
