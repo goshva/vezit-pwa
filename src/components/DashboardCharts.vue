@@ -1,120 +1,95 @@
 <template>
-    <div class="content">
-      <div class="row">
-        <div class="col-lg-12">
-          <BaseBlock title="Рекламодатели и партнеры">
-            <template #options>
-              <BalanceDisplay :balance="5000" />
-            </template>
-  
-            <template #content>
-              <div class="block-content p-0 text-center overflow-hidden">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <ChartBlock :data="earningsData" :options="earningsOptions" />
-                  </div>
-                  <div class="col-lg-6">
-                    <ChartBlock :data="salesData" :options="salesOptions" />
-                  </div>
+  <div class="content">
+    <div class="row">
+      <div class="col-lg-12">
+        <BaseBlock title="Панель управления">
+          <template #options>
+            <BalanceDisplay :balance="clientsTotal - partnersTotal" />
+          </template>
+
+          <template #content>
+            <div class="block-content p-0 text-center overflow-hidden">
+              <div class="row">
+                <div class="col-lg-6">
+                  <DashboardChartClients/>
+                </div>
+                <div class="col-lg-6">
+                  <DashboardChartPartners/>
                 </div>
               </div>
-              <div class="block-content">
-                <div class="row items-push text-center py-3">
-                  <div class="col-6 col-xl-6">
-                    <p class="m-0" id="page-header-user-dropdown">
-                      Рекламодатели: <strong>5 000</strong> ₽
-                    </p>
-                    <DateFilter />
-                  </div>
-                  <div class="col-6 col-xl-6">
-                    <p class="m-0" id="page-header-user-dropdown">
-                      Партнеры: <strong>5 000</strong> ₽
-                    </p>
-                    <DateFilter />
-                  </div>
+            </div>
+            <div class="block-content">
+              <div class="row items-push text-center py-3">
+                <div class="col-6 col-xl-6">
+                  <p class="m-0" id="page-header-user-dropdown">
+                    Рекламодатели: <strong>{{ clientsTotal }}</strong> ₽
+                  </p>
+                  <DateFilter />
+                </div>
+                <div class="col-6 col-xl-6">
+                  <p class="m-0" id="page-header-user-dropdown">
+                    Партнеры: <strong>{{ partnersTotal }}</strong> ₽
+                  </p>
+                  <DateFilter />
                 </div>
               </div>
-            </template>
-          </BaseBlock>
-        </div>
+            </div>
+          </template>
+        </BaseBlock>
       </div>
-      <AdminOverview />
     </div>
-  </template>
-  
-  <script setup>
-  import { reactive } from 'vue';
-  import BalanceDisplay from '@/components/BalanceDisplay.vue';
-  import ChartBlock from '@/components/ChartBlock.vue';
-  import DateFilter from '@/components/DateFilter.vue';
-  import AdminOverview from '@/components/overviews/AdminOverView.vue';
-  
-  const earningsData = reactive({
-    labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-    datasets: [
-      {
-        label: 'Earnings',
-        backgroundColor: [
-          'rgba(132, 94, 247, 0.3)',
-          'rgba(33, 37, 41, 0.15)',
-          'rgba(255, 159, 64, 0.3)',
-          'rgba(75, 192, 192, 0.3)',
-          'rgba(153, 102, 255, 0.3)',
-          'rgba(255, 99, 132, 0.3)',
-        ],
-        data: [2150, 1350, 1560, 980, 1260, 1720, 1115, 1690, 1870, 2420, 2100, 2730],
-      },
-    ],
-  });
-  
-  const earningsOptions = reactive({
-    responsive: true,
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return ' $' + context.raw;
-          },
-        },
-      },
-      legend: {
-        position: 'top',
-      },
-    },
-  });
-  
-  const salesData = reactive({
-    labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-    datasets: [
-      {
-        label: 'Sales',
-        backgroundColor: [
-          'rgba(34, 184, 207, 0.3)',
-          'rgba(255, 206, 86, 0.3)',
-          'rgba(153, 102, 255, 0.3)',
-          'rgba(75, 192, 192, 0.3)',
-          'rgba(255, 99, 132, 0.3)',
-          'rgba(255, 159, 64, 0.3)',
-        ],
-        data: [175, 120, 169, 82, 135, 169, 132, 130, 192, 230, 215, 260],
-      },
-    ],
-  });
-  
-  const salesOptions = reactive({
-    responsive: true,
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return context.raw + ' Sales';
-          },
-        },
-      },
-      legend: {
-        position: 'top',
-      },
-    },
-  });
-  </script>
-  
+    <AdminOverview />
+  </div>
+</template>
+
+<script setup>
+import DashboardChartPartners from '@/components/DashboardChartPartners.vue';
+import DashboardChartClients from '@/components/DashboardChartClients.vue';
+import { onMounted, ref, computed } from 'vue';
+import BalanceDisplay from '@/components/BalanceDisplay.vue';
+import DateFilter from '@/components/DateFilter.vue';
+import AdminOverview from '@/components/overviews/AdminOverView.vue';
+import axiosInstance from '@/services/axios.js';
+
+
+const loading = ref(false);
+const clients = ref([]);
+const partners = ref([]);
+
+const fetchPartnerFinanceSummary = async () => {
+  loading.value = true;
+  try {
+    const response = await axiosInstance.get('/partner-finance-summary');
+    partners.value = response.data;
+  } catch (error) {
+    console.error('Error fetching partner data:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const fetchClientFinanceSummary = async () => {
+  loading.value = true;
+  try {
+    const response = await axiosInstance.get('/client-finance-summary');
+    clients.value = response.data;
+  } catch (error) {
+    console.error('Error fetching client data:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const clientsTotal = computed(() => {
+  return clients.value.reduce((total, client) => total + parseInt(client.total_amount), 0);
+});
+
+const partnersTotal = computed(() => {
+  return partners.value.reduce((total, partner) => total + parseInt(partner.total_amount), 0);
+});
+
+onMounted(() => {
+  fetchClientFinanceSummary();
+  fetchPartnerFinanceSummary();
+});
+</script>

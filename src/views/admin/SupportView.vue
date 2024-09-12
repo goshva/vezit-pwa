@@ -97,31 +97,37 @@ const changePage = (page) => {
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th class="d-xl-table-cell">Событие</th>
-                  <th>Время</th>
-                  <th class="d-none d-sm-table-cell text-center">Описание</th>
+                  <th class="d-xl-table-cell">#</th>
+                  <th class="d-none d-sm-table-cell text-center">Переписка</th>
                   <th class="d-none d-sm-table-cell text-end">От</th>
-                  <th class="d-none d-sm-table-cell text-end">Ответ</th>
+                  <th>Время</th>
+                  <th class="d-none d-sm-table-cell text-end">Статус</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="message in messages" :key="message.Event">
                   <td>{{ message.id }}</td>
-                  <td>
-                    <p class="fs-sm fw-medium text-muted mb-0">
-                      {{ formatDate(message.updated_at) }}
-                    </p>
-                  </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
-                    {{ message.message }}
+
+                  <td class="d-none d-sm-table-cell fw-semibold">
+                    {{ message.user_id }}:«{{ message.message }}»
+                    <span v-if="message.support_answer" class="d-block fs-xs text-muted">
+                      <hr>
+                      {{ message.support_id }}:«{{ message.support_answer }}»
+                    </span>
                   </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill">
                       {{ message.user_id }}
                     </span>
                   </td>
-e                  <td class="d-none d-sm-table-cell text-end">
-                    <strong>{{ message.support_id }}</strong>
+                  <td>
+                    <p class="fs-sm fw-medium text-muted mb-0">
+                      {{ formatDate(message.updated_at) }}
+                    </p>
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(message.status) > 0" title="Готово"></i>
+                    <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                 </tr>
               </tbody>
