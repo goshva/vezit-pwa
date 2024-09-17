@@ -112,7 +112,7 @@ const changePage = (page) => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td class="d-none d-xl-table-cell">{{ video.filename }}</td>
+                  <td class="d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
                       'bg-success-light text-success': video.status === 0,
@@ -128,25 +128,15 @@ const changePage = (page) => {
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
                     <p class="mb-0">Nurillaev Asliddin</p>
-                    <span>0112332</span>
+                    <span>777</span>
                     
-                    <!-- <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        :style="{ width: video.progress + '%' }"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div> -->
-                    <!-- <p class="fs-xs fw-semibold mb-0">{{ video.progress }}%</p> -->
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(video.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'EditAd', params: { id: video.id } }">
+                      <router-link :to="{ name: 'ClientEditAd', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>

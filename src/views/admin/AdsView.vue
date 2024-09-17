@@ -127,7 +127,7 @@ const changePage = (page) => {
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <span>0112332</span>
+                    <span>343434</span>
                     <p>Nurillaev Asliddin</p>
                     <!-- <div class="progress mb-1" style="height: 5px">
                       <div

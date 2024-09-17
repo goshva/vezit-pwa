@@ -64,7 +64,7 @@ const printSelectedCheckboxes = () => {
   const handleSubmit = async () => {
     try {
       await axiosInstance.put(`/videos/${route.params.id}`, ad.value);
-      router.push("/admin/ads");
+      router.push("/moderator/ads");
     } catch (error) {
       console.error("Error updating ad:", error);
     }

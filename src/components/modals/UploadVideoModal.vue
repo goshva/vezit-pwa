@@ -18,7 +18,7 @@
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <BaseBlock title="Upload Video" transparent class="mb-0">
+        <BaseBlock title="Загрузить видео" transparent class="mb-0">
           <template #options>
             <button
               type="button"
