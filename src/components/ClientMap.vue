@@ -1,18 +1,11 @@
 <script setup>
 import leaflet from "leaflet";
-import { onMounted, watch } from "vue";
-
+import { onMounted } from "vue";
 import { useMapStore } from "@/stores/map";
-import { computed } from "vue";
 
 const mapStore = useMapStore();
 
 let map;
-const props = defineProps(["activePoint"]);
-
-let a = computed(() => {
-  return props.activePoint;
-});
 
 let greenIcon = new L.Icon({
   iconUrl:
@@ -78,9 +71,36 @@ const variable = () => {
   return (randomVariableColor = variables[randomIndexColor]);
 };
 
-onMounted(() => {
-  map = leaflet.map("map").setView([43, 43], 4);
+// Function to calculate the center latitude and longitude
+const calculateMapCenter = (ads) => {
+  if (ads.length === 0) return [0, 0];
+
+  let totalLat = 0;
+  let totalLng = 0;
+
+  ads.forEach((ad) => {
+    totalLat += ad.latlong[0];
+    totalLng += ad.latlong[1];
+  });
+
+  const centerLat = totalLat / ads.length;
+  const centerLng = totalLng / ads.length;
+
+  return [centerLat, centerLng];
+};
+
+onMounted(async () => {
+  // Fetch video views from the API and populate ads
+  await mapStore.fetchVideoViews();
+
+  // Calculate center of all ads (video views)
+  const mapCenter = calculateMapCenter(mapStore.ads);
+
+  // Initialize the map centered on the calculated point
+  map = leaflet.map("map").setView(mapCenter, 10); // Dynamic center based on ads
+
   mapStore.setMap(map);
+
   leaflet
     .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
@@ -90,6 +110,7 @@ onMounted(() => {
     })
     .addTo(map);
 
+  // Add markers for each ad (video view) on the map
   mapStore.ads.forEach((el) => {
     variable();
 

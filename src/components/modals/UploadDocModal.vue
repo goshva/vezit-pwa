@@ -53,8 +53,8 @@
                   <input v-model="form.adddate" class="form-control" type="datetime-local" id="adddate" required />
                 </div>
                 <div class="mb-3">
-                  <label for="enabled" class="form-label">Enabled</label>
-                  <select v-model="form.enabled" class="form-control" id="enabled" required>
+                  <label for="status" class="form-label">Enabled</label>
+                  <select v-model="form.status" class="form-control" id="status" required>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </select>
@@ -85,7 +85,7 @@ const form = ref({
   serverfilename: '',
   url: '',
   adddate: '',
-  enabled: '1',
+  status: '1',
   doc: null,
 });
 
@@ -101,7 +101,7 @@ const uploadDocument = async () => {
     formData.append('serverfilename', form.value.serverfilename);
     formData.append('url', form.value.url);
     formData.append('adddate', form.value.adddate);
-    formData.append('enabled', form.value.enabled);
+    formData.append('status', form.value.status);
     formData.append('doc', form.value.doc);
 
     const response = await axios.post('https://olhar.vit.ooo/api/docs', formData, {

@@ -113,11 +113,11 @@ const changePage = (page) => {
                     <span
                       class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
                       :class="{
-                        'bg-success-light text-success': doc.enabled,
-                        'bg-danger-light text-danger': !doc.enabled,
+                        'bg-success-light text-success': doc.status,
+                        'bg-danger-light text-danger': !doc.status,
                       }"
                     >
-                      {{ doc.enabled ? 'Включено' : 'Отключено' }}
+                      {{ doc.status ? 'Включено' : 'Отключено' }}
                     </span>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
