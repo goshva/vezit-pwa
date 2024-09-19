@@ -100,7 +100,7 @@
   
   const fetchAdDetails = async (id) => {
     try {
-      const response = await axiosInstance.get(`/partnerscars/${id}`);
+      const response = await axiosInstance.get(`/partnercars/${id}`);
       ad.value = response.data;
     } catch (error) {
       console.error("Error fetching ad details:", error);
@@ -109,7 +109,7 @@
   
   const handleSubmit = async () => {
     try {
-      await axiosInstance.put(`/partnerscars/${route.params.id}`, ad.value);
+      await axiosInstance.put(`/partnercars/${route.params.id}`, ad.value);
       router.push("/partner/cars");
     } catch (error) {
       console.error("Error updating ad:", error);

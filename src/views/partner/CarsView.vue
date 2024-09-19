@@ -19,7 +19,7 @@ const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error'
 const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/partnerscars`, {
+    const response = await axiosInstance.get(`/partnercars`, {
       params: {
         page: page,
         status: status,
