@@ -15,7 +15,7 @@ const statuses = ref({});
 const fetchEquipments = async () => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get('/common-status-counts');
+    const response = await axiosInstance.get('/moderator-results');
     statuses.value = response.data; // Assuming response data matches the new JSON format
   } catch (error) {
     console.error('Error fetching data:', error);
