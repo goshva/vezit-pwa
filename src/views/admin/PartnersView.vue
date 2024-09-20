@@ -20,7 +20,7 @@ const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/clients`, {
+    const response = await axiosInstance.get(`/partners`, { 
       params: {
         page: page,
         status: status,
@@ -65,7 +65,7 @@ const formatDateBasedOnFormat = (dateString) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список клиентов" class="mb-0">
+    <BaseBlock title="Список партнёров" class="mb-0">
       <template #options>
         <div class="space-x-1">
           <div class="dropdown d-inline-block">
