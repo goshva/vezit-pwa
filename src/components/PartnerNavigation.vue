@@ -115,7 +115,7 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Список авто",
+    name: "Список автомобилей",
     link: "/partner/cars",
   },
 
@@ -133,7 +133,7 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Поддержка",
+    name: "Техподдержка",
     link: "/partner/support",
   },
 ];

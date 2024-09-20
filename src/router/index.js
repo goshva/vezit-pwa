@@ -403,7 +403,7 @@ const routes = [
             component: CheckVideoView,
           },
           {
-            path: "videosList",
+            path: "ads",
             component: AdsModeratorView,
           },
           {
@@ -459,18 +459,14 @@ const routes = [
             component: ClientView,
           },
           {
-            path: "addAdc",
-            children: [
-              {
-                path: "",
-                component: AddAdcView,
-              },
-              {
-                path: ":id",
-                component: ClientCompanyView,
-              }
-            ]
+            path: "ads",
+            component: AddAdcView,
           },
+          {
+            path: 'ads/:id',
+            name: 'ClientEditAd',
+            component: () => import('@/views/client/ClientEditAdView.vue'), 
+          }, 
           {
             path: "addVideo",
             component: AddVideoView,

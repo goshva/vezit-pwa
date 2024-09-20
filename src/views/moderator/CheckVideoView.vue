@@ -15,7 +15,7 @@ import { arr } from "@/constans.js";
     duration: "",
     url: "",
     mainlocation: null,
-    enabled: 0,
+    status: 0,
   });
 const selectedCheckboxes = ref([]);
 const comment = ref("");
@@ -64,7 +64,7 @@ const printSelectedCheckboxes = () => {
   const handleSubmit = async () => {
     try {
       await axiosInstance.put(`/videos/${route.params.id}`, ad.value);
-      router.push("/admin/ads");
+      router.push("/moderator/ads");
     } catch (error) {
       console.error("Error updating ad:", error);
     }
@@ -174,8 +174,8 @@ const handleOpenModal = (id) => {
               />
             </div>
             <div class="col-md-6 mb-3">
-              <label for="enabled" class="form-label">Включено</label>
-              <select class="form-control" id="enabled" v-model="ad.enabled">
+              <label for="status" class="form-label">Включено</label>
+              <select class="form-control" id="status" v-model="ad.status">
                 <option :value="1">Да</option>
                 <option :value="0">Нет</option>
               </select>

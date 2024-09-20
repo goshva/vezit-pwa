@@ -18,7 +18,7 @@
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <BaseBlock title="Upload Video" transparent class="mb-0">
+        <BaseBlock title="Загрузить видео" transparent class="mb-0">
           <template #options>
             <button
               type="button"
@@ -67,7 +67,7 @@
                   class="form-control"
                   type="number"
                   id="userId"
-                  v-model="userid"
+                  v-model="user_id"
                   placeholder="User ID"
                   required
                 />
@@ -112,7 +112,7 @@
                 />
               </div>
               <div class="block-content">
-                <select class="form-control" id="enabled" v-model="enabled" required>
+                <select class="form-control" id="status" v-model="status" required>
                   <option :value="1">Yes</option>
                   <option :value="0">No</option>
                 </select>
@@ -141,12 +141,12 @@ const videoFile = ref(null);
 // Default values for required fields
 const filename = ref("default_filename.mp4");
 const serverfilename = ref("default_server_filename.mp4");
-const userid = ref(1);  // Default user ID
+const user_id = ref(1);  // Default user ID
 const duration = ref("00:00:00");  // Default duration
 const url = ref("http://example.com/video.mp4");  // Default URL
 const adddate = ref(new Date().toISOString().slice(0, 16));  // Default current date and time
 const mainlocation = ref(1);  // Default main location ID
-const enabled = ref(1);  // Default enabled status
+const status = ref(1);  // Default status status
 
 const handleFileUpload = (event) => {
   videoFile.value = event.target.files[0];
@@ -158,12 +158,12 @@ const handleSubmit = async () => {
     formData.append("video", videoFile.value);
     formData.append("filename", filename.value);
     formData.append("serverfilename", serverfilename.value);
-    formData.append("userid", userid.value);
+    formData.append("user_id", user_id.value);
     formData.append("duration", duration.value);
     formData.append("url", url.value);
     formData.append("adddate", adddate.value);
     formData.append("mainlocation", mainlocation.value);
-    formData.append("enabled", enabled.value);
+    formData.append("status", status.value);
 
     try {
       const response = await axiosInstance.post("/videos/", formData, {
