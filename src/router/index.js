@@ -403,7 +403,7 @@ const routes = [
             component: CheckVideoView,
           },
           {
-            path: "videosList",
+            path: "ads",
             component: AdsModeratorView,
           },
           {
