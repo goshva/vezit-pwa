@@ -51,21 +51,19 @@ const changePage = (page) => {
 };
 
 const editFinanceStatus = async (status, index) => {
-  if (status > 0){
-    finances.value[index].Status = 0;
-  } else {
+  if (status === 0){
     finances.value[index].Status = 1;
-  }
-  try {
-    await axiosInstance.put(`/finances/${finances.value.length - index}`, {
-      Status: finances.value[index].Status,
-      Time: finances.value[index].Time,
-      Title: finances.value[index].Title,
-      Amount: finances.value[index].Amount,
-      user_id: finances.value[index].user_id,
-      headers: {'Content-Type': 'application/json'}})
-  } catch(error) {
-    console.error("Error updating ad:", error);
+    try {
+      await axiosInstance.put(`/finances/${finances.value.length - index}`, {
+        Status: finances.value[index].Status,
+        Time: finances.value[index].Time,
+        Title: finances.value[index].Title,
+        Amount: finances.value[index].Amount,
+        user_id: finances.value[index].user_id,
+        headers: {'Content-Type': 'application/json'}})
+    } catch(error) {
+      console.error("Error updating ad:", error);
+    }
   }
 }
 
