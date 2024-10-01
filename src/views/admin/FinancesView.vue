@@ -25,7 +25,7 @@ const fetchEquipments = async (page = 1, status = '') => {
       },
     });
     finances.value = response.data.data; // Adjust according to your API structure
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    totalPages.value = response.data.total; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
     console.error('Error fetching finance:', error);
@@ -49,6 +49,28 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
+
+const editFinanceStatus = async (status, index) => {
+  if (status > 0){
+    finances.value[index].Status = 0;
+  } else {
+    finances.value[index].Status = 1;
+  }
+  try {
+    await axiosInstance.put(`/finances/${finances.value.length - index}`, {
+      Status: finances.value[index].Status,
+      Time: finances.value[index].Time,
+      Title: finances.value[index].Title,
+      Amount: finances.value[index].Amount,
+      user_id: finances.value[index].user_id,
+      headers: {'Content-Type': 'application/json'}})
+  } catch(error) {
+    console.error("Error updating ad:", error);
+  }
+}
+
+
+
 </script>
 <template>
   <div class="m-5 mb-0">
@@ -122,12 +144,12 @@ const changePage = (page) => {
                           d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
                     </p>
-                    <span class="fs-sm fw-medium text-muted mb-0 text-end">{{ finance.user_name }} </span> 
+                    <span class="fs-sm fw-medium text-muted mb-0 text-end">{{ finance.user.username}} </span>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted">
                     {{ finance.Title }}
                     <p class="fw-small mb-0">
-                      {{ finance.usernameD || "Имя пользователя" }}
+                      {{ finance.user.username || "Имя пользователя" }}
                     </p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
@@ -138,7 +160,7 @@ const changePage = (page) => {
                       {{ formatDate(finance.updated_at) }}
                     </p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
+                  <td class="d-none d-sm-table-cell text-end" @click="editFinanceStatus(finance.Status, finances.indexOf(finance))">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(finance.Status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
