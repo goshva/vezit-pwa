@@ -79,7 +79,7 @@ const changePage = (page) => {
                   total
                 }}</span>
               </a>
-           
+
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                 href="javascript:void(0)" @click.prevent="applyFilter(1)">
                 Проверка
@@ -122,14 +122,13 @@ const changePage = (page) => {
                       'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
 
                     }">
-                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ? "Отключено" : "Ошибка" }}
+                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ?
+                      "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <p class="mb-0">Nurillaev Asliddin</p>
-                    <span>777</span>
-                    
+                    <p v-if="video.moderator_id" class="mb-0">{{ video.moderator.name }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(video.updated_at) }}
