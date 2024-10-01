@@ -62,7 +62,7 @@ const editFinanceStatus = async (status, index) => {
       Time: finances.value[index].Time,
       Title: finances.value[index].Title,
       Amount: finances.value[index].Amount,
-      UserID: finances.value[index].user_id,
+      user_id: finances.value[index].user_id,
       headers: {'Content-Type': 'application/json'}})
   } catch(error) {
     console.error("Error updating ad:", error);
