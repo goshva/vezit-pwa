@@ -50,29 +50,26 @@ const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
 
-async function ChangeFinanceStatus(status, index){
+const editFinanceStatus = async (status, index) => {
   if (status > 0){
     finances.value[index].Status = 0;
   } else {
     finances.value[index].Status = 1;
   }
-  //
   try {
-    let response = await axiosInstance.put(`/finances/${finances.value.length - index}`, {
+    await axiosInstance.put(`/finances/${finances.value.length - index}`, {
       Status: finances.value[index].Status,
       Time: finances.value[index].Time,
       Title: finances.value[index].Title,
       Amount: finances.value[index].Amount,
       UserID: finances.value[index].user_id,
-      headers: {'Content-Type': 'application/json'}
-    })
+      headers: {'Content-Type': 'application/json'}})
   } catch(error) {
-    console.error('Ошибка при отправке запроса:', error.message);
-    if (error.response) {
-      console.error('Ответ сервера:', error.response.data);
-    }
+    console.error("Error updating ad:", error);
   }
 }
+
+
 
 </script>
 <template>
@@ -163,7 +160,7 @@ async function ChangeFinanceStatus(status, index){
                       {{ formatDate(finance.updated_at) }}
                     </p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end" @click="ChangeFinanceStatus(finance.Status, finances.indexOf(finance))">
+                  <td class="d-none d-sm-table-cell text-end" @click="editFinanceStatus(finance.Status, finances.indexOf(finance))">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(finance.Status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
