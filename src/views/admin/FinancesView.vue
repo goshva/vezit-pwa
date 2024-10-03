@@ -62,8 +62,7 @@ const editFinanceStatus = async (status, index) => {
       Time: finances.value[index].Time,
       Title: finances.value[index].Title,
       Amount: finances.value[index].Amount,
-      user_id: finances.value[index].user_id,
-      headers: {'Content-Type': 'application/json'}})
+      user_id: finances.value[index].user_id,})
   } catch(error) {
     console.error("Error updating ad:", error);
   }
@@ -144,11 +143,10 @@ const editFinanceStatus = async (status, index) => {
                           d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
                     </p>
-                    <span class="fs-sm fw-medium text-muted mb-0 text-end">{{ finance.user.username}} </span>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted">
                     {{ finance.Title }}
-                    <p class="fw-small mb-0">
+                    <p class="fw-small mb-0" style="font-weight: bold">
                       {{ finance.user.username || "Имя пользователя" }}
                     </p>
                   </td>
