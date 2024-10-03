@@ -121,8 +121,8 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Список видео",
-    link: "/moderator/videosList",
+    name: "Видео",
+    link: "/moderator/ads",
   },
 
   {

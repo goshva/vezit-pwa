@@ -87,9 +87,6 @@ const filteredIconsSimpleLine = computed(() => {
         placeholder="Try house or user.."
         v-model="search"
       />
-      <span class="input-group-text">
-        <i class="fa fa-search"></i>
-      </span>
     </div>
     <!-- END Search Section -->
 

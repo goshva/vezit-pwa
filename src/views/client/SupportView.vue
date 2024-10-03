@@ -1,37 +1,13 @@
 <template>
-  <BaseBlock title="Обратная связь" class="m-5">
-    <div class="">
-        <!-- Sign In Form -->
-        <div class="mb-4">
-          Задайте свой вопрос:
-          </div>
-        <div class="mb-4">
-          <input
-              type="text"
-              class="form-control form-control-alt form-control-lg"
-              placeholder="Введите вопрос"
-            />
-          </div>
 
-          <div class="mb-4">
-            <strong>Наши контакты:
-            8(999)-555-55-55
-            example@mail.ru
-          </strong>
-          </div>
+<RequestSupport />
+<div class="m-5 mb-0">
 
-          
-          <div class="mb-4">
-            <button type="submit" class="btn w-100 btn-alt-primary">
-              <i class=""></i>
-              Отправить
-            </button>
-          </div>
-        </div>
-        <!-- END Sign In Form -->
-  </BaseBlock>
-<!-- END Recent Orders -->
-
+<ResponseSupport/>
+</div>
 </template>
-<script setup></script>
+<script setup>
+import RequestSupport from "@/components/RequestSupport.vue";
+import ResponseSupport from "@/components/ResponseSupport.vue";
+</script>
 <style lang="scss"></style>

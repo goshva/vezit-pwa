@@ -115,13 +115,13 @@ const routerLinks = [
 
   {
     id: Math.random(Date.now()),
-    name: "Список реклам",
+    name: "Рекламные компании",
     link: "/admin/ads",
   },
 
   {
     id: Math.random(Date.now()),
-    name: "Список оборудования",
+    name: "Оборудование",
     link: "/admin/eq",
   },
 
@@ -132,29 +132,54 @@ const routerLinks = [
   },
   {
     id: Math.random(Date.now()),
-    name: "Список системных ошибок",
+    name: "Партнеры",
+    link: "/admin/partners",
+  },  
+  {
+    id: Math.random(Date.now()),
+    name: "Системные ошибки",
     link: "/admin/error",
   },
   {
     id: Math.random(Date.now()),
-    name: "Изменение настроек оборудования",
+    name: "Обновления оборудования",
     link: "/admin/settings",
   },
   {
     id: Math.random(Date.now()),
-    name: "Контроль пользователей",
+    name: "Пользователи",
     link: "/admin/control",
   },
   {
     id: Math.random(Date.now()),
-    name: "Финансы и документы",
+    name: "Финансы",
+    link: "/admin/finances",
+  },
+  {
+    id: Math.random(Date.now()),
+    name: "Документы",
     link: "/admin/documents",
   },
+  {
+    id: Math.random(Date.now()),
+    name: "Шаблоны",
+    link: "/admin/templates",
+  },    
   {
     id: Math.random(Date.now()),
     name: "Tехподдержка",
     link: "/admin/support",
   },
+  {
+    id: Math.random(Date.now()),
+    name: "Локации",
+    link: "/admin/locations",
+  },  
+  {
+    id: Math.random(Date.now()),
+    name: "Тарифы",
+    link: "/admin/tariffs",
+  },    
 ];
 </script>
 

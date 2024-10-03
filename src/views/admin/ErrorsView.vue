@@ -1,19 +1,60 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import axiosInstance from '@/services/axios.js';
+import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
+
+// State for storing update_log data
+const cfgupdate_log = ref([]);
+const loading = ref(false);
+const orderSearch = ref(false);
+
+// Pagination and filtering state
+const currentPage = ref(1);
+const totalPages = ref(1);
+const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
+
+// Fetch update_log data from API
+const fetchEquipments = async (page = 1, status = '') => {
+  loading.value = true;
+  try {
+    const response = await axiosInstance.get(`/cfgupdate-logs`, {
+      params: {
+        page: page,
+        status: status,
+      },
+    });
+    cfgupdate_log.value = response.data.data; // Adjust according to your API structure
+    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    currentPage.value = page;
+  } catch (error) {
+    console.error('Error fetching update_log:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Fetch data when component mounts
+onMounted(() => {
+  fetchEquipments();
+});
+
+// Handle filtering by status
+const applyFilter = (status) => {
+  filterStatus.value = status;
+  fetchEquipments(1, status); // Reset to first page when filtering
+};
+
+// Handle pagination
+const changePage = (page) => {
+  fetchEquipments(page, filterStatus.value);
+};
+</script>
+
 <template>
   <div class="m-5 mb-0">
     <BaseBlock title="Список системных ошибок" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button
-            type="button"
-            class="btn btn-sm btn-alt-secondary"
-            @click="
-              () => {
-                orderSearch = !orderSearch;
-              }
-            "
-          >
-            <i class="fa fa-search"></i>
-          </button>
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -24,39 +65,24 @@
               aria-expanded="false"
             >
               <i class="fa fa-fw fa-flask"></i>
-              Filters
+              Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
-            <div
-              class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters"
-            >
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                Pending
-                <span class="badge bg-primary rounded-pill">20</span>
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('')">
+                Все
+                <span class="badge bg-primary rounded-pill">{{ cfgupdate_log.length }}</span>
               </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                Active
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
+                В работе
                 <span class="badge bg-primary rounded-pill">72</span>
               </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                Completed
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('completed')">
+                Готово
                 <span class="badge bg-primary rounded-pill">890</span>
               </a>
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                All
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('error')">
+                Ошибка
                 <span class="badge bg-primary rounded-pill">997</span>
               </a>
             </div>
@@ -65,125 +91,46 @@
       </template>
 
       <template #content>
-        <div class="block-content block-content-full">
+        <div v-if="loading" class="block-content text-center">
+          <span>Загрузка...</span>
+        </div>
+        <div v-else class="block-content block-content-full">
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th class="d-none d-xl-table-cell">Гос Номер</th>
-                  <th class="d-none d-sm-table-cell">Статус</th>
-                  <th class="d-none d-sm-table-cell">Партнер</th>
-                  <th class="d-none d-sm-table-cell">Дата</th>
+                  <th>Описание</th>
+                  <th class="d-none d-xl-table-cell">Партнер</th>
+                  <th>Статус</th>
+                  <th>IP</th>
+                  <th class="d-none d-sm-table-cell text-end">Дата</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
-                <tr>
+                <tr v-for="update_log in cfgupdate_log" :key="update_log.id">
                   <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00925
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ update_log.equipid }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ update_log.annotation }}</p>
                   </td>
                   <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Marie Duncan</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ update_log.partner_name }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ update_log.partner_role }}</p>
                   </td>
                   <td>
                     <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Completed</span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
+                      :class="{
+                        'bg-success-light text-success': update_log.status === 'completed',
+                        'bg-info-light text-info': update_log.status === 'in-progress',
+                        'bg-warning-light text-warning': update_log.status === 'error'
+                      }"
                     >
+                      {{ update_log.status === 1 ? 'В работе' : update_log.status === 0 ? 'Повторяется' : 'Исправленно' }}
+                    </span>
                   </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 8%"
-                        aria-valuenow="8"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">8%</p>
-                  </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
-                    7 min ago
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00924
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Jack Estrada</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Photographer</p>
-                  </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info"
-                      >Active</span
-                    >
-                  </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 6%"
-                        aria-valuenow="6"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">6%</p>
-                  </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
-                    26 min ago
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a class="fw-semibold" href="javascript:void(0)">
-                      ORD.00923
-                    </a>
-                    <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                  </td>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)"
-                      >Megan Fuller</a
-                    >
-                    <p class="fs-sm fw-medium text-muted mb-0">Web developer</p>
-                  </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Completed</span
-                    >
-                  </td>
-                  <td class="d-none d-sm-table-cell">
-                    <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 25%"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <p class="fs-xs fw-semibold mb-0">25%</p>
-                  </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted">
-                    19 min ago
+                  <td><p>{{ update_log.lastip }}</p></td>
+                  <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
+                    {{ formatDate(update_log.created_at) }}
                   </td>
                 </tr>
               </tbody>
@@ -191,46 +138,23 @@
           </div>
         </div>
         <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Photos Search Navigation">
+          <nav aria-label="Pagination">
             <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="javascript:void(0)"
-                  tabindex="-1"
-                  aria-label="Previous"
-                >
-                  Prev
-                </a>
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">Prev</a>
               </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0)">1</a>
+              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
               </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">4</a>
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="javascript:void(0)"
-                  aria-label="Next"
-                >
-                  Next
-                </a>
+              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)" aria-label="Next">Next</a>
               </li>
             </ul>
           </nav>
         </div>
       </template>
     </BaseBlock>
-    <!-- END Recent Orders -->
   </div>
 </template>
-<script setup></script>
+
 <style lang="scss"></style>

@@ -10,12 +10,9 @@ import LayoutBackendMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
 import LayoutBackendSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
 import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
 import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
+import SupportLayout from "@/layouts/variations/SupportLayout.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
 
-// Frontend: Landing
-const Landing = () => import("@/views/landing/LandingView.vue");
-
-// Backend Boxed: Dashboard
 const BackendBoxedDashboard = () =>
   import("@/views/backend-boxed/DashboardView.vue");
 const BackendBoxedSimple1 = () =>
@@ -264,21 +261,28 @@ const AdsView = () => import("@/views/admin/AdsView.vue");
 const EqView = () => import("@/views/admin/EqView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
 const ClientsView = () => import("@/views/admin/ClientsView.vue");
+const PartnersView = () => import("@/views/admin/PartnersView.vue");
 const ErrorsView = () => import("@/views/admin/ErrorsView.vue");
 const ControlView = () => import("@/views/admin/ControlView.vue");
+const FinancesView = () => import("@/views/admin/FinancesView.vue");
 const DocumentsView = () => import("@/views/admin/DocumentsView.vue");
+const TemplatesView = () => import("@/views/admin/TemplatesView.vue");
 const AdminSupportView = () => import("@/views/admin/SupportView.vue");
-
-//
+const LocationView = () => import("@/views/admin/LocationView.vue");
+const TariffView = () => import("@/views/admin/TariffView.vue");
 
 //moderator views
 const ModeratorDashboardView = () =>
-  import("@/views/moderator/DashboardView.vue");
-const ListVideoView = () => import("@/views/moderator/ListVideoView.vue");
+import("@/views/moderator/DashboardView.vue");
+const AdsModeratorView = () => import("@/views/moderator/AdsView.vue");
 const ResultsView = () => import("@/views/moderator/ResultsView.vue");
 const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
-// const CheckListVideoView = () =>
-//   import("@/views/moderator/CheckListVideoView.vue");
+
+const SupportDashboardView = () =>
+  import("@/views/support/DashboardView.vue");
+
+const SupportSupportView = () => import("@/views/support/SupportView.vue");
+const ResultsSupportView = () => import("@/views/support/ResultsView.vue");
 
 //
 
@@ -290,6 +294,7 @@ const AddAdcView = () => import("@/views/client/AddAdcView.vue");
 const ClientSupportView = () => import("@/views/client/SupportView.vue");
 const ClientAnalyticsView = () => import("@/views/client/AnalyticsView.vue");
 const ClientFinanceView = () => import("@/views/client/FinanceView.vue");
+const ClientCompanyView = () => import("@/views/client/ClientCompanyView.vue");
 //
 
 //partner views
@@ -327,6 +332,11 @@ const routes = [
             component: AdsView,
           },
           {
+            path: 'ads/:id',
+            name: 'EditAd',
+            component: () => import('@/views/admin/EditAdView.vue'), 
+          },          
+          {
             path: "eq",
             component: EqView,
           },
@@ -334,6 +344,7 @@ const routes = [
             path: "clients",
             component: ClientsView,
           },
+          { path: "partners", component: PartnersView },
           {
             path: "error",
             component: ErrorsView,
@@ -347,12 +358,28 @@ const routes = [
             component: ControlView,
           },
           {
+            path: "finances",
+            component: FinancesView,
+          },
+          {
             path: "documents",
             component: DocumentsView,
           },
           {
+            path: "templates",
+            component: TemplatesView,
+          },
+          {
             path: "support",
             component: AdminSupportView,
+          },
+          {
+            path: "locations",
+            component: LocationView,
+          },
+          {
+            path: "tariffs",
+            component: TariffView,
           },
         ],
       },
@@ -371,21 +398,45 @@ const routes = [
             component: ModeratorDashboardView,
           },
           {
-            path: "checkVideos",
-            children: [
-              {
-                path: ":id",
-                component: CheckVideoView,
-              },
-            ],
+            path: 'checkVideos/:id',
+            name: "checkVideos",
+            component: CheckVideoView,
           },
           {
-            path: "videosList",
-            component: ListVideoView,
+            path: "ads",
+            component: AdsModeratorView,
           },
           {
             path: "results",
             component: ResultsView,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: SupportLayout,
+    children: [
+      {
+        path: "support",
+        children: [
+          {
+            path: "dashboard",
+            component: SupportDashboardView,
+          },
+          {
+            path: "messages",
+            component: SupportSupportView,
+          },
+          {
+            path: 'messages/:id',
+            name: 'ResponseSupport',
+            component: () => import('@/views/support/ResponseMessageView.vue'), 
+          },                  
+          {
+            path: "results",
+            component: ResultsSupportView,
           },
         ],
       },
@@ -408,9 +459,14 @@ const routes = [
             component: ClientView,
           },
           {
-            path: "addAdc",
+            path: "ads",
             component: AddAdcView,
           },
+          {
+            path: 'ads/:id',
+            name: 'ClientEditAd',
+            component: () => import('@/views/client/ClientEditAdView.vue'), 
+          }, 
           {
             path: "addVideo",
             component: AddVideoView,
@@ -447,6 +503,11 @@ const routes = [
           {
             path: "cars",
             component: CarsView,
+          },
+          {
+            path: 'cars/:id',
+            name: 'EditCar',
+            component: () => import('@/views/partner/EditCarView.vue'), 
           },
 
           {
