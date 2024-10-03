@@ -128,7 +128,7 @@ const changePage = (page) => {
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <p v-if="video.moderator_id" class="mb-0">{{ video.moderator.name }}</p>
+                    <p v-if="video.moderator" class="mb-0">{{ video.moderator.name }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(video.updated_at) }}
