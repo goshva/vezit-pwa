@@ -126,18 +126,7 @@ const changePage = (page) => {
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <span>0112332</span>
-                    <p>Nurillaev Asliddin</p>
-                    <!-- <div class="progress mb-1" style="height: 5px">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        :style="{ width: video.progress + '%' }"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div> -->
-                    <!-- <p class="fs-xs fw-semibold mb-0">{{ video.progress }}%</p> -->
+                    <p>{{ video.moderator?.name }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(video.updated_at) }}

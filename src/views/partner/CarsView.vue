@@ -117,7 +117,7 @@ const changePage = (page) => {
                   </td>
                   <td class="d-none d-xl-table-cell">{{ car.filename }}</td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <p>Nurillaev Asliddin</p>
+                    <p>{{ car.driver}}</p>
                   </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
