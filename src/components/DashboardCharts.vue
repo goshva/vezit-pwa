@@ -50,7 +50,7 @@ import BalanceDisplay from '@/components/BalanceDisplay.vue';
 import DateFilter from '@/components/DateFilter.vue';
 import AdminOverview from '@/components/overviews/AdminOverView.vue';
 import axiosInstance from '@/services/axios.js';
-
+// import formatRubles from '@/services/priceConvert.js'
 
 const loading = ref(false);
 const clients = ref([]);
@@ -81,13 +81,12 @@ const fetchClientFinanceSummary = async () => {
 };
 
 const clientsTotal = computed(() => {
-  return clients.value.reduce((total, client) => total + parseInt(client.total_amount), 0);
+  return clients.value.reduce((total, client) => total + parseInt(client.total_amount), 0)/100;
 });
 
 const partnersTotal = computed(() => {
-  return partners.value.reduce((total, partner) => total + parseInt(partner.total_amount), 0);
+  return partners.value.reduce((total, partner) => total + parseInt(partner.total_amount), 0)/100;
 });
-
 onMounted(() => {
   fetchClientFinanceSummary();
   fetchPartnerFinanceSummary();
