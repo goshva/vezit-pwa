@@ -3,7 +3,7 @@ import RequestSupport from "@/components/RequestSupport.vue";
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
-
+import { formatRubles } from '@/services/priceConvert.js';
 // State for storing finance data
 const finances = ref([]);
 const loading = ref(false);
@@ -142,7 +142,7 @@ const changePage = (page) => {
                     </p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ finance.Amount }} ₽
+                    {{formatRubles(finance.Amount)}} ₽
                   </td>
 
                   <td class="d-none d-sm-table-cell text-end">

@@ -151,7 +151,7 @@ const editFinanceStatus = async (status, index) => {
                     </p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ formatRubles(finance.Amount) }}
+                    {{ formatRubles(finance.Amount) }} ₽
                   </td>
                   <td>
                     <p class="fs-sm fw-medium text-muted mb-0">
