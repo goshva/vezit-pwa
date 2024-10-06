@@ -430,7 +430,7 @@ const routes = [
             component: SupportSupportView,
           },
           {
-            path: 'messages/:id',
+            path: 'tikect/:id',
             name: 'ResponseSupport',
             component: () => import('@/views/support/ResponseMessageView.vue'), 
           },                  
