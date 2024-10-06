@@ -258,6 +258,7 @@ const Error503 = () => import("@/views/errors/503View.vue");
 
 //admin views
 const AdsView = () => import("@/views/admin/AdsView.vue");
+const AdminCarsView = () => import("@/views/admin/CarsView.vue")
 const EqView = () => import("@/views/admin/EqView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
 const ClientsView = () => import("@/views/admin/ClientsView.vue");
@@ -345,6 +346,9 @@ const routes = [
             component: ClientsView,
           },
           { path: "partners", component: PartnersView },
+          {
+            path: "cars", component: AdminCarsView
+          },
           {
             path: "error",
             component: ErrorsView,
