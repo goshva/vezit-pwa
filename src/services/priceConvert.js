@@ -1,3 +1,3 @@
-export const formatRubles = (dateString) => {
-    return dateString/100 + ' ₽';
+export const formatRubles = (dateNumber) => {
+    return dateNumber/100;
   };
