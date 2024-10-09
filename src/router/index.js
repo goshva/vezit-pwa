@@ -350,6 +350,11 @@ const routes = [
             path: "cars", component: AdminCarsView
           },
           {
+            path: 'cars/:id',
+            name: 'EditAd',
+            component: () => import('@/views/admin/EditCarView.vue'), 
+          },           
+          {
             path: "error",
             component: ErrorsView,
           },
