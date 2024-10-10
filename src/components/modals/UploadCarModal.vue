@@ -35,30 +35,10 @@
               <div class="block-content">
                 <input
                   class="form-control"
-                  type="file"
-                  id="videoId"
-                  @change="handleFileUpload"
-                  accept="video/*"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
                   type="text"
-                  id="filename"
-                  v-model="filename"
-                  placeholder="Default Filename"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="serverFilename"
-                  v-model="serverfilename"
-                  placeholder="Default Server Filename"
+                  id="driver"
+                  v-model="driver"
+                  placeholder="Driver"
                   required
                 />
               </div>
@@ -66,9 +46,9 @@
                 <input
                   class="form-control"
                   type="number"
-                  id="userId"
-                  v-model="user_id"
-                  placeholder="User ID"
+                  id="partner_id"
+                  v-model="partner_id"
+                  placeholder="Partner ID"
                   required
                 />
               </div>
@@ -76,28 +56,59 @@
                 <input
                   class="form-control"
                   type="text"
-                  id="duration"
-                  v-model="duration"
-                  placeholder="00:00:00"
+                  id="carVIN"
+                  v-model="carVIN"
+                  placeholder="Car VIN"
                   required
                 />
               </div>
               <div class="block-content">
                 <input
                   class="form-control"
-                  type="url"
-                  id="url"
-                  v-model="url"
-                  placeholder="http://example.com/video.mp4"
+                  type="text"
+                  id="carPlate"
+                  v-model="carPlate"
+                  placeholder="Car Plate"
                   required
                 />
               </div>
               <div class="block-content">
                 <input
                   class="form-control"
-                  type="datetime-local"
-                  id="adddate"
-                  v-model="adddate"
+                  type="text"
+                  id="carModel"
+                  v-model="carModel"
+                  placeholder="Car Model"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carColor"
+                  v-model="carColor"
+                  placeholder="Car Color"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carDescription"
+                  v-model="carDescription"
+                  placeholder="Car Description"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carType"
+                  v-model="carType"
+                  placeholder="Car Type"
                   required
                 />
               </div>
@@ -105,21 +116,22 @@
                 <input
                   class="form-control"
                   type="number"
-                  id="mainLocation"
-                  v-model="mainlocation"
-                  placeholder="Main Location ID"
+                  id="carEquipmentID"
+                  v-model="carEquipmentID"
+                  placeholder="Car Equipment ID"
                   required
                 />
               </div>
               <div class="block-content">
                 <select class="form-control" id="status" v-model="status" required>
-                  <option :value="1">Yes</option>
-                  <option :value="0">No</option>
+                  <option value="ожидает">ожидает</option>
+                  <option value="в процессе">в процессе</option>
+                  <option value="завершен">завершен</option>
                 </select>
               </div>
               <div class="block-content block-content-full text-end">
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
-                  Upload
+                  Save
                 </button>
               </div>
             </form>
@@ -133,53 +145,41 @@
 <script setup>
 import { ref } from "vue";
 import axiosInstance from "@/services/axios.js";
-import { useRouter } from "vue-router";
 
-const router = useRouter();
-const videoFile = ref(null);
+const driver = ref("Арсен Быстров");
+const partner_id = ref(1);  // Default partner ID for testing
+const carVIN = ref("d1234567890");
+const carPlate = ref("А0111Р126");
+const carModel = ref("Toyota Corolla");
+const carColor = ref("Белый");
+const carDescription = ref("Хорошее техническое состояние");
+const carType = ref("Легковой седан");
+const carEquipmentID = ref(2);  // Default car equipment ID for testing
+const status = ref("ожидает");  // Default status for testing
 
-// Default values for required fields
-const filename = ref("default_filename.mp4");
-const serverfilename = ref("default_server_filename.mp4");
-const user_id = ref(1);  // Default user ID
-const duration = ref("00:00:00");  // Default duration
-const url = ref("http://example.com/video.mp4");  // Default URL
-const adddate = ref(new Date().toISOString().slice(0, 16));  // Default current date and time
-const mainlocation = ref(1);  // Default main location ID
-const status = ref(1);  // Default status status
-
-const handleFileUpload = (event) => {
-  videoFile.value = event.target.files[0];
-};
 
 const handleSubmit = async () => {
-  if (videoFile.value) {
-    const formData = new FormData();
-    formData.append("video", videoFile.value);
-    formData.append("filename", filename.value);
-    formData.append("serverfilename", serverfilename.value);
-    formData.append("user_id", user_id.value);
-    formData.append("duration", duration.value);
-    formData.append("url", url.value);
-    formData.append("adddate", adddate.value);
-    formData.append("mainlocation", mainlocation.value);
-    formData.append("status", status.value);
+  const formData = {
+    driver: driver.value,
+    partner_id: partner_id.value,
+    carVIN: carVIN.value,
+    carPlate: carPlate.value,
+    carModel: carModel.value,
+    carColor: carColor.value,
+    carDescription: carDescription.value,
+    carType: carType.value,
+    carEquipmentID: carEquipmentID.value,
+    status: status.value,
+  };
 
-    try {
-      const response = await axiosInstance.post("/videos/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+  try {
+    const response = await axiosInstance.post("/cars", formData);
 
-      if (response.status === 201) {
-        // Handle successful upload, e.g., navigate to another page or show success message
-        console.log("Video uploaded successfully!");
-      }
-    } catch (error) {
-      console.error("Error uploading video:", error);
-      // Handle error, e.g., show an error message
+    if (response.status === 201) {
+      console.log("Car data submitted successfully!");
     }
+  } catch (error) {
+    console.error("Error submitting car data:", error);
   }
 };
 </script>

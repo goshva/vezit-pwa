@@ -1,123 +1,160 @@
 <template>
-    <div class="m-5 mb-5">
-      <BaseBlock title="Редактировать автомобиль">
-        <template #content>
-          <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
-            <div class="col-md-6 mb-3">
-              <label for="filename" class="form-label">Название авто</label>
-              <input
-                type="text"
-                class="form-control"
-                id="filename"
-                v-model="ad.filename"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="serverFilename" class="form-label">Имя файла на сервере</label>
-              <input
-                type="text"
-                class="form-control"
-                id="serverFilename"
-                v-model="ad.serverfilename"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="userId" class="form-label">ID пользователя</label>
-              <input
-                type="number"
-                class="form-control"
-                id="userId"
-                v-model="ad.userid"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="duration" class="form-label">Длительность</label>
-              <input
-                type="text"
-                class="form-control"
-                id="duration"
-                v-model="ad.duration"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="url" class="form-label">URL</label>
-              <input
-                type="url"
-                class="form-control"
-                id="url"
-                v-model="ad.url"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="mainLocation" class="form-label">Основное местоположение</label>
-              <input
-                type="number"
-                class="form-control"
-                id="mainLocation"
-                v-model="ad.mainlocation"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="enabled" class="form-label">Включено</label>
-              <select class="form-control" id="enabled" v-model="ad.enabled">
-                <option :value="1">Да</option>
-                <option :value="0">Нет</option>
-              </select>
-            </div>
-            <div class="col-md-12 text-center p-3">
-              <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-            </div>
-          </form>
-        </template>
-      </BaseBlock>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from "vue";
-  import { useRoute, useRouter } from "vue-router";
-  import axiosInstance from "@/services/axios.js";
-  
-  const route = useRoute();
-  const router = useRouter();
-  
-  const ad = ref({
-    id: null,
-    filename: "",
-    serverfilename: "",
-    userid: null,
-    duration: "",
-    url: "",
-    mainlocation: null,
-    enabled: 0,
-  });
-  
-  const fetchAdDetails = async (id) => {
-    try {
-      const response = await axiosInstance.get(`/videos/${id}`);
-      ad.value = response.data;
-    } catch (error) {
-      console.error("Error fetching ad details:", error);
-    }
-  };
-  
-  const handleSubmit = async () => {
-    try {
-      await axiosInstance.put(`/videos/${route.params.id}`, ad.value);
-      router.push("/admin/ads");
-    } catch (error) {
-      console.error("Error updating ad:", error);
-    }
-  };
-  
-  onMounted(() => {
-    fetchAdDetails(route.params.id);
-  });
-  </script>
-  
+  <div class="m-5 mb-5">
+    <BaseBlock title="Редактировать автомобиль">
+      <template #content>
+        <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
+          <div class="col-md-6 mb-3">
+            <label for="driver" class="form-label">Водитель</label>
+            <input
+              type="text"
+              class="form-control"
+              id="driver"
+              v-model="car.driver"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="partner_id" class="form-label">ID партнера</label>
+            <input
+              type="number"
+              class="form-control"
+              id="partner_id"
+              v-model="car.partner_id"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="carVIN" class="form-label">VIN автомобиля</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carVIN"
+              v-model="car.carVIN"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="carPlate" class="form-label">Номерной знак</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carPlate"
+              v-model="car.carPlate"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="carModel" class="form-label">Модель автомобиля</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carModel"
+              v-model="car.carModel"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="carColor" class="form-label">Цвет автомобиля</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carColor"
+              v-model="car.carColor"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="carDescription" class="form-label">Описание автомобиля</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carDescription"
+              v-model="car.carDescription"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="carType" class="form-label">Тип автомобиля</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carType"
+              v-model="car.carType"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="carEquipmentID" class="form-label">ID оборудования автомобиля</label>
+            <input
+              type="number"
+              class="form-control"
+              id="carEquipmentID"
+              v-model="car.carEquipmentID"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="status" class="form-label">Статус</label>
+            <select class="form-control" id="status" v-model="car.status">
+              <option value="ожидает">ожидает</option>
+              <option value="в процессе">в процессе</option>
+              <option value="завершен">завершен</option>
+            </select>
+          </div>
+          <div class="col-md-12 text-center p-3">
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+          </div>
+        </form>
+      </template>
+    </BaseBlock>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import axiosInstance from "@/services/axios.js";
+
+const route = useRoute();
+const router = useRouter();
+
+const car = ref({
+  id: null,
+  driver: "",
+  partner_id: null,
+  carVIN: "",
+  carPlate: "",
+  carModel: "",
+  carColor: "",
+  carDescription: "",
+  carType: "",
+  carEquipmentID: null,
+  status: "ожидает",
+});
+
+const fetchCarDetails = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/cars/${id}`);
+    car.value = response.data;
+  } catch (error) {
+    console.error("Error fetching car details:", error);
+  }
+};
+
+const handleSubmit = async () => {
+  try {
+    await axiosInstance.put(`/cars/${route.params.id}`, car.value);
+    router.push("/admin/cars");
+  } catch (error) {
+    console.error("Error updating car:", error);
+  }
+};
+
+onMounted(() => {
+  fetchCarDetails(route.params.id);
+});
+</script>
+
+<style lang="css">
+/* Add any additional styles if needed */
+</style>

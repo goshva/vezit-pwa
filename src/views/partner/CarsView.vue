@@ -56,7 +56,7 @@ const changePage = (page) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список автомобилей" class="mb-0">
+    <BaseBlock title="Автопарк" class="mb-0">
       <template #options>
         <div class="space-x-4">
           <UploadVideoModal />

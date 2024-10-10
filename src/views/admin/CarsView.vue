@@ -5,7 +5,7 @@ import { formatDate } from "@/services/dateFormatter.js"; // Import the date for
 import UploadCarModal from "@/components/modals/UploadCarModal.vue";
 
 // State for storing video data
-const videos = ref([]);
+const cars = ref([]);
 const total = ref(0);
 const loading = ref(false);
 const orderSearch = ref(false);
@@ -25,7 +25,7 @@ const fetchEquipments = async (page = 1, status = "") => {
         status: status,
       },
     });
-    videos.value = response.data.data;
+    cars.value = response.data.data;
     total.value = response.data.total;
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
@@ -96,7 +96,7 @@ const changePage = (page) => {
 
       <template #content>
         <div v-if="loading" class="block-content text-center">
-          <span>Загрузка...</span>
+          <span>Загрузка авто...</span>
         </div>
         <div v-else class="block-content block-content-full">
           <div class="table-responsive">
@@ -104,37 +104,46 @@ const changePage = (page) => {
               <thead>
                 <tr>
                   <th class="d-xl-table-cell">Название</th>
+                  <th class="d-xl-table-cell">Номер</th>
                   <th>Статус</th>
                   <th class="d-none d-sm-table-cell text-center">Партнёр</th>
+                  <th class="d-none d-sm-table-cell text-center">Водитель</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
                   <th class="d-none d-sm-table-cell text-end"></th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
-                <tr v-for="video in videos" :key="video.id">
-                  <td class="d-xl-table-cell">{{ video.filename }}</td>
+                <tr v-for="car in cars" :key="car.id">
+                  <td class="d-xl-table-cell">{{ car.carModel }}</td>
+                  <td class="d-none d-sm-table-cell text-start">
+                    <p v-if="car.carVIN" class="mb-0">{{ car.carVIN }}</p>
+                  </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': video.status === 0,
-                      'bg-info-light text-info': video.status === 1,
-                      'bg-danger-light text-danger': video.status === 2,
-                      'bg-warning-light text-warning': video.status === 3,
-                      'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
+                      'bg-success-light text-success': car.status === 0,
+                      'bg-info-light text-info': car.status === 1,
+                      'bg-danger-light text-danger': car.status === 2,
+                      'bg-warning-light text-warning': car.status === 3,
+                      'bg-light': car.status === 4 || car.status === 5 || car.status === 6,
 
                     }">
-                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ? "Отключено" : "Ошибка" }}
+                      {{ car.status === 0 ? "Включено" : car.status === 1 ? "Ожидание" : car.status === 3 ? "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <p v-if="video.moderator_id" class="mb-0">{{ video.moderator.name }}</p>
+                    <p v-if="car.partner_id" class="mb-0">{{ car.partner_id }}</p>
+                  </td>
+                  <td class="d-none d-sm-table-cell text-start">
+                    <p v-if="car.driver" class="mb-0">{{ car.driver }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ formatDate(video.updated_at) }}
+                    {{ formatDate(car.updated_at) }}
                   </td>
+                  
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'EditAd', params: { id: video.id } }">
+                      <router-link :to="{ name: 'EditAd', params: { id: car.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>
