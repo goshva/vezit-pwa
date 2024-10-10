@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import { formatRubles } from '@/services/priceConvert.js';
+import CreateFianceModal from "@/components/modals/CreateFianceModal.vue";
 
 // State for storing finance data
 const finances = ref([]);
@@ -75,7 +76,8 @@ const editFinanceStatus = async (status, index) => {
   <div class="m-5 mb-0">
     <BaseBlock title="Финансы" class="mb-0">
       <template #options>
-        <div class="space-x-1">
+        <div class="space-x-4">
+          <CreateFianceModal />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
