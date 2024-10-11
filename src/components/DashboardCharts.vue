@@ -4,7 +4,7 @@
       <div class="col-lg-12">
         <BaseBlock title="Панель управления">
           <template #options>
-            <BalanceDisplay :balance="clientsTotal - partnersTotal" />
+            <BalanceDisplay :balance="formatRubles(clientsTotal - partnersTotal)" />
           </template>
 
           <template #content>
@@ -22,13 +22,13 @@
               <div class="row items-push text-center py-3">
                 <div class="col-6 col-xl-6">
                   <p class="m-0" id="page-header-user-dropdown">
-                    Рекламодатели: <strong>{{ clientsTotal }}</strong> ₽
+                    Рекламодатели: <strong>{{ formatRubles(clientsTotal)}}</strong> ₽
                   </p>
                   <DateFilter />
                 </div>
                 <div class="col-6 col-xl-6">
                   <p class="m-0" id="page-header-user-dropdown">
-                    Партнеры: <strong>{{ partnersTotal }}</strong> ₽
+                    Партнеры: <strong>{{ formatRubles(partnersTotal)}}</strong> ₽
                   </p>
                   <DateFilter />
                 </div>
@@ -55,7 +55,6 @@ import {formatRubles} from '@/services/priceConvert.js';
 const loading = ref(false);
 const clients = ref([]);
 const partners = ref([]);
-
 const fetchPartnerFinanceSummary = async () => {
   loading.value = true;
   try {
@@ -81,11 +80,11 @@ const fetchClientFinanceSummary = async () => {
 };
 
 const clientsTotal = computed(() => {
-  return formatRubles(clients.value.reduce((total, client) => total + parseInt(client.total_amount), 0).valueOf());
+  return clients.value.reduce((total, client) => total + parseInt(client.total_amount), 0);
 });
 
 const partnersTotal = computed(() => {
-  return formatRubles(partners.value.reduce((total, partner) => total + parseInt(partner.total_amount), 0).valueOf());
+  return partners.value.reduce((total, partner) => total + parseInt(partner.total_amount), 0);
 });
 
 onMounted(() => {

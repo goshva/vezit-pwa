@@ -271,6 +271,7 @@ const TemplatesView = () => import("@/views/admin/TemplatesView.vue");
 const AdminSupportView = () => import("@/views/admin/SupportView.vue");
 const LocationView = () => import("@/views/admin/LocationView.vue");
 const TariffView = () => import("@/views/admin/TariffView.vue");
+const ModeratorsView = () => import("@/views/admin/ModeratorsView.vue")
 
 //moderator views
 const ModeratorDashboardView = () =>
@@ -344,6 +345,10 @@ const routes = [
           {
             path: "clients",
             component: ClientsView,
+          },
+          {
+            path: "moderators",
+            component: ModeratorsView,
           },
           { path: "partners", component: PartnersView },
           {
