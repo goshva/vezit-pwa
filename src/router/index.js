@@ -351,7 +351,7 @@ const routes = [
           },
           {
             path: 'cars/:id',
-            name: 'EditAd',
+            name: 'EditCar',
             component: () => import('@/views/admin/EditCarView.vue'), 
           },           
           {
@@ -365,6 +365,11 @@ const routes = [
           {
             path: "control",
             component: ControlView,
+          },
+          {
+            path: 'control/:id',
+            name: 'EditUserView',
+            component: () => import('@/views/admin/EditUserView.vue'), 
           },
           {
             path: "finances",

@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 
 // State for storing user data
 const users = ref([]);
@@ -98,30 +97,43 @@ const changePage = (page) => {
             <table class="table table-hover table-vcenter">
               <thead>
                 <th>Имя</th>
-                <th class="d-none d-xl-table-cell">Статус</th>
-                <th>Контакт</th>
-                <th>Дата реистрации</th>
-                <th>Последний заход</th>
-                <th class="d-none d-sm-table-cell">Блокировка</th>
+                <th class="d-none d-xl-table-cell">Компания (Роль)</th>
+                <th>Электронная почта</th>
+                <th>Роль пользователя</th>
+                <th>Статус</th>
+                <th>Последний IP адрес</th>
+                <th>Дата регистрации</th>
+                <th></th>
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="user in users" :key="user.id">
                   <td>
                     <a class="fw-semibold" href="javascript:void(0)">
-                      {{ user.id }}
+                      {{ user.fullusername }} <!-- Display full username -->
                     </a>
                   </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)">
-                      {{ user.username }} <!-- Display username -->
+                      {{ user.companyname }} <!-- Display company name -->
                     </a>
+                    <span class="text-muted">({{ user.companyrole }})</span> <!-- Display company role -->
                   </td>
-                  <td>0</td> <!-- Fixed value for Кол-во -->
-                  <td>0</td> <!-- Fixed value for Город -->
                   <td>{{ user.email }}</td> <!-- Display email -->
-                  <td class="d-none d-sm-table-cell">
+                  <td>{{ user.userrole }}</td> <!-- Display user role -->
+                  <td>{{ user.status === 0 ? 'Inactive' : 'Active' }}</td> <!-- Display status (Active/Inactive) -->
+                  <td>{{ user.lastipaddr }}</td> <!-- Display last IP address -->
+                  <td>
                     <strong>{{ new Date(user.created_at).toLocaleDateString() }}</strong>
-                    <!-- Display formatted date -->
+                    <!-- Display formatted creation date -->
+                  </td>
+                  <td class="d-none d-sm-table-cell text-end">
+                    <div class="d-flex justify-content-evenly">
+                      <router-link :to="{ name: 'EditUserView', params: { id: user.id } }">
+                        <button class="btn btn-sm btn-alt-primary">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                      </router-link>
+                    </div>
                   </td>
                 </tr>
               </tbody>
