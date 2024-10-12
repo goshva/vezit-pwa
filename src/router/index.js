@@ -258,6 +258,7 @@ const Error503 = () => import("@/views/errors/503View.vue");
 
 //admin views
 const AdsView = () => import("@/views/admin/AdsView.vue");
+const AdminCarsView = () => import("@/views/admin/CarsView.vue")
 const EqView = () => import("@/views/admin/EqView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
 const ClientsView = () => import("@/views/admin/ClientsView.vue");
@@ -270,6 +271,7 @@ const TemplatesView = () => import("@/views/admin/TemplatesView.vue");
 const AdminSupportView = () => import("@/views/admin/SupportView.vue");
 const LocationView = () => import("@/views/admin/LocationView.vue");
 const TariffView = () => import("@/views/admin/TariffView.vue");
+const ModeratorsView = () => import("@/views/admin/ModeratorsView.vue")
 
 //moderator views
 const ModeratorDashboardView = () =>
@@ -344,7 +346,19 @@ const routes = [
             path: "clients",
             component: ClientsView,
           },
+          {
+            path: "moderators",
+            component: ModeratorsView,
+          },
           { path: "partners", component: PartnersView },
+          {
+            path: "cars", component: AdminCarsView
+          },
+          {
+            path: 'cars/:id',
+            name: 'EditCar',
+            component: () => import('@/views/admin/EditCarView.vue'), 
+          },           
           {
             path: "error",
             component: ErrorsView,
@@ -356,6 +370,11 @@ const routes = [
           {
             path: "control",
             component: ControlView,
+          },
+          {
+            path: 'control/:id',
+            name: 'EditUserView',
+            component: () => import('@/views/admin/EditUserView.vue'), 
           },
           {
             path: "finances",
@@ -430,7 +449,7 @@ const routes = [
             component: SupportSupportView,
           },
           {
-            path: 'messages/:id',
+            path: 'tikect/:id',
             name: 'ResponseSupport',
             component: () => import('@/views/support/ResponseMessageView.vue'), 
           },                  

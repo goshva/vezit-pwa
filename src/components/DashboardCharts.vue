@@ -4,7 +4,7 @@
       <div class="col-lg-12">
         <BaseBlock title="Панель управления">
           <template #options>
-            <BalanceDisplay :balance="clientsTotal - partnersTotal" />
+            <BalanceDisplay :balance="formatRubles(clientsTotal - partnersTotal)" />
           </template>
 
           <template #content>
@@ -22,13 +22,13 @@
               <div class="row items-push text-center py-3">
                 <div class="col-6 col-xl-6">
                   <p class="m-0" id="page-header-user-dropdown">
-                    Рекламодатели: <strong>{{ clientsTotal }}</strong> ₽
+                    Рекламодатели: <strong>{{ formatRubles(clientsTotal)}}</strong> ₽
                   </p>
                   <DateFilter />
                 </div>
                 <div class="col-6 col-xl-6">
                   <p class="m-0" id="page-header-user-dropdown">
-                    Партнеры: <strong>{{ partnersTotal }}</strong> ₽
+                    Партнеры: <strong>{{ formatRubles(partnersTotal)}}</strong> ₽
                   </p>
                   <DateFilter />
                 </div>
@@ -50,12 +50,11 @@ import BalanceDisplay from '@/components/BalanceDisplay.vue';
 import DateFilter from '@/components/DateFilter.vue';
 import AdminOverview from '@/components/overviews/AdminOverView.vue';
 import axiosInstance from '@/services/axios.js';
-
+import {formatRubles} from '@/services/priceConvert.js';
 
 const loading = ref(false);
 const clients = ref([]);
 const partners = ref([]);
-
 const fetchPartnerFinanceSummary = async () => {
   loading.value = true;
   try {

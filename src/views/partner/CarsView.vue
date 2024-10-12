@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
+import { formatRubles } from '@/services/priceConvert.js';
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
 // State for storing car data
@@ -55,7 +56,7 @@ const changePage = (page) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список автомобилей" class="mb-0">
+    <BaseBlock title="Автопарк" class="mb-0">
       <template #options>
         <div class="space-x-4">
           <UploadVideoModal />
