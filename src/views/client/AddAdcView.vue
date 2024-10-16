@@ -36,6 +36,14 @@ const fetchEquipments = async (page = 1, status = "") => {
   }
 };
 
+const deleteVideo = async (videoId) => {
+
+}
+
+const isVideoModerated = (video) => {
+  return video.status === 1 || video.status === 0 && video.moderator
+}
+
 // Fetch data when component mounts
 onMounted(() => {
   fetchEquipments();
@@ -135,11 +143,16 @@ const changePage = (page) => {
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'ClientEditAd', params: { id: video.id } }">
+                      <router-link v-if="!isVideoModerated(video)" :to="{ name: 'ClientEditAd', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
+                      <div v-if="isVideoModerated(video)" @click="deleteVideo(video.id)">
+                        <button class="btn btn-sm btn-alt-danger">
+                          <i class="fa fa-close"></i>
+                        </button>
+                      </div>
                     </div>
                   </td>
                 </tr>
