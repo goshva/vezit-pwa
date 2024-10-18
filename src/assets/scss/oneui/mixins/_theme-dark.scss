@@ -548,10 +548,10 @@
         &::placeholder {
           color: rgba($white, 0.5);
         }
-
-        border-color: rgba(#14532d, 0.85);
-        background-color: rgba(#14532d, 0.85);
-
+        & {
+         border-color: rgba(#14532d, 0.85);
+         background-color: rgba(#14532d, 0.85);
+        }
         &:focus {
           border-color: rgba(#14532d, 1);
           background-color: rgba(#14532d, 1);
@@ -563,8 +563,8 @@
           color: rgba($white, 0.5);
         }
 
-        border-color: rgba(#7f1d1d, 0.85);
-        background-color: rgba(#7f1d1d, 0.85);
+        // border-color: rgba(#7f1d1d, 0.85);
+        // background-color: rgba(#7f1d1d, 0.85);
 
         &:focus {
           border-color: rgba(#7f1d1d, 1);
@@ -1020,7 +1020,7 @@
     }
 
     // Vueform Slider
-    --slider-bg: #{darken($primary-darker, 4.5%)};
+    //--slider-bg: #{darken($primary-darker, 4.5%)};
 
     // Vue Select
     .vs__dropdown-toggle,
