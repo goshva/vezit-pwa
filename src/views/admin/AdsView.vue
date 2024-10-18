@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axiosInstance from "@/services/axios.js";
-import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
+import { formatDate } from "@/services/dateFormatter.js";
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
 // State for storing video data
