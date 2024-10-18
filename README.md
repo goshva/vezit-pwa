@@ -1,8 +1,9 @@
 # oneui-vue-edition
 
-# sync
-
-lftp -u host1868209_y,DgGL8m4S -e "set ssl:verify-certificate no; mirror -R ./dist / ; quit" ftp://ftp79.hostland.ru
+# sync  
+```sh
+npm run build && cp .htaccess ./dist/ && lftp -u host1868209_y,DgGL8m4S -e "set ssl:verify-certificate no; mirror -R ./dist / ; quit" ftp://ftp79.hostland.ru
+```
 
 ## Recommended IDE Setup
 
