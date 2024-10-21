@@ -113,12 +113,15 @@ const changePage = (page) => {
                     <a class="fw-semibold" href="javascript:void(0)">
                       {{ user.fullusername }} <!-- Display full username -->
                     </a>
+                    <a class="fw-normal text-muted" href="javascript:void(0)">
+                      {{ user.username }} <!-- Display username -->
+                    </a>
                   </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)">
                       {{ user.companyname }} <!-- Display company name -->
                     </a>
-                    <span class="text-muted">({{ user.companyrole }})</span> <!-- Display company role -->
+                    <span v-if="user.companyrole" class="text-muted">({{ user.companyrole }})</span> <!-- Display company role -->
                   </td>
                   <td>{{ user.email }}</td> <!-- Display email -->
                   <td>{{ user.userrole }}</td> <!-- Display user role -->
