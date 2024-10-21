@@ -173,7 +173,7 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await axiosInstance.post("/cars", formData);
+    const response = await axiosInstance.post("/partnerscars", formData);
 
     if (response.status === 201) {
       console.log("Car data submitted successfully!");

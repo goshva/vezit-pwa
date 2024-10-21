@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axiosInstance from "@/services/axios.js";
-import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
+import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js'; // Import the date formatter
+
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
 // State for storing video data
@@ -9,6 +10,7 @@ const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
 const orderSearch = ref(false);
+const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -51,7 +53,14 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
+const toggleFormat = () => {
+  toggleDateFormat(dateFormat); // Pass the dateFormat ref to toggleDateFormat
+};
 
+// Format date using service
+const formatClientDate = (dateString) => {
+  return formatDateBasedOnFormat(dateString, dateFormat); // Pass the dateFormat ref
+};
 
 </script>
 
@@ -104,13 +113,12 @@ const changePage = (page) => {
                   <th class="d-xl-table-cell">Название</th>
                   <th>Статус</th>
                   <th class="d-none d-sm-table-cell text-center">Модератор</th>
-                  <th class="d-none d-sm-table-cell text-end">Дата</th>
+                  <th class="d-none d-sm-table-cell text-center">Дата</th>
                   <th class="d-none d-sm-table-cell text-end"></th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td>{{ video.filename }}</td>
                   <td class="d-none d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
@@ -128,8 +136,12 @@ const changePage = (page) => {
                   <td class="d-none d-sm-table-cell text-start">
                     <p>{{ video.moderator?.name }}</p>
                   </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ formatDate(video.updated_at) }}
+                  <td 
+                    class="d-none d-sm-table-cell fw-semibold text-muted text-center"
+                    @click="toggleFormat"
+                    style="cursor: pointer;"
+                  >
+                    {{ formatClientDate(video.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">

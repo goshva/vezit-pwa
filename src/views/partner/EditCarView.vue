@@ -70,9 +70,14 @@
                 <option :value="0">Нет</option>
               </select>
             </div>
-            <div class="col-md-12 text-center p-3">
+            <div class="row g-3 m-2 mb-5">
+            <div class="col-md-6 text-center p-3">
+              <button @click.prevent="handleDelete" class="btn btn-danger">Удалить</button>
+            </div>
+            <div class="col-md-6 text-center p-3">
               <button type="submit" class="btn btn-primary">Сохранить изменения</button>
             </div>
+          </div>
           </form>
         </template>
       </BaseBlock>
@@ -100,7 +105,7 @@
   
   const fetchAdDetails = async (id) => {
     try {
-      const response = await axiosInstance.get(`/partnercars/${id}`);
+      const response = await axiosInstance.get(`/partnerscars/${id}`);
       ad.value = response.data;
     } catch (error) {
       console.error("Error fetching ad details:", error);
@@ -109,8 +114,8 @@
   
   const handleSubmit = async () => {
     try {
-      await axiosInstance.put(`/partnercars/${route.params.id}`, ad.value);
-      router.push("/partner/cars");
+      await axiosInstance.put(`/partnerscars/${route.params.id}`, ad.value);
+      router.push(-1);
     } catch (error) {
       console.error("Error updating ad:", error);
     }

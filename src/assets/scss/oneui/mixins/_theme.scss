@@ -1089,11 +1089,12 @@
   }
 
   // Vueform Slider
+  & {
   --slider-bg: #{$body-bg-dark};
   --slider-connect-bg: #{$primary};
   --slider-tooltip-bg: #{$primary};
   --slider-handle-ring-color: #{$primary};
-
+  }
   // Vue Select
   .vs__dropdown-option--highlight {
     background: $primary;
@@ -1107,5 +1108,33 @@
   .vs__selected {
     background: $body-bg;
     border-color: $body-bg;
+  }
+}
+
+legend {
+  float: left; // 1
+  width: 100%;
+  padding: 0;
+  margin-bottom: $legend-margin-bottom;
+  @include font-size($legend-font-size);
+  & {
+    font-weight: $legend-font-weight;
+    line-height: inherit;
+  }
+
+  + * {
+    clear: left; // 2
+  }
+}
+
+@each $display, $font-size in $display-font-sizes {
+  .display-#{$display} {
+    @include font-size($font-size);
+    & {
+    font-family: $display-font-family;
+    font-style: $display-font-style;
+    font-weight: $display-font-weight;
+    line-height: $display-line-height;
+  }
   }
 }

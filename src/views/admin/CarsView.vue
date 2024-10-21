@@ -1,9 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
 import UploadCarModal from "@/components/modals/UploadCarModal.vue";
-
+const route = useRoute();
 // State for storing video data
 const cars = ref([]);
 const total = ref(0);
@@ -19,7 +20,7 @@ const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error'
 const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/partnerscars`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
@@ -143,7 +144,7 @@ const changePage = (page) => {
                   
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'EditCar', params: { id: car.id } }">
+                      <router-link :to="{ name: 'AdminEditCar', params: { id: car.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>

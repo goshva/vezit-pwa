@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
+import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js'; // Import the date formatter
 
-// State for storing location data
+// State for storing client data
 const clients = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
@@ -16,8 +16,8 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 // State for toggling date format
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
-// Fetch location data from API
-const fetchEquipments = async (page = 1, status = '') => {
+// Fetch client data from API
+const fetchClients = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/clients`, {
@@ -30,7 +30,7 @@ const fetchEquipments = async (page = 1, status = '') => {
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
-    console.error('Error fetching location:', error);
+    console.error('Error fetching clients:', error);
   } finally {
     loading.value = false;
   }
@@ -38,28 +38,28 @@ const fetchEquipments = async (page = 1, status = '') => {
 
 // Fetch data when component mounts
 onMounted(() => {
-  fetchEquipments();
+  fetchClients();
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchClients(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchClients(page, filterStatus.value);
 };
 
-// Method to toggle date format
-const toggleDateFormat = () => {
-  dateFormat.value = dateFormat.value === 'elapsed' ? 'absolute' : 'elapsed';
+// Toggle date format using service
+const toggleFormat = () => {
+  toggleDateFormat(dateFormat); // Pass the dateFormat ref to toggleDateFormat
 };
 
-// Method to format date based on the current format
-const formatDateBasedOnFormat = (dateString) => {
-  return dateFormat.value === 'elapsed' ? formatTimeElapsed(dateString) : formatDate(dateString);
+// Format date using service
+const formatClientDate = (dateString) => {
+  return formatDateBasedOnFormat(dateString, dateFormat); // Pass the dateFormat ref
 };
 </script>
 
@@ -123,18 +123,18 @@ const formatDateBasedOnFormat = (dateString) => {
                 <tr v-for="client in clients" :key="client.id">
                   <td :title="client.description">
                     <a class="fw-semibold" href="javascript:void(0)">{{ client.name }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0" >{{ client.bussines }}</p>
-                    <a class="fw-semibold" href="javascript:void(0)" >{{ client.contactName }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactTel }}</p>                    
-                    <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactEMail }}</p>                    
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ client.bussines }}</p>
+                    <a class="fw-semibold" href="javascript:void(0)">{{ client.contactName }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ client.contactTel }}</p>                    
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ client.contactEMail }}</p>                    
                   </td>
                 
                   <td 
                     class="d-none d-sm-table-cell fw-semibold text-muted"
-                    @click="toggleDateFormat"
+                    @click="toggleFormat"
                     style="cursor: pointer;"
                   >
-                    {{ formatDateBasedOnFormat(client.updated_at) }}
+                    {{ formatClientDate(client.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <p class="fs-sm fw-medium text-muted mb-0">0</p>

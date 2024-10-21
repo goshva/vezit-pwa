@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import axiosInstance from '@/services/axios.js';
+import { useRoute } from "vue-router";
+import axiosInstance from "@/services/axios.js";
+const route = useRoute();
 
 // State for storing user data
 const users = ref([]);
@@ -16,7 +18,7 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/users`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
@@ -111,12 +113,15 @@ const changePage = (page) => {
                     <a class="fw-semibold" href="javascript:void(0)">
                       {{ user.fullusername }} <!-- Display full username -->
                     </a>
+                    <a class="fw-normal text-muted" href="javascript:void(0)">
+                      {{ user.username }} <!-- Display username -->
+                    </a>
                   </td>
                   <td class="d-none d-xl-table-cell">
                     <a class="fw-semibold" href="javascript:void(0)">
                       {{ user.companyname }} <!-- Display company name -->
                     </a>
-                    <span class="text-muted">({{ user.companyrole }})</span> <!-- Display company role -->
+                    <span v-if="user.companyrole" class="text-muted">({{ user.companyrole }})</span> <!-- Display company role -->
                   </td>
                   <td>{{ user.email }}</td> <!-- Display email -->
                   <td>{{ user.userrole }}</td> <!-- Display user role -->
