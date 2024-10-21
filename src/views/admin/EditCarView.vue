@@ -101,8 +101,9 @@
               <option value="завершен">завершен</option>
             </select>
           </div>
-          <div class="col-md-12 text-center p-3">
-            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+          <div class="row g-3 m-2 mb-5">
+            <RemoveData :path="route.path" />
+            <EditData :path="route.path" :data="car" />
           </div>
         </form>
       </template>
@@ -112,11 +113,11 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
-
+import RemoveData from "@/components/RemoveData.vue";
+import EditData from "@/components/EditData.vue";
 const route = useRoute();
-const router = useRouter();
 
 const car = ref({
   id: null,
@@ -132,21 +133,12 @@ const car = ref({
   status: "ожидает",
 });
 
-const fetchCarDetails = async (id) => {
+const fetchCarDetails = async () => {
   try {
-    const response = await axiosInstance.get(`/cars/${id}`);
+    const response = await axiosInstance.get(route.path);
     car.value = response.data;
   } catch (error) {
     console.error("Error fetching car details:", error);
-  }
-};
-
-const handleSubmit = async () => {
-  try {
-    await axiosInstance.put(`/cars/${route.params.id}`, car.value);
-    router.push("/admin/cars");
-  } catch (error) {
-    console.error("Error updating car:", error);
   }
 };
 

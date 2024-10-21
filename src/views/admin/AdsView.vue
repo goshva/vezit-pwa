@@ -1,14 +1,14 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
-
+const route = useRoute();
 // State for storing video data
 const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
-const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -19,7 +19,7 @@ const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error'
 const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/videos`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
@@ -134,7 +134,7 @@ const changePage = (page) => {
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'EditAd', params: { id: video.id } }">
+                      <router-link :to="{ name: 'AdminEditAd', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>

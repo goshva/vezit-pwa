@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import axiosInstance from '@/services/axios.js';
+import { useRoute } from "vue-router";
+import axiosInstance from "@/services/axios.js";
+const route = useRoute();
 
 // State for storing user data
 const users = ref([]);
@@ -16,7 +18,7 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/users`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,

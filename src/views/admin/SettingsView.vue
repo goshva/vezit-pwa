@@ -99,9 +99,9 @@ const changePage = (page) => {
                 <tr>
                   <th>Имя</th>
                   <th>Статус</th>
-                  <th class="d-none d-sm-table-cell">IP</th>
-                  <th class="d-none d-sm-table-cell text-end">Дата</th>
-                  <th class="d-none d-sm-table-cell text-end">Настройка</th>
+                  <th class="d-sm-table-cell">IP</th>
+                  <th class="d-sm-table-cell text-end">Дата</th>
+                  <th class="d-sm-table-cell text-end">Настройка</th>
                 </tr>
               </thead>`
               <tbody class="fs-sm">
@@ -109,10 +109,6 @@ const changePage = (page) => {
                   <td>
                     <a class="fw-semibold" href="javascript:void(0)">{{ cfgupdate.ver }}</a>
                     <p class="fs-sm fw-medium text-muted mb-0">{{ cfgupdate.dsc }}</p>
-                  </td>
-                  <td class="d-none d-xl-table-cell">
-                    <a class="fw-semibold" href="javascript:void(0)">{{ cfgupdate.partner_name }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ cfgupdate.partner_role }}</p>
                   </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{

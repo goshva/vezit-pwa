@@ -30,19 +30,14 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="enabled" class="form-label">Включено</label>
-            <select class="form-control" id="enabled" v-model="ad.enabled">
-              <option :value="1">Да</option>
-              <option :value="0">Нет</option>
+            <select class="form-control" id="enabled" v-model="ad.status">
+              <option :value="0">Да</option>
+              <option :value="1">Нет</option>
             </select>
           </div>
-
           <div class="row g-3 m-2 mb-5">
-            <div class="col-md-6 text-center p-3">
-              <button @click.prevent="handleDelete" class="btn btn-danger">Удалить</button>
-            </div>
-            <div class="col-md-6 text-center p-3">
-              <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-            </div>
+            <RemoveData :path="route.path" />
+            <EditData :path="route.path" :data="ad" />
           </div>
         </form>
       </template>
@@ -52,11 +47,11 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
-
+import RemoveData from "@/components/RemoveData.vue";
+import EditData from "@/components/EditData.vue";
 const route = useRoute();
-const router = useRouter();
 
 const ad = ref({
   id: null,
@@ -69,32 +64,12 @@ const ad = ref({
   enabled: 0,
 });
 
-const fetchAdDetails = async (id) => {
+const fetchAdDetails = async () => {
   try {
-    const response = await axiosInstance.get(`/videos/${id}`);
+    const response = await axiosInstance.get(route.path);
     ad.value = response.data;
   } catch (error) {
     console.error("Error fetching ad details:", error);
-  }
-};
-
-const handleSubmit = async () => {
-  try {
-    await axiosInstance.put(`/videos/${route.params.id}`, ad.value);
-    router.push("/admin/ads");
-  } catch (error) {
-    console.error("Error updating ad:", error);
-  }
-};
-
-const handleDelete = async () => {
-  if (confirm("Вы уверены, что хотите удалить эту рекламу?")) {
-    try {
-      await axiosInstance.delete(`/videos/${route.params.id}`);
-      router.push("/admin/ads");
-    } catch (error) {
-      console.error("Error deleting ad:", error);
-    }
   }
 };
 
