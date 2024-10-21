@@ -52,25 +52,25 @@ const blocks = [
   {
     title: "Список актуальных реклам",
     icon: "fa-gem",
-    link: "/admin/ads",
+    link: "/video",
     sourceCount: "videos",
   },
   {
     title: "Контроль пользователей",
     icon: "fa-chart-bar",
-    link: "/admin/control",
+    link: "/control",
     sourceCount: "users",
   },
   {
     title: "Список оборудования",
     icon: "fa-paper-plane",
-    link: "/admin/eq",
+    link: "/eq",
     sourceCount: "equipments",
   },
   {
     title: "Техподдержка",
     icon: "fa-chart-bar",
-    link: "/admin/support",
+    link: "/support",
     sourceCount: "messages",
   }
 ];

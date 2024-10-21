@@ -95,7 +95,7 @@ onMounted(() => {
                   aria-labelledby="page-header-user-dropdown">
                   <div class="p-2">
                     <RouterLink class="dropdown-item d-flex align-items-center justify-content-between"
-                      to="/admin/dashboard">
+                      to="/dashboard">
                       <span class="fs-sm fw-medium">Администратор</span>
                     </RouterLink>
                     <button @click="handleChangeRole('moderator/dashboard')"

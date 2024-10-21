@@ -1,26 +1,22 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
-import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
+import { formatDate } from "@/services/dateFormatter.js";
 import { formatRubles } from '@/services/priceConvert.js';
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
-
-// State for storing car data
+const route = useRoute();
 const cars = ref([]);
 const total = ref(0);
 const loading = ref(false);
 const orderSearch = ref(false);
-
-// Pagination and filtering state
 const currentPage = ref(1);
 const totalPages = ref(1);
-const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
-
-// Fetch car data from API
+const filterStatus = ref("");
 const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/partnercars`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
@@ -28,7 +24,7 @@ const fetchEquipments = async (page = 1, status = "") => {
     });
     cars.value = response.data.data;
     total.value = response.data.total;
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    totalPages.value = response.data.total_pages;
     currentPage.value = page;
   } catch (error) {
     console.error("Error fetching car:", error);
@@ -36,24 +32,17 @@ const fetchEquipments = async (page = 1, status = "") => {
     loading.value = false;
   }
 };
-
-// Fetch data when component mounts
 onMounted(() => {
   fetchEquipments();
 });
-
-// Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchEquipments(1, status);
 };
-
-// Handle pagination
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
 </script>
-
 <template>
   <div class="m-5 mb-0">
     <BaseBlock title="Автопарк" class="mb-0">
@@ -175,5 +164,4 @@ const changePage = (page) => {
     </BaseBlock>
   </div>
 </template>
-
 <style lang="scss"></style>

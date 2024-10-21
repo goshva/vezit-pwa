@@ -88,23 +88,23 @@ async function onSubmit() {
 
     // Redirect user based on user role from the store
     switch (userStore.userRole) {
-      case "admin": // Admin
-        router.push("/admin/dashboard");
+      case "admin":
+        router.push("/Adashboard");
         break;
-      case "moderator": // Moderator
-        router.push("/moderator/dashboard");
+      case "moderator":
+        router.push("/Mdashboard");
         break;
-      case "client": // Client
-        router.push("/client/dashboard");
+      case "client": 
+        router.push("/Cdashboard");
         break;
-      case "partner": // Partner
-        router.push("/partner/dashboard");
+      case "partner":
+        router.push("/Pdashboard");
         break;
-      case "quest": // Guest
+      case "quest": 
         router.push("/guest");
         break;
-        case "support": // Guest
-        router.push("/support/dashboard");
+        case "support": 
+        router.push("/Sdashboard");
         break;        
       default:
         console.error("Unknown user role:", userStore.userRole);

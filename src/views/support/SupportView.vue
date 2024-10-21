@@ -1,30 +1,26 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from "vue-router";
 import axiosInstance from '@/services/axios.js';
-import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
-
-// State for storing message data
+import { formatDate } from '@/services/dateFormatter.js';
+const route = useRoute();
 const messages = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
-
-// Pagination and filtering state
 const currentPage = ref(1);
 const totalPages = ref(1);
-const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
-
-// Fetch message data from API
+const filterStatus = ref(''); 
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/messages`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
       },
     });
     messages.value = response.data.data
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    totalPages.value = response.data.total_pages;
     currentPage.value = page;
   } catch (error) {
     console.error('Error fetching message:', error);
@@ -32,26 +28,20 @@ const fetchEquipments = async (page = 1, status = '') => {
     loading.value = false;
   }
 };
-
-// Fetch data when component mounts
 onMounted(() => {
   fetchEquipments();
 });
-
-// Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchEquipments(1, status);
 };
 
-// Handle pagination
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
 </script>
 
 <template>
-
   <div class="m-5 mb-0">
     <BaseBlock title="Обращения в техподдержку" class="mb-0">
       <template #options>
@@ -119,7 +109,7 @@ const changePage = (page) => {
                   </td>
                   <td>
                     <p class="fs-sm fw-medium text-muted mb-0 text-center">
-                      {{ formatDate(message.updated_at ) }}
+                      {{ formatDate(message.updated_at) }}
                     </p>
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
@@ -128,10 +118,10 @@ const changePage = (page) => {
                   </td>
                   <td class="d-sm-table-cell fw-semibold text-muted text-end">
                     <router-link :to="{ name: 'ResponseSupport', params: { id: message.id } }">
-                        <button class="btn btn-sm btn-alt-primary">
-                          <i class="fa fa-edit"></i>
-                        </button>
-                      </router-link>
+                      <button class="btn btn-sm btn-alt-primary">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                    </router-link>
                   </td>
                 </tr>
               </tbody>

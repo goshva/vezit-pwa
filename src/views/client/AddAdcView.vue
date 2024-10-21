@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
-import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
+import { formatDate } from "@/services/dateFormatter.js";
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
-
-// State for storing video data
+const route = useRoute();
 const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
@@ -19,7 +19,7 @@ const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error'
 const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/video`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
@@ -85,7 +85,7 @@ const changePage = (page) => {
                 Все
                 <span class="badge bg-primary rounded-pill">{{
                   total
-                }}</span>
+                  }}</span>
               </a>
 
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
@@ -131,7 +131,7 @@ const changePage = (page) => {
 
                     }">
                       {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ?
-                      "Отключено" : "Ошибка" }}
+                        "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
@@ -143,7 +143,8 @@ const changePage = (page) => {
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link v-if="!isVideoModerated(video)" :to="{ name: 'ClientEditAd', params: { id: video.id } }">
+                      <router-link v-if="!isVideoModerated(video)"
+                        :to="{ name: 'ClientEditAd', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>
