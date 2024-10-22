@@ -85,7 +85,6 @@ async function onSubmit() {
     router.push("/auth/signin");
   } catch (error) {
     // Handle errors (e.g., notify user about the error)
-    console.log(error.response.data)
     if (error.response.data.email){
       state.errorEmail = error.response.data.email[0];
     } else {
