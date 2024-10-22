@@ -98,8 +98,8 @@ const blocks = [
   {
     title: "Техподдержка",
     icon: "fa-chart-bar",
-    link: "/support",
-    sourceCount: "messages",
+    link: "/tiketsupport",
+    sourceCount: "tiketssupport",
   }
 ];
 </script>

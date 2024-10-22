@@ -322,7 +322,7 @@ const routes = [
     component: AdminLayout,
     children: [
       {
-        path: "dashboard",
+        path: "Adashboard",
         name: "landing",
         component: BackendDashboard,
       },
@@ -386,7 +386,7 @@ const routes = [
         component: TemplatesView,
       },
       {
-        path: "support",
+        path: "tiketsupport",
         component: AdminSupportView,
       },
       {
