@@ -110,19 +110,19 @@ const routerLinks = [
   {
     id: Math.random(Date.now()),
     name: "Главная",
-    link: "/support/dashboard",
+    link: "/Sdashboard",
   },
 
   {
     id: Math.random(Date.now()),
     name: "Сообщения",
-    link: "/support/messages",
+    link: "/tikets",
   },
 
   {
     id: Math.random(Date.now()),
     name: "Результаты",
-    link: "/support/results",
+    link: "/total",
   },
 ];
 </script>

@@ -4,10 +4,10 @@ import NProgress from "nprogress/nprogress.js";
 
 // Main layout variations
 import LayoutSimple from "@/layouts/variations/Simple.vue";
-import LayoutBackend from "@/layouts/variations/Backend.vue";
-import LayoutBackendBoxed from "@/layouts/variations/BackendBoxed.vue";
-import LayoutBackendMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
-import LayoutBackendSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
+import AdminLayout from "@/layouts/variations/Backend.vue";
+import AdminLayoutBoxed from "@/layouts/variations/BackendBoxed.vue";
+import AdminLayoutMegaMenu from "@/layouts/variations/BackendMegaMenu.vue";
+import AdminLayoutSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNav.vue";
 import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
 import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
 import SupportLayout from "@/layouts/variations/SupportLayout.vue";
@@ -257,7 +257,7 @@ const Error500 = () => import("@/views/errors/500View.vue");
 const Error503 = () => import("@/views/errors/503View.vue");
 
 //admin views
-const AdsView = () => import("@/views/admin/AdsView.vue");
+const AdsView = () => import("@/views/admin/VideoView.vue");
 const AdminCarsView = () => import("@/views/admin/CarsView.vue")
 const EqView = () => import("@/views/admin/EqView.vue");
 const SettingsView = () => import("@/views/admin/SettingsView.vue");
@@ -275,8 +275,8 @@ const ModeratorsView = () => import("@/views/admin/ModeratorsView.vue")
 
 //moderator views
 const ModeratorDashboardView = () =>
-import("@/views/moderator/DashboardView.vue");
-const AdsModeratorView = () => import("@/views/moderator/AdsView.vue");
+  import("@/views/moderator/DashboardView.vue");
+const VideoModeratorView = () => import("@/views/moderator/VideoView.vue");
 const ResultsView = () => import("@/views/moderator/ResultsView.vue");
 const CheckVideoView = () => import("@/views/moderator/CheckVideoView.vue");
 
@@ -319,88 +319,83 @@ const routes = [
   */
   {
     path: "/",
-    component: LayoutBackend,
+    component: AdminLayout,
     children: [
       {
-        path: "admin",
-        children: [
-          {
-            path: "dashboard",
-            name: "landing",
-            component: BackendDashboard,
-          },
-          {
-            path: "ads",
-            component: AdsView,
-          },
-          {
-            path: 'ads/:id',
-            name: 'AdminEditAd',
-            component: () => import('@/views/admin/EditAdView.vue'), 
-          },          
-          {
-            path: "eq",
-            component: EqView,
-          },
-          {
-            path: "clients",
-            component: ClientsView,
-          },
-          {
-            path: "moderators",
-            component: ModeratorsView,
-          },
-          { path: "partners", component: PartnersView },
-          {
-            path: "cars", component: AdminCarsView
-          },
-          {
-            path: 'cars/:id',
-            name: 'AdminEditCar',
-            component: () => import('@/views/admin/EditCarView.vue'), 
-          },           
-          {
-            path: "error",
-            component: ErrorsView,
-          },
-          {
-            path: "settings",
-            component: SettingsView,
-          },
-          {
-            path: "control",
-            component: ControlView,
-          },
-          {
-            path: 'control/:id',
-            name: 'EditUserView',
-            component: () => import('@/views/admin/EditUserView.vue'), 
-          },
-          {
-            path: "finances",
-            component: FinancesView,
-          },
-          {
-            path: "documents",
-            component: DocumentsView,
-          },
-          {
-            path: "templates",
-            component: TemplatesView,
-          },
-          {
-            path: "support",
-            component: AdminSupportView,
-          },
-          {
-            path: "locations",
-            component: LocationView,
-          },
-          {
-            path: "tariffs",
-            component: TariffView,
-          },
-        ],
+        path: "Adashboard",
+        name: "landing",
+        component: BackendDashboard,
+      },
+      {
+        path: "allvideo",
+        component: AdsView,
+      },
+      {
+        path: 'allvideo/:id',
+        name: 'AdminEditAd',
+        component: () => import('@/views/admin/EditAdView.vue'),
+      },
+      {
+        path: "eq",
+        component: EqView,
+      },
+      {
+        path: "clients",
+        component: ClientsView,
+      },
+      {
+        path: "moderators",
+        component: ModeratorsView,
+      },
+      { path: "partners", component: PartnersView },
+      {
+        path: "cars", component: AdminCarsView
+      },
+      {
+        path: 'cars/:id',
+        name: 'AdminEditCar',
+        component: () => import('@/views/admin/EditCarView.vue'),
+      },
+      {
+        path: "error",
+        component: ErrorsView,
+      },
+      {
+        path: "settings",
+        component: SettingsView,
+      },
+      {
+        path: "control",
+        component: ControlView,
+      },
+      {
+        path: 'control/:id',
+        name: 'EditUserView',
+        component: () => import('@/views/admin/EditUserView.vue'),
+      },
+      {
+        path: "finances",
+        component: FinancesView,
+      },
+      {
+        path: "documents",
+        component: DocumentsView,
+      },
+      {
+        path: "templates",
+        component: TemplatesView,
+      },
+      {
+        path: "tiketsupport",
+        component: AdminSupportView,
+      },
+      {
+        path: "locations",
+        component: LocationView,
+      },
+      {
+        path: "tariffs",
+        component: TariffView,
       },
     ],
   },
@@ -408,29 +403,26 @@ const routes = [
   {
     path: "/",
     component: ModeratorLayout,
+
     children: [
       {
-        path: "moderator",
-        children: [
-          {
-            path: "dashboard",
-            component: ModeratorDashboardView,
-          },
-          {
-            path: 'checkVideos/:id',
-            name: "checkVideos",
-            component: CheckVideoView,
-          },
-          {
-            path: "ads",
-            component: AdsModeratorView,
-          },
-          {
-            path: "results",
-            component: ResultsView,
-          },
-        ],
+        path: "Mdashboard",
+        component: ModeratorDashboardView,
       },
+      {
+        path: 'checkVideos/:id',
+        name: "checkVideos",
+        component: CheckVideoView,
+      },
+      {
+        path: "videos",
+        component: VideoModeratorView,
+      },
+      {
+        path: "results",
+        component: ResultsView,
+      },
+
     ],
   },
   {
@@ -438,27 +430,23 @@ const routes = [
     component: SupportLayout,
     children: [
       {
-        path: "support",
-        children: [
-          {
-            path: "dashboard",
-            component: SupportDashboardView,
-          },
-          {
-            path: "messages",
-            component: SupportSupportView,
-          },
-          {
-            path: 'tikect/:id',
-            name: 'ResponseSupport',
-            component: () => import('@/views/support/ResponseMessageView.vue'), 
-          },                  
-          {
-            path: "results",
-            component: ResultsSupportView,
-          },
-        ],
+        path: "Sdashboard",
+        component: SupportDashboardView,
       },
+      {
+        path: "tikets",
+        component: SupportSupportView,
+      },
+      {
+        path: 'tikect/:id',
+        name: 'ResponseSupport',
+        component: () => import('@/views/support/ResponseMessageView.vue'),
+      },
+      {
+        path: "total",
+        component: ResultsSupportView,
+      },
+
     ],
   },
 
@@ -466,44 +454,37 @@ const routes = [
     path: "/",
     component: ClientLayout,
     children: [
+
       {
-        path: "client",
-        children: [
-          {
-            path: "dashboard",
-            component: ClientDashboardView,
-          },
-          {
-            path: "profile",
-            component: ClientView,
-          },
-          {
-            path: "ads",
-            component: AddAdcView,
-          },
-          {
-            path: 'ads/:id',
-            name: 'ClientEditAd',
-            component: () => import('@/views/client/ClientEditAdView.vue'), 
-          }, 
-          {
-            path: "addVideo",
-            component: AddVideoView,
-          },
-          {
-            path: "finance",
-            component: ClientFinanceView,
-          },
-          {
-            path: "analytics",
-            component: ClientAnalyticsView,
-          },
-          {
-            path: "support",
-            component: ClientSupportView,
-          },
-        ],
+        path: "Cdashboard",
+        component: ClientDashboardView,
       },
+      {
+        path: "myvideo",
+        component: AddAdcView,
+      },
+      {
+        path: 'myvideo/:id',
+        name: 'ClientEditAd',
+        component: () => import('@/views/client/ClientEditAdView.vue'),
+      },
+      {
+        path: "addVideo",
+        component: AddVideoView,
+      },
+      {
+        path: "myfinance",
+        component: ClientFinanceView,
+      },
+      {
+        path: "profile",
+        component: ClientView,
+      },
+      {
+        path: "supportme",
+        component: ClientSupportView,
+      },
+
     ],
   },
 
@@ -511,40 +492,37 @@ const routes = [
     path: "/",
     component: PartnerLayout,
     children: [
+
       {
-        path: "partner",
-        children: [
-          {
-            path: "dashboard",
-            component: PartnerDashboardView,
-          },
-
-          {
-            path: "cars",
-            component: CarsView,
-          },
-          {
-            path: 'cars/:id',
-            name: 'EditCar',
-            component: () => import('@/views/partner/EditCarView.vue'), 
-          },
-
-          {
-            path: "finance",
-            component: FinanceView,
-          },
-
-          {
-            path: "profile",
-            component: UserView,
-          },
-
-          {
-            path: "support",
-            component: PartnerSupportView,
-          },
-        ],
+        path: "Pdashboard",
+        component: PartnerDashboardView,
       },
+
+      {
+        path: "mycars",
+        component: CarsView,
+      },
+      {
+        path: 'mycars/:id',
+        name: 'EditCar',
+        component: () => import('@/views/partner/EditCarView.vue'),
+      },
+
+      {
+        path: "cash",
+        component: FinanceView,
+      },
+
+      {
+        path: "about",
+        component: UserView,
+      },
+
+      {
+        path: "help",
+        component: PartnerSupportView,
+      },
+
     ],
   },
 
@@ -557,7 +535,7 @@ const routes = [
   */
   {
     path: "/backend-boxed",
-    component: LayoutBackendBoxed,
+    component: AdminLayoutBoxed,
     children: [
       {
         path: "",
@@ -600,7 +578,7 @@ const routes = [
 
   {
     path: "/backend/elements",
-    component: LayoutBackendMegaMenu,
+    component: AdminLayoutMegaMenu,
     children: [
       {
         path: "mega-menu",
@@ -618,7 +596,7 @@ const routes = [
 
   {
     path: "/backend/pages/generic",
-    component: LayoutBackendSidebarMiniNav,
+    component: AdminLayoutSidebarMiniNav,
     children: [
       {
         path: "sidebar-mini-nav",
@@ -638,7 +616,7 @@ const routes = [
   {
     path: "/backend",
     redirect: "/backend/dashboard",
-    component: LayoutBackend,
+    component: AdminLayout,
     children: [
       {
         path: "dashboard",

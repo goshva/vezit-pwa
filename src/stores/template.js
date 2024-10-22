@@ -8,7 +8,7 @@ export const useTemplateStore = defineStore({
     isAuth: false,
     app: {
       name: "Olhar Media",
-      version: "1.0.2",
+      version: import.meta.env.VITE_VERSION,
       copyright: new Date().getFullYear(),
     },
 

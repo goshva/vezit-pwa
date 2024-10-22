@@ -52,25 +52,25 @@ const blocks = [
   {
     title: "Ожидают проверки",
     icon: "fa-gem",
-    link: "/admin/ads",
+    link: "/video",
     sourceCount: "videos",
   },
   {
     title: "Проверено",
     icon: "fa-chart-bar",
-    link: "/admin/control",
+    link: "/control",
     sourceCount: "users",
   },
   {
     title: "Принято",
     icon: "fa-paper-plane",
-    link: "/admin/eq",
+    link: "/eq",
     sourceCount: "equipments",
   },
   {
     title: "Отклонены",
     icon: "fa-chart-bar",
-    link: "/admin/support",
+    link: "/support",
     sourceCount: "messages",
   }
 ];

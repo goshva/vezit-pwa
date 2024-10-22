@@ -110,85 +110,85 @@ const routerLinks = [
   {
     id: Math.random(Date.now()),
     name: "Админ панель",
-    link: "/admin/dashboard",
+    link: "/Adashboard",
   },
 
   {
     id: Math.random(Date.now()),
     name: "Рекламные компании",
-    link: "/admin/ads",
+    link: "/allvideo",
   },
 
   {
     id: Math.random(Date.now()),
     name: "Оборудование",
-    link: "/admin/eq",
+    link: "/eq",
   },
 
   {
     id: Math.random(Date.now()),
     name: "Клиенты",
-    link: "/admin/clients",
+    link: "/clients",
   },
   {
     id: Math.random(Date.now()),
     name: "Модераторы",
-    link: "/admin/moderators",
+    link: "/moderators",
   },
   {
     id: Math.random(Date.now()),
     name: "Партнеры",
-    link: "/admin/partners",
+    link: "/partners",
   },
   {
     id: Math.random(Date.now()),
     name: "Автомобили",
-    link: "/admin/cars",
+    link: "/cars",
   },
   {
     id: Math.random(Date.now()),
     name: "Системные ошибки",
-    link: "/admin/error",
+    link: "/error",
   },
   {
     id: Math.random(Date.now()),
     name: "Обновления оборудования",
-    link: "/admin/settings",
+    link: "/settings",
   },
   {
     id: Math.random(Date.now()),
     name: "Пользователи",
-    link: "/admin/control",
+    link: "/control",
   },
   {
     id: Math.random(Date.now()),
     name: "Финансы",
-    link: "/admin/finances",
+    link: "/finances",
   },
   {
     id: Math.random(Date.now()),
     name: "Документы",
-    link: "/admin/documents",
+    link: "/documents",
   },
   {
     id: Math.random(Date.now()),
     name: "Шаблоны",
-    link: "/admin/templates",
+    link: "/templates",
   },    
   {
     id: Math.random(Date.now()),
     name: "Tехподдержка",
-    link: "/admin/support",
+    link: "/tiketsupport",
   },
   {
     id: Math.random(Date.now()),
     name: "Локации",
-    link: "/admin/locations",
+    link: "/locations",
   },  
   {
     id: Math.random(Date.now()),
     name: "Тарифы",
-    link: "/admin/tariffs",
+    link: "/tariffs",
   },    
 ];
 </script>

@@ -120,7 +120,7 @@ const ad = ref({
 
 const fetchAdDetails = async () => {
   try {
-    const response = await axiosInstance.get(`/profile`);
+    const response = await axiosInstance.get(`/about`);
     ad.value = response.data.data;
   } catch (error) {
     console.error("Error fetching ad details:", error);
@@ -129,10 +129,10 @@ const fetchAdDetails = async () => {
 
 const handleSubmit = async () => {
   try {
-    await axiosInstance.put(`/profile`, ad.value);
-    router.push("/partner");
+    await axiosInstance.put(`/about`, ad.value);
+    router.push("/Pdashboard");
   } catch (error) {
-    console.error("Error updating ad:", error);
+    console.error("Error updating partner:", error);
   }
 };
 

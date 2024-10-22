@@ -17,6 +17,11 @@ const { path } = useRoute();
 
 let isShow = ref(false);
 
+const handleLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('isAuth');
+}
+
 onMounted(() => {
   isShow.value = path.includes("/moderator") || path.includes("/client") || path.includes("/partner");
 });
@@ -77,7 +82,7 @@ onMounted(() => {
                   <div role="separator" class="dropdown-divider m-0"></div>
                   <div class="p-2">
                     <RouterLink :to="{ name: 'auth-signin' }"
-                      class="dropdown-item d-flex align-items-center justify-content-between">
+                      class="dropdown-item d-flex align-items-center justify-content-between" @click="handleLogout">
                       <span class="fs-sm fw-medium">Выйти</span>
                     </RouterLink>
                   </div>
@@ -95,23 +100,23 @@ onMounted(() => {
                   aria-labelledby="page-header-user-dropdown">
                   <div class="p-2">
                     <RouterLink class="dropdown-item d-flex align-items-center justify-content-between"
-                      to="/admin/dashboard">
+                      to="/Adashboard">
                       <span class="fs-sm fw-medium">Администратор</span>
                     </RouterLink>
-                    <button @click="handleChangeRole('moderator/dashboard')"
+                    <button @click="handleChangeRole('Mdashboard')"
                       class="dropdown-item d-flex align-items-center justify-content-between">
                       <span class="fs-sm fw-medium">Модератор</span>
                     </button>
                     <button class="dropdown-item d-flex align-items-center justify-content-between"
-                      @click="handleChangeRole('client/dashboard')">
+                      @click="handleChangeRole('Cdashboard')">
                       <span class="fs-sm fw-medium">Клиент</span>
                     </button>
                     <button class="dropdown-item d-flex align-items-center justify-content-between"
-                      @click="handleChangeRole('partner/dashboard')">
+                      @click="handleChangeRole('Pdashboard')">
                       <span class="fs-sm fw-medium">Партнёр</span>
                     </button>
                     <button class="dropdown-item d-flex align-items-center justify-content-between"
-                      @click="handleChangeRole('support/dashboard')">
+                      @click="handleChangeRole('Sdashboard')">
                       <span class="fs-sm fw-medium">Тех. поддержка</span>
                     </button>                    
                     <a class="dropdown-item d-flex align-items-center justify-content-between"

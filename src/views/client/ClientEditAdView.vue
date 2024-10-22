@@ -107,7 +107,7 @@
   const handleSubmit = async () => {
     try {
       await axiosInstance.put(`/videos/${route.params.id}`, ad.value);
-      router.push("/client/ads");
+      router.push("/client/video");
     } catch (error) {
       console.error("Error updating ad:", error);
     }

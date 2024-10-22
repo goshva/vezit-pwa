@@ -15,7 +15,7 @@ const statuses = ref({});
 const fetchEquipments = async () => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get('/common-status-counts');
+    const response = await axiosInstance.get('/Pdashboard');
     statuses.value = response.data; // Assuming response data matches the new JSON format
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -52,25 +52,25 @@ const blocks = [
   {
     title: "Список машин",
     icon: "fa-gem",
-    link: "/admin/ads",
+    link: "/video",
     sourceCount: "videos",
   },
   {
     title: "Профиль",
     icon: "fa-chart-bar",
-    link: "/admin/control",
+    link: "/control",
     sourceCount: "users",
   },
   {
     title: "Финансы",
     icon: "fa-paper-plane",
-    link: "/admin/eq",
+    link: "/eq",
     sourceCount: "equipments",
   },
   {
     title: "Техподдержка",
     icon: "fa-chart-bar",
-    link: "/admin/support",
+    link: "/support",
     sourceCount: "messages",
   }
 ];

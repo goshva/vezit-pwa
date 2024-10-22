@@ -56,50 +56,50 @@ const blocks = [
   {
     title: "Список актуальных реклам",
     icon: "fa-gem",
-    link: "/admin/ads",
+    link: "/video",
     sourceCount: "videos",
   },
   {
     title: "Список оборудования",
     icon: "fa-paper-plane",
-    link: "/admin/eq",
+    link: "/eq",
     sourceCount: "equipments",
   },
   {
     title: "Клиенты",
     icon: "fa-chart-bar",
-    link: "/admin/cli",
+    link: "/cli",
     sourceCount: "clients",
   },
   {
     title: "Список системных ошибок",
     icon: "fa-chart-bar",
-    link: "/admin/error",
+    link: "/error",
     sourceCount: "cfgupdates",
   },
   {
     title: "Изменение настроек оборудования",
     icon: "fa-chart-bar",
-    link: "/admin/settings",
+    link: "/settings",
     sourceCount: "cfgupdate_log",
   },
   {
     title: "Контроль пользователей",
     icon: "fa-chart-bar",
-    link: "/admin/control",
+    link: "/control",
     sourceCount: "users",
   },
   {
     title: "Документы",
     icon: "fa-chart-bar",
-    link: "/admin/doc",
+    link: "/doc",
     sourceCount: "docs",
   },
   {
     title: "Техподдержка",
     icon: "fa-chart-bar",
-    link: "/admin/support",
-    sourceCount: "messages",
+    link: "/tiketsupport",
+    sourceCount: "tiketssupport",
   }
 ];
 </script>
