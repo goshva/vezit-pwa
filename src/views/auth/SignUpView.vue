@@ -19,6 +19,7 @@ const state = reactive({
   confirmPassword: null,
   userRole: null,
   terms: null,
+  errorEmail: null
 });
 
 // Validation rules
@@ -55,7 +56,6 @@ const v$ = useVuelidate(rules, state);
 // On form submission
 async function onSubmit() {
   const result = await v$.value.$validate();
-
   if (!result) {
     // notify user form is invalid
     return;
@@ -85,7 +85,13 @@ async function onSubmit() {
     router.push("/auth/signin");
   } catch (error) {
     // Handle errors (e.g., notify user about the error)
-    console.error("Registration failed:", error);
+    console.log(error.response.data)
+    if (error.response.data.email){
+      state.errorEmail = error.response.data.email[0];
+    } else {
+      console.error("Registration failed:", error);
+    }
+
   }
 }
 </script>
@@ -132,6 +138,9 @@ async function onSubmit() {
                       }" v-model="state.email" @blur="v$.email.$touch" />
                     <div v-if="v$.email.$errors.length" class="invalid-feedback animated fadeIn">
                       Введите ваш адрес электронной почты
+                    </div>
+                    <div v-if="state.errorEmail" class="animated fadeIn" style="margin-top: 0.375rem; font-size: 0.875rem; color: #e75a79;">
+                      {{state.errorEmail}}
                     </div>
                   </div>
                   <div class="mb-4">
