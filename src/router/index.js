@@ -327,11 +327,11 @@ const routes = [
         component: BackendDashboard,
       },
       {
-        path: "video",
+        path: "allvideo",
         component: AdsView,
       },
       {
-        path: 'video/:id',
+        path: 'allvideo/:id',
         name: 'AdminEditAd',
         component: () => import('@/views/admin/EditAdView.vue'),
       },
