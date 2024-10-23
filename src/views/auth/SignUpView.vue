@@ -192,7 +192,7 @@ async function onSubmit() {
                 </div>
                 <div class="row mb-4">
                   <div class="col-md-6 col-xl-5">
-                    <button type="submit" class="btn w-100 btn-alt-success">
+                    <button type="submit" class="btn w-150 btn-alt-success">
                       Регистрация
                     </button>
                   </div>
