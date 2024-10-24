@@ -191,9 +191,14 @@ async function onSubmit() {
                   </div>
                 </div>
                 <div class="row mb-4">
-                  <div class="col-md-6 col-xl-5">
-                    <button type="submit" class="btn w-100 btn-alt-success">
+                  <div class="col-md-6 col-xl-6">
+                    <button type="submit" class="btn w-100 btn-success">
                       Регистрация
+                    </button>
+                  </div>
+                  <div class="col-md-6 col-xl-6">
+                    <button @click="() => router.push('/auth/signin')" class="btn w-100 btn-primary">
+                      Войти
                     </button>
                   </div>
                 </div>
