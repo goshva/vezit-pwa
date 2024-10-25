@@ -31,7 +31,7 @@ const handleClick = (id) => {
     <ClientMap :activePoint="activePoint" />
     <div class="right-sidebar">
       <div class="efficiency mb-4">
-        <h3>Эффективность за день</h3>
+        <h3 class="right-sidebar-title">Эффективность за день</h3>
         <p class="d-flex justify-content-between mb-3">
           <span>Переходы / показы</span>
           <span class="fw-semibold">400 / 500</span>
@@ -99,7 +99,7 @@ const handleClick = (id) => {
 .wrapper {
   background-color: white;
   display: flex;
-  padding: 25px;
+  padding: 0 25px;
   gap: 20px;
 }
 
@@ -112,8 +112,7 @@ const handleClick = (id) => {
 }
 .right-sidebar {
   min-width: 22vw;
-  padding: 15px;
-  padding-bottom: 0;
+  padding: 0 15px;
   display: flex;
   flex-direction: column;
 }
@@ -125,5 +124,16 @@ const handleClick = (id) => {
 }
 .bg-ping {
   background-color: #dddddd;
+}
+
+@media(max-width: 768px) {
+  .right-sidebar-title {
+    font-size: 1rem;
+  }
+}
+@media(max-width: 500px) {
+  .right-sidebar-title {
+    font-size: 0.75rem;
+  }
 }
 </style>
