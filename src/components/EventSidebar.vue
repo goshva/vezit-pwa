@@ -53,7 +53,8 @@ const isSelected = (id) => id === mapStore.selectedAd;
         class="form-check-input" 
         type="checkbox" 
         id="show-video-views" 
-        @change="mapStore.toggleVideoClickViews"
+        @change="mapStore.toggleVideoViews"
+        checked
       />
       
       <label class="form-check-label" for="show-click-views">Переходы</label>

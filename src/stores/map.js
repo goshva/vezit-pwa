@@ -30,17 +30,7 @@ export const useMapStore = defineStore({
       try {
         const response = await axiosInstance.get('/video-views');
         this.videoViews = response.data;
-        
-        // Mapping videoViews data into ads
-        this.ads = this.videoViews.map(view => ({
-          id: view.id,
-          name: `Video ID: ${view.video_id}`, // You can customize the name as needed
-          latlong: [parseFloat(view.latitude), parseFloat(view.longitude)],
-          date: new Date(view.created_at).toLocaleDateString(), // Formatting the date
-          event: 'Video View',
-          pointerColor: 'blue' // Default color, you can customize this as well
-        }));
-        
+        this.updateAds();
       } catch (error) {
         console.error("Failed to fetch video views:", error);
       }
@@ -49,35 +39,36 @@ export const useMapStore = defineStore({
       try {
         const response = await axiosInstance.get('/video-clicks');
         this.clicksViews = response.data;
-        
-        // Mapping videoViews data into ads
-        this.ads = this.videoViews.map(view => ({
-          id: view.id,
-          name: `Click ID: ${view.video_id}`, // You can customize the name as needed
-          latlong: [parseFloat(view.latitude), parseFloat(view.longitude)],
-          date: new Date(view.created_at).toLocaleDateString(), // Formatting the date
-          event: 'Click View',
-          pointerColor: 'red' // Default color, you can customize this as well
-        }));
-        
+        this.updateAds();
+   
       } catch (error) {
         console.error("Failed to fetch Click views:", error);
       }
+    },
+    updateAds() {
+      // Update `ads` based on which views are enabled
+      this.ads = [
+        ...(this.showVideoViews ? this.videoViews : []),
+        ...(this.showClickViews ? this.clicksViews : []),
+      ].map((view) => ({
+        id: view.id,
+        name: `ID: ${view.video_id}`,
+        latlong: [parseFloat(view.latitude), parseFloat(view.longitude)],
+        date: new Date(view.created_at).toLocaleDateString(),
+        event: view.event,
+        pointerColor: view.event === "Video View" ? "blue" : "red",
+      }));
     },
     getVideoViewById(id) {
       return this.videoViews.find((view) => view.id === id);
     },
     toggleVideoViews() {
-
-
       this.showVideoViews = !this.showVideoViews;
-      console.log(showVideoViews)
-      console.log(showClickViews)
+      this.updateAds();
     },
     toggleClickViews() {
       this.showClickViews = !this.showClickViews;
-      console.log(showVideoViews)
-      console.log(showClickViews)
+      this.updateAds();
     },
   },
 });

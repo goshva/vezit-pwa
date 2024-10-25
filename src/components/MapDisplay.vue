@@ -3,7 +3,7 @@ import { defineProps, defineEmits } from "vue";
 import ClientMap from "@/components/ClientMap.vue";
 
 // Properties to control the active point on the map
-const props = defineProps(["activePoint"]);
+const activePoint = defineProps(["activePoint"]);
 const emits = defineEmits(["mapClick"]);
 
 // Emit an event when a point on the map is clicked
