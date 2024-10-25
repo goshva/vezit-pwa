@@ -13,9 +13,9 @@ const clearMarkers = () => {
 const addMarkers = () => {
   clearMarkers();
   mapStore.ads.forEach((ad) => {
-    const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+    const redIcon = icons[0];
     const marker = leaflet
-      .marker(ad.latlong, { icon: randomIcon })
+      .marker(ad.latlong, { icon: redIcon })
       .bindPopup(`<strong>${ad.name}</strong><br>${ad.date}`)
       .addTo(map);
 
