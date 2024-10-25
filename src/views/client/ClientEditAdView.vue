@@ -67,8 +67,9 @@
                 <option :value="0">Нет</option>
               </select>
             </div>
-            <div class="col-md-12 text-center p-3">
-              <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <div class="row text-center p-3">
+              <RemoveData :path="'videos/' + ad.id"></RemoveData>
+              <EditData :path="'videos/' + ad.id" :data="ad"></EditData>
             </div>
           </form>
         </template>
@@ -80,6 +81,8 @@
   import { ref, onMounted } from "vue";
   import { useRoute, useRouter } from "vue-router";
   import axiosInstance from "@/services/axios.js";
+  import RemoveData from "@/components/RemoveData.vue";
+  import EditData from "@/components/EditData.vue";
   
   const route = useRoute();
   const router = useRouter();
@@ -104,14 +107,6 @@
     }
   };
   
-  const handleSubmit = async () => {
-    try {
-      await axiosInstance.put(`/videos/${route.params.id}`, ad.value);
-      router.push("/client/video");
-    } catch (error) {
-      console.error("Error updating ad:", error);
-    }
-  };
   
   onMounted(() => {
     fetchAdDetails(route.params.id);
