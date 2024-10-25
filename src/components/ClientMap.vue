@@ -92,6 +92,7 @@ const calculateMapCenter = (ads) => {
 onMounted(async () => {
   // Fetch video views from the API and populate ads
   await mapStore.fetchVideoViews();
+  await mapStore.fetchClickViews();
 
   // Calculate center of all ads (video views)
   const mapCenter = calculateMapCenter(mapStore.ads);
@@ -110,7 +111,7 @@ onMounted(async () => {
     })
     .addTo(map);
 
-  // Add markers for each ad (video view) on the map
+  console.log(mapStore.adsToDisplay)
   mapStore.ads.forEach((el) => {
     variable();
 
@@ -134,6 +135,5 @@ onMounted(async () => {
 #map {
   width: 100%;
   height: calc(100vh - 115px);
-  border: 2px solid black;
 }
 </style>
