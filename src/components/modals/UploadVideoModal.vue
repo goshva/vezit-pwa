@@ -166,7 +166,7 @@ const handleSubmit = async () => {
     formData.append("status", status.value);
 
     try {
-      const response = await axiosInstance.post("/videos/", formData, {
+      const response = await axiosInstance.post("/allvideo/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
