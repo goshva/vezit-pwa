@@ -23,8 +23,8 @@
   import BaseBlock from '@/components/BaseBlock.vue';
   import ChartBlock from '@/components/ChartBlock.vue';
   import axiosInstance from '@/services/axios.js';
-  
-  // Static chart options for earnings
+  import { generateColor } from '@/services/genColor.js'; // Updated import
+
   const earningsOptions = reactive({
     responsive: true,
     plugins: {
@@ -65,7 +65,7 @@
   const computedEarningsData = computed(() => {
     const labels = clients.value.map(client => client.username); // Use username for labels
     const totalAmounts = clients.value.map(client => parseInt(client.total_amount)); // Use total_amount for data
-    const backgroundColors = labels.map(() => generateRandomColor()); // Generate random color for each label
+    const backgroundColors = clients.value.map(client => generateColor(client.username)); // Pass username to generateColor
     
     return {
       labels: labels, // Set usernames as labels
