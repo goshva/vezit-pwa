@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import { formatRubles } from '@/services/priceConvert.js';
+import UploadFinanceCheckModal from "@/components/modals/UploadFinanceCheckModal.vue";
+
 // State for storing finance data
 const finances = ref([]);
 const loading = ref(false);
@@ -54,6 +56,7 @@ const changePage = (page) => {
     <BaseBlock title="Финансы" class="mb-0">
       <template #options>
         <div class="space-x-1">
+          <UploadFinanceCheckModal />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
