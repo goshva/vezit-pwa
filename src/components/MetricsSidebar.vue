@@ -9,15 +9,15 @@ const props = defineProps(["activePoint"]);
 <template>
   <div class="sidebar">
     <div class="efficiency">
-      <h3 class="sidebar-title">Daily Efficiency</h3>
-      <p class="metric">
-        Active Point Coordinates:
+      <h3 class="sidebar-title">Ежедневная Эффективность</h3>
+      <!-- <p class="metric">
+        Координаты Активной Точки:
         <span class="coordinates">
-          {{ props.activePoint ? props.activePoint.join(", ") : "None selected" }}
+          {{ props.activePoint ? props.activePoint.join(", ") : "Ничего не выбрано" }}
         </span>
-      </p>
+      </p> -->
       <p class="metric">
-        Clicks / Views:
+        Клики / Просмотры:
         <span class="value">45 / 100</span>
       </p>
     </div>
