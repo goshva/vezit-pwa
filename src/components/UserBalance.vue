@@ -1,9 +1,10 @@
 <template>
-  <p @click="getBalance" class="m-0"><strong>{{ userStore.balance }}</strong> ₽</p>
+  <p @click="getBalance" class="m-0"><strong>{{ formatRubles(userStore.balance) }}</strong> ₽</p>
 </template>
 
 <script setup>
 import { useUserStore } from '@/stores/user';
+import { formatRubles } from '@/services/priceConvert.js';
 
 // Get the user store
 const userStore = useUserStore();
