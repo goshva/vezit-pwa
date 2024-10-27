@@ -75,7 +75,7 @@ const isSelected = (id) => id === mapStore.selectedAd;
         <span>{{`Video ${mapStore.ads[el.id - 1].name}`}}</span>
         <span class="text-center">
           {{ el.event }} <br />
-          ({{ el.date }})
+          ({{ mapStore.ads[el.id - 1].date }})
         </span>
       </div>
     </div>
