@@ -10,6 +10,10 @@ export const useMapStore = defineStore({
     showVideoViews: true,
     showClickViews: false,
   }),
+  getters: {
+    totalVideoViews: (state) => state.videoViews.length,
+    totalClickViews: (state) => state.clicksViews.length,
+  },
   actions: {
     setMap(mapInstance) {
       this.map = mapInstance;
@@ -28,7 +32,7 @@ export const useMapStore = defineStore({
     },
     async fetchVideoViews() {
       try {
-        const response = await axiosInstance.get('/video-views');
+        const response = await axiosInstance.get('https://app.olhar.media/api/video-views');
         this.videoViews = response.data;
         this.updateAds();
       } catch (error) {
@@ -37,7 +41,7 @@ export const useMapStore = defineStore({
     },
     async fetchClickViews() {
       try {
-        const response = await axiosInstance.get('/video-clicks');
+        const response = await axiosInstance.get('https://app.olhar.media/api/video-clicks');
         this.clicksViews = response.data;
         this.updateAds();
    

@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps } from "vue";
 import EventSidebar from "@/components/EventSidebar.vue";
 import { useMapStore } from "@/stores/map";
 
@@ -7,14 +7,6 @@ import { useMapStore } from "@/stores/map";
 const props = defineProps(["activePoint"]);
 
 const mapStore = useMapStore();
-
-// Computed property to display both video views and clicks if both checkboxes are checked
-const clicksAndViews = computed(() => {
-  return {
-    clicks: mapStore.clicksViews.length,
-    views: mapStore.videoViews.length
-  };
-});
 </script>
 
 <template>
@@ -29,7 +21,7 @@ const clicksAndViews = computed(() => {
       </p> -->
       <p class="metric">
         Клики / Просмотры:
-        <span class="value">{{ clicksAndViews.clicks }} / {{ clicksAndViews.views }}</span>
+        <span class="value">{{ mapStore.totalClickViews }} / {{ mapStore.totalVideoViews }}</span>
       </p>
     </div>
     <EventSidebar />
