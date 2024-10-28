@@ -35,11 +35,13 @@ const saveClient = async () => {
 };
 
 // Fetch existing client data if editing
-const fetchClient = async (clientId) => {
+const fetchClient = async () => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/client/${clientId}`);
-    clientForm.value = response.data.data; // Assuming the API returns the client object
+    const response = await axiosInstance.get(`/client/`);
+    if (response.data.data !== null) {
+      clientForm.value = response.data.data;
+    }
   } catch (error) {
     console.error('Error fetching client:', error);
   } finally {
@@ -48,7 +50,7 @@ const fetchClient = async (clientId) => {
 };
 
 onMounted(() => {
-  fetchClient(); 
+    fetchClient()
 });
 
 </script>
@@ -61,7 +63,10 @@ onMounted(() => {
         <input v-model="clientForm.name" type="text" class="form-control form-control-alt form-control-lg"
           placeholder="Название компании" />
       </div>
-
+      <div class="mb-4">
+        <input v-model="clientForm.bussines" type="text" class="form-control form-control-alt form-control-lg"
+          placeholder="Бизнес" />
+      </div>
       <div class="mb-4">
         <input v-model="clientForm.OGRN" type="text" class="form-control form-control-alt form-control-lg"
           placeholder="ОГРН" />

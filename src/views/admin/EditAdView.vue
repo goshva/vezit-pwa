@@ -2,7 +2,7 @@
   <div class="m-5 mb-5">
     <BaseBlock title="Редактировать рекламу">
       <template #content>
-        <video width="100%" height="100%" :src="storageBaseUrl+ad.url" controls frameborder="0"></video>
+        <video width="100%" height="100%" :src="storageBaseUrl+ad.url" controls frameborder="0" muted autoplay></video>
         <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
           <div class="col-md-6 mb-3">
             <label for="filename" class="form-label">Название файла</label>

@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
       console.error('Unauthorized! Redirecting to login...');
       localStorage.removeItem('token');
       localStorage.removeItem('isAuth');
-      window.location.href = 'http://localhost:5173/#/auth/signin';
+      window.location.href = '/#/auth/signin';
       // You can add logic to redirect to login page or handle token refresh here
     }
 
