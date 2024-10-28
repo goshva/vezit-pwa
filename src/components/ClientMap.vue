@@ -33,8 +33,15 @@ watch(
     addMarkers(); // Redraw markers
   }
 );
-const getRandomIcon = () => icons[Math.floor(Math.random() * icons.length)];
-
+const getRandomIcon = () => {
+  if (mapStore.showVideoViews && mapStore.showClickViews) {
+    return icons[2];
+  } else if (mapStore.showVideoViews) {
+    return icons[1];
+  } else if (mapStore.showClickViews) {
+    return icons[0];
+  }
+};
 const calculateMapCenter = (ads) => {
   if (ads.length === 0) return [0, 0];
 

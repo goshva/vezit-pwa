@@ -72,10 +72,10 @@ const isSelected = (id) => id === mapStore.selectedAd;
       <div v-for="el in adsToDisplay" :key="el.id" @click="handleClick(el.id)"
         :style="{ backgroundColor: isSelected(el.id) ? mapStore.selectedColor : 'white', marginInline: '-8px' }"
         class="cursor-pointer border-bottom border-dark d-flex justify-content-between align-items-center px-2">
-        <span>{{`Video ${mapStore.ads[el.id - 1].name}`}}</span>
+        <span>{{` ${mapStore.ads[el.id - 1]?.name}`}}</span>
         <span class="text-center">
           {{ el.event }} <br />
-          ({{ mapStore.ads[el.id - 1].date }})
+          {{ mapStore.ads[el.id - 1]?.date }}
         </span>
       </div>
     </div>

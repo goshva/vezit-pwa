@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axiosInstance from '@/services/axios.js';
+import {formatDate} from "@/services/dateFormatter.js";
 
 export const useMapStore = defineStore({
   id: "map",
@@ -32,7 +33,7 @@ export const useMapStore = defineStore({
     },
     async fetchVideoViews() {
       try {
-        const response = await axiosInstance.get('https://app.olhar.media/api/video-views');
+        const response = await axiosInstance.get('/video-views');
         this.videoViews = response.data;
         this.updateAds();
       } catch (error) {
@@ -41,7 +42,7 @@ export const useMapStore = defineStore({
     },
     async fetchClickViews() {
       try {
-        const response = await axiosInstance.get('https://app.olhar.media/api/video-clicks');
+        const response = await axiosInstance.get('/video-clicks');
         this.clicksViews = response.data;
         this.updateAds();
    
@@ -58,9 +59,8 @@ export const useMapStore = defineStore({
         id: view.id,
         name: `ID: ${view.video_id}`,
         latlong: [parseFloat(view.latitude), parseFloat(view.longitude)],
-        date: new Date(view.created_at).toLocaleDateString(),
+        date: formatDate(view.created_at),
         event: view.event,
-        pointerColor: view.event === "Video View" ? "blue" : "red",
       }));
     },
     getVideoViewById(id) {
