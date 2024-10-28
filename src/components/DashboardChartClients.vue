@@ -54,10 +54,6 @@ const fetchClientFinanceSummary = async () => {
     }
 };
 
-// Helper function to generate random color
-
-
-// Computed property to use usernames as labels and total_amount as data
 const computedEarningsData = computed(() => {
     const labels = clients.value.map(client => client.username); // Use username for labels
     const totalAmounts = clients.value.map(client => parseInt(client.total_amount)); // Use total_amount for data

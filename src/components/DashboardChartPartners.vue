@@ -53,15 +53,6 @@
     }
   };
   
-  // Helper function to generate random color
-  const generateRandomColor = () => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgba(${r}, ${g}, ${b}, 0.3)`;
-  };
-  
-  // Computed property to use usernames as labels and total_amount as data
   const computedEarningsData = computed(() => {
     const labels = clients.value.map(client => client.username); // Use username for labels
     const totalAmounts = clients.value.map(client => parseInt(client.total_amount)); // Use total_amount for data

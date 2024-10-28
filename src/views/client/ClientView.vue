@@ -23,9 +23,11 @@ const saveClient = async () => {
   try {
     const response = await axiosInstance.post(`/client`, clientForm.value);
     console.log('Client saved successfully:', response.data);
+    // loading.value = false;
     // You can handle success response here, e.g., show a message, reset form, etc.
   } catch (error) {
     console.error('Error saving client:', error);
+    // loading.value = false;
     // Handle the error, e.g., show a notification
   } finally {
     loading.value = false;
@@ -39,7 +41,6 @@ const fetchClient = async () => {
     const response = await axiosInstance.get(`/client/`);
     if (response.data.data !== null) {
       clientForm.value = response.data.data;
-      
     }
   } catch (error) {
     console.error('Error fetching client:', error);

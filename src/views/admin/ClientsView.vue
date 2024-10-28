@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js'; // Import the date formatter
+import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js';
 
 // State for storing client data
 const clients = ref([]);
