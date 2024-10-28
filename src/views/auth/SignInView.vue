@@ -14,6 +14,8 @@ const store = useTemplateStore();
 const userStore = useUserStore(); // Initialize the user store
 const router = useRouter();
 
+let hasUser = true;
+
 // Input state variables
 const state = reactive({
   email: null,
