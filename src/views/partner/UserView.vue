@@ -1,46 +1,4 @@
 <template>
-  <div class="m-5 mb-5">
-    <BaseBlock title="Редактировать автомобиль">
-      <template #content>
-        <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
-          <div class="col-md-6 mb-3">
-            <label for="filename" class="form-label">Название файла</label>
-            <input type="text" class="form-control" id="filename" v-model="ad.name" required />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="serverFilename" class="form-label">Имя файла на сервере</label>
-            <input type="text" class="form-control" id="serverFilename" v-model="ad.serverfilename" required />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="userId" class="form-label">ID пользователя</label>
-            <input type="number" class="form-control" id="userId" v-model="ad.userid" required />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="duration" class="form-label">Длительность</label>
-            <input type="text" class="form-control" id="duration" v-model="ad.duration" required />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="url" class="form-label">URL</label>
-            <input type="url" class="form-control" id="url" v-model="ad.url" required />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="mainLocation" class="form-label">Основное местоположение</label>
-            <input type="number" class="form-control" id="mainLocation" v-model="ad.mainlocation" required />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="enabled" class="form-label">Включено</label>
-            <select class="form-control" id="enabled" v-model="ad.enabled">
-              <option :value="1">Да</option>
-              <option :value="0">Нет</option>
-            </select>
-          </div>
-          <div class="col-md-12 text-center p-3">
-            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-          </div>
-        </form>
-      </template>
-    </BaseBlock>
-  </div>
 
   <BaseBlock title="Данные о компании" class="m-5">
     <div class="">
@@ -50,15 +8,15 @@
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" placeholder="ОГРН/ОГРИП" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.OGRN" placeholder="ОГРН/ОГРИП" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" placeholder="Название компании" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.bussines" placeholder="Название компании" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" placeholder="Директор(ФИО)" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.contactName" placeholder="Директор(ФИО)" />
       </div>
 
       <div class="mb-4">
@@ -66,11 +24,11 @@
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" placeholder="Фактический адрес" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.name" placeholder="Фактический адрес" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" placeholder="Вид деятельности" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.bussines" placeholder="Вид деятельности" />
       </div>
 
       <div class="mb-2">
@@ -88,7 +46,7 @@
       </div>
 
       <div class="mb-4">
-        <button type="submit" class="btn w-100 btn-alt-primary">
+        <button type="submit" class="btn w-100 btn-alt-primary" @click="handleSubmit">
           <i class=""></i>
           Отправить
         </button>
@@ -111,11 +69,22 @@ const ad = ref({
   id: null,
   filename: "",
   serverfilename: "",
-  userid: null,
   duration: "",
   url: "",
   mainlocation: null,
   enabled: 0,
+  user_id: null,
+  name: "",
+  bussines: "",
+  description: "",
+  OGRN: "",
+  BIK: "",
+  contactName: "",
+  contactTel: "",
+  contactEMail: "",
+  status: null,
+  created_at: "",
+  updated_at: "",
 });
 
 const fetchAdDetails = async () => {
