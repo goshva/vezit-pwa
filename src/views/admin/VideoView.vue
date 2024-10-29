@@ -29,7 +29,6 @@ const fetchEquipments = async (page = 1, status = "") => {
     total.value = response.data.total;
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
-    console.log(videos.value)
   } catch (error) {
     console.error("Error fetching video:", error);
   } finally {
