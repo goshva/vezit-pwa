@@ -129,6 +129,11 @@ const changePage = (page) => {
                   <td class="d-none d-sm-table-cell text-end">
                     <strong>{{ doc.price || '0' }}</strong>
                   </td>
+                  <td>
+                    <button class="btn btn-sm btn-alt-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>

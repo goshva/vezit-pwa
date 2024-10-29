@@ -126,6 +126,11 @@ const formatDateBasedOnFormat = (dateString) => {
                   >
                     {{ formatDateBasedOnFormat(tariff.updated_at) }}
                   </td>
+                  <td>
+                    <button class="btn btn-sm btn-alt-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
