@@ -1,4 +1,4 @@
-а5 ыыые<script setup>
+<script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
