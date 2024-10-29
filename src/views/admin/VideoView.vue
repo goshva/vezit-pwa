@@ -1,4 +1,4 @@
-<script setup>
+а5 ыыые<script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
@@ -29,6 +29,7 @@ const fetchEquipments = async (page = 1, status = "") => {
     total.value = response.data.total;
     totalPages.value = response.data.total_pages; // Adjust according to your API structure
     currentPage.value = page;
+    console.log(videos.value)
   } catch (error) {
     console.error("Error fetching video:", error);
   } finally {
@@ -115,14 +116,14 @@ const changePage = (page) => {
                   <td class="d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': video.status === 0,
-                      'bg-info-light text-info': video.status === 1,
-                      'bg-danger-light text-danger': video.status === 2,
-                      'bg-warning-light text-warning': video.status === 3,
+                      'bg-success-light text-success': video.status === 1,
+                      'bg-info-light text-info': !video.moderator,
+                      'bg-danger-light text-danger': video.status === 0,
+                      'bg-warning-light text-warning': video.status === 2,
                       'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
 
                     }">
-                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ? "Отключено" : "Ошибка" }}
+                      {{ !video.moderator ? "Ожидание" : video.status === 1 ? "Включено" : video.status === 0 ? "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
