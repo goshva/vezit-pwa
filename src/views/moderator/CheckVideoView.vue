@@ -47,6 +47,16 @@ const printSelectedCheckboxes = async () => {
     comment.value = "";
   }
   selectedCheckboxes.value = [];
+  reson_obj = {
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+    7: false,
+  };
   router.push({ path: `/checkVideos/${parseInt(route.params.id) + 1}` });
 };
 
