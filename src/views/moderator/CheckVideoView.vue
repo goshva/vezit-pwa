@@ -19,7 +19,7 @@ const ad = ref({
 });
 const selectedCheckboxes = ref([]);
 const comment = ref("");
-const reson_obj = {
+let reson_obj = {
   0: false,
   1: false,
   2: false,
@@ -30,12 +30,12 @@ const reson_obj = {
   7: false,
 };
 
-const printSelectedCheckboxes = () => {
+const printSelectedCheckboxes = async () => {
   console.log(selectedCheckboxes.value);
 
   // Обновляем reson_obj
   selectedCheckboxes.value.forEach(index => {
-    if (reson_obj.hasOwnProperty(index)) {
+    if (Object.prototype.hasOwnProperty.call(reson_obj, index)) {
       reson_obj[index] = true;
     }
   });
@@ -47,15 +47,22 @@ const printSelectedCheckboxes = () => {
     comment.value = "";
   }
   selectedCheckboxes.value = [];
-
   router.push({ path: `/checkVideos/${parseInt(route.params.id) + 1}` });
-
 };
+
+const rejectAd = async () => {
+  try {
+    await axiosInstance.put(`/videos/${parseInt(route.params.id)}`, {status: 0});
+  } catch (error){
+    console.error(error);
+  }
+}
 
 const fetchAdDetails = async (id) => {
   try {
     const response = await axiosInstance.get(`/videos/${id}`);
     ad.value = response.data;
+    console.log(response)
   } catch (error) {
     console.error("Error fetching ad details:", error);
   }
@@ -112,7 +119,7 @@ const handleOpenModal = (id) => {
           </div>
           <div class="mb-4">
             <div v-if="selectedCheckboxes.length > 0">
-              <button @click="printSelectedCheckboxes" type="submit" class="btn w-100 btn-alt-primary">
+              <button @click="rejectAd" type="submit" class="btn w-100 btn-alt-primary">
                 <i class=""></i>
                 Отклонить
               </button>
