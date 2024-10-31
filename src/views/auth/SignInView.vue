@@ -103,12 +103,14 @@ async function onSubmit() {
         else router.push("/profile")
         break;
       case "partner":
-        router.push("/Pdashboard");
+        if (user.status == 2) router.push("/Pdashboard")
+        else if (user.status == 1) router.push("/mycars")
+        else router.push("/about")
         break;
       case "quest": 
         router.push("/guest");
         break;
-        case "support": 
+      case "support": 
         router.push("/Sdashboard");
         break;        
       default:
