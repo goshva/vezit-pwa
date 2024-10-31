@@ -115,14 +115,14 @@ const changePage = (page) => {
                   <td class="d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': video.status === 0,
-                      'bg-info-light text-info': video.status === 1,
-                      'bg-danger-light text-danger': video.status === 2,
-                      'bg-warning-light text-warning': video.status === 3,
+                      'bg-success-light text-success': video.status === 1,
+                      'bg-info-light text-info': !video.moderator,
+                      'bg-danger-light text-danger': video.status === 0,
+                      'bg-warning-light text-warning': video.status === 2,
                       'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
 
                     }">
-                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ? "Отключено" : "Ошибка" }}
+                      {{ !video.moderator ? "Ожидание" : video.status === 1 ? "Включено" : video.status === 0 ? "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
