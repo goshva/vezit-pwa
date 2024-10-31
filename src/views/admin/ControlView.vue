@@ -56,6 +56,9 @@ const changePage = (page) => {
     <BaseBlock title="Контроль пользователей" class="mb-0">
       <template #options>
         <div class="space-x-1">
+          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
+          <i class="fa fa-plus"></i>
+          </button>
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

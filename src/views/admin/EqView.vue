@@ -55,6 +55,9 @@ const changePage = (page) => {
     <BaseBlock title="Оборудование" class="mb-0">
       <template #options>
         <div class="space-x-1">
+          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
+          <i class="fa fa-plus"></i>
+          </button>
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -129,6 +132,11 @@ const changePage = (page) => {
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(equipment.created_at) }}
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-alt-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
