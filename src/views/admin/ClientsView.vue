@@ -2,8 +2,8 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js';
+import EditButton from '@/components/buttons/EditButton.vue';
 
-// State for storing client data
 const clients = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
@@ -147,9 +147,9 @@ const formatClientDate = (dateString) => {
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                    
+                    <EditButton :id="client.id" routeName="AdminEditClient" />
+
                   </td>
                 </tr>
               </tbody>

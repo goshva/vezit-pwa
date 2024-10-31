@@ -4,6 +4,8 @@ import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js"; // Import the date formatter
 import UploadCarModal from "@/components/modals/UploadCarModal.vue";
+import EditButton from '@/components/buttons/EditButton.vue';
+
 const route = useRoute();
 // State for storing video data
 const cars = ref([]);
@@ -78,9 +80,9 @@ const changePage = (page) => {
                 Все
                 <span class="badge bg-primary rounded-pill">{{
                   total
-                }}</span>
+                  }}</span>
               </a>
-           
+
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                 href="javascript:void(0)" @click.prevent="applyFilter(1)">
                 Проверка
@@ -128,7 +130,8 @@ const changePage = (page) => {
                       'bg-light': car.status === 4 || car.status === 5 || car.status === 6,
 
                     }">
-                      {{ car.status === 0 ? "Включено" : car.status === 1 ? "Ожидание" : car.status === 3 ? "Отключено" : "Ошибка" }}
+                      {{ car.status === 0 ? "Включено" : car.status === 1 ? "Ожидание" : car.status === 3 ? "Отключено"
+                      : "Ошибка" }}
                     </span>
 
                   </td>
@@ -141,15 +144,10 @@ const changePage = (page) => {
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(car.updated_at) }}
                   </td>
-                  
+
                   <td class="d-none d-sm-table-cell text-end">
-                    <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'AdminEditCar', params: { id: car.id } }">
-                        <button class="btn btn-sm btn-alt-primary">
-                          <i class="fa fa-edit"></i>
-                        </button>
-                      </router-link>
-                    </div>
+                    <EditButton :id="car.id" routeName="AdminEditCar" />
+
                   </td>
                 </tr>
               </tbody>
