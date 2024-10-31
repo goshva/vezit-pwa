@@ -96,8 +96,11 @@ async function onSubmit() {
       case "moderator":
         router.push("/Mdashboard");
         break;
-      case "client": 
-        router.push("/Cdashboard");
+      case "client":
+        await userStore.fetchUserBalance()
+        if (user.status == 1 && userStore.balance >= 0) router.push("/myvideo")
+        else if (user.status == 1) router.push("/myfinance")
+        else router.push("/profile")
         break;
       case "partner":
         router.push("/Pdashboard");
