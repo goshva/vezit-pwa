@@ -340,6 +340,11 @@ const routes = [
         component: EqView,
       },
       {
+        path: "eq/:id",
+        name: 'AdminEditEq',
+        component: () => import('@/views/admin/EditEqView.vue'),
+      },
+      {
         path: "clients",
         component: ClientsView,
       },

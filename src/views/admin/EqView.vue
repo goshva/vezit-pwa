@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
+import EditButton from '@/components/buttons/EditButton.vue';
 
 // State for storing equipment data
 const equipments = ref([]);
@@ -48,6 +49,12 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
+
+// const openEditForm = () => {
+//     // Open the edit form modal or component
+//     const editFormModal = ref(null);
+//     editFormModal.value = true;
+//   };
 </script>
 
 <template>
@@ -134,9 +141,7 @@ const changePage = (page) => {
                     {{ formatDate(equipment.created_at) }}
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                    <EditButton :id="equipment.id" routeName="AdminEditEq" />
                   </td>
                 </tr>
               </tbody>
