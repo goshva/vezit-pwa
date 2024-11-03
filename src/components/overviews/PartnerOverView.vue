@@ -52,7 +52,7 @@ const blocks = [
   {
     title: "Список машин",
     icon: "fa-gem",
-    link: "/video",
+    link: "/allvideo",
     sourceCount: "videos",
   },
   {
@@ -70,7 +70,7 @@ const blocks = [
   {
     title: "Техподдержка",
     icon: "fa-chart-bar",
-    link: "/support",
+    link: "/tiketsupport",
     sourceCount: "messages",
   }
 ];

@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js'; // Import the date formatter
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js';
+import EditButton from '@/components/buttons/EditButton.vue';
 
-// State for storing client data
 const clients = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
@@ -69,6 +69,9 @@ const formatClientDate = (dateString) => {
     <BaseBlock title="Список клиентов" class="mb-0">
       <template #options>
         <div class="space-x-1">
+          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
+          <i class="fa fa-plus"></i>
+          </button>
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -143,6 +146,11 @@ const formatClientDate = (dateString) => {
                   <td class="d-none d-sm-table-cell text-end">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
+                  </td>
+                  <td>
+                    
+                    <EditButton :id="client.id" routeName="AdminEditClient" />
+
                   </td>
                 </tr>
               </tbody>

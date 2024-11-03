@@ -166,6 +166,11 @@ const editFinanceStatus = async (status, index) => {
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(finance.Status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
+                  <td>
+                    <button class="btn btn-sm btn-alt-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>

@@ -70,6 +70,9 @@ const formatDateBasedOnFormat = (dateString) => {
     <BaseBlock title="Список локаций" class="mb-0">
       <template #options>
         <div class="space-x-1">
+          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
+          <i class="fa fa-plus"></i>
+          </button>
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -151,6 +154,11 @@ const formatDateBasedOnFormat = (dateString) => {
                     style="cursor: pointer;"
                   >
                     {{ formatDateBasedOnFormat(location.updated_at) }}
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-alt-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>

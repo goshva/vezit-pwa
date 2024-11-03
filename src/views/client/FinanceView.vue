@@ -4,6 +4,8 @@ import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import { formatRubles } from '@/services/priceConvert.js';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import UploadFinanceCheckModal from "@/components/modals/UploadFinanceCheckModal.vue";
+
 // State for storing finance data
 const finances = ref([]);
 const loading = ref(false);
@@ -55,6 +57,7 @@ const changePage = (page) => {
     <BaseBlock title="Финансы" class="mb-0">
       <template #options>
         <div class="space-x-1">
+          <UploadFinanceCheckModal />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,7 +102,7 @@ const changePage = (page) => {
               <thead>
                 <tr>
                   <th class="d-xl-table-cell">Событие</th>
-                  <th>Время</th>
+                  <th class="d-none d-sm-table-cell text-center">Время</th>
                   <th class="d-none d-sm-table-cell text-center">Описание</th>
                   <th class="d-none d-sm-table-cell text-end">Сумма</th>
                   <th class="d-none d-sm-table-cell text-end">Статус</th>
@@ -125,24 +128,20 @@ const changePage = (page) => {
                       Пополнение
                     </p>
                   </td>
-
                   <td>
                     <p class="fs-sm fw-medium text-muted mb-0">
-                      {{ finance.UpdatedAt }}
+                      {{ formatDate(finance.updated_at) }}
                     </p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted">
                     {{ finance.Title }}
-                    <p class="fw-small mb-0">
-                      {{ finance.usernameD || "Имя пользователя" }}
-                    </p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{formatRubles(finance.Amount)}} ₽
+                    {{ formatRubles(finance.Amount) }} ₽
                   </td>
 
                   <td class="d-none d-sm-table-cell text-end">
-                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(finance.Status) >0" title="Готово"></i>
+                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(finance.Status) > 0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                 </tr>

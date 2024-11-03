@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-
+import { useUserStore } from "@/stores/user";
 // Main store and Route
 const store = useTemplateStore();
 const route = useRoute();
@@ -137,11 +137,17 @@ const routerLinks = [
     link: "/help",
   },
 ];
+
+const userStore = useUserStore();
+const linkArray = () => {
+  if (userStore.userStatus === 0) return routerLinks.slice(3)
+  else return routerLinks
+}
 </script>
 
 <template>
   <ul class="list">
-    <li v-for="item in routerLinks" :key="item.id">
+    <li v-for="item in linkArray()" :key="item.id">
       <RouterLink class="nav_link" :to="item.link" active-class="active-link">{{
         item.name
       }}</RouterLink>

@@ -3,6 +3,8 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import {formatDate} from "@/services/dateFormatter.js";
+
 
 // Vue Router instances
 const route = useRoute();
@@ -135,19 +137,12 @@ onMounted(() => {
                 </td>
                 <td>
                   <p class="fs-sm fw-medium text-muted mb-0 text-center">
-                    {{ message.updated_at }}
+                    {{ formatDate(message.updated_at) }}
                   </p>
                 </td>
                 <td class="d-none d-sm-table-cell text-end">
                   <i class="fa fa-fw fa-check text-success" v-if="parseInt(message.status) > 0" title="Готово"></i>
                   <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
-                </td>
-                <td class="d-sm-table-cell fw-semibold text-muted text-end">
-                  <router-link :to="{ name: 'ResponseSupport', params: { id: message.id } }">
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
-                  </router-link>
                 </td>
               </tr>
             </tbody>

@@ -58,7 +58,7 @@ const changePage = (page) => {
   <RequestSupport />
 
   <div class="m-5 mb-0">
-    <BaseBlock title="Финансы" class="mb-0">
+    <!-- <BaseBlock title="Финансы" class="mb-0">
       <template #options>
         <div class="space-x-1">
           <div class="dropdown d-inline-block">
@@ -95,7 +95,7 @@ const changePage = (page) => {
         </div>
       </template>
 
-      <template #content>
+<template #content>
         <div v-if="loading" class="block-content text-center">
           <span>Загрузка финансов...</span>
         </div>
@@ -162,53 +162,37 @@ const changePage = (page) => {
         @page-changed="changePage"
         />
       </template>
-    </BaseBlock>
+</BaseBlock> -->
   </div>
   <BaseBlock title="Обращения в техподдержку" class="m-5">
     <template #options>
       <div class="space-x-1">
         <div class="dropdown d-inline-block">
-          <button
-              type="button"
-              class="btn btn-sm btn-alt-secondary"
-              id="dropdown-recent-orders-filters"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-          >
+          <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-flask"></i>
             Фильтр
             <i class="fa fa-angle-down ms-1"></i>
           </button>
-          <div
-              class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters"
-          >
-            <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-            >
+          <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
+            aria-labelledby="dropdown-recent-orders-filters">
+            <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+              href="javascript:void(0)">
               Pending
               <span class="badge bg-primary rounded-pill">20</span>
             </a>
-            <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-            >
+            <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+              href="javascript:void(0)">
               Active
               <span class="badge bg-primary rounded-pill">72</span>
             </a>
-            <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-            >
+            <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+              href="javascript:void(0)">
               Completed
               <span class="badge bg-primary rounded-pill">890</span>
             </a>
-            <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-            >
+            <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+              href="javascript:void(0)">
               All
               <span class="badge bg-primary rounded-pill">997</span>
             </a>
@@ -222,69 +206,54 @@ const changePage = (page) => {
         <div class="table-responsive">
           <table class="table table-hover table-vcenter">
             <thead>
-            <tr>
-              <th class="d-none d-sm-table-cell">Время</th>
-              <th class="d-none d-sm-table-cell">Статус</th>
-            </tr>
+              <tr>
+                <th class="d-none d-sm-table-cell text-center">Сообщение / Ответ</th>
+                <th class="d-none d-sm-table-cell text-center">Время</th>
+                <th class="d-none d-sm-table-cell text-end">Статус</th>
+                <th class="d-none d-sm-table-cell text-end"></th>
+              </tr>
             </thead>
             <tbody class="fs-sm">
-            <tr>
-              <td class="d-none d-sm-table-cell fw-semibold text-muted text-start">
-                7 min ago
-              </td>
-              <td>
-                <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                      >Отвечено</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="d-none d-sm-table-cell fw-semibold text-muted text-start">
-                26 min ago
-              </td>
-              <td>
-                <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info">
-                  Завершено
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td class="d-none d-sm-table-cell fw-semibold text-muted text-start">
-                19 min ago
-              </td>
-              <td>
-                <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success"
-                >Отвечено</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="d-none d-sm-table-cell fw-semibold text-muted text-start">
-                13 min ago
-              </td>
-              <td>
-                <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info">
-                  Завершено
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td class="d-none d-sm-table-cell fw-semibold text-muted text-start">
-                4 min ago
-              </td>
-              <td>
-                <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-info-light text-info">
-                  Завершено
-                </span>
-              </td>
-            </tr>
+              <tr v-for="message in finances" :key="message.id">
+                <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                  <p class="fw-medium mb-0">
+                    {{ message.user_id }} : «{{ message.message }}»
+                  </p>
+                  <p v-if="message.support_answer" class="fw-medium
+                     mb-0">
+                    {{ message.support_id }} : «{{ message.support_answer }}»
+                  </p>
+
+                </td>
+                <td>
+                  <p class="fs-sm fw-medium text-muted mb-0 text-center">
+                    {{ formatDate(message.updated_at) }}
+                  </p>
+                </td>
+                <td class="d-none d-sm-table-cell text-end">
+                  <i class="fa fa-fw fa-check text-success" v-if="parseInt(message.status) > 0" title="Готово"></i>
+                  <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
+                </td>
+                <td class="d-sm-table-cell fw-semibold text-muted text-end">
+                  <router-link :to="{ name: 'ResponseSupport', params: { id: message.id } }">
+                    <button class="btn btn-sm btn-alt-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </router-link>
+                </td>
+              </tr>
+
             </tbody>
           </table>
         </div>
       </div>
+
       <PaginationComponent v-if="lastPage > 1"
         :current-page="currentPage"
         :last-page="lastPage"
         @page-changed="changePage"
         />
+        
     </template>
   </BaseBlock>
 </template>

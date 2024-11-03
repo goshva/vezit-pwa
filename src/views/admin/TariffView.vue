@@ -68,6 +68,11 @@ const formatDateBasedOnFormat = (dateString) => {
 <template>
   <div class="m-5 mb-0">
     <BaseBlock title="Список Тарифов" class="mb-0">
+      <template #options>
+        <button type="button" class="btn btn-primary push">
+          <i class="fa fa-plus"></i>
+        </button>
+      </template>
       <template #content>
         <div v-if="loading" class="block-content text-center">
           <span>Загрузка...</span>
@@ -122,6 +127,11 @@ const formatDateBasedOnFormat = (dateString) => {
                     style="cursor: pointer;"
                   >
                     {{ formatDateBasedOnFormat(tariff.updated_at) }}
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-alt-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
