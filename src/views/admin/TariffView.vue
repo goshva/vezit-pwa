@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
 import { formatRubles } from '@/services/priceConvert.js';
+import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+
 // State for storing tariff data
 const tariffs = ref([]);
 const loading = ref(false);
@@ -10,7 +12,7 @@ const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
-const totalPages = ref(1);
+const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // State for toggling date format
@@ -27,7 +29,7 @@ const fetchEquipments = async (page = 1, status = '') => {
       },
     });
     tariffs.value = response.data;
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
     console.error('Error fetching tariff:', error);
@@ -126,6 +128,11 @@ const formatDateBasedOnFormat = (dateString) => {
             </table>
           </div>
         </div>
+        <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
+        />
       </template>
     </BaseBlock>
   </div>
