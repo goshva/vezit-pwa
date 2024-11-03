@@ -3,6 +3,7 @@
     <BaseBlock title="Редактировать данные оборудования">
       <template #content>
         <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
+          <!-- Existing Fields -->
           <div class="col-md-6 mb-3">
             <label for="equipid" class="form-label">ID оборудования</label>
             <input
@@ -51,22 +52,55 @@
               required
             />
           </div>
+          
+          <!-- New Fields -->
+          <div class="col-md-6 mb-3">
+            <label for="sid" class="form-label">Серийный ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="sid"
+              v-model="equipment.sid"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="apikey" class="form-label">API Key</label>
+            <input
+              type="text"
+              class="form-control"
+              id="apikey"
+              v-model="equipment.apikey"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="apikey" class="form-label">Last Ip</label>
+            <input
+              type="text"
+              class="form-control"
+              id="apikey"
+              v-model="equipment.lastipaddr"
+              required
+            />
+          </div>
+                    
         </form>
+        
         <div class="row g-3 m-2 mb-5" v-if="equipment && equipment.id">
-            <RemoveData :path="$route.path" @delete="handleDelete"/>
-            <EditData :path="$route.path" :data="equipment" @submit="handleSubmit"/>
+          <RemoveData :path="$route.path" @delete="handleDelete"/>
+          <EditData :path="$route.path" :data="equipment" @submit="handleSubmit"/>
         </div>
       </template>
     </BaseBlock>
   </div>
 </template>
-
 <script>
 import RemoveData from "@/components/RemoveData.vue";
 import EditData from "@/components/EditData.vue";
 import axiosInstance from "@/services/axios.js";
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   name: "EditEqView",
@@ -76,11 +110,24 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const equipment = ref({});
+    const router = useRouter();
+
+    // Define equipment as a reactive object with its expected properties
+    const equipment = ref({
+      id: "",
+      description: "",
+      partner_name: "",
+      status: 0,
+      created_at: "",
+      sid: "",
+      apikey: "",
+      lastIp:""
+
+    });
 
     const fetchEquipmentDetails = async (id) => {
       try {
-        const response = await axiosInstance.get(`https://app.olhar.media/api/equipments/${id}`);
+        const response = await axiosInstance.get(`/eq/${id}`);
         equipment.value = response.data;
       } catch (error) {
         console.error("Error fetching equipment details:", error);
@@ -93,22 +140,12 @@ export default {
 
     const handleSubmit = async () => {
       try {
-        await axiosInstance.put(`/equipments/${route.params.id}`, equipment.value);
-        route.push("/equipment");
+        await axiosInstance.put(`/eq/${route.params.id}`, equipment.value);
+        router.push("/eq");
       } catch (error) {
         console.error("Error updating equipment:", error);
       }
     };
-
-    const handleDelete = async() => {
-      axiosInstance.delete(`/equipments/${this.route.params.id}`)
-        .then(response => {
-          console.log("Data deleted successfully!");
-        })
-        .catch(error => {
-          console.error("Error deleting data:", error);
-        });
-    }
 
     return {
       equipment,
