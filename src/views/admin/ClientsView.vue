@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
+import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js';
 import EditButton from '@/components/buttons/EditButton.vue';
 
@@ -10,7 +11,7 @@ const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
-const totalPages = ref(1);
+const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // State for toggling date format
@@ -27,7 +28,7 @@ const fetchClients = async (page = 1, status = '') => {
       },
     });
     clients.value = response.data.data; // Adjust according to your API structure
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
     console.error('Error fetching clients:', error);
@@ -51,6 +52,16 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchClients(page, filterStatus.value);
 };
+
+const editClientStatus = async (status, index, id) => {
+  clients.value[index].status = status > 0 ? 0 : 1;
+  try {
+    await axiosInstance.put(`/clients/${id}`, {
+      status: clients.value[index].status})
+  } catch(error) {
+    console.error("Error updating ad:", error);
+  }
+}
 
 // Toggle date format using service
 const toggleFormat = () => {
@@ -142,13 +153,13 @@ const formatClientDate = (dateString) => {
                   <td class="d-none d-sm-table-cell text-end">
                     <p class="fs-sm fw-medium text-muted mb-0">0</p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
+                  <td class="d-none d-sm-table-cell text-end" @click="editClientStatus(client.status, clients.indexOf(client), client.id)">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td>
                     
-                    <EditButton :id="client.id" routeName="AdminEditClient" />
+                      <EditButton :id="client.id" routeName="AdminEditClient" />
 
                   </td>
                 </tr>
@@ -156,21 +167,11 @@ const formatClientDate = (dateString) => {
             </table>
           </div>
         </div>
-        <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Pagination">
-            <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">Prev</a>
-              </li>
-              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)" aria-label="Next">Next</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
+        />
       </template>
     </BaseBlock>
   </div>

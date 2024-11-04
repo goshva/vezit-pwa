@@ -354,6 +354,11 @@ const routes = [
         component: () => import('@/views/admin/EditClientView.vue'),
       },
       {
+        path: 'partners/:id',
+        name: 'AdminEditPartner',
+        component: () => import('@/views/admin/EditPartnerView.vue'),
+      },
+      {
         path: "moderators",
         component: ModeratorsView,
       },
