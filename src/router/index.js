@@ -357,6 +357,11 @@ const routes = [
         path: "moderators",
         component: ModeratorsView,
       },
+      {
+        path: "moderators/:id/:status",
+        name: 'AdminEditModerator',
+        component: () => import('@/views/admin/EditModeratorView.vue'),
+      },
       { path: "partners", component: PartnersView },
       {
         path: "cars", component: AdminCarsView
