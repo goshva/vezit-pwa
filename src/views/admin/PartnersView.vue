@@ -1,8 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js';
-import EditButton from "@/components/buttons/EditButton.vue"; // Import the date formatter
+import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
+import EditButton from "@/components/buttons/EditButton.vue";
+import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 
 // State for storing location data
 const clients = ref([]);
