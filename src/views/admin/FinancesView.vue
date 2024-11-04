@@ -4,6 +4,7 @@ import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import { formatRubles } from '@/services/priceConvert.js';
 import CreateFianceModal from "@/components/modals/CreateFianceModal.vue";
+import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 
 // State for storing finance data
 const finances = ref([]);
@@ -12,7 +13,7 @@ const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
-const totalPages = ref(1);
+const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch finance data from API
@@ -26,8 +27,9 @@ const fetchEquipments = async (page = 1, status = '') => {
       },
     });
     finances.value = response.data.data; // Adjust according to your API structure
-    totalPages.value = response.data.total; // Adjust according to your API structure
+    lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
+    
   } catch (error) {
     console.error('Error fetching finance:', error);
   } finally {
@@ -174,23 +176,13 @@ const editFinanceStatus = async (status, index) => {
             </table>
           </div>
         </div>
-        <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Pagination">
-            <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)"
-                  aria-label="Previous">Prev</a>
-              </li>
-              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)"
-                  aria-label="Next">Next</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        
+        <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
+        />
+
       </template>
     </BaseBlock>
   </div>

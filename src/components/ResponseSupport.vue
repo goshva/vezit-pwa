@@ -2,7 +2,9 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axiosInstance from "@/services/axios.js";
+import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import {formatDate} from "@/services/dateFormatter.js";
+
 
 // Vue Router instances
 const route = useRoute();
@@ -19,7 +21,7 @@ const supportMessage = ref({
 const messages = ref([]);
 const loading = ref(false);
 const currentPage = ref(1);
-const totalPages = ref(1);
+const lastPage = ref(1);
 
 // Function to fetch support messages (filtered by support ID if necessary)
 const fetchSupportDetails = async (supportId = null) => {
@@ -32,7 +34,7 @@ const fetchSupportDetails = async (supportId = null) => {
       },
     });
     messages.value = response.data.data; // Assuming the response contains an array of messages
-    totalPages.value = response.data.total_pages; // Assuming the response contains pagination details
+    lastPage.value = response.data.last_page; // Assuming the response contains pagination details
   } catch (error) {
     console.error("Error fetching support details:", error);
   } finally {
@@ -57,7 +59,7 @@ const applyFilter = (status) => {
 
 // Function to handle pagination
 const changePage = (page) => {
-  if (page >= 1 && page <= totalPages.value) {
+  if (page >= 1 && page <= lastPage.value) {
     currentPage.value = page;
     fetchSupportDetails(route.params.id); // Fetch support details for the new page
   }
@@ -147,23 +149,13 @@ onMounted(() => {
           </table>
         </div>
       </div>
-      <div class="block-content block-content-full bg-body-light">
-        <nav aria-label="Pagination">
-          <ul class="pagination pagination-sm justify-content-end mb-0">
-            <li class="page-item" :class="{ disabled: currentPage === 1 }">
-              <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)"
-                aria-label="Previous">Prev</a>
-            </li>
-            <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-              <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
-            </li>
-            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-              <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)"
-                aria-label="Next">Next</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+
+      <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
+        />
+
     </template>
   </BaseBlock>
 </template>
