@@ -53,14 +53,10 @@ const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
 
-const editFinanceStatus = async (status, index) => {
-  if (status > 0){
-    finances.value[index].Status = 0;
-  } else {
-    finances.value[index].Status = 1;
-  }
+const editFinanceStatus = async (status, index, id) => {
+  finances.value[index].Status = status > 0 ? 0 : 1
   try {
-    await axiosInstance.put(`/finances/${finances.value.length - index}`, {
+    await axiosInstance.put(`/finances/${id}`, {
       Status: finances.value[index].Status,
       Time: finances.value[index].Time,
       Title: finances.value[index].Title,
@@ -71,9 +67,8 @@ const editFinanceStatus = async (status, index) => {
   }
 }
 
-
-
 </script>
+
 <template>
   <div class="m-5 mb-0">
     <BaseBlock title="Финансы" class="mb-0">
@@ -162,7 +157,7 @@ const editFinanceStatus = async (status, index) => {
                       {{ formatDate(finance.updated_at) }}
                     </p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end" @click="editFinanceStatus(finance.Status, finances.indexOf(finance))">
+                  <td class="d-none d-sm-table-cell text-end" @click="editFinanceStatus(finance.Status, finances.indexOf(finance), finance.id)">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(finance.Status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
