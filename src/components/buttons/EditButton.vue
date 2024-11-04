@@ -11,12 +11,16 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    status: {
+    type: Number,
+    required: true,
+  },
 });
 
 const router = useRouter();
 
 const navigateToEdit = () => {
-    router.push({ name: props.routeName, params: { id: props.id } });
+    router.push({ name: props.routeName, params: { id: props.id, status: props.status } });
 };
 </script>
 

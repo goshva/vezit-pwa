@@ -2,7 +2,12 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
+<<<<<<< HEAD
+import EditButton from '@/components/buttons/EditButton.vue';
+import { status } from 'nprogress';
+=======
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+>>>>>>> develop
 
 // State for storing equipment data
 const equipments = ref([]);
@@ -18,7 +23,7 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/equipments`, {
+    const response = await axiosInstance.get(`/eq`, {
       params: {
         page: page,
         status: status,
@@ -49,6 +54,12 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
+
+// const openEditForm = () => {
+//     // Open the edit form modal or component
+//     const editFormModal = ref(null);
+//     editFormModal.value = true;
+//   };
 </script>
 
 <template>
@@ -135,9 +146,7 @@ const changePage = (page) => {
                     {{ formatDate(equipment.created_at) }}
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                    <EditButton :id="equipment.id" routeName="AdminEditEq" :status="equipment.status"/>
                   </td>
                 </tr>
               </tbody>

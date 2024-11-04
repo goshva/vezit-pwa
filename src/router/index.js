@@ -340,6 +340,11 @@ const routes = [
         component: EqView,
       },
       {
+        path: "eq/:id",
+        name: 'AdminEditEq',
+        component: () => import('@/views/admin/EditEqView.vue'),
+      },
+      {
         path: "clients",
         component: ClientsView,
       },
@@ -356,6 +361,11 @@ const routes = [
       {
         path: "moderators",
         component: ModeratorsView,
+      },
+      {
+        path: "moderators/:id/:status",
+        name: 'AdminEditModerator',
+        component: () => import('@/views/admin/EditModeratorView.vue'),
       },
       { path: "partners", component: PartnersView },
       {
