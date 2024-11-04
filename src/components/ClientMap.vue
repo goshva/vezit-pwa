@@ -3,6 +3,8 @@ import leaflet from "leaflet";
 import { onMounted, watch } from "vue";
 import { useMapStore } from "@/stores/map";
 import { icons } from "@/components/MapIcons.vue"; // Import icons array
+import { useRouter } from "vue-router";
+const router = useRouter();
 const mapStore = useMapStore();
 let map;
 let markers = [];
@@ -63,7 +65,7 @@ onMounted(async () => {
   // Fetch video views from the API and populate ads
   await mapStore.fetchVideoViews();
   await mapStore.fetchClickViews();
-
+  if (mapStore.videoViews.length === 0) return router.push("/myvideo")
   // Calculate center of all ads (video views)
   const mapCenter = calculateMapCenter(mapStore.ads);
 

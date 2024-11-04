@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import axiosInstance from "@/services/axios.js";
 import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js'; // Import the date formatter
+import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 
@@ -14,7 +15,7 @@ const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Pagination and filtering state
 const currentPage = ref(1);
-const totalPages = ref(1);
+const lastPage = ref(1);
 const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch video data from API
@@ -29,8 +30,10 @@ const fetchEquipments = async (page = 1, status = "") => {
     });
     videos.value = response.data.data;
     total.value = response.data.total;
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
+    console.log(response);
+    
   } catch (error) {
     console.error("Error fetching video:", error);
   } finally {
@@ -157,23 +160,11 @@ const formatClientDate = (dateString) => {
             </table>
           </div>
         </div>
-        <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Pagination">
-            <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)"
-                  aria-label="Previous">Prev</a>
-              </li>
-              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)"
-                  aria-label="Next">Next</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
+        />
       </template>
     </BaseBlock>
   </div>

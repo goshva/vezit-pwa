@@ -12,7 +12,7 @@ const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
-const totalPages = ref(1);
+const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // State for toggling date format
@@ -28,8 +28,9 @@ const fetchEquipments = async (page = 1, status = '') => {
         status: status,
       },
     });
+    console.log(response);
     clients.value = response.data.data; // Adjust according to your API structure
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
     console.error('Error fetching location:', error);
@@ -166,21 +167,11 @@ const formatDateBasedOnFormat = (dateString) => {
             </table>
           </div>
         </div>
-        <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Pagination">
-            <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">Prev</a>
-              </li>
-              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)" aria-label="Next">Next</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
+        />
       </template>
     </BaseBlock>
   </div>

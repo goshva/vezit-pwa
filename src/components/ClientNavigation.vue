@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-
+import { useUserStore } from "@/stores/user";
 // Main store and Route
 const store = useTemplateStore();
 const route = useRoute();
@@ -141,11 +141,18 @@ const routerLinks = [
 function changeMap(lon, lat, zoom) {
   map = leaflet.map("map").setView([112, 112], 3);
 }
+
+const userStore = useUserStore();
+const linkArray = () => {
+  if (userStore.userStatus === 0) return routerLinks.slice(3)
+  else if (userStore.userStatus === 1 && userStore.balance < 0) return routerLinks.slice(2)
+  else return routerLinks
+}
 </script>
 
 <template>
   <ul class="list">
-    <li v-for="item in routerLinks" :key="item.id">
+    <li v-for="item in linkArray()" :key="item.id">
       <RouterLink class="nav_link" :to="item.link" active-class="active-link">{{
         item.name
       }}</RouterLink>

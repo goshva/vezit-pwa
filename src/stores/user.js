@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', {
     fullUserName: null,
     companyName: null,
     companyRole: null,
+    userStatus: null,
     createdAt: '',
     updatedAt: ''
   }),
@@ -29,6 +30,7 @@ export const useUserStore = defineStore('user', {
       this.companyName = userData.companyname;
       this.companyRole = userData.companyrole;
       this.createdAt = userData.created_at;
+      this.userStatus = userData.status;
       this.updatedAt = userData.updated_at;
     },
 
@@ -45,6 +47,7 @@ export const useUserStore = defineStore('user', {
       this.companyRole = null;
       this.createdAt = '';
       this.updatedAt = '';
+      this.userStatus = null;
     },
 
     // New action to fetch user balance
