@@ -137,7 +137,8 @@ const changePage = (page) => {
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <p v-if="car.partner_id" class="mb-0">{{ car.partner_id }}</p>
+                    <p class="mb-0">{{ car.partner.name }}</p>
+                    <p class="mb-0">{{ car.partner.contactName }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
                     <p v-if="car.driver" class="mb-0">{{ car.driver }}</p>
