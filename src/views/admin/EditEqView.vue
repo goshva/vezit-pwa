@@ -39,7 +39,7 @@
             <select class="form-control" id="status" v-model="equipment.status" required>
               <option value="0">Выключено</option>
               <option value="1">В работе</option>
-              <option value="2">Ошибка</option>
+              <option value="2">Неизвестно</option>
             </select>
           </div>
           <div class="col-md-6 mb-3">
@@ -104,11 +104,17 @@ import { useRoute, useRouter } from "vue-router";
 
 export default {
   name: "EditEqView",
+  props: {
+    status: {
+      type: Number,
+      required: true
+    }
+  },
   components: {
     RemoveData,
     EditData,
   },
-  setup() {
+  setup(props) {
     const route = useRoute();
     const router = useRouter();
 
@@ -117,7 +123,7 @@ export default {
       id: "",
       description: "",
       partner_name: "",
-      status: 0,
+      status: props.status,
       created_at: "",
       sid: "",
       apikey: "",

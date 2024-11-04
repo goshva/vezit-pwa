@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import EditButton from '@/components/buttons/EditButton.vue';
+import { status } from 'nprogress';
 
 // State for storing equipment data
 const equipments = ref([]);
@@ -141,7 +142,7 @@ const changePage = (page) => {
                     {{ formatDate(equipment.created_at) }}
                   </td>
                   <td>
-                    <EditButton :id="equipment.id" routeName="AdminEditEq" />
+                    <EditButton :id="equipment.id" routeName="AdminEditEq" :status="equipment.status"/>
                   </td>
                 </tr>
               </tbody>
