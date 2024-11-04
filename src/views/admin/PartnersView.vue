@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
+import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js';
+import EditButton from "@/components/buttons/EditButton.vue"; // Import the date formatter
 
 // State for storing location data
 const clients = ref([]);
@@ -56,6 +57,16 @@ const changePage = (page) => {
 const toggleDateFormat = () => {
   dateFormat.value = dateFormat.value === 'elapsed' ? 'absolute' : 'elapsed';
 };
+
+const editPartnerStatus = async (status, index, id) => {
+  clients.value[index].status = status > 0 ? 0 : 1;
+  try {
+    await axiosInstance.put(`/partners/${id}`, {
+      status: clients.value[index].status})
+  } catch(error) {
+    console.error("Error updating ad:", error);
+  }
+}
 
 // Method to format date based on the current format
 const formatDateBasedOnFormat = (dateString) => {
@@ -142,14 +153,12 @@ const formatDateBasedOnFormat = (dateString) => {
                   <td class="d-none d-sm-table-cell text-end">
                     <p class="fs-sm fw-medium text-muted mb-0">0</p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
+                  <td class="d-none d-sm-table-cell text-end" @click="editPartnerStatus(client.status, clients.indexOf(client), client.id)">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                    <EditButton :id="client.id" routeName="AdminEditPartner" />
                   </td>
                 </tr>
               </tbody>

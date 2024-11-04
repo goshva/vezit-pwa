@@ -52,6 +52,16 @@ const changePage = (page) => {
   fetchClients(page, filterStatus.value);
 };
 
+const editClientStatus = async (status, index, id) => {
+  clients.value[index].status = status > 0 ? 0 : 1;
+  try {
+    await axiosInstance.put(`/clients/${id}`, {
+      status: clients.value[index].status})
+  } catch(error) {
+    console.error("Error updating ad:", error);
+  }
+}
+
 // Toggle date format using service
 const toggleFormat = () => {
   toggleDateFormat(dateFormat); // Pass the dateFormat ref to toggleDateFormat
@@ -142,13 +152,13 @@ const formatClientDate = (dateString) => {
                   <td class="d-none d-sm-table-cell text-end">
                     <p class="fs-sm fw-medium text-muted mb-0">0</p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
+                  <td class="d-none d-sm-table-cell text-end" @click="editClientStatus(client.status, clients.indexOf(client), client.id)">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td>
                     
-                    <EditButton :id="client.id" routeName="AdminEditClient" />
+                      <EditButton :id="client.id" routeName="AdminEditClient" />
 
                   </td>
                 </tr>
