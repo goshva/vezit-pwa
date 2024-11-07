@@ -398,6 +398,11 @@ const routes = [
         component: FinancesView,
       },
       {
+        path: "finances/:id",
+        name: 'AdminEditFinance',
+        component: () => import('@/views/admin/EditFinanceView.vue'),
+      },
+      {
         path: "documents",
         component: DocumentsView,
       },
