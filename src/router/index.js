@@ -407,6 +407,11 @@ const routes = [
         component: DocumentsView,
       },
       {
+        path: "docs/:id",
+        name: 'AdminEditDocument',
+        component: () => import('@/views/admin/EditDocumentView.vue'),
+      },
+      {
         path: "templates",
         component: TemplatesView,
       },
