@@ -424,6 +424,11 @@ const routes = [
         component: LocationView,
       },
       {
+        path: "locations/:id",
+        name: 'AdminEditLocation',
+        component: () => import('@/views/admin/EditLocationView.vue'),
+      },
+      {
         path: "tariffs",
         component: TariffView,
       },

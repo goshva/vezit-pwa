@@ -1,6 +1,6 @@
 <template>
   <div class="m-5 mb-5">
-    <BaseBlock title="Редактировать данные финансов">
+    <BaseBlock title="Редактировать данные документов">
       <template #content>
         <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
           <!-- Existing Fields -->
