@@ -407,6 +407,11 @@ const routes = [
         component: DocumentsView,
       },
       {
+        path: "docs/:id",
+        name: 'AdminEditDocument',
+        component: () => import('@/views/admin/EditDocumentView.vue'),
+      },
+      {
         path: "templates",
         component: TemplatesView,
       },
@@ -417,6 +422,11 @@ const routes = [
       {
         path: "locations",
         component: LocationView,
+      },
+      {
+        path: "locations/:id",
+        name: 'AdminEditLocation',
+        component: () => import('@/views/admin/EditLocationView.vue'),
       },
       {
         path: "tariffs",
