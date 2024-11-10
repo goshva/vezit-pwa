@@ -1,96 +1,96 @@
 <template>
   <div class="m-5 mb-5">
-    <BaseBlock title="Редактировать данные документов">
+    <BaseBlock title="Редактировать данные тарифов">
       <template #content>
         <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
           <!-- Existing Fields -->
           <div class="col-md-6 mb-3">
-            <label for="documentid" class="form-label">ID</label>
+            <label for="id" class="form-label">ID</label>
             <input
               type="text"
               class="form-control"
-              id="documentid"
-              v-model="document.id"
+              id="id"
+              v-model="tariff.id"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="user_id" class="form-label">ID Пользователя</label>
+            <label for="name" class="form-label">Название</label>
             <input
               type="text"
               class="form-control"
-              id="user_id"
-              v-model="document.user_id"
+              id="name"
+              v-model="tariff.name"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="filename" class="form-label">Название</label>
+            <label for="description" class="form-label">Описание</label>
             <input
               type="text"
               class="form-control"
-              id="filename"
-              v-model="document.filename"
+              id="description"
+              v-model="tariff.description"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="status" class="form-label">Доступ</label>
-            <select class="form-control" id="status" v-model="document.status" required>
+            <label for="status" class="form-label">Статус</label>
+            <select class="form-control" id="status" v-model="tariff.status" required>
               <option value="0">Неизвестно</option>
-              <option value="1">Включено</option>
-              <option value="2">Включено</option>
+              <option value="1">В работе</option>
+              <option value="2">В работе</option>
             </select>
           </div>
           
           <!-- New Fields -->
           <div class="col-md-6 mb-3">
-            <label for="serverfilename" class="form-label">Имя файла на сервере</label>
+            <label for="start_date" class="form-label">Начало</label>
             <input
               type="text"
               class="form-control"
-              id="serverfilename"
-              v-model="document.serverfilename"
+              id="start_date"
+              v-model="tariff.start_date"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="adddate" class="form-label">Дата добавления</label>
+            <label for="end_date" class="form-label">Конец</label>
             <input
               type="text"
               class="form-control"
-              id="adddate"
-              v-model="document.adddate"
+              id="end_date"
+              v-model="tariff.end_date"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="userrole" class="form-label">Роль пользователя</label>
+            <label for="view_cost" class="form-label">Показы</label>
             <input
               type="text"
               class="form-control"
-              id="userrole"
-              v-model="document.userrole"
+              id="view_cost"
+              v-model="tariff.view_cost"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="url" class="form-label">Ссылка</label>
+            <label for="link_cost" class="form-label">Переходы</label>
             <input
               type="text"
               class="form-control"
-              id="url"
-              v-model="document.url"
+              id="link_cost"
+              v-model="tariff.link_cost"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="enabled" class="form-label">Разрешение</label>
+            <label for="currency" class="form-label">Валюта</label>
             <input
               type="text"
               class="form-control"
-              id="enabled"
-              v-model="document.enabled"
+              id="currency"
+              v-model="tariff.currency"
               required
             />
           </div>
@@ -100,7 +100,7 @@
               type="datetime-local"
               class="form-control"
               id="created_at"
-              v-model="document.created_at"
+              v-model="tariff.created_at"
               required
             />
           </div>
@@ -110,16 +110,16 @@
               type="datetime-local"
               class="form-control"
               id="updated_at"
-              v-model="document.updated_at"
+              v-model="tariff.updated_at"
               required
             />
           </div>
                     
         </form>
         
-        <div class="row g-3 m-2 mb-5" v-if="document && document.id">
+        <div class="row g-3 m-2 mb-5" v-if="tariff && tariff.id">
           <RemoveData :path="$route.path" @delete="handleDelete"/>
-          <EditData :path="$route.path" :data="document" @submit="handleSubmit"/>
+          <EditData :path="$route.path" :data="tariff" @submit="handleSubmit"/>
         </div>
       </template>
     </BaseBlock>
@@ -133,7 +133,7 @@ import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export default {
-  name: "EditDocumentView",
+  name: "EditTariffView",
   props: {
     status: {
       type: Number,
@@ -149,44 +149,44 @@ export default {
     const router = useRouter();
 
     // Define finance as a reactive object with its expected properties
-    const document = ref({
+    const tariff = ref({
       id: "",
-      user_id: "",
-      filename: "",
-      serverfilename: "",
+      name: "",
+      description: "",
+      start_date: "",
+      end_date: "",
+      view_cost: "",
+      link_cost: "",
+      currency: "",
       status: props.status,
-      adddate: "",
-      userrole: "",
-      url: "",
-      enabled:"",
       created_at: "",
       updated_at: ""
     });
 
-    const fetchDocumentDetails = async (id) => {
+    const fetchTariffDetails = async (id) => {
       try {
-        const response = await axiosInstance.get(`/docs/${id}`);
-        document.value = response.data;
+        const response = await axiosInstance.get(`/tariffs/${id}`);
+        tariff.value = response.data;
       } catch (error) {
-        console.error("Error fetching document details:", error);
+        console.error("Error fetching tarrif details:", error);
       }
     };
 
     onMounted(() => {
-      fetchDocumentDetails(route.params.id);
+      fetchTariffDetails(route.params.id);
     });
 
     const handleSubmit = async () => {
       try {
-        await axiosInstance.put(`/doсs/${route.params.id}`, document.value);
-        router.push("/docs");
+        await axiosInstance.put(`/tariffs/${route.params.id}`, tariff.value);
+        router.push("/tariffs");
       } catch (error) {
-        console.error("Error updating document:", error);
+        console.error("Error updating tarrif:", error);
       }
     };
 
     return {
-      document,
+      tariff,
       handleSubmit,
     };
   },

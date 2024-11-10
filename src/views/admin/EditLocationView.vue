@@ -126,7 +126,7 @@ export default {
         const response = await axiosInstance.get(`/locations/${id}`);
         location.value = response.data;
       } catch (error) {
-        console.error("Error fetching equipment details:", error);
+        console.error("Error fetching location details:", error);
       }
     };
 
@@ -139,7 +139,7 @@ export default {
         await axiosInstance.put(`/locations/${route.params.id}`, location.value);
         router.push("/locations");
       } catch (error) {
-        console.error("Error updating equipment:", error);
+        console.error("Error updating location:", error);
       }
     };
 

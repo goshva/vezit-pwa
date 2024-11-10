@@ -147,7 +147,7 @@ export default {
         const response = await axiosInstance.get(`/finances/${id}`);
         finance.value = response.data;
       } catch (error) {
-        console.error("Error fetching equipment details:", error);
+        console.error("Error fetching finance details:", error);
       }
     };
 
@@ -160,7 +160,7 @@ export default {
         await axiosInstance.put(`/finances/${route.params.id}`, finance.value);
         router.push("/finances");
       } catch (error) {
-        console.error("Error updating equipment:", error);
+        console.error("Error updating finance:", error);
       }
     };
 

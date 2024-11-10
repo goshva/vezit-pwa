@@ -4,6 +4,7 @@ import axiosInstance from '@/services/axios.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
 import { formatRubles } from '@/services/priceConvert.js';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import EditButton from '@/components/buttons/EditButton.vue';
 
 // State for storing tariff data
 const tariffs = ref([]);
@@ -129,9 +130,7 @@ const formatDateBasedOnFormat = (dateString) => {
                     {{ formatDateBasedOnFormat(tariff.updated_at) }}
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                    <EditButton :id="tariff.id" routeName="AdminEditTariff" :status="tariff.status" />
                   </td>
                 </tr>
               </tbody>

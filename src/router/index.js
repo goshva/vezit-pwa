@@ -420,6 +420,11 @@ const routes = [
         component: AdminSupportView,
       },
       {
+        path: "messages/:id",
+        name: 'AdminEditSupport',
+        component: () => import('@/views/admin/EditSupportView.vue'),
+      },
+      {
         path: "locations",
         component: LocationView,
       },
@@ -431,6 +436,11 @@ const routes = [
       {
         path: "tariffs",
         component: TariffView,
+      },
+      {
+        path: "tariffs/:id",
+        name: 'AdminEditTariff',
+        component: () => import('@/views/admin/EditTariffView.vue'),
       },
     ],
   },

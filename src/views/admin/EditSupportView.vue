@@ -1,16 +1,16 @@
 <template>
   <div class="m-5 mb-5">
-    <BaseBlock title="Редактировать данные документов">
+    <BaseBlock title="Редактировать данные Техподдержки">
       <template #content>
         <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
           <!-- Existing Fields -->
           <div class="col-md-6 mb-3">
-            <label for="documentid" class="form-label">ID</label>
+            <label for="id" class="form-label">ID</label>
             <input
               type="text"
               class="form-control"
-              id="documentid"
-              v-model="document.id"
+              id="id"
+              v-model="message.id"
               required
             />
           </div>
@@ -20,77 +20,47 @@
               type="text"
               class="form-control"
               id="user_id"
-              v-model="document.user_id"
+              v-model="message.user_id"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="filename" class="form-label">Название</label>
+            <label for="support_id" class="form-label">ID Техподдержки</label>
             <input
               type="text"
               class="form-control"
-              id="filename"
-              v-model="document.filename"
+              id="support_id"
+              v-model="message.support_id"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="status" class="form-label">Доступ</label>
-            <select class="form-control" id="status" v-model="document.status" required>
+            <label for="status" class="form-label">Статус</label>
+            <select class="form-control" id="status" v-model="message.status" required>
               <option value="0">Неизвестно</option>
-              <option value="1">Включено</option>
-              <option value="2">Включено</option>
+              <option value="1">В работе</option>
+              <option value="2">В работе</option>
             </select>
           </div>
           
           <!-- New Fields -->
           <div class="col-md-6 mb-3">
-            <label for="serverfilename" class="form-label">Имя файла на сервере</label>
+            <label for="message" class="form-label">Сообщение</label>
             <input
               type="text"
               class="form-control"
-              id="serverfilename"
-              v-model="document.serverfilename"
+              id="message"
+              v-model="message.message"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="adddate" class="form-label">Дата добавления</label>
+            <label for="support_answer" class="form-label">Ответ</label>
             <input
               type="text"
               class="form-control"
-              id="adddate"
-              v-model="document.adddate"
-              required
-            />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="userrole" class="form-label">Роль пользователя</label>
-            <input
-              type="text"
-              class="form-control"
-              id="userrole"
-              v-model="document.userrole"
-              required
-            />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="url" class="form-label">Ссылка</label>
-            <input
-              type="text"
-              class="form-control"
-              id="url"
-              v-model="document.url"
-              required
-            />
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="enabled" class="form-label">Разрешение</label>
-            <input
-              type="text"
-              class="form-control"
-              id="enabled"
-              v-model="document.enabled"
+              id="support_answer"
+              v-model="message.support_answer"
               required
             />
           </div>
@@ -100,7 +70,7 @@
               type="datetime-local"
               class="form-control"
               id="created_at"
-              v-model="document.created_at"
+              v-model="message.created_at"
               required
             />
           </div>
@@ -110,16 +80,16 @@
               type="datetime-local"
               class="form-control"
               id="updated_at"
-              v-model="document.updated_at"
+              v-model="message.updated_at"
               required
             />
           </div>
                     
         </form>
         
-        <div class="row g-3 m-2 mb-5" v-if="document && document.id">
+        <div class="row g-3 m-2 mb-5" v-if="message && message.id">
           <RemoveData :path="$route.path" @delete="handleDelete"/>
-          <EditData :path="$route.path" :data="document" @submit="handleSubmit"/>
+          <EditData :path="$route.path" :data="message" @submit="handleSubmit"/>
         </div>
       </template>
     </BaseBlock>
@@ -133,7 +103,7 @@ import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export default {
-  name: "EditDocumentView",
+  name: "EditSupportView",
   props: {
     status: {
       type: Number,
@@ -149,44 +119,41 @@ export default {
     const router = useRouter();
 
     // Define finance as a reactive object with its expected properties
-    const document = ref({
+    const message = ref({
       id: "",
       user_id: "",
-      filename: "",
-      serverfilename: "",
+      support_id: "",
+      message: "",
+      support_answer: "",
       status: props.status,
-      adddate: "",
-      userrole: "",
-      url: "",
-      enabled:"",
       created_at: "",
       updated_at: ""
     });
 
-    const fetchDocumentDetails = async (id) => {
+    const fetchSupportDetails = async (id) => {
       try {
-        const response = await axiosInstance.get(`/docs/${id}`);
-        document.value = response.data;
+        const response = await axiosInstance.get(`/messages/${id}`);
+        message.value = response.data;
       } catch (error) {
-        console.error("Error fetching document details:", error);
+        console.error("Error fetching support details:", error);
       }
     };
 
     onMounted(() => {
-      fetchDocumentDetails(route.params.id);
+      fetchSupportDetails(route.params.id);
     });
 
     const handleSubmit = async () => {
       try {
-        await axiosInstance.put(`/doсs/${route.params.id}`, document.value);
-        router.push("/docs");
+        await axiosInstance.put(`/messages/${route.params.id}`, message.value);
+        router.push("/messages");
       } catch (error) {
-        console.error("Error updating document:", error);
+        console.error("Error updating support:", error);
       }
     };
 
     return {
-      document,
+      message,
       handleSubmit,
     };
   },
