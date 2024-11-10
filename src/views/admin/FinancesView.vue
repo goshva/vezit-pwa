@@ -5,6 +5,7 @@ import { formatDate } from '@/services/dateFormatter.js'; // Import the date for
 import { formatRubles } from '@/services/priceConvert.js';
 import CreateFianceModal from "@/components/modals/CreateFianceModal.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import EditButton from '@/components/buttons/EditButton.vue';
 
 // State for storing finance data
 const finances = ref([]);
@@ -162,9 +163,7 @@ const editFinanceStatus = async (status, index, id) => {
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                    <EditButton :id="finance.id" routeName="AdminEditFinance" :status="finance.status"/>
                   </td>
                 </tr>
               </tbody>

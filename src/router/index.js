@@ -398,8 +398,18 @@ const routes = [
         component: FinancesView,
       },
       {
+        path: "finances/:id",
+        name: 'AdminEditFinance',
+        component: () => import('@/views/admin/EditFinanceView.vue'),
+      },
+      {
         path: "documents",
         component: DocumentsView,
+      },
+      {
+        path: "docs/:id",
+        name: 'AdminEditDocument',
+        component: () => import('@/views/admin/EditDocumentView.vue'),
       },
       {
         path: "templates",
@@ -412,6 +422,11 @@ const routes = [
       {
         path: "locations",
         component: LocationView,
+      },
+      {
+        path: "locations/:id",
+        name: 'AdminEditLocation',
+        component: () => import('@/views/admin/EditLocationView.vue'),
       },
       {
         path: "tariffs",
