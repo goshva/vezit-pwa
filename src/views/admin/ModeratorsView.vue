@@ -2,18 +2,11 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
-<<<<<<< HEAD
 import EditButton from '@/components/buttons/EditButton.vue';
-=======
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
->>>>>>> develop
-
-// State for storing location data
 const moderators = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
-
-// Pagination and filtering state
 const currentPage = ref(1);
 const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.

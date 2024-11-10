@@ -1,34 +1,44 @@
 <template>
 
   <BaseBlock title="Данные о компании" class="m-5">
-    <div class="">
-      <!-- Sign In Form -->
+    <div>
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" placeholder="ИНН" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.name"
+          placeholder="Название" />
+      </div>
+      <div class="mb-4">
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.INN"
+          placeholder="ИНН" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.OGRN" placeholder="ОГРН/ОГРИП" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.OGRN"
+          placeholder="ОГРН/ОГРИП" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.bussines" placeholder="Название компании" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.bussines"
+          placeholder="Название компании" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.contactName" placeholder="Директор(ФИО)" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.contactName"
+          placeholder="Директор(ФИО)" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" placeholder="Юридический адрес" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.legalAddress"
+          placeholder="Юридический адрес" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.name" placeholder="Фактический адрес" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.actualAddress"
+          placeholder="Фактический адрес" />
       </div>
 
       <div class="mb-4">
-        <input type="text" class="form-control form-control-alt form-control-lg" v-model="ad.bussines" placeholder="Вид деятельности" />
+        <input type="text" class="form-control form-control-alt form-control-lg" v-model="partner.OKVED"
+          placeholder="Вид деятельности" />
       </div>
 
       <div class="mb-2">
@@ -64,21 +74,13 @@ import axiosInstance from "@/services/axios.js";
 
 const route = useRoute();
 const router = useRouter();
-
-const ad = ref({
-  id: null,
-  filename: "",
-  serverfilename: "",
-  duration: "",
-  url: "",
-  mainlocation: null,
-  enabled: 0,
-  user_id: null,
+const partner = ref({
   name: "",
   bussines: "",
   description: "",
   OGRN: "",
   BIK: "",
+  INN: "",
   contactName: "",
   contactTel: "",
   contactEMail: "",
@@ -89,16 +91,16 @@ const ad = ref({
 
 const fetchAdDetails = async () => {
   try {
-    const response = await axiosInstance.get(`/about`);
-    ad.value = response.data.data;
+    const response = await axiosInstance.get(`/about/`);
+    if (response.data != null) { partner.value = response.data.data }
   } catch (error) {
-    console.error("Error fetching ad details:", error);
+    console.error("Error fetching partner details:", error);
   }
 };
 
 const handleSubmit = async () => {
   try {
-    await axiosInstance.put(`/about`, ad.value);
+    await axiosInstance.post(`/about`, partner.value);
     router.push("/Pdashboard");
   } catch (error) {
     console.error("Error updating partner:", error);
