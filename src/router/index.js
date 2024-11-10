@@ -432,6 +432,11 @@ const routes = [
         path: "tariffs",
         component: TariffView,
       },
+      {
+        path: "tariffs/:id",
+        name: 'AdminEditTariff',
+        component: () => import('@/views/admin/EditTariffView.vue'),
+      },
     ],
   },
 
