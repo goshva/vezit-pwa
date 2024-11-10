@@ -133,7 +133,7 @@ import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export default {
-  name: "EditDocumentView",
+  name: "EditTariffView",
   props: {
     status: {
       type: Number,
@@ -168,7 +168,7 @@ export default {
         const response = await axiosInstance.get(`/tariffs/${id}`);
         tariff.value = response.data;
       } catch (error) {
-        console.error("Error fetching equipment details:", error);
+        console.error("Error fetching tarrif details:", error);
       }
     };
 
@@ -181,7 +181,7 @@ export default {
         await axiosInstance.put(`/tariffs/${route.params.id}`, tariff.value);
         router.push("/tariffs");
       } catch (error) {
-        console.error("Error updating equipment:", error);
+        console.error("Error updating tarrif:", error);
       }
     };
 

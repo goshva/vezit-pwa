@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import EditButton from '@/components/buttons/EditButton.vue';
 
 // State for storing message data
 const messages = ref([]);
@@ -134,9 +135,7 @@ const changePage = (page) => {
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-alt-primary">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                    <EditButton :id="message.id" routeName="AdminEditSupport" :status="message.status" />
                   </td>
                 </tr>
               </tbody>

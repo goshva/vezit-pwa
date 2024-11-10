@@ -420,6 +420,11 @@ const routes = [
         component: AdminSupportView,
       },
       {
+        path: "messages/:id",
+        name: 'AdminEditSupport',
+        component: () => import('@/views/admin/EditSupportView.vue'),
+      },
+      {
         path: "locations",
         component: LocationView,
       },

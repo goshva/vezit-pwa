@@ -141,7 +141,7 @@ export default {
         const response = await axiosInstance.get(`/moderators/${id}`);
         moderator.value = { ...response.data, status: route.params.status };
       } catch (error) {
-        console.error("Error fetching equipment details:", error);
+        console.error("Error fetching moderator details:", error);
       }
     };
 
@@ -154,7 +154,7 @@ export default {
         await axiosInstance.put(`/moderators/${route.params.id}`, moderator.value);
         router.push("/moderators");
       } catch (error) {
-        console.error("Error updating equipment:", error);
+        console.error("Error updating moderator:", error);
       }
     };
 
