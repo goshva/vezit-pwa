@@ -143,20 +143,23 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
+import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 
+const route = useRoute();
+const emit = defineEmits(["added"]); // Ensure correct event name is defined
+
 const driver = ref("Арсен Быстров");
-const partner_id = ref(1);  // Default partner ID for testing
+const partner_id = ref(1);
 const carVIN = ref("d1234567890");
 const carPlate = ref("А0111Р126");
 const carModel = ref("Toyota Corolla");
 const carColor = ref("Белый");
 const carDescription = ref("Хорошее техническое состояние");
 const carType = ref("Легковой седан");
-const carEquipmentID = ref(2);  // Default car equipment ID for testing
-const status = ref("ожидает");  // Default status for testing
-
+const carEquipmentID = ref(2);
+const status = ref("ожидает");
 
 const handleSubmit = async () => {
   const formData = {
@@ -173,16 +176,16 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await axiosInstance.post("/partnerscars", formData);
-
-    if (response.status === 201) {
-      console.log("Car data submitted successfully!");
+    const response = await axiosInstance.post(route.path, formData);
+    if (response.status === 200) {
+      emit("added", formData); // Use the defined event
     }
   } catch (error) {
     console.error("Error submitting car data:", error);
   }
 };
 </script>
+
 
 <style lang="css">
 /* Add any additional styles if needed */

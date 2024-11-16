@@ -83,6 +83,7 @@ async function onSubmit() {
 
     // Redirect user to the dashboard after successful registration
     router.push("/auth/signin");
+    
   } catch (error) {
     // Handle errors (e.g., notify user about the error)
     if (error.response.data.email){

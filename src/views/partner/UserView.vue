@@ -91,7 +91,7 @@ const partner = ref({
 
 const fetchAdDetails = async () => {
   try {
-    const response = await axiosInstance.get(`/about/`);
+    const response = await axiosInstance.get(route.path);
     if (response.data != null) { partner.value = response.data.data }
   } catch (error) {
     console.error("Error fetching partner details:", error);
@@ -100,7 +100,7 @@ const fetchAdDetails = async () => {
 
 const handleSubmit = async () => {
   try {
-    await axiosInstance.post(`/about`, partner.value);
+    await axiosInstance.post(route.path, partner.value);
     router.push("/Pdashboard");
   } catch (error) {
     console.error("Error updating partner:", error);

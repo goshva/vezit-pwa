@@ -13,7 +13,7 @@ const props = defineProps({
     },
     status: {
     type: Number,
-    required: true,
+    required: false,
   },
 });
 

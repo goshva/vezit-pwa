@@ -13,7 +13,12 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="userrole" class="form-label">Роль пользователя</label>
-            <input type="text" class="form-control" id="userrole" v-model="user.userrole" required />
+            <select name="userrole" id="userrole" v-model="user.userrole" required class="form-control">
+              <option value="admin">Администратор</option>
+              <option value="moderator">Модератор</option>
+              <option value="partner">Партнер</option>
+              <option value="client">Клиент</option>
+            </select>
           </div>
           <div class="col-md-6 mb-3">
             <label for="status" class="form-label">Статус</label>

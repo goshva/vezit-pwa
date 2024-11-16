@@ -549,7 +549,7 @@ const routes = [
       },
       {
         path: 'mycars/:id',
-        name: 'EditCar',
+        name: 'PartnerEditCar',
         component: () => import('@/views/partner/EditCarView.vue'),
       },
 
