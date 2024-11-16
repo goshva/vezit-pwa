@@ -4,6 +4,8 @@ import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
+import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+
 const route = useRoute();
 // State for storing video data
 const videos = ref([]);
@@ -12,7 +14,7 @@ const loading = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
-const totalPages = ref(1);
+const lastPage = ref(1);
 const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch video data from API
@@ -27,8 +29,9 @@ const fetchEquipments = async (page = 1, status = "") => {
     });
     videos.value = response.data.data;
     total.value = response.data.total;
-    totalPages.value = response.data.total_pages; // Adjust according to your API structure
+    lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
+    
   } catch (error) {
     console.error("Error fetching video:", error);
   } finally {
@@ -115,14 +118,14 @@ const changePage = (page) => {
                   <td class="d-xl-table-cell">{{ video.filename }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': video.status === 0,
-                      'bg-info-light text-info': video.status === 1,
-                      'bg-danger-light text-danger': video.status === 2,
-                      'bg-warning-light text-warning': video.status === 3,
+                      'bg-success-light text-success': video.status === 1,
+                      'bg-info-light text-info': !video.moderator,
+                      'bg-danger-light text-danger': video.status === 0,
+                      'bg-warning-light text-warning': video.status === 2,
                       'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
 
                     }">
-                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ? "Отключено" : "Ошибка" }}
+                      {{ !video.moderator ? "Ожидание" : video.status === 1 ? "Включено" : video.status === 0 ? "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
@@ -146,23 +149,12 @@ const changePage = (page) => {
             </table>
           </div>
         </div>
-        <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Pagination">
-            <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)"
-                  aria-label="Previous">Prev</a>
-              </li>
-              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)"
-                  aria-label="Next">Next</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
+        />
+
       </template>
     </BaseBlock>
   </div>

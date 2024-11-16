@@ -1,167 +1,192 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import axiosInstance from "@/services/axios.js";
-import { formatDate } from "@/services/dateFormatter.js";
-import { formatRubles } from '@/services/priceConvert.js';
-import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
-const route = useRoute();
-const cars = ref([]);
-const total = ref(0);
-const loading = ref(false);
-const orderSearch = ref(false);
-const currentPage = ref(1);
-const totalPages = ref(1);
-const filterStatus = ref("");
-const fetchEquipments = async (page = 1, status = "") => {
-  loading.value = true;
-  try {
-    const response = await axiosInstance.get(route.path, {
-      params: {
-        page: page,
-        status: status,
-      },
-    });
-    cars.value = response.data.data;
-    total.value = response.data.total;
-    totalPages.value = response.data.total_pages;
-    currentPage.value = page;
-  } catch (error) {
-    console.error("Error fetching car:", error);
-  } finally {
-    loading.value = false;
-  }
-};
-onMounted(() => {
-  fetchEquipments();
-});
-const applyFilter = (status) => {
-  filterStatus.value = status;
-  fetchEquipments(1, status);
-};
-const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
-};
-</script>
 <template>
-  <div class="m-5 mb-0">
-    <BaseBlock title="Автопарк" class="mb-0">
-      <template #options>
-        <div class="space-x-4">
-          <UploadVideoModal />
+  <button
+    type="button"
+    class="btn btn-primary push"
+    data-bs-toggle="modal"
+    data-bs-target="#modal-block-normal"
+  >
+    <i class="fa-solid fa-plus"></i>
+  </button>
 
-          <div class="dropdown d-inline-block">
-            <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
-              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-fw fa-flask"></i>
-              Фильтр
-              <i class="fa fa-angle-down ms-1"></i>
+  <div
+    class="modal"
+    id="modal-block-normal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modal-block-normal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <BaseBlock title="Загрузить автомобиль" transparent class="mb-0">
+          <template #options>
+            <button
+              type="button"
+              class="btn-block-option"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="fa fa-fw fa-times"></i>
             </button>
+          </template>
 
-            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters">
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('')">
-                Все
-                <span class="badge bg-primary rounded-pill">{{
-                  total
-                }}</span>
-              </a>
-
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter(1)">
-                Проверка
-              </a>
-
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter(2)">
-                Ошибка
-              </a>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template #content>
-        <div v-if="loading" class="block-content text-center">
-          <span>Загрузка авто...</span>
-        </div>
-        <div v-else class="block-content block-content-full">
-          <div class="table-responsive">
-            <table class="table table-hover table-vcenter">
-              <thead>
-                <tr>
-                  <th>Рег. номер</th>
-                  <th class="d-xl-table-cell">Водитель</th>
-                  <th>Статус</th>
-                  <th class="d-none d-sm-table-cell text-center">Доходность</th>
-                  <th class="d-none d-sm-table-cell text-end">Создан</th>
-                  <th class="d-none d-sm-table-cell text-end"></th>
-                </tr>
-              </thead>
-              <tbody class="fs-sm">
-                <tr v-for="car in cars" :key="car.id">
-                  <td>
-                    <span class="fw-semibold">{{ car.carModel }}</span><br>
-                    <span class="fw-bold">{{ car.carPlate }}</span>
-                  </td>
-                  <td class="d-none d-xl-table-cell">{{ car.filename }}</td>
-                  <td class="d-none d-sm-table-cell text-start">
-                    <p>{{ car.driver}}</p>
-                  </td>
-                  <td>
-                    <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': car.status === 0,
-                      'bg-info-light text-info': car.status === 1,
-                      'bg-danger-light text-danger': car.status === 2,
-                      'bg-warning-light text-warning': car.status === 3,
-                      'bg-light': car.status === 4 || car.status === 5 || car.status === 6,
-
-                    }">
-                      {{ car.status === 0 ? "Включено" : car.status === 1 ? "Ожидание" : car.status === 3 ?
-                        "Отключено" : "Ошибка" }}
-                    </span>
-
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                    <p>1000 ₽</p>
-                  </td>
-                  <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
-                    {{ formatDate(car.updated_at) }}
-                  </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                    <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'EditCar', params: { id: car.id } }">
-                        <button class="btn btn-sm btn-alt-primary">
-                          <i class="fa fa-edit"></i>
-                        </button>
-                      </router-link>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="block-content block-content-full bg-body-light">
-          <nav aria-label="Pagination">
-            <ul class="pagination pagination-sm justify-content-end mb-0">
-              <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage - 1)"
-                  aria-label="Previous">Prev</a>
-              </li>
-              <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(currentPage + 1)"
-                  aria-label="Next">Next</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </template>
-    </BaseBlock>
+          <template #content>
+            <form @submit.prevent="handleSubmit">
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="driver"
+                  v-model="driver"
+                  placeholder="Driver"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="number"
+                  id="partner_id"
+                  v-model="partner_id"
+                  placeholder="Partner ID"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carVIN"
+                  v-model="carVIN"
+                  placeholder="Car VIN"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carPlate"
+                  v-model="carPlate"
+                  placeholder="Car Plate"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carModel"
+                  v-model="carModel"
+                  placeholder="Car Model"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carColor"
+                  v-model="carColor"
+                  placeholder="Car Color"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carDescription"
+                  v-model="carDescription"
+                  placeholder="Car Description"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="carType"
+                  v-model="carType"
+                  placeholder="Car Type"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <input
+                  class="form-control"
+                  type="number"
+                  id="carEquipmentID"
+                  v-model="carEquipmentID"
+                  placeholder="Car Equipment ID"
+                  required
+                />
+              </div>
+              <div class="block-content">
+                <select class="form-control" id="status" v-model="status" required>
+                  <option value="ожидает">ожидает</option>
+                  <option value="в процессе">в процессе</option>
+                  <option value="завершен">завершен</option>
+                </select>
+              </div>
+              <div class="block-content block-content-full text-end">
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                  Save
+                </button>
+              </div>
+            </form>
+          </template>
+        </BaseBlock>
+      </div>
+    </div>
   </div>
 </template>
-<style lang="scss"></style>
+
+<script setup>
+import { ref, defineEmits } from "vue";
+import { useRoute } from "vue-router";
+import axiosInstance from "@/services/axios.js";
+
+const route = useRoute();
+const emit = defineEmits(["added"]); // Ensure correct event name is defined
+
+const driver = ref("Арсен Быстров");
+const partner_id = ref(1);
+const carVIN = ref("d1234567890");
+const carPlate = ref("А0111Р126");
+const carModel = ref("Toyota Corolla");
+const carColor = ref("Белый");
+const carDescription = ref("Хорошее техническое состояние");
+const carType = ref("Легковой седан");
+const carEquipmentID = ref(2);
+const status = ref("ожидает");
+
+const handleSubmit = async () => {
+  const formData = {
+    driver: driver.value,
+    partner_id: partner_id.value,
+    carVIN: carVIN.value,
+    carPlate: carPlate.value,
+    carModel: carModel.value,
+    carColor: carColor.value,
+    carDescription: carDescription.value,
+    carType: carType.value,
+    carEquipmentID: carEquipmentID.value,
+    status: status.value,
+  };
+
+  try {
+    const response = await axiosInstance.post(route.path, formData);
+    if (response.status === 200) {
+      emit("added", formData); // Use the defined event
+    }
+  } catch (error) {
+    console.error("Error submitting car data:", error);
+  }
+};
+</script>
+
+
+<style lang="css">
+/* Add any additional styles if needed */
+</style>

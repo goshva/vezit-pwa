@@ -52,26 +52,30 @@ const blocks = [
   {
     title: "Список машин",
     icon: "fa-gem",
-    link: "/video",
+    link: "/#",
     sourceCount: "videos",
   },
   {
     title: "Профиль",
     icon: "fa-chart-bar",
-    link: "/control",
+    link: "/#",
     sourceCount: "users",
   },
   {
     title: "Финансы",
     icon: "fa-paper-plane",
-    link: "/eq",
+    link: "/#",
     sourceCount: "equipments",
   },
   {
     title: "Техподдержка",
     icon: "fa-chart-bar",
-    link: "/support",
+    link: "/#",
     sourceCount: "messages",
   }
 ];
 </script>
+
+<style>
+.hide_element {display: none};
+</style>

@@ -112,28 +112,20 @@ const routerLinks = [
     name: "Админ панель",
     link: "/Adashboard",
   },
-
+  {
+    id: Math.random(Date.now()),
+    name: "Финансы",
+    link: "/finances",
+  },
   {
     id: Math.random(Date.now()),
     name: "Рекламные компании",
     link: "/allvideo",
   },
-
-  {
-    id: Math.random(Date.now()),
-    name: "Оборудование",
-    link: "/eq",
-  },
-
   {
     id: Math.random(Date.now()),
     name: "Клиенты",
     link: "/clients",
-  },
-  {
-    id: Math.random(Date.now()),
-    name: "Модераторы",
-    link: "/moderators",
   },
   {
     id: Math.random(Date.now()),
@@ -147,8 +139,8 @@ const routerLinks = [
   },
   {
     id: Math.random(Date.now()),
-    name: "Системные ошибки",
-    link: "/error",
+    name: "Оборудование",
+    link: "/eq",
   },
   {
     id: Math.random(Date.now()),
@@ -162,11 +154,6 @@ const routerLinks = [
   },
   {
     id: Math.random(Date.now()),
-    name: "Финансы",
-    link: "/finances",
-  },
-  {
-    id: Math.random(Date.now()),
     name: "Документы",
     link: "/documents",
   },
@@ -174,11 +161,21 @@ const routerLinks = [
     id: Math.random(Date.now()),
     name: "Шаблоны",
     link: "/templates",
-  },    
+  },
   {
     id: Math.random(Date.now()),
     name: "Tехподдержка",
     link: "/tiketsupport",
+  },
+  {
+    id: Math.random(Date.now()),
+    name: "Системные ошибки",
+    link: "/error",
+  },
+  {
+    id: Math.random(Date.now()),
+    name: "Модераторы",
+    link: "/moderators",
   },
   {
     id: Math.random(Date.now()),

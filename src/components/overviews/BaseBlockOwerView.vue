@@ -22,7 +22,7 @@
               <i :class="`fa ${block.icon} fs-3 text-primary`"></i>
             </div>
           </div>
-          <div class="bg-body-light rounded-bottom">
+          <div class="bg-body-light rounded-bottom hide_element">
             <RouterLink
               class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
               :to="block.link"

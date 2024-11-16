@@ -340,12 +340,32 @@ const routes = [
         component: EqView,
       },
       {
+        path: "eq/:id",
+        name: 'AdminEditEq',
+        component: () => import('@/views/admin/EditEqView.vue'),
+      },
+      {
         path: "clients",
         component: ClientsView,
       },
       {
+        path: 'clients/:id',
+        name: 'AdminEditClient',
+        component: () => import('@/views/admin/EditClientView.vue'),
+      },
+      {
+        path: 'partners/:id',
+        name: 'AdminEditPartner',
+        component: () => import('@/views/admin/EditPartnerView.vue'),
+      },
+      {
         path: "moderators",
         component: ModeratorsView,
+      },
+      {
+        path: "moderators/:id/:status",
+        name: 'AdminEditModerator',
+        component: () => import('@/views/admin/EditModeratorView.vue'),
       },
       { path: "partners", component: PartnersView },
       {
@@ -378,8 +398,18 @@ const routes = [
         component: FinancesView,
       },
       {
+        path: "finances/:id",
+        name: 'AdminEditFinance',
+        component: () => import('@/views/admin/EditFinanceView.vue'),
+      },
+      {
         path: "documents",
         component: DocumentsView,
+      },
+      {
+        path: "docs/:id",
+        name: 'AdminEditDocument',
+        component: () => import('@/views/admin/EditDocumentView.vue'),
       },
       {
         path: "templates",
@@ -390,12 +420,27 @@ const routes = [
         component: AdminSupportView,
       },
       {
+        path: "messages/:id",
+        name: 'AdminEditSupport',
+        component: () => import('@/views/admin/EditSupportView.vue'),
+      },
+      {
         path: "locations",
         component: LocationView,
       },
       {
+        path: "locations/:id",
+        name: 'AdminEditLocation',
+        component: () => import('@/views/admin/EditLocationView.vue'),
+      },
+      {
         path: "tariffs",
         component: TariffView,
+      },
+      {
+        path: "tariffs/:id",
+        name: 'AdminEditTariff',
+        component: () => import('@/views/admin/EditTariffView.vue'),
       },
     ],
   },
@@ -504,7 +549,7 @@ const routes = [
       },
       {
         path: 'mycars/:id',
-        name: 'EditCar',
+        name: 'PartnerEditCar',
         component: () => import('@/views/partner/EditCarView.vue'),
       },
 
