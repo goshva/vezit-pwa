@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
+import DelButton from "@/components/buttons/DelButton.vue";
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 
@@ -38,10 +39,6 @@ const fetchEquipments = async (page = 1, status = "") => {
   }
 };
 
-const deleteVideo = async (videoId) => {
-
-}
-
 const isVideoModerated = (video) => {
   return video.status === 1 || video.status === 0 && video.moderator
 }
@@ -70,7 +67,7 @@ const changePage = (page) => {
     <BaseBlock title="Список рекламных компаний" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <UploadVideoModal />
+          <UploadVideoModal @created="fetchEquipments"/>
 
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
@@ -151,11 +148,7 @@ const changePage = (page) => {
                           <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
-                      <div v-if="isVideoModerated(video)" @click="deleteVideo(video.id)">
-                        <button class="btn btn-sm btn-alt-danger">
-                          <i class="fa fa-close"></i>
-                        </button>
-                      </div>
+                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchEquipments"/>
                     </div>
                   </td>
                 </tr>

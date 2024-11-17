@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router"; 
 import axiosInstance from "@/services/axios.js";
 import FormInput from "@/components/inputs/FormInput.vue";
-
-// State for client form data
+const router = useRouter();
 const clientForm = ref({
   name: null,
   bussines: null,
@@ -53,8 +53,8 @@ const saveClient = async () => {
 
   loading.value = true;
   try {
-    const response = await axiosInstance.post(`/client`, clientForm.value);
-    console.log('Client saved successfully:', response.data);
+    await axiosInstance.post(`/client`, clientForm.value);
+    router.push('/myvideo');
   } catch (error) {
     console.error('Error saving client:', error);
   } finally {

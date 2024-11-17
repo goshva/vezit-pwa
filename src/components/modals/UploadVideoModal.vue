@@ -134,7 +134,8 @@
 import { ref } from "vue";
 import axiosInstance from "@/services/axios.js";
 import { useRouter } from "vue-router";
-
+import { defineEmits } from 'vue';
+const emit = defineEmits(['created']);
 const router = useRouter();
 const videoFile = ref(null);
 
@@ -173,8 +174,7 @@ const handleSubmit = async () => {
       });
 
       if (response.status === 201) {
-        // Handle successful upload, e.g., navigate to another page or show success message
-        console.log("Video uploaded successfully!");
+        emit("created");
       }
     } catch (error) {
       console.error("Error uploading video:", error);
