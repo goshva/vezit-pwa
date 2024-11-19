@@ -49,7 +49,6 @@ const route = useRoute();
 const router = useRouter();
 
 const partner = ref({
-  id: null,
   name: "",
   bussines: "",
   description: "",
