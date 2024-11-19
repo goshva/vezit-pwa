@@ -37,7 +37,7 @@ async function submitImage() {
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <BaseBlock title="Upload Document" transparent class="mb-0">
+        <BaseBlock title="Загрузите фото чека об оплате" transparent class="mb-0">
           <template #options>
             <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
               <i class="fa fa-fw fa-times"></i>
@@ -50,7 +50,7 @@ async function submitImage() {
               </div>
             </div>
             <div class="block-content block-content-full text-end">
-              <button @click="submitImage" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Upload</button>
+              <button @click="submitImage" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Отправить</button>
             </div>
           </template>
         </BaseBlock>

@@ -3,6 +3,7 @@ import axiosInstance from '@/services/axios.js';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
+    id: '',
     username: '',
     email: '',
     emailVerifiedAt: null,
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     // Action to set user data
     setUserData(userData) {
+      this.id = userData.id;
       this.username = userData.username;
       this.email = userData.email;
       this.emailVerifiedAt = userData.email_verified_at;
@@ -36,6 +38,7 @@ export const useUserStore = defineStore('user', {
 
     // Action to clear user data
     clearUserData() {
+      this.id = '';
       this.username = '';
       this.email = '';
       this.emailVerifiedAt = null;

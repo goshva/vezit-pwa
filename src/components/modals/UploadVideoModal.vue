@@ -48,7 +48,7 @@
                   type="text"
                   id="filename"
                   v-model="filename"
-                  placeholder="Default Filename"
+                  placeholder="Название рекламной компании"
                   required
                 />
               </div>
@@ -58,27 +58,7 @@
                   type="text"
                   id="serverFilename"
                   v-model="serverfilename"
-                  placeholder="Default Server Filename"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="number"
-                  id="userId"
-                  v-model="user_id"
-                  placeholder="User ID"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="duration"
-                  v-model="duration"
-                  placeholder="00:00:00"
+                  placeholder="Название файла видео"
                   required
                 />
               </div>
@@ -88,7 +68,7 @@
                   type="url"
                   id="url"
                   v-model="url"
-                  placeholder="http://example.com/video.mp4"
+                  placeholder="Ссылка для перехода с видео"
                   required
                 />
               </div>
@@ -107,19 +87,20 @@
                   type="number"
                   id="mainLocation"
                   v-model="mainlocation"
-                  placeholder="Main Location ID"
+                  placeholder="Выбор локации"
                   required
                 />
               </div>
               <div class="block-content">
                 <select class="form-control" id="status" v-model="status" required>
-                  <option :value="1">Yes</option>
-                  <option :value="0">No</option>
+                  <option  selected disabled>Выбор статуса</option>
+                  <option :value="1">Включено</option>
+                  <option :value="0">Выключено</option>
                 </select>
               </div>
               <div class="block-content block-content-full text-end">
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
-                  Upload
+                  Отправить
                 </button>
               </div>
             </form>
@@ -139,14 +120,13 @@ const emit = defineEmits(['created']);
 const router = useRouter();
 const videoFile = ref(null);
 
-// Default values for required fields
-const filename = ref("default_filename.mp4");
-const serverfilename = ref("default_server_filename.mp4");
-const user_id = ref(1);  // Default user ID
-const duration = ref("00:00:00");  // Default duration
-const url = ref("http://example.com/video.mp4");  // Default URL
-const adddate = ref(new Date().toISOString().slice(0, 16));  // Default current date and time
-const mainlocation = ref(1);  // Default main location ID
+const filename = ref("");
+const serverfilename = ref("");
+const user_id = ref(1); 
+const duration = ref(""); 
+const url = ref("");
+const adddate = ref(new Date().toISOString().slice(0, 16));
+const mainlocation = ref(1); 
 const status = ref(1);  // Default status status
 
 const handleFileUpload = (event) => {
@@ -160,7 +140,6 @@ const handleSubmit = async () => {
     formData.append("filename", filename.value);
     formData.append("serverfilename", serverfilename.value);
     formData.append("user_id", user_id.value);
-    formData.append("duration", duration.value);
     formData.append("url", url.value);
     formData.append("adddate", adddate.value);
     formData.append("mainlocation", mainlocation.value);

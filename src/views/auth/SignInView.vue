@@ -3,36 +3,25 @@ import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
 import { useUserStore } from "@/stores/user";
+import { useClientStore } from "@/stores/client";
+
 import axios from "axios";
-import VueSelect from "vue-select";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import "vue-select/dist/vue-select.css";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const store = useTemplateStore();
-const userStore = useUserStore(); // Initialize the user store
+const userStore = useUserStore();
+const clientStore = useClientStore();
+
 const router = useRouter();
 
-let hasUser = true;
-
-// Input state variables
 const state = reactive({
   email: null,
   password: null,
 });
 
-// Select variables
-const roles = ["Администратор", "Модератор", "Клиент", "Партнёр", "Гость"];
-
-const vueSelectState = reactive({
-  options: roles,
-  optionsSelected: null,
-  optionsMultiple: roles,
-  optionsMultipleSelected: null,
-});
-
-// Validation rules
 const rules = computed(() => {
   return {
     email: {
@@ -97,9 +86,10 @@ async function onSubmit() {
         router.push("/Mdashboard");
         break;
       case "client":
-        await userStore.fetchUserBalance()
-        if (user.status == 1 && userStore.balance >= 0) router.push("/myvideo")
-        else if (user.status == 1) router.push("/myfinance")
+        await clientStore.fetchClientProfile()
+        console.log(clientStore.isActiveClient)
+        if (clientStore.isActiveClient && userStore.balance > 0) router.push("/myvideo")
+        else if (clientStore.isActiveClient) router.push("/myfinance")
         else router.push("/profile")
         break;
       case "partner":

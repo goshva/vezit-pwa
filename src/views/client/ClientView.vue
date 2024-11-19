@@ -1,21 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router"; 
-import axiosInstance from "@/services/axios.js";
+import { useClientStore } from "@/stores/client"; // Import the Pinia store
 import FormInput from "@/components/inputs/FormInput.vue";
-const router = useRouter();
-const clientForm = ref({
-  name: null,
-  bussines: null,
-  description: null,
-  OGRN: null,
-  BIK: null,
-  contactName: null,
-  contactTel: null,
-  contactEMail: null,
-  status: 0,
-});
 
+const clientStore = useClientStore(); // Use the client Pinia store
 const errors = ref({});
 const loading = ref(false);
 
@@ -34,7 +22,7 @@ const validateClientForm = () => {
 
   for (const field of formFields) {
     for (const rule of field.rules) {
-      if (!rule(clientForm.value[field.model])) {
+      if (!rule(clientStore[field.model])) {
         errors.value[field.model] = ` ${field.placeholder} не должно быть пустым или содержит ошибку`;
         break;
       }
@@ -44,41 +32,24 @@ const validateClientForm = () => {
   return Object.keys(errors.value).length === 0;
 };
 
-// Function to create or edit client data
 const saveClient = async () => {
   if (!validateClientForm()) {
-    console.error('Validation failed:', errors.value);
+    console.error("Validation failed:", errors.value);
     return;
   }
 
   loading.value = true;
   try {
-    await axiosInstance.post(`/client`, clientForm.value);
-    router.push('/myvideo');
+    await clientStore.saveClient();
   } catch (error) {
-    console.error('Error saving client:', error);
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Fetch existing client data if editing
-const fetchClient = async () => {
-  loading.value = true;
-  try {
-    const response = await axiosInstance.get(`/client/`);
-    if (response.data.data !== null) {
-      clientForm.value = response.data.data;
-    }
-  } catch (error) {
-    console.error('Error fetching client:', error);
+    console.error("Error saving client:", error);
   } finally {
     loading.value = false;
   }
 };
 
 onMounted(() => {
-  fetchClient();
+  clientStore.fetchClientProfile();
 });
 </script>
 
@@ -91,14 +62,14 @@ onMounted(() => {
         :id="field.id"
         :placeholder="field.placeholder"
         :type="field.type"
-        :modelValue="clientForm[field.model]"
-        @update:modelValue="(value) => (clientForm[field.model] = value)"
+        :modelValue="clientStore[field.model]"
+        @update:modelValue="(value) => (clientStore[field.model] = value)"
         :error="errors[field.model]"
       />
 
       <div class="mb-4">
         <textarea 
-          v-model="clientForm.description" 
+          v-model="clientStore.description" 
           class="form-control form-control-alt form-control-lg" 
           placeholder="Описание клиента"
         ></textarea>
@@ -112,7 +83,7 @@ onMounted(() => {
           @click="saveClient" 
           :disabled="loading"
         >
-          <i class="fas fa-save"></i> {{ loading ? 'Сохранение...' : 'Отправить' }}
+          <i class="fas fa-save"></i> {{ loading ? "Сохранение..." : "Отправить" }}
         </button>
       </div>
     </div>
