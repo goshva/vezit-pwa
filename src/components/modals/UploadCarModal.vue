@@ -147,7 +147,7 @@ import { ref, defineEmits } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 const route = useRoute();
-const emit = defineEmits(["added"]);
+const emit = defineEmits(["addedCar"]);
 
 const driver = ref("Арсен Быстров");
 const partner_id = ref(1);
@@ -175,10 +175,8 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await axiosInstance.post(route.path, formData);
-    if (response.status === 200) {
-      emit("added"); // Use the defined event
-    }
+    await axiosInstance.post(route.path, formData);
+    emit("addedCar"); 
   } catch (error) {
     console.error("Error submitting car data:", error);
   }

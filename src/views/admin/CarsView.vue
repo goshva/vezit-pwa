@@ -64,7 +64,7 @@ const changePage = (page) => {
     <BaseBlock title="Список всех автомобилей" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <UploadCarModal @added="fetchCars"/>
+          <UploadCarModal @addedCar="fetchCars"/>
 
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
