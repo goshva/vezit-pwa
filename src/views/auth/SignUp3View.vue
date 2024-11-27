@@ -1,11 +1,13 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-
-// Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
+import axios from "axios"; // Import axios
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email, sameAs } from "@vuelidate/validators";
+
+// API Base URL with fallback
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
 // Main store and Router
 const store = useTemplateStore();
@@ -17,50 +19,84 @@ const state = reactive({
   email: null,
   password: null,
   confirmPassword: null,
-  terms: null,
+  userRole: null,
+  terms: false,
+  errorMessage: null,
 });
 
 // Validation rules
-const rules = computed(() => {
-  return {
-    username: {
-      required,
-      minLength: minLength(3),
-    },
-    email: {
-      required,
-      email,
-    },
-    password: {
-      required,
-      minLength: minLength(5),
-    },
-    confirmPassword: {
-      required,
-      sameAs: sameAs(state.password),
-    },
-    terms: {
-      sameAs: sameAs(true),
-    },
-  };
-});
+const rules = computed(() => ({
+  username: {
+    required,
+    minLength: minLength(3),
+  },
+  email: {
+    required,
+    email,
+  },
+  password: {
+    required,
+    minLength: minLength(5),
+  },
+  confirmPassword: {
+    required,
+    sameAs: sameAs(state.password),
+  },
+  terms: {
+    sameAs: sameAs(true),
+  },
+  userRole: {
+    required,
+  },
+}));
 
 // Use vuelidate
 const v$ = useVuelidate(rules, state);
 
+// Loading state
+const isLoading = ref(false);
+
+// Password visibility toggle
+const showPassword = ref(false);
+
 // On form submission
 async function onSubmit() {
-  const result = await v$.value.$validate();
-
-  if (!result) {
-    // notify user form is invalid
+  const isValid = await v$.value.$validate();
+  if (!isValid) {
+    // Form is invalid
     return;
   }
 
-  // Go to dashboard
-  router.push({ name: "backend-pages-auth" });
+  isLoading.value = true;
+  state.errorMessage = null;
+
+  try {
+    // Make the API request to register the user
+    const response = await axios.post(`${apiBaseUrl}/register`, {
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      password_confirmation: state.confirmPassword,
+      userrole: state.userRole,
+    });
+
+    // Store the JWT token and redirect
+    const token = response.data.token;
+    localStorage.setItem("token", token);
+    router.push("/auth/signin");
+  } catch (error) {
+    // Handle errors
+    if (error.response?.data) {
+      state.errorMessage = error.response.data.message || "Registration failed.";
+    } else {
+      state.errorMessage = "A network error occurred. Please try again.";
+    }
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
+
 
 <template>
   <!-- Page Content -->

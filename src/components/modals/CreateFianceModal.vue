@@ -123,7 +123,7 @@ const status = ref(1);
 // Fetch users from API (paginated)
 const fetchUsers = async () => {
   try {
-    const response = await axiosInstance.get('/users');
+    const response = await axiosInstance.get('/control');
     userSuggestions.value = response.data.data; // Get users from the response
   } catch (error) {
     console.error("Error fetching users:", error);

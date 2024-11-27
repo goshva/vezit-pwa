@@ -20,6 +20,7 @@ const router = useRouter();
 const state = reactive({
   email: null,
   password: null,
+  errorMessage: "",
 });
 
 const rules = computed(() => {
@@ -48,36 +49,29 @@ async function onSubmit() {
   }
 
   try {
-    // Make the API request to login the user
+    // Reset the error message on a new login attempt
+    state.errorMessage = "";
+
     const response = await axios.post(`${apiBaseUrl}/login`, {
       email: state.email,
       password: state.password,
     });
 
-    // Assuming the response contains a JWT token
     const token = response.data.token;
+    localStorage.setItem("token", token);
 
-    // Store the token (in localStorage for this example)
-    localStorage.setItem('token', token);
-
-    // Optionally, set token in Vuex or Pinia store
     store.setAuthHandler(true);
     localStorage.setItem("isAuth", true);
 
-    // Fetch user details with the token
     const userResponse = await axios.get(`${apiBaseUrl}/me`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Send the token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    // Assuming the response contains user data
     const user = userResponse.data;
-
-    // Set user data in the Pinia store
     userStore.setUserData(user);
 
-    // Redirect user based on user role from the store
     switch (userStore.userRole) {
       case "admin":
         router.push("/Adashboard");
@@ -86,30 +80,36 @@ async function onSubmit() {
         router.push("/Mdashboard");
         break;
       case "client":
-        await clientStore.fetchClientProfile()
-        console.log(clientStore.isActiveClient)
-        if (clientStore.isActiveClient && userStore.balance > 0) router.push("/myvideo")
-        else if (clientStore.isActiveClient) router.push("/myfinance")
-        else router.push("/profile")
+        await clientStore.fetchClientProfile();
+        if (clientStore.isActiveClient && userStore.balance > 0) router.push("/myvideo");
+        else if (clientStore.isActiveClient) router.push("/myfinance");
+        else router.push("/profile");
         break;
       case "partner":
-        if (user.status == 2) router.push("/Pdashboard")
-        else if (user.status == 1) router.push("/mycars")
-        else router.push("/about")
+        if (user.status == 2) router.push("/Pdashboard");
+        else if (user.status == 1) router.push("/mycars");
+        else router.push("/about");
         break;
-      case "quest": 
+      case "quest":
         router.push("/guest");
         break;
-      case "support": 
+      case "support":
         router.push("/Sdashboard");
-        break;        
+        break;
       default:
         console.error("Unknown user role:", userStore.userRole);
-        router.push("/default"); // Redirect to a default route
+        router.push("/default");
         break;
     }
   } catch (error) {
-    router.push("/auth/signup");
+    console.error("Error logging in:", error);
+
+    if (error.response && error.response.status === 401) {
+      // Set the error message for invalid credentials
+      state.errorMessage = "Неверный email или пароль.";
+    } else {
+      state.errorMessage = "Произошла ошибка. Попробуйте еще раз.";
+    }
   }
 }
 </script>
@@ -125,36 +125,46 @@ async function onSubmit() {
               <h1 class="h2 mb-1">Olhar Media</h1>
               <p class="fw-medium text-muted">Приветствует Вас!</p>
               <!-- Sign In Form -->
+              <div v-if="state.errorMessage" class="alert alert-danger">
+                {{ state.errorMessage }}
+              </div>
               <form @submit.prevent="onSubmit">
                 <div class="py-3">
                   <div class="mb-4">
                     <input type="text" class="form-control form-control-alt form-control-lg" id="login-email"
-                      name="login-email" placeholder="email" autocomplete="email" :class="{
-                        'is-invalid': v$.email.$errors.length,
-                      }" v-model="state.email" @blur="v$.email.$touch" />
+                      name="login-email" placeholder="email" autocomplete="email"
+                      :class="{ 'is-invalid': v$.email.$errors.length }" v-model="state.email"
+                      @blur="v$.email.$touch" />
                     <div v-if="v$.email.$errors.length" class="invalid-feedback animated fadeIn">
                       Введите вашу почту
                     </div>
                   </div>
                   <div class="mb-4">
                     <input type="password" class="form-control form-control-alt form-control-lg" id="login-password"
-                      name="login-password" placeholder="Password" :class="{
-                        'is-invalid': v$.password.$errors.length,
-                      }" v-model="state.password" @blur="v$.password.$touch" />
+                      name="login-password" placeholder="Password" :class="{ 'is-invalid': v$.password.$errors.length }"
+                      v-model="state.password" @blur="v$.password.$touch" />
                     <div v-if="v$.password.$errors.length" class="invalid-feedback animated fadeIn">
-                      введите ваш пароль
+                      Введите ваш пароль
                     </div>
                   </div>
                 </div>
                 <div class="row mb-4">
-                  <div class="col-md-6 col-xl-5">
+                  <div class="col-md-6 col-xl-6">
                     <button type="submit" class="btn w-100 btn-alt-primary">
                       <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i>
                       Войти
                     </button>
                   </div>
+
+                  <div v-if="state.errorMessage" class="col-md-6 col-xl-6">
+                    <button @click="() => router.push('/auth/signup')" class="btn w-100 btn-success">
+                      Зарегистрироваться
+                    </button>
+                  </div>
+
                 </div>
               </form>
+
               <!-- END Sign In Form -->
             </div>
           </BaseBlock>
