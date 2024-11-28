@@ -59,13 +59,6 @@ const store = useTemplateStore();
                       Войти
                     </button>
                   </div>
-                  <div v-if="state.errorMessage" class="col-md-6 col-xl-6 ">
-                    <a href="#/auth/signup" class="btn w-100 btn-success">
-                      <i class="fa fa-fw fa-plus me-1 opacity-50"></i> Регистрация
-                    </a>
-                    
-
-                  </div>
                 </div>
               </form>
             </div>

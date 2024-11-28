@@ -83,14 +83,7 @@ window
       }
     }
   });
-
-  let isLogin = localStorage.getItem("isAuth");
-
-// Remove side transitions on window resizing
 onMounted(() => {
-
-
-  isLogin ?? router.replace("/auth/signin")
   let winResize = false;
 
   window.addEventListener("resize", () => {
