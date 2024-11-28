@@ -3,22 +3,21 @@
     type="button"
     class="btn btn-primary push"
     data-bs-toggle="modal"
-    data-bs-target="#modal-block-normal"
+    data-bs-target="#modal-block-csv-upload"
   >
-    <i class="fa-solid fa-plus"></i>
+  <i class="fa-solid fa-plus"></i><i class="fa-solid fa-file-csv"></i>
   </button>
-
   <div
     class="modal"
-    id="modal-block-normal"
+    id="modal-block-csv-upload"
     tabindex="-1"
     role="dialog"
-    aria-labelledby="modal-block-normal"
+    aria-labelledby="modal-block-csv-upload"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <BaseBlock title="Загрузить автомобиль" transparent class="mb-0">
+        <BaseBlock title="Загрузить автомобили из таблицы CSV" transparent class="mb-0">
           <template #options>
             <button
               type="button"
@@ -31,107 +30,21 @@
           </template>
 
           <template #content>
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleUpload">
               <div class="block-content">
+                <label for="csvFile" class="form-label">Файл CSV:</label>
                 <input
                   class="form-control"
-                  type="text"
-                  id="driver"
-                  v-model="driver"
-                  placeholder="Driver"
+                  type="file"
+                  id="csvFile"
+                  accept=".csv"
+                  @change="handleFileChange"
                   required
                 />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="number"
-                  id="partner_id"
-                  v-model="partner_id"
-                  placeholder="Partner ID"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="carVIN"
-                  v-model="carVIN"
-                  placeholder="Car VIN"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="carPlate"
-                  v-model="carPlate"
-                  placeholder="Car Plate"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="carModel"
-                  v-model="carModel"
-                  placeholder="Car Model"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="carColor"
-                  v-model="carColor"
-                  placeholder="Car Color"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="carDescription"
-                  v-model="carDescription"
-                  placeholder="Car Description"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="carType"
-                  v-model="carType"
-                  placeholder="Car Type"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <input
-                  class="form-control"
-                  type="number"
-                  id="carEquipmentID"
-                  v-model="carEquipmentID"
-                  placeholder="Car Equipment ID"
-                  required
-                />
-              </div>
-              <div class="block-content">
-                <select class="form-control" id="status" v-model="status" required>
-                  <option value="ожидает">ожидает</option>
-                  <option value="в процессе">в процессе</option>
-                  <option value="завершен">завершен</option>
-                </select>
               </div>
               <div class="block-content block-content-full text-end">
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
-                  Save
+                  Загрузить
                 </button>
               </div>
             </form>
@@ -146,43 +59,39 @@
 import { ref, defineEmits } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
+
 const route = useRoute();
-const emit = defineEmits(["addedCar"]);
+const emit = defineEmits(["uploadedCSV"]);
 
-const driver = ref("Арсен Быстров");
-const partner_id = ref(1);
-const carVIN = ref("d1234567890");
-const carPlate = ref("А0111Р126");
-const carModel = ref("Toyota Corolla");
-const carColor = ref("Белый");
-const carDescription = ref("Хорошее техническое состояние");
-const carType = ref("Легковой седан");
-const carEquipmentID = ref(2);
-const status = ref("ожидает");
+const csvFile = ref(null);
 
-const handleSubmit = async () => {
-  const formData = {
-    driver: driver.value,
-    partner_id: partner_id.value,
-    carVIN: carVIN.value,
-    carPlate: carPlate.value,
-    carModel: carModel.value,
-    carColor: carColor.value,
-    carDescription: carDescription.value,
-    carType: carType.value,
-    carEquipmentID: carEquipmentID.value,
-    status: status.value,
-  };
+const handleFileChange = (event) => {
+  csvFile.value = event.target.files[0];
+};
+
+const handleUpload = async () => {
+  if (!csvFile.value) {
+    alert("Выберите файл CSV для загрузки.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", csvFile.value);
 
   try {
-    await axiosInstance.post(route.path, formData);
-    emit("addedCar"); 
+    await axiosInstance.post(`/upload-csv`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    emit("uploadedCSV");
+    alert("Файл успешно загружен!");
   } catch (error) {
-    console.error("Error submitting car data:", error);
+    console.error("Ошибка при загрузке CSV файла:", error);
+    alert("Ошибка загрузки. Проверьте файл или повторите попытку.");
   }
 };
 </script>
-
 
 <style lang="css">
 /* Add any additional styles if needed */

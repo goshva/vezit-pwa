@@ -61,7 +61,7 @@ const changePage = (page) => {
     <BaseBlock title="Список автомобилей" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <UploadCarModal @addedCar="fetchCars"/>
+          <UploadCarModal @uploadedCSV="fetchCars"/>
 
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
@@ -106,8 +106,8 @@ const changePage = (page) => {
                 <tr>
                   <th class="d-xl-table-cell">Название</th>
                   <th class="d-xl-table-cell">Номер</th>
-                  <th>Статус</th>
-                  <th class="d-none d-sm-table-cell text-center">Партнёр</th>
+                  <th class="d-none d-sm-table-cell text-center">Статус</th>
+                  <th class="d-none d-sm-table-cell text-center">Доход</th>
                   <th class="d-none d-sm-table-cell text-center">Водитель</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
                   <th class="d-none d-sm-table-cell text-end"></th>
