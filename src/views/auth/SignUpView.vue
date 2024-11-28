@@ -2,9 +2,11 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email, sameAs } from "@vuelidate/validators";
+import useLoginLogic from "@/services/useLoginLogic";
+
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Main store and Router
@@ -19,82 +21,70 @@ const state = reactive({
   confirmPassword: null,
   userRole: null,
   terms: null,
-  errorEmail: null
+  errorEmail: null,
 });
 
 // Validation rules
-const rules = computed(() => {
-  return {
-    username: {
-      required,
-      minLength: minLength(3),
-    },
-    email: {
-      required,
-      email,
-    },
-    password: {
-      required,
-      minLength: minLength(5),
-    },
-    confirmPassword: {
-      required,
-      sameAs: sameAs(state.password),
-    },
-    terms: {
-      sameAs: sameAs(true),
-    },
-    userRole: {
-      required
-    }
-  };
-});
+const rules = computed(() => ({
+  email: {
+    required,
+    email,
+  },
+  password: {
+    required,
+    minLength: minLength(5),
+  },
+  confirmPassword: {
+    required,
+    sameAs: sameAs(state.password),
+  },
+  terms: {
+    sameAs: sameAs(true),
+  },
+  userRole: {
+    required,
+  },
+}));
 
 // Use vuelidate
 const v$ = useVuelidate(rules, state);
+
+// Import login logic
+const { state: loginState, onSubmit: loginUser } = useLoginLogic();
 
 // On form submission
 async function onSubmit() {
   const result = await v$.value.$validate();
   if (!result) {
-    // notify user form is invalid
+    // Notify user form is invalid
     return;
   }
 
   try {
     // Make the API request to register the user
     const response = await axios.post(`${apiBaseUrl}/register`, {
-      username: state.username,
+      username: state.email.split("@")[0],
       email: state.email,
       password: state.password,
       password_confirmation: state.confirmPassword,
       userrole: state.userRole,
     });
 
-    // Assuming the response contains a JWT token
-    const token = response.data.token;
+    // Use the login logic to authenticate the user after successful registration
+    loginState.email = state.email;
+    loginState.password = state.password;
+    await loginUser();
 
-    // Store the token (in localStorage for this example)
-    localStorage.setItem('token', token);
-
-    // Optionally, store token in Vuex or Pinia store for easier access
-    // store.commit('setToken', token); // If using Vuex
-    // store.setToken(token); // If using Pinia
-
-    // Redirect user to the dashboard after successful registration
-    router.push("/auth/signin");
-    
   } catch (error) {
-    // Handle errors (e.g., notify user about the error)
-    if (error.response.data.email){
+    if (error.response?.data?.email) {
       state.errorEmail = error.response.data.email[0];
     } else {
       console.error("Registration failed:", error);
     }
-
   }
 }
 </script>
+
 
 
 <template>
@@ -122,15 +112,6 @@ async function onSubmit() {
               <!-- Sign Up Form -->
               <form @submit.prevent="onSubmit">
                 <div class="py-3">
-                  <div class="mb-4">
-                    <input type="text" class="form-control form-control-lg form-control-alt" id="signup-username"
-                      name="signup-username" placeholder="Имя" autocomplete="off" :class="{
-                        'is-invalid': v$.username.$errors.length,
-                      }" v-model="state.username" @blur="v$.username.$touch" />
-                    <div v-if="v$.username.$errors.length" class="invalid-feedback animated fadeIn">
-                      Please enter a username
-                    </div>
-                  </div>
                   <div class="mb-4">
                     <input type="email" class="form-control form-control-lg form-control-alt" id="signup-email"
                       name="signup-email" placeholder="Email" autocomplete="email" :class="{
@@ -188,14 +169,9 @@ async function onSubmit() {
                   </div>
                 </div>
                 <div class="row mb-4">
-                  <div class="col-md-6 col-xl-6">
-                    <button type="submit" class="btn w-100 btn-success">
-                      Регистрация
-                    </button>
-                  </div>
-                  <div class="col-md-6 col-xl-6">
-                    <button @click="() => router.push('/auth/signin')" class="btn w-100 btn-primary">
-                      Войти
+                  <div class="col-md-12 col-xl-12 text-center">
+                    <button type="submit" class="btn btn-lg btn-alt-success">
+                      <i class="fa fa-fw fa-plus me-1 opacity-50"></i> Регистрация
                     </button>
                   </div>
                 </div>
@@ -227,53 +203,10 @@ async function onSubmit() {
             <template #content>
               <div class="block-content">
                 <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
                   proin odio sagittis purus mi, nec taciti vestibulum quis in
                   sit varius lorem sit metus mi.
                 </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
+
               </div>
               <div class="block-content block-content-full text-end bg-body">
                 <button type="button" class="btn btn-sm btn-alt-secondary me-1" data-bs-dismiss="modal">

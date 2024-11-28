@@ -53,16 +53,18 @@ const store = useTemplateStore();
                   </div>
                 </div>
                 <div class="row mb-4">
-                  <div class="col-md-5 col-xl-5">
+                  <div class="col-md-6 col-xl-6">
                     <button type="submit" class="btn w-100 btn-alt-primary">
                       <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i>
                       Войти
                     </button>
                   </div>
-                  <div v-if="state.errorMessage" class="col-md-7 col-xl-7">
-                    <button @click="() => router.push('/auth/signup')" class="btn w-100 btn-success">
-                      Зарегистрироваться
-                    </button>
+                  <div v-if="state.errorMessage" class="col-md-6 col-xl-6 ">
+                    <a href="#/auth/signup" class="btn w-100 btn-success">
+                      <i class="fa fa-fw fa-plus me-1 opacity-50"></i> Регистрация
+                    </a>
+                    
+
                   </div>
                 </div>
               </form>

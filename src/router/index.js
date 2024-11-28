@@ -1318,8 +1318,13 @@ const routes = [
         component: AuthSignIn3,
       },
       {
-        path: "signup",
-        name: "auth-signup",
+        path: "partner",
+        name: "partner-signup",
+        component: AuthSignUp,
+      },
+      {
+        path: "client",
+        name: "client-signup",
         component: AuthSignUp,
       },
       {
