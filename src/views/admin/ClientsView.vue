@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
+import { formatRubles } from '@/services/priceConvert.js';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js';
 import EditButton from '@/components/buttons/EditButton.vue';
@@ -151,7 +152,7 @@ const formatClientDate = (dateString) => {
                     {{ formatClientDate(client.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
-                    <p class="fs-sm fw-medium text-muted mb-0">0</p>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ formatRubles(client.balance) }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell text-end" @click="editClientStatus(client.status, clients.indexOf(client), client.id)">
                     <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
