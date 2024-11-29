@@ -70,7 +70,7 @@ const formFields = [
   { id: "name", placeholder: "Название", type: "text", model: "name", rules: [(val) => val?.trim() !== ""] },
   { id: "INN", placeholder: "ИНН", type: "text", model: "INN", rules: [(val) => val?.trim().length <= 13] },
   { id: "BIK", placeholder: "БИК", type: "text", model: "BIK", rules: [(val) => val?.trim().length <= 9] },
-  { id: "OGRN", placeholder: "ОГРН/ОГРИП", type: "text", model: "OGRN", rules: [(val) => val?.trim().length <= 13] },
+  { id: "OGRN", placeholder: "ОГРН/ОГРИП", type: "text", model: "OGRN", rules: [(val) => val?.trim().length <= 15] },
   { id: "bussines", placeholder: "Название компании", type: "text", model: "bussines", rules: [(val) => val?.trim() !== ""] },
   { id: "description", placeholder: "Описание компании", type: "text", model: "description", rules: [(val) => val?.trim() !== ""] },
   { id: "contactName", placeholder: "Директор (ФИО)", type: "text", model: "contactName", rules: [(val) => val?.trim() !== ""] },
