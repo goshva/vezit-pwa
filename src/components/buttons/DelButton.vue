@@ -27,7 +27,7 @@ const handleDelete = async () => {
 <template>
     <div class="d-flex justify-content-evenly">
         <button @click="handleDelete" class="btn btn-sm btn-alt-danger">
-            <i class="fa fa-close">{{ props }}</i>
+            <i class="fa fa-close"></i>
         </button>
     </div>
 </template>

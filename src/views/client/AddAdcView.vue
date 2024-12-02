@@ -119,7 +119,7 @@ const changePage = (page) => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td class="d-xl-table-cell">{{ video.filename }}</td>
+                  <td class="d-xl-table-cell">{{ video.adcampaign_name }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
                       'bg-success-light text-success': video.status === 0,
