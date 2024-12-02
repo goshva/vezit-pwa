@@ -94,14 +94,10 @@ onMounted(() => {
     Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
     Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
   -->
-  <nav
-    id="sidebar"
-    :class="{ 'with-mini-nav': withMiniNav }"
-    aria-label="Main Navigation"
-  >
+  <nav id="sidebar" :class="{ 'with-mini-nav': withMiniNav }" aria-label="Main Navigation">
     <slot>
       <!-- Side Header -->
-      <div class="" style="background-color: white">
+      <div class="side-header" style="background-color: white">
         <img :src="logoImage" height="55px" width="240px" class="p-1 pt-2 mb-2">
         <slot name="header">
           <!-- Logo -->
@@ -116,11 +112,8 @@ onMounted(() => {
         <!-- Extra -->
         <div>
           <!-- Close Sidebar, Visible only on mobile screens -->
-          <button
-            type="button"
-            class="d-lg-none btn btn-sm btn-alt-secondary ms-1"
-            @click="store.sidebar({ mode: 'close' })"
-          >
+          <button type="button" class="d-lg-none btn btn-sm btn-alt-secondary ms-1"
+            @click="store.sidebar({ mode: 'close' })">
             <i class="fa fa-fw fa-times"></i>
           </button>
           <!-- END Close Sidebar -->
@@ -134,7 +127,7 @@ onMounted(() => {
         <slot name="content">
           <!-- Side Navigation -->
           <div class="content-side">
-            <slot name="sidebar-navigation" >
+            <slot name="sidebar-navigation">
               <BaseNavigation :nodes="navigation" />
             </slot>
           </div>
