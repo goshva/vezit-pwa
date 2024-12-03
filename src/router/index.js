@@ -46,8 +46,6 @@ const BackendElearningLesson = () =>
 const BackendForumCategories = () =>
   import("@/views/backend/forum/CategoriesView.vue");
 const BackendForumTopics = () => import("@/views/backend/forum/TopicsView.vue");
-const BackendForumDiscussion = () =>
-  import("@/views/backend/forum/DiscussionView.vue");
 
 // Backend: Blocks
 const BackendBlocksStyles = () =>
@@ -120,8 +118,6 @@ const BackendFormsInputGroups = () =>
   import("@/views/backend/forms/InputGroupsView.vue");
 const BackendFormsPlugins = () =>
   import("@/views/backend/forms/PluginsView.vue");
-const BackendFormsEditors = () =>
-  import("@/views/backend/forms/EditorsView.vue");
 const BackendFormsValidation = () =>
   import("@/views/backend/forms/ValidationView.vue");
 
@@ -752,11 +748,6 @@ const routes = [
             name: "backend-forum-topics",
             component: BackendForumTopics,
           },
-          {
-            path: "discussion",
-            name: "backend-forum-discussion",
-            component: BackendForumDiscussion,
-          },
         ],
       },
 
@@ -964,11 +955,6 @@ const routes = [
             path: "plugins",
             name: "backend-form-plugins",
             component: BackendFormsPlugins,
-          },
-          {
-            path: "editors",
-            name: "backend-form-editors",
-            component: BackendFormsEditors,
           },
           {
             path: "validation",

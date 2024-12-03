@@ -5,6 +5,7 @@ import { formatDate } from '@/services/dateFormatter.js'; // Import the date for
 import { formatRubles } from '@/services/priceConvert.js';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import UploadFinanceCheckModal from "@/components/modals/UploadFinanceCheckModal.vue";
+import PayQr from "@/components/modals/PayQr.vue";
 
 // State for storing finance data
 const finances = ref([]);
@@ -54,10 +55,14 @@ const changePage = (page) => {
 </script>
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Финансы" class="mb-0">
+    <BaseBlock title="Пополните баланс" class="mb-0">
+        <PayQr />
+    </BaseBlock>
+  </div>
+  <div class="m-5 mb-0">
+    <BaseBlock title="Поступления и расходы" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <UploadFinanceCheckModal />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -149,11 +154,8 @@ const changePage = (page) => {
             </table>
           </div>
         </div>
-        <PaginationComponent v-if="lastPage > 1"
-        :current-page="currentPage"
-        :last-page="lastPage"
-        @page-changed="changePage"
-        />
+        <PaginationComponent v-if="lastPage > 1" :current-page="currentPage" :last-page="lastPage"
+          @page-changed="changePage" />
       </template>
     </BaseBlock>
   </div>
