@@ -58,7 +58,7 @@ const changePage = (page) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список автомобилей" class="mb-0">
+    <BaseBlock title="Список автомобилей в парке" class="mb-0">
       <template #options>
         <div class="space-x-4">
           <UploadCarModal @uploadedCSV="fetchCars"/>
@@ -121,14 +121,14 @@ const changePage = (page) => {
                   </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': car.status === 0,
-                      'bg-info-light text-info': car.status === 1,
+                      'bg-warning-light text-warning': car.status === 0,
+                      'bg-success-light text-success': car.status === 1,
                       'bg-danger-light text-danger': car.status === 2,
-                      'bg-warning-light text-warning': car.status === 3,
+                      'bg-info-light text-info': car.status === 3,
                       'bg-light': car.status === 4 || car.status === 5 || car.status === 6,
 
                     }">
-                      {{ car.status === 0 ? "Включено" : car.status === 1 ? "Ожидание" : car.status === 3 ? "Отключено"
+                      {{ car.status === 0 ? "Ожидание" : car.status === 1 ? "Включено" : car.status === 3 ? "Неизвесно"
                       : "Ошибка" }}
                     </span>
 
