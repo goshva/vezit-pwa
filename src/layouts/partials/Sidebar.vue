@@ -98,7 +98,7 @@ onMounted(() => {
     <slot>
       <!-- Side Header -->
       <div class="side-header" style="background-color: white; display: flex; justify-content: center; align-items: center; height: 64px;">
-        <img :src="logoImage" class="p-1 pt-2 mb-2" style="margin: 0 !important; padding: 0 !important; width: auto; height: 40px;">
+        <img :src="logoImage" class="p-1 pt-2 mb-2" style="margin: 0 !important; padding: 0 !important; width: auto; max-height: 40px;">
         <slot name="header">
           <!-- Logo -->
           <RouterLink :to="{ name: 'landing' }" class="fw-semibold text-dual">
