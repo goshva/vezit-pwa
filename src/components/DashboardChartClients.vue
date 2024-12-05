@@ -6,7 +6,7 @@
                     <template #content>
                         <div class="block-content p-0 text-center overflow-hidden">
                             <div class="row">
-                                <div class="col-lg-6 center">
+                                <div class="col-lg-12 center">
                                     <ChartBlock :data="computedEarningsData" :options="earningsOptions" />
                                 </div>
                             </div>
