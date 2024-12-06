@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="mainLocation" class="form-label">Основное местоположение</label>
-             <LocationSelect v-model="mainlocation" />
+             <LocationSelect v-model="ad.mainlocation" />
             </div>
             <div class="col-md-6 mb-3">
               <label for="status" class="form-label">Включено</label>

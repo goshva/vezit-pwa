@@ -27,19 +27,8 @@
                   required />
               </div>
               <div class="block-content">
-                <input class="form-control" type="text" id="filename" v-model="filename"
-                  placeholder="Название файла компании" required />
-              </div>
-              <div class="block-content">
-                <input class="form-control" type="text" id="serverFilename" v-model="serverfilename"
-                  placeholder="Название файла видео" required />
-              </div>
-              <div class="block-content">
                 <input class="form-control" type="url" id="url" v-model="url" placeholder="Ссылка для перехода с видео"
                   required />
-              </div>
-              <div class="block-content">
-                <input class="form-control" type="datetime-local" id="adddate" v-model="adddate" required />
               </div>
               <div class="block-content">
                 <LocationSelect v-model="mainlocation" />

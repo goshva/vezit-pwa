@@ -2,6 +2,7 @@
   <CustomDropdown
     v-model="selectedLocation"
     :options="locations"
+    @update:model-value="updateSelectedLocation"
   />
 </template>
 
@@ -29,4 +30,14 @@ const fetchLocations = async () => {
 onMounted(() => {
   fetchLocations();
 });
+
+const updateSelectedLocation = (selectedLocation) => {
+  // Ищем выбранную локацию по id
+  const location = locations.value.find(location => location.id === selectedLocation);
+  if (location) {
+    // Отправляем id выбранной локации обратно родителю
+    emit('update:model-value', location.id);
+  }
+};
+
 </script>
