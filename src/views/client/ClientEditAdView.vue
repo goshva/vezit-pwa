@@ -62,13 +62,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="mainLocation" class="form-label">Основное местоположение</label>
-              <input
-                type="number"
-                class="form-control"
-                id="mainLocation"
-                v-model="ad.mainlocation"
-                required
-              />
+             <LocationSelect v-model="mainlocation" />
             </div>
             <div class="col-md-6 mb-3">
               <label for="status" class="form-label">Включено</label>
@@ -93,6 +87,8 @@
   import axiosInstance from "@/services/axios.js";
   import RemoveData from "@/components/RemoveData.vue";
   import EditData from "@/components/EditData.vue";
+  import LocationSelect from "@/components/LocationSelect.vue";
+
   const storageBaseUrl = import.meta.env.VITE_STORAGE_BASE_URL;
 
   const route = useRoute();

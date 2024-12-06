@@ -42,8 +42,7 @@
                 <input class="form-control" type="datetime-local" id="adddate" v-model="adddate" required />
               </div>
               <div class="block-content">
-                <input class="form-control" type="number" id="mainLocation" v-model="mainlocation"
-                  placeholder="Выбор локации" required />
+                <LocationSelect v-model="mainlocation" />
               </div>
               <div class="block-content">
                 <select class="form-control" id="status" v-model="status" required>
@@ -70,6 +69,8 @@ import { ref } from "vue";
 import axiosInstance from "@/services/axios.js";
 import { useRouter } from "vue-router";
 import { defineEmits } from 'vue';
+import LocationSelect from "@/components/LocationSelect.vue";
+
 const emit = defineEmits(['created']);
 const router = useRouter();
 const videoFile = ref(null);
@@ -82,6 +83,7 @@ const url = ref("https://ya.ru");
 const adddate = ref(new Date().toISOString().slice(0, 16));
 const mainlocation = ref(1);
 const status = ref(1);  // Default status status
+
 
 const handleFileUpload = (event) => {
   videoFile.value = event.target.files[0];
