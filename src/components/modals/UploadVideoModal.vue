@@ -44,13 +44,7 @@
               <div class="block-content">
                 <LocationSelect v-model="mainlocation" />
               </div>
-              <div class="block-content">
-                <select class="form-control" id="status" v-model="status" required>
-                  <option selected disabled>Выбор статуса</option>
-                  <option :value="1">Включено</option>
-                  <option :value="0">Выключено</option>
-                </select>
-              </div>
+              
               <div class="block-content block-content-full text-end">
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
                   Отправить
