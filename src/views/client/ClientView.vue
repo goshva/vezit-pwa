@@ -1,34 +1,39 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axiosInstance from '@/services/axios.js';
 
 // State for client form data
 const clientForm = ref({
   name: null,
-  bussines: null,
-  description: null,
+  business: null,
   OGRN: null,
+  BANK: null,
   BIK: null,
   contactName: null,
   contactTel: null,
-  contactEMail: null,
+  directorName: null,
+  directorTel: null,
+  contactEmail: null,
+  description: null,
   status: 0,
+  publicOfferConsent: false,
 });
 
+const copyContactToDirectorChecked = ref(false);
 const loading = ref(false);
 
 // Function to create or edit client data
 const saveClient = async () => {
+    if (!clientForm.value.name || !clientForm.value.contactTel || !clientForm.value.contactName) {
+    alert("Пожалуйста, заполните обязательные поля.");
+    return;
+  }
   loading.value = true;
   try {
     const response = await axiosInstance.post(`/client`, clientForm.value);
     console.log('Client saved successfully:', response.data);
-    // loading.value = false;
-    // You can handle success response here, e.g., show a message, reset form, etc.
   } catch (error) {
     console.error('Error saving client:', error);
-    // loading.value = false;
-    // Handle the error, e.g., show a notification
   } finally {
     loading.value = false;
   }
@@ -49,6 +54,17 @@ const fetchClient = async () => {
   }
 };
 
+// Watcher to update director data when the checkbox is checked
+watch(copyContactToDirectorChecked, (newValue) => {
+  if (newValue) {
+    clientForm.value.directorName = clientForm.value.contactName;
+    clientForm.value.directorTel = clientForm.value.contactTel;
+  }  else {
+    clientForm.value.directorName = null;
+    clientForm.value.directorTel = null;
+  }
+});
+
 onMounted(() => {
     fetchClient()
 });
@@ -58,23 +74,30 @@ onMounted(() => {
 <template>
   <BaseBlock title="Данные о компании клиента" class="m-5">
     <div>
-      <!-- Client Form -->
+       <!-- Client Form -->
       <div class="mb-4">
         <input v-model="clientForm.name" type="text" class="form-control form-control-alt form-control-lg"
-          placeholder="Название компании" />
+          placeholder="Наименование компании" />
       </div>
+
       <div class="mb-4">
-        <input v-model="clientForm.bussines" type="text" class="form-control form-control-alt form-control-lg"
-          placeholder="Бизнес" />
+        <input v-model="clientForm.business" type="text" class="form-control form-control-alt form-control-lg"
+          placeholder="Вид деятельности" />
       </div>
+
       <div class="mb-4">
         <input v-model="clientForm.OGRN" type="text" class="form-control form-control-alt form-control-lg"
-          placeholder="ОГРН" />
+          placeholder="ОГРН/ОГРНИП" />
+      </div>
+
+      <div class="mb-4">
+        <input v-model="clientForm.BANK" type="text" class="form-control form-control-alt form-control-lg"
+          placeholder="Р/с" />
       </div>
 
       <div class="mb-4">
         <input v-model="clientForm.BIK" type="text" class="form-control form-control-alt form-control-lg"
-          placeholder="BIK" />
+          placeholder="БИК" />
       </div>
 
       <div class="mb-4">
@@ -84,17 +107,43 @@ onMounted(() => {
 
       <div class="mb-4">
         <input v-model="clientForm.contactTel" type="text" class="form-control form-control-alt form-control-lg"
-          placeholder="Телефон" />
+          placeholder="Телефон контактного лица" />
+      </div>
+
+            <!-- Checkbox to copy contact data -->
+      <div class="mb-4 form-check">
+        <input v-model="copyContactToDirectorChecked" type="checkbox" id="copyContactToDirector" class="form-check-input" />
+        <label for="copyContactToDirector" class="form-check-label">
+          Заполнить ФИО и телефон руководителя, если совпадают с контактным лицом
+        </label>
+      </div>
+
+            <div class="mb-4">
+        <input v-model="clientForm.directorName" type="text" class="form-control form-control-alt form-control-lg"
+          placeholder="ФИО руководителя" />
       </div>
 
       <div class="mb-4">
-        <input v-model="clientForm.contactEMail" type="email" class="form-control form-control-alt form-control-lg"
+        <input v-model="clientForm.directorTel" type="text" class="form-control form-control-alt form-control-lg"
+          placeholder="Телефон руководителя" />
+      </div>
+
+      <div class="mb-4">
+        <input v-model="clientForm.contactEmail" type="email" class="form-control form-control-alt form-control-lg"
           placeholder="Электронная почта" />
       </div>
 
       <div class="mb-4">
         <textarea v-model="clientForm.description" class="form-control form-control-alt form-control-lg"
-          placeholder="Описание клиента"></textarea>
+          placeholder="Описание деятельности"></textarea>
+      </div>
+
+      <!-- Checkbox for public offer consent -->
+      <div class="mb-4 form-check">
+        <input v-model="clientForm.publicOfferConsent" type="checkbox" id="publicOfferConsent" class="form-check-input" />
+        <label for="publicOfferConsent" class="form-check-label">
+          Согласие на публичную оферту
+        </label>
       </div>
 
       <div class="mb-4">
