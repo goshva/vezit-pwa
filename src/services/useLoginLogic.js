@@ -42,7 +42,7 @@ export default function useLoginLogic() {
         email: state.email,
         password: state.password,
       });
-
+      console.log(response)
       const token = response.data.token;
       localStorage.setItem("token", token);
 
@@ -54,7 +54,11 @@ export default function useLoginLogic() {
       });
 
       const user = userResponse.data;
+
       userStore.setUserData(user);
+      // Add username and userRole to localStorage
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("userrole", user.userrole);
 
       switch (userStore.userRole) {
         case "admin":

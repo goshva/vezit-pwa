@@ -8,15 +8,22 @@ const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Get the token from localStorage
-    const token = localStorage.getItem('token');
+      // Get the token, username, userRole from localStorage
+      const token = localStorage.getItem('token');
+      const username = localStorage.getItem('username');
+      const userrole = localStorage.getItem('userrole');
 
-    // If the token exists, add it to the headers of the request
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
+      // If username or userRole or username not exist redirect to /singin
+      if (!username || !userrole) {
+          console.error('Unauthorized! Redirecting to login...');
+          localStorage.clear()
+          window.location.href = '/#/auth/signin';}
 
-    return config;
+      // If the token exists, add it to the headers of the request
+      if (token) {
+          config.headers['Authorization'] = `Bearer ${token}`;
+      }
+      return config;
   },
   (error) => {
     // Handle request errors here
@@ -35,8 +42,7 @@ axiosInstance.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Handle 401 Unauthorized errors (e.g., redirect to login)
       console.error('Unauthorized! Redirecting to login...');
-      localStorage.removeItem('token');
-      localStorage.removeItem('isAuth');
+      localStorage.clear()
       window.location.href = '/#/auth/signin';
       // You can add logic to redirect to login page or handle token refresh here
     }
