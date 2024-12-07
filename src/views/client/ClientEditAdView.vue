@@ -21,36 +21,6 @@
               />
             </div>
             <div class="col-md-6 mb-3">
-              <label for="filename" class="form-label">Название файла</label>
-              <input
-                type="text"
-                class="form-control"
-                id="filename"
-                v-model="ad.filename"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="serverFilename" class="form-label">Имя файла на сервере</label>
-              <input
-                type="text"
-                class="form-control"
-                id="serverFilename"
-                v-model="ad.serverfilename"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="duration" class="form-label">Длительность</label>
-              <input
-                type="text"
-                class="form-control"
-                id="duration"
-                v-model="ad.duration"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
               <label for="url" class="form-label">URL</label>
               <input
                 type="url"
@@ -62,13 +32,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="mainLocation" class="form-label">Основное местоположение</label>
-              <input
-                type="number"
-                class="form-control"
-                id="mainLocation"
-                v-model="ad.mainlocation"
-                required
-              />
+             <LocationSelect v-model="ad.mainlocation" />
             </div>
             <div class="col-md-6 mb-3">
               <label for="status" class="form-label">Включено</label>
@@ -93,6 +57,8 @@
   import axiosInstance from "@/services/axios.js";
   import RemoveData from "@/components/RemoveData.vue";
   import EditData from "@/components/EditData.vue";
+  import LocationSelect from "@/components/LocationSelect.vue";
+
   const storageBaseUrl = import.meta.env.VITE_STORAGE_BASE_URL;
 
   const route = useRoute();

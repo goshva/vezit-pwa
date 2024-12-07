@@ -27,31 +27,13 @@
                   required />
               </div>
               <div class="block-content">
-                <input class="form-control" type="text" id="filename" v-model="filename"
-                  placeholder="Название файла компании" required />
-              </div>
-              <div class="block-content">
-                <input class="form-control" type="text" id="serverFilename" v-model="serverfilename"
-                  placeholder="Название файла видео" required />
-              </div>
-              <div class="block-content">
                 <input class="form-control" type="url" id="url" v-model="url" placeholder="Ссылка для перехода с видео"
                   required />
               </div>
               <div class="block-content">
-                <input class="form-control" type="datetime-local" id="adddate" v-model="adddate" required />
+                <LocationSelect v-model="mainlocation" />
               </div>
-              <div class="block-content">
-                <input class="form-control" type="number" id="mainLocation" v-model="mainlocation"
-                  placeholder="Выбор локации" required />
-              </div>
-              <div class="block-content">
-                <select class="form-control" id="status" v-model="status" required>
-                  <option selected disabled>Выбор статуса</option>
-                  <option :value="1">Включено</option>
-                  <option :value="0">Выключено</option>
-                </select>
-              </div>
+              
               <div class="block-content block-content-full text-end">
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
                   Отправить
@@ -68,20 +50,20 @@
 <script setup>
 import { ref } from "vue";
 import axiosInstance from "@/services/axios.js";
-import { useRouter } from "vue-router";
 import { defineEmits } from 'vue';
+import LocationSelect from "@/components/LocationSelect.vue";
+
 const emit = defineEmits(['created']);
-const router = useRouter();
 const videoFile = ref(null);
-const adcampaign_name = ref("adcampaign_name");
+const adcampaign_name = ref("");
 const filename = ref("filename");
 const serverfilename = ref("serverfilename");
 const user_id = ref(1);
-const duration = ref("");
-const url = ref("https://ya.ru");
+const url = ref("");
 const adddate = ref(new Date().toISOString().slice(0, 16));
 const mainlocation = ref(1);
 const status = ref(1);  // Default status status
+
 
 const handleFileUpload = (event) => {
   videoFile.value = event.target.files[0];
@@ -112,12 +94,7 @@ const handleSubmit = async () => {
       }
     } catch (error) {
       console.error("Error uploading video:", error);
-      // Handle error, e.g., show an error message
     }
   }
 };
 </script>
-
-<style lang="css">
-/* Add any additional styles if needed */
-</style>

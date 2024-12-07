@@ -8,6 +8,8 @@ import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 
 const route = useRoute();
+
+// State
 const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
