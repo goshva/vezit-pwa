@@ -11,8 +11,8 @@ const clientForm = ref({
   BIK: null,
   contactName: null,
   contactTel: null,
-  directorName: null,
-  directorTel: null,
+  director_name: null,
+  director_tel: null,
   contactEmail: null,
   description: null,
   status: 0,
@@ -30,7 +30,7 @@ const saveClient = async () => {
   }
   loading.value = true;
   try {
-    const response = await axiosInstance.post(`/client`, clientForm.value);
+    const response = await axiosInstance.post(`/profile`, clientForm.value);
     console.log('Client saved successfully:', response.data);
   } catch (error) {
     console.error('Error saving client:', error);
@@ -43,7 +43,7 @@ const saveClient = async () => {
 const fetchClient = async () => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/client/`);
+    const response = await axiosInstance.get(`/profile`);
     if (response.data.data !== null) {
       clientForm.value = response.data.data;
     }
@@ -57,11 +57,11 @@ const fetchClient = async () => {
 // Watcher to update director data when the checkbox is checked
 watch(copyContactToDirectorChecked, (newValue) => {
   if (newValue) {
-    clientForm.value.directorName = clientForm.value.contactName;
-    clientForm.value.directorTel = clientForm.value.contactTel;
-  }  else {
-    clientForm.value.directorName = null;
-    clientForm.value.directorTel = null;
+    clientForm.value.director_name = clientForm.value.contactName;
+    clientForm.value.director_tel = clientForm.value.contactTel;
+  } else {
+    clientForm.value.director_name = '';
+    clientForm.value.director_tel = '';
   }
 });
 
@@ -81,7 +81,7 @@ onMounted(() => {
       </div>
 
       <div class="mb-4">
-        <input v-model="clientForm.business" type="text" class="form-control form-control-alt form-control-lg"
+        <input v-model="clientForm.bussines" type="text" class="form-control form-control-alt form-control-lg"
           placeholder="Вид деятельности" />
       </div>
 
@@ -119,17 +119,17 @@ onMounted(() => {
       </div>
 
             <div class="mb-4">
-        <input v-model="clientForm.directorName" type="text" class="form-control form-control-alt form-control-lg"
+        <input v-model="clientForm.director_name" type="text" class="form-control form-control-alt form-control-lg"
           placeholder="ФИО руководителя" />
       </div>
 
       <div class="mb-4">
-        <input v-model="clientForm.directorTel" type="text" class="form-control form-control-alt form-control-lg"
+        <input v-model="clientForm.director_tel" type="text" class="form-control form-control-alt form-control-lg"
           placeholder="Телефон руководителя" />
       </div>
 
       <div class="mb-4">
-        <input v-model="clientForm.contactEmail" type="email" class="form-control form-control-alt form-control-lg"
+        <input v-model="clientForm.contactEMail" type="email" class="form-control form-control-alt form-control-lg"
           placeholder="Электронная почта" />
       </div>
 
