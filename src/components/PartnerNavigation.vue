@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
 import { useUserStore } from "@/stores/user";
+import NavLink from "./NavLink.vue";
 // Main store and Route
 const store = useTemplateStore();
 const route = useRoute();
@@ -148,9 +149,11 @@ const linkArray = () => {
 <template>
   <ul class="list">
     <li v-for="item in linkArray()" :key="item.id">
-      <RouterLink class="nav_link" :to="item.link" active-class="active-link">{{
-        item.name
-      }}</RouterLink>
+      <NavLink 
+        :link="item.link" 
+        :name="item.name" 
+        @click="() => linkClicked($event, false)" 
+      />
     </li>
     <!-- <li
       v-for="(node, index) in nodes"
