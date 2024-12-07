@@ -16,12 +16,12 @@ export default {
       icon: "si si-camrecorder", // Example icon
     },
     {
-      name: "Клиенты",
+      name: "Рекламодатели",
       to: "clients",
       icon: "si si-users", // Example icon
     },
     {
-      name: "Партнеры",
+      name: "Таксопарки",
       to: "partners",
       icon: "si si-briefcase", // Example icon
     },

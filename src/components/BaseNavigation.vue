@@ -124,12 +124,12 @@ const routerLinks = [
   },
   {
     id: Math.random(Date.now()),
-    name: "Клиенты",
+    name: "Рекламодатели",
     link: "/clients",
   },
   {
     id: Math.random(Date.now()),
-    name: "Партнеры",
+    name: "Таксопарки",
     link: "/partners",
   },
   {
