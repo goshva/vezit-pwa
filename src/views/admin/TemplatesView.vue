@@ -13,15 +13,19 @@ const orderSearch = ref(false);
 const currentPage = ref(1);
 const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
+const sortBy = ref('id'); // Колонка для сортировки
+const sortOrder = ref('asc'); // 'asc' - по возрастанию, 'desc' - по убыванию
 
 // Fetch doc data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchEquipments = async (page = 1, status = '', sortBy = 'id', sortOrder = 'asc') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/docs`, {
       params: {
         page: page,
         status: status,
+        sortBy: sortBy,
+        sortOrder: sortOrder,
       },
     });
     docs.value = response.data.data; // Adjust according to your API structure
@@ -42,7 +46,20 @@ onMounted(() => {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchEquipments(1, status, sortBy.value, sortOrder.value); // Reset to first page when filtering
+};
+
+// Функция для сортировки по колонке
+const handleSort = (column) => {
+  if (sortBy.value === column) {
+    // Если кликнули по той же колонке, меняем порядок сортировки
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
+  } else {
+    // Если кликнули по другой колонке, сортируем по ней по возрастанию
+    sortBy.value = column;
+    sortOrder.value = 'asc';
+  }
+  fetchEquipments(1, filterStatus.value, sortBy.value, sortOrder.value); // Сбрасываем на первую страницу при изменении сортировки
 };
 
 // Handle pagination
@@ -102,11 +119,27 @@ const changePage = (page) => {
           <div class="table-responsive">
             <table class="table table-hover table-vcenter">
               <thead>
-                <tr>
+                <!-- <tr>
                   <th>ID</th>
                   <th class="d-xl-table-cell">Название</th>
                   <th>Доступ</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
+                </tr> -->
+                <tr class="text-center">
+                  <th @click="handleSort('id')" style="cursor: pointer">
+                    Номер шаблона
+                    <span v-if="sortBy === 'id'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
+                  </th>
+                  <th @click="handleSort('filename')" style="cursor: pointer">
+                    Наименование
+                    <span v-if="sortBy === 'filename'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
+                  </th>
+                  <th>Доступ</th>
+                  <th @click="handleSort('updated_at')" style="cursor: pointer">
+                    Последнее обновление
+                    <span v-if="sortBy === 'updated_at'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
+                  </th>
+                  <th>Количество использований</th>
                 </tr>
               </thead>
               <tbody class="fs-sm">
