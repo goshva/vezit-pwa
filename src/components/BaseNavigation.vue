@@ -109,7 +109,7 @@ function linkClicked(e, submenu) {
 const routerLinks = [
   {
     id: Math.random(Date.now()),
-    name: "Админ панель",
+    name: "Сводка",
     link: "/Adashboard",
   },
   {

@@ -9,15 +9,12 @@ import { reactive } from 'vue';
 import DashboardCharts from '@/components/DashboardCharts.vue';
 import { Pie } from 'vue-chartjs';
 import { Chart, registerables } from 'chart.js';
-
 // Register Chart.js components
 Chart.register(...registerables);
-
 // Set Global Chart.js configuration
 Chart.defaults.color = '#818d96';
 Chart.defaults.scale.display = false;
 Chart.defaults.plugins.legend.labels.boxWidth = 12;
-
 // Pie Chart Earnings Data
 const earningsData = reactive({
   labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -29,7 +26,6 @@ const earningsData = reactive({
     },
   ],
 });
-
 // Pie Chart Earnings Options
 const earningsOptions = reactive({
   responsive: true,
@@ -46,7 +42,6 @@ const earningsOptions = reactive({
     },
   },
 });
-
 // Pie Chart Sales Data
 const salesData = reactive({
   labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -58,7 +53,6 @@ const salesData = reactive({
     },
   ],
 });
-
 // Pie Chart Sales Options
 const salesOptions = reactive({
   responsive: true,

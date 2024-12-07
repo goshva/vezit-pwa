@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-import { useUserStore } from '@/stores/user'; 
+import { useUserStore } from '@/stores/user';
 import UserBalance from "@/components/UserBalance.vue";
 
 const userStore = useUserStore();
@@ -13,8 +13,7 @@ const router = useRouter();
 const isShow = ref(true);
 
 const handleLogout = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('isAuth');
+  userStore.clearUserData()
 }
 
 </script>

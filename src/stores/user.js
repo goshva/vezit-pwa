@@ -4,11 +4,11 @@ import axiosInstance from '@/services/axios.js';
 export const useUserStore = defineStore('user', {
   state: () => ({
     id: '',
-    username: '',
+    username: localStorage.getItem('username') || '',
     email: '',
     emailVerifiedAt: null,
     balance: null,
-    userRole: '',
+    userRole: localStorage.getItem('userrole') || '',
     lastIpAddr: null,
     fullUserName: null,
     companyName: null,
@@ -51,6 +51,7 @@ export const useUserStore = defineStore('user', {
       this.createdAt = '';
       this.updatedAt = '';
       this.userStatus = null;
+      localStorage.clear()
     },
 
     // New action to fetch user balance
