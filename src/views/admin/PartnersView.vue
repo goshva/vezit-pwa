@@ -1,21 +1,19 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
-import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
+import { formatRubles } from '@/services/priceConvert.js';
+import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js';
 import EditButton from "@/components/buttons/EditButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 
-// State for storing location data
-const clients = ref([]);
+const partners = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
 
-// Pagination and filtering state
 const currentPage = ref(1);
 const lastPage = ref(1);
-const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
+const filterStatus = ref('');
 
-// State for toggling date format
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Fetch location data from API
@@ -29,7 +27,7 @@ const fetchEquipments = async (page = 1, status = '') => {
       },
     });
     console.log(response);
-    clients.value = response.data.data; // Adjust according to your API structure
+    partners.value = response.data.data; // Adjust according to your API structure
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -61,10 +59,10 @@ const toggleDateFormat = () => {
 };
 
 const editPartnerStatus = async (status, index, id) => {
-  clients.value[index].status = status > 0 ? 0 : 1;
+  partners.value[index].status = status > 0 ? 0 : 1;
   try {
     await axiosInstance.put(`/partners/${id}`, {
-      status: clients.value[index].status})
+      status: partners.value[index].status})
   } catch(error) {
     console.error("Error updating ad:", error);
   }
@@ -100,7 +98,7 @@ const formatDateBasedOnFormat = (dateString) => {
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm" aria-labelledby="dropdown-recent-orders-filters">
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('')">
                 Все
-                <span class="badge bg-primary rounded-pill">{{ clients.length }}</span>
+                <span class="badge bg-primary rounded-pill">{{ partners.length }}</span>
               </a>
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between" href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
                 В работе
@@ -136,13 +134,13 @@ const formatDateBasedOnFormat = (dateString) => {
                   </tr>
                 </thead>
               <tbody class="fs-sm">
-                <tr v-for="client in clients" :key="client.id">
-                  <td :title="client.description">
-                    <a class="fw-semibold" href="javascript:void(0)">{{ client.name }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0" >{{ client.bussines }}</p>
-                    <a class="fw-semibold" href="javascript:void(0)" >{{ client.contactName }}</a>
-                    <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactTel }}</p>                    
-                    <p class="fs-sm fw-medium text-muted mb-0" >{{ client.contactEMail }}</p>                    
+                <tr v-for="partner in partners" :key="partner.id">
+                  <td :title="partner.description">
+                    <a class="fw-semibold" href="javascript:void(0)">{{ partner.name }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0" >{{ partner.bussines }}</p>
+                    <a class="fw-semibold" href="javascript:void(0)" >{{ partner.contactName }}</a>
+                    <p class="fs-sm fw-medium text-muted mb-0" >{{ partner.contactTel }}</p>                    
+                    <p class="fs-sm fw-medium text-muted mb-0" >{{ partner.contactEMail }}</p>                    
                   </td>
                 
                   <td 
@@ -150,17 +148,17 @@ const formatDateBasedOnFormat = (dateString) => {
                     @click="toggleDateFormat"
                     style="cursor: pointer;"
                   >
-                    {{ formatDateBasedOnFormat(client.updated_at) }}
+                    {{ formatDateBasedOnFormat(partner.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
-                    <p class="fs-sm fw-medium text-muted mb-0">0</p>
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ formatRubles(partner.balance) }}</p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end" @click="editPartnerStatus(client.status, clients.indexOf(client), client.id)">
-                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(client.status) >0" title="Готово"></i>
+                  <td class="d-none d-sm-table-cell text-end" @click="editPartnerStatus(partner.status, partners.indexOf(partner), partner.id)">
+                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(partner.status) >0" title="Готово"></i>
                     <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td>
-                    <EditButton :id="client.id" routeName="AdminEditPartner" />
+                    <EditButton :id="partner.id" routeName="AdminEditPartner" />
                   </td>
                 </tr>
               </tbody>

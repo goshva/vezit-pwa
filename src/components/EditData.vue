@@ -1,7 +1,6 @@
 <template>
     <div class="col-md-6 text-center p-3">
         <button @click.prevent="handleSubmit" type="submit" class="btn btn-primary">Сохранить изменения</button>
-        {{ props.user }}
     </div>
 </template>
 

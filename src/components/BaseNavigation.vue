@@ -109,7 +109,7 @@ function linkClicked(e, submenu) {
 const routerLinks = [
   {
     id: Math.random(Date.now()),
-    name: "Админ панель",
+    name: "Сводка",
     link: "/Adashboard",
   },
   {
@@ -181,12 +181,12 @@ const routerLinks = [
     id: Math.random(Date.now()),
     name: "Локации",
     link: "/locations",
-  },  
+  },
   {
     id: Math.random(Date.now()),
     name: "Тарифы",
     link: "/tariffs",
-  },    
+  },
 ];
 </script>
 
@@ -295,23 +295,11 @@ const routerLinks = [
   list-style: none;
   margin-inline: -20px;
 }
-.nav_link {
-  display: flex;
-  width: 100%;
-  height: 60px;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 18px;
-  padding-inline: 20px;
-  color: white;
-  line-height: 20px;
-  &:hover {
-    color: white;
-  }
-}
+
 .active-link {
   color: black;
   background-color: #ebeef2;
+
   &:hover {
     color: black !important;
   }

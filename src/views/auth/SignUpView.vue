@@ -1,15 +1,18 @@
 <script setup>
-import { reactive, computed } from "vue";
-import { useRouter } from "vue-router";
+import { reactive, computed, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email, sameAs } from "@vuelidate/validators";
+import useLoginLogic from "@/services/useLoginLogic";
+
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Main store and Router
 const store = useTemplateStore();
 const router = useRouter();
+const route = useRoute(); // Access current route
 
 // Input state variables
 const state = reactive({
@@ -17,85 +20,78 @@ const state = reactive({
   email: null,
   password: null,
   confirmPassword: null,
-  userRole: null,
+  userRole: null, // Will be set based on the route
   terms: null,
-  errorEmail: null
+  errorEmail: null,
 });
 
 // Validation rules
-const rules = computed(() => {
-  return {
-    username: {
-      required,
-      minLength: minLength(3),
-    },
-    email: {
-      required,
-      email,
-    },
-    password: {
-      required,
-      minLength: minLength(5),
-    },
-    confirmPassword: {
-      required,
-      sameAs: sameAs(state.password),
-    },
-    terms: {
-      sameAs: sameAs(true),
-    },
-    userRole: {
-      required
-    }
-  };
-});
+const rules = computed(() => ({
+  email: {
+    required,
+    email,
+  },
+  password: {
+    required,
+    minLength: minLength(5),
+  },
+  confirmPassword: {
+    required,
+    sameAs: sameAs(state.password),
+  },
+  terms: {
+    sameAs: sameAs(true),
+  },
+  userRole: {
+    required,
+  },
+}));
 
 // Use vuelidate
 const v$ = useVuelidate(rules, state);
 
+// Import login logic
+const { state: loginState, onSubmit: loginUser } = useLoginLogic();
+
+// Dynamically set the role based on the route
+onMounted(() => {
+  const path = route.name;
+  if (path === "partner-signup") {
+    state.userRole = "partner";
+  } else if (path === "client-signup") {
+    state.userRole = "client";
+  } else {
+    state.userRole = null; // Handle invalid or missing role
+  }
+});
+
 // On form submission
 async function onSubmit() {
-  const result = await v$.value.$validate();
-  if (!result) {
-    // notify user form is invalid
-    return;
-  }
+  const isValid = await v$.value.$validate();
+  if (!isValid) return;
 
   try {
-    // Make the API request to register the user
-    const response = await axios.post(`${apiBaseUrl}/register`, {
-      username: state.username,
+    await axios.post(`${apiBaseUrl}/register`, {
+      username: state.email.split("@")[0],
       email: state.email,
       password: state.password,
       password_confirmation: state.confirmPassword,
       userrole: state.userRole,
     });
 
-    // Assuming the response contains a JWT token
-    const token = response.data.token;
+    loginState.email = state.email;
+    loginState.password = state.password;
+    await loginUser();
 
-    // Store the token (in localStorage for this example)
-    localStorage.setItem('token', token);
-
-    // Optionally, store token in Vuex or Pinia store for easier access
-    // store.commit('setToken', token); // If using Vuex
-    // store.setToken(token); // If using Pinia
-
-    // Redirect user to the dashboard after successful registration
-    router.push("/auth/signin");
-    
   } catch (error) {
-    // Handle errors (e.g., notify user about the error)
-    if (error.response.data.email){
+    if (error.response?.data?.email) {
       state.errorEmail = error.response.data.email[0];
     } else {
       console.error("Registration failed:", error);
     }
-
   }
 }
 </script>
-
 
 <template>
   <!-- Page Content -->
@@ -108,29 +104,17 @@ async function onSubmit() {
             <template #options>
               <a class="btn-block-option fs-sm" href="javascript:void(0)" data-bs-toggle="modal"
                 data-bs-target="#one-signup-terms">правила использования</a>
-              <RouterLink :to="{ name: 'auth-signin' }" class="btn-block-option">
-                <i class="fa fa-sign-in-alt"></i>
-              </RouterLink>
             </template>
 
             <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
               <h1 class="h2 mb-1">Olhar.Media</h1>
               <p class="fw-medium text-muted">
-                Заполните форму для регистрации
+                Заполните форму для регистрации как {{ state.userRole === "partner" ? "Партнёр" : "Клиент" }}
               </p>
 
               <!-- Sign Up Form -->
               <form @submit.prevent="onSubmit">
                 <div class="py-3">
-                  <div class="mb-4">
-                    <input type="text" class="form-control form-control-lg form-control-alt" id="signup-username"
-                      name="signup-username" placeholder="Имя" autocomplete="off" :class="{
-                        'is-invalid': v$.username.$errors.length,
-                      }" v-model="state.username" @blur="v$.username.$touch" />
-                    <div v-if="v$.username.$errors.length" class="invalid-feedback animated fadeIn">
-                      Please enter a username
-                    </div>
-                  </div>
                   <div class="mb-4">
                     <input type="email" class="form-control form-control-lg form-control-alt" id="signup-email"
                       name="signup-email" placeholder="Email" autocomplete="email" :class="{
@@ -161,23 +145,8 @@ async function onSubmit() {
                       Повторите введеный пароль еще раз
                     </div>
                   </div>
-                  <div class="mb-4">
-                    <label class="form-label" for="subject">Выберите роль</label>
-
-                    <select  class="form-select form-control form-control-lg form-control-alt"  id="signup-userrole"
-                      v-model="state.userRole" :class="{ 'is-invalid': v$.userRole.$errors.length }"
-                      @blur="v$.userRole.$touch">
-                      <option value="admin">Администратор</option>
-                      <option value="moderator">Модератор</option>
-                      <option value="client">Клиент</option>
-                      <option value="partner">Партнёр</option>
-                      <option value="quest">Гость</option>
-                      <option value="support">Тех. поддержка</option>
-                    </select>
-
-                    <div v-if="v$.userRole.$errors.length" class="invalid-feedback animated fadeIn">
-                      Выберите роль
-                    </div>
+                  <div class="mb-4" v-if="!state.userRole">
+                    <p class="text-danger">Роль не выбрана или неверна.</p>
                   </div>
                   <div class="mb-4">
                     <div class="form-check">
@@ -193,13 +162,13 @@ async function onSubmit() {
                 </div>
                 <div class="row mb-4">
                   <div class="col-md-6 col-xl-6">
-                    <button type="submit" class="btn w-100 btn-success">
-                      Регистрация
+                    <button type="submit" class="btn btn-lg btn-alt-success" :disabled="!state.userRole">
+                      <i class="fa fa-fw fa-plus me-1 opacity-50"></i> Регистрация
                     </button>
                   </div>
-                  <div class="col-md-6 col-xl-6">
-                    <button @click="() => router.push('/auth/signin')" class="btn w-100 btn-primary">
-                      Войти
+                  <div v-if="state.errorEmail" class="col-md-6 col-xl-6 text-end">
+                    <button @click="() => router.push('/auth/signin')" class="btn btn-lg btn-alt-primary">
+                      <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i>Войти
                     </button>
                   </div>
                 </div>
@@ -215,84 +184,5 @@ async function onSubmit() {
         {{ store.app.copyright }}
       </div>
     </div>
-
-    <!-- Terms Modal -->
-    <div class="modal fade" id="one-signup-terms" tabindex="-1" role="dialog" aria-labelledby="one-signup-terms"
-      aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
-        <div class="modal-content">
-          <BaseBlock title="Terms &amp; Conditions" transparent class="mb-0">
-            <template #options>
-              <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                <i class="fa fa-fw fa-times"></i>
-              </button>
-            </template>
-
-            <template #content>
-              <div class="block-content">
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-                <p>
-                  Dolor posuere proin blandit accumsan senectus netus nullam
-                  curae, ornare laoreet adipiscing luctus mauris adipiscing
-                  pretium eget fermentum, tristique lobortis est ut metus
-                  lobortis tortor tincidunt himenaeos habitant quis dictumst
-                  proin odio sagittis purus mi, nec taciti vestibulum quis in
-                  sit varius lorem sit metus mi.
-                </p>
-              </div>
-              <div class="block-content block-content-full text-end bg-body">
-                <button type="button" class="btn btn-sm btn-alt-secondary me-1" data-bs-dismiss="modal">
-                  Close
-                </button>
-                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">
-                  I Agree
-                </button>
-              </div>
-            </template>
-          </BaseBlock>
-        </div>
-      </div>
-    </div>
-    <!-- END Terms Modal -->
   </div>
-  <!-- END Page Content -->
 </template>

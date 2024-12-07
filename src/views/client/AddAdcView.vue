@@ -3,10 +3,13 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
+import DelButton from "@/components/buttons/DelButton.vue";
 import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 
 const route = useRoute();
+
+// State
 const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
@@ -38,10 +41,6 @@ const fetchEquipments = async (page = 1, status = "") => {
   }
 };
 
-const deleteVideo = async (videoId) => {
-
-}
-
 const isVideoModerated = (video) => {
   return video.status === 1 || video.status === 0 && video.moderator
 }
@@ -70,7 +69,7 @@ const changePage = (page) => {
     <BaseBlock title="Список рекламных компаний" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <UploadVideoModal />
+          <UploadVideoModal @created="fetchEquipments"/>
 
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
@@ -122,7 +121,7 @@ const changePage = (page) => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td class="d-xl-table-cell">{{ video.filename }}</td>
+                  <td class="d-xl-table-cell">{{ video.adcampaign_name }}</td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
                       'bg-success-light text-success': video.status === 0,
@@ -151,11 +150,7 @@ const changePage = (page) => {
                           <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
-                      <div v-if="isVideoModerated(video)" @click="deleteVideo(video.id)">
-                        <button class="btn btn-sm btn-alt-danger">
-                          <i class="fa fa-close"></i>
-                        </button>
-                      </div>
+                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchEquipments"/>
                     </div>
                   </td>
                 </tr>

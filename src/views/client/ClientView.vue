@@ -36,19 +36,27 @@ const saveClient = async () => {
     console.error('Error saving client:', error);
   } finally {
     loading.value = false;
+
   }
+
+  return Object.keys(errors.value).length === 0;
 };
 
-// Fetch existing client data if editing
-const fetchClient = async () => {
+const saveClient = async () => {
+  if (!validateClientForm()) {
+    console.error("Validation failed:", errors.value);
+    return;
+  }
+
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/profile`);
     if (response.data.data !== null) {
       clientForm.value = response.data.data;
     }
+
   } catch (error) {
-    console.error('Error fetching client:', error);
+    console.error("Error saving client:", error);
   } finally {
     loading.value = false;
   }
@@ -66,9 +74,8 @@ watch(copyContactToDirectorChecked, (newValue) => {
 });
 
 onMounted(() => {
-    fetchClient()
+  clientStore.fetchClientProfile();
 });
-
 </script>
 
 <template>
@@ -147,8 +154,13 @@ onMounted(() => {
       </div>
 
       <div class="mb-4">
-        <button type="button" class="btn w-100 btn-alt-primary" @click="saveClient" :disabled="loading">
-          <i class="fas fa-save"></i> {{ loading ? 'Сохранение...' : 'Отправить' }}
+        <button 
+          type="button" 
+          class="btn w-100 btn-alt-primary" 
+          @click="saveClient" 
+          :disabled="loading"
+        >
+          <i class="fas fa-save"></i> {{ loading ? "Сохранение..." : "Отправить" }}
         </button>
       </div>
     </div>

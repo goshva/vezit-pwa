@@ -3,11 +3,12 @@ import axiosInstance from '@/services/axios.js';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    username: '',
+    id: '',
+    username: localStorage.getItem('username') || '',
     email: '',
     emailVerifiedAt: null,
     balance: null,
-    userRole: '',
+    userRole: localStorage.getItem('userrole') || '',
     lastIpAddr: null,
     fullUserName: null,
     companyName: null,
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     // Action to set user data
     setUserData(userData) {
+      this.id = userData.id;
       this.username = userData.username;
       this.email = userData.email;
       this.emailVerifiedAt = userData.email_verified_at;
@@ -36,6 +38,7 @@ export const useUserStore = defineStore('user', {
 
     // Action to clear user data
     clearUserData() {
+      this.id = '';
       this.username = '';
       this.email = '';
       this.emailVerifiedAt = null;
@@ -48,6 +51,7 @@ export const useUserStore = defineStore('user', {
       this.createdAt = '';
       this.updatedAt = '';
       this.userStatus = null;
+      localStorage.clear()
     },
 
     // New action to fetch user balance

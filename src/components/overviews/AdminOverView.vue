@@ -72,6 +72,12 @@ const blocks = [
     sourceCount: "clients",
   },
   {
+    title: "Автомобили",
+    icon: "fa-chart-bar",
+    link: "/cars",
+    sourceCount: "partnerscars",
+  },
+  {
     title: "Список системных ошибок",
     icon: "fa-chart-bar",
     link: "/error",
