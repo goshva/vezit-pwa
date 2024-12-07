@@ -50,19 +50,16 @@
 <script setup>
 import { ref } from "vue";
 import axiosInstance from "@/services/axios.js";
-import { useRouter } from "vue-router";
 import { defineEmits } from 'vue';
 import LocationSelect from "@/components/LocationSelect.vue";
 
 const emit = defineEmits(['created']);
-const router = useRouter();
 const videoFile = ref(null);
-const adcampaign_name = ref("adcampaign_name");
+const adcampaign_name = ref("");
 const filename = ref("filename");
 const serverfilename = ref("serverfilename");
 const user_id = ref(1);
-const duration = ref("");
-const url = ref("https://ya.ru");
+const url = ref("");
 const adddate = ref(new Date().toISOString().slice(0, 16));
 const mainlocation = ref(1);
 const status = ref(1);  // Default status status
@@ -97,12 +94,7 @@ const handleSubmit = async () => {
       }
     } catch (error) {
       console.error("Error uploading video:", error);
-      // Handle error, e.g., show an error message
     }
   }
 };
 </script>
-
-<style lang="css">
-/* Add any additional styles if needed */
-</style>

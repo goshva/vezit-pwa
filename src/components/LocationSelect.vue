@@ -13,7 +13,7 @@ import CustomDropdown from "@/components/CustomDropdown.vue";
 
 const selectedLocation = ref(null);
 const locations = ref([]);
-
+const emit = defineEmits(['update:model-value']);
 const fetchLocations = async () => {
   try {
       const response = await axiosInstance.get("/areas");
