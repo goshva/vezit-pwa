@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axiosInstance from '@/services/axios.js';
-
 // State for client form data
 const clientForm = ref({
   name: null,
@@ -18,10 +17,8 @@ const clientForm = ref({
   status: 0,
   publicOfferConsent: false,
 });
-
 const copyContactToDirectorChecked = ref(false);
 const loading = ref(false);
-
 // Function to create or edit client data
 const saveClient = async () => {
     if (!clientForm.value.name || !clientForm.value.contactTel || !clientForm.value.contactName) {
@@ -30,38 +27,27 @@ const saveClient = async () => {
   }
   loading.value = true;
   try {
-    const response = await axiosInstance.post(`/profile`, clientForm.value);
-    console.log('Client saved successfully:', response.data);
+    await axiosInstance.post(`/profile`, clientForm.value);
   } catch (error) {
     console.error('Error saving client:', error);
   } finally {
     loading.value = false;
-
   }
-
-  return Object.keys(errors.value).length === 0;
 };
-
-const saveClient = async () => {
-  if (!validateClientForm()) {
-    console.error("Validation failed:", errors.value);
-    return;
-  }
-
+// Fetch existing client data if editing
+const fetchClient = async () => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/profile`);
     if (response.data.data !== null) {
       clientForm.value = response.data.data;
     }
-
   } catch (error) {
-    console.error("Error saving client:", error);
+    console.error('Error fetching client:', error);
   } finally {
     loading.value = false;
   }
 };
-
 // Watcher to update director data when the checkbox is checked
 watch(copyContactToDirectorChecked, (newValue) => {
   if (newValue) {
@@ -72,9 +58,8 @@ watch(copyContactToDirectorChecked, (newValue) => {
     clientForm.value.director_tel = '';
   }
 });
-
 onMounted(() => {
-  clientStore.fetchClientProfile();
+    fetchClient()
 });
 </script>
 
@@ -154,13 +139,8 @@ onMounted(() => {
       </div>
 
       <div class="mb-4">
-        <button 
-          type="button" 
-          class="btn w-100 btn-alt-primary" 
-          @click="saveClient" 
-          :disabled="loading"
-        >
-          <i class="fas fa-save"></i> {{ loading ? "Сохранение..." : "Отправить" }}
+        <button type="button" class="btn w-100 btn-alt-primary" @click="saveClient" :disabled="loading">
+          <i class="fas fa-save"></i> {{ loading ? 'Сохранение...' : 'Отправить' }}
         </button>
       </div>
     </div>
