@@ -193,9 +193,13 @@ const routerLinks = [
 <template>
   <ul class="list">
     <li v-for="item in routerLinks" :key="item.id">
-      <RouterLink class="nav_link" :to="item.link" active-class="active-link">{{
-        item.name
-      }}</RouterLink>
+      <RouterLink 
+        class="nav_link" 
+        :to="item.link" 
+        active-class="active-link"
+        @click="() => linkClicked($event, false)">
+        {{item.name}}
+      </RouterLink>
     </li>
     <!-- <li
       v-for="(node, index) in nodes"
