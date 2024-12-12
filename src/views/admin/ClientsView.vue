@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from "vue-router";
 import axiosInstance from '@/services/axios.js';
 import { formatRubles } from '@/services/priceConvert.js';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js';
 import EditButton from '@/components/buttons/EditButton.vue';
-
+const route = useRoute();
 const clients = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
@@ -22,7 +23,7 @@ const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 const fetchClients = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/clients`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
@@ -77,7 +78,7 @@ const formatClientDate = (dateString) => {
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список клиентов" class="mb-0">
+    <BaseBlock title="Список рекламодателей" class="mb-0">
       <template #options>
         <div class="space-x-1">
           <button type="button" class="btn btn-primary push" style="margin-right: 20px">

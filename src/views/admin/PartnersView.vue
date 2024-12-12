@@ -119,7 +119,7 @@ const formatDateBasedOnFormat = (dateString) => {
 
       <template #content>
         <div v-if="loading" class="block-content text-center">
-          <span>Загрузка клиентов...</span>
+          <span>Загрузка партнеров...</span>
         </div>
         <div v-else class="block-content block-content-full">
           <div class="table-responsive">
