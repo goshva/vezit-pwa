@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-4">
+    <div class="m-2">
       <input
         :type="type"
         :id="id"
