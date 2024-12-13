@@ -15,14 +15,25 @@
           </template>
 
           <template #content>
-            <FormInput v-for="field in formFields" :key="field.id" :modelValue="fieldNames[field.model]"
-              :placeholder="field.placeholder" :type="field.type" :id="field.id" :rules="field.rules"
+            <FormInput
+              v-for="field in formFields"
+              :key="field.id"
+              :modelValue="fieldNames[field.model] ? String(fieldNames[field.model]) : ''"
+              :placeholder="field.placeholder"
+              :type="field.type"
+              :id="field.id"
+              :rules="field.rules"
               @update:modelValue="(value) => updatePartnerValue(field.model, value)"
-              :error="errors[field.model]?.[0]" />
+              :error="errors[field.model]?.[0]"
+            />
 
             <div class="mb-4">
-              <button type="submit" :disabled="!fieldNames.agreeToOffer" class="btn w-100 btn-alt-primary"
-                @click="handleSubmit">
+              <button
+                type="submit"
+                :disabled="!fieldNames.agreeToOffer"
+                class="btn w-100 btn-alt-primary"
+                @click="handleSubmit"
+              >
                 Отправить
               </button>
             </div>
@@ -37,11 +48,12 @@
 import { ref } from "vue";
 import FormInput from "@/components/inputs/FormInput.vue";
 
-defineProps({
+const props = defineProps({
   title: { type: String, required: true },
   fieldNames: {
     type: Object,
     required: true,
+    agreeToOffer: false,
   },
   formFields: {
     type: Array,
@@ -54,15 +66,21 @@ const errors = ref({});
 const emit = defineEmits(["update:fieldNames", "submit"]);
 
 const updatePartnerValue = (field, value) => {
-  emit("update:fieldNames", { ...fieldNames, [field]: value });
+  console.log(`updatePartnerValue called for field: ${field}, new value: ${value}`); //отладка
+
+  if (field === 'agreeToOffer') {
+    console.log("agreeToOffer updated:", value);
+  } // отладка
+
+  emit("update:fieldNames", { ...props.fieldNames, [field]: value });
 };
 
 const validatePartner = () => {
   errors.value = {};
 
-  for (const field of formFields) {
+  for (const field of props.formFields) {
     for (const rule of field.rules) {
-      if (!rule(fieldNames[field.model])) {
+      if (!rule(props.fieldNames[field.model])) {
         errors.value[field.model] = [`${field.placeholder} не должно быть пустым или содержит ошибку`];
         break;
       }
@@ -77,7 +95,7 @@ const handleSubmit = () => {
     console.log("Validation failed:", errors.value);
     return;
   }
-  emit("submit", fieldNames);
+  emit("submit", props.fieldNames);
 };
 </script>
 

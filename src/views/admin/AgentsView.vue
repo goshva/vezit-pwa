@@ -19,6 +19,7 @@ const formFields = [
   { id: "OKVED", placeholder: "Вид деятельности", type: "text", model: "OKVED", rules: [(val) => val?.trim().length <= 512] },
   { id: "contactTel", placeholder: "Контактный телефон", type: "text", model: "contactTel", rules: [(val) => val?.trim() !== ""] },
   { id: "contactEMail", placeholder: "Электронная почта", type: "email", model: "contactEMail", rules: [(val) => /^\S+@\S+\.\S+$/.test(val)] },
+  { id: "agreeToOffer", placeholder: "Согласие с условиями", type: "checkbox", model: "agreeToOffer", rules: [(val) => val === 'true'] },
 ];
 function createObjectFromArray(fieldMapping) {
   
@@ -52,9 +53,20 @@ const fetchClients = async (page = 1, status = '') => {
   }
 };
 
+const updatePartner = (updatedFieldNames) => {
+  console.log("Updated fieldNames:", updatedFieldNames);
+  fieldNames.value = updatedFieldNames;
+};
+
+const handleSubmit = (formData) => {
+  console.log("Отправка данных:", formData);
+};
+
 // Fetch data when component mounts
 onMounted(() => {
-  fetchClients().then( createObjectFromArray(fieldNames.value));
+  fetchClients().then(() => {
+    createObjectFromArray(fieldNames.value)
+  });
 });
 
 </script>
@@ -64,8 +76,12 @@ onMounted(() => {
     <BaseBlock title="Список агентов" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <CreateAutoModal :fieldNames="fieldNames" :formFields="formFields" @update:fieldNames="updatePartner"
-          :title="'Добавить нового агента'" @submit="handleSubmit" />
+          <CreateAutoModal 
+          :fieldNames="fieldNames" 
+          :formFields="formFields" 
+          @update:fieldNames="updatePartner"
+          :title="'Добавить нового агента'" 
+          @submit="handleSubmit" />
         </div>
       </template>
 
