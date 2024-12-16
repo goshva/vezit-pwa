@@ -1,15 +1,18 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axiosInstance from '@/services/axios.js';
 import { formatRubles } from '@/services/priceConvert.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js';
 import EditButton from "@/components/buttons/EditButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
-
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+const route = useRoute();
 const partners = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
+const fieldNames = ref({});
 
+const orderSearch = ref(false);
 const currentPage = ref(1);
 const lastPage = ref(1);
 const filterStatus = ref('');
@@ -20,7 +23,7 @@ const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/partners`, { 
+    const response = await axiosInstance.get(route.path, { 
       params: {
         page: page,
         status: status,
@@ -36,11 +39,11 @@ const fetchEquipments = async (page = 1, status = '') => {
     loading.value = false;
   }
 };
-
-// Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
-});
+function createObjectFromArray(fieldMapping) {
+  Object.keys(fieldMapping).forEach((key) => {
+    fieldNames.value[fieldMapping[key]] = ""; // Initialize each field with an empty string
+  });
+}
 
 // Handle filtering by status
 const applyFilter = (status) => {
@@ -61,7 +64,7 @@ const toggleDateFormat = () => {
 const editPartnerStatus = async (status, index, id) => {
   partners.value[index].status = status > 0 ? 0 : 1;
   try {
-    await axiosInstance.put(`/partners/${id}`, {
+    await axiosInstance.put( `${route.path}/${id}`, {
       status: partners.value[index].status})
   } catch(error) {
     console.error("Error updating ad:", error);
@@ -72,6 +75,46 @@ const editPartnerStatus = async (status, index, id) => {
 const formatDateBasedOnFormat = (dateString) => {
   return dateFormat.value === 'elapsed' ? formatTimeElapsed(dateString) : formatDate(dateString);
 };
+const fetchClients = async (page = 1, status = '') => {
+  loading.value = true;
+
+  try {
+    const response = await axiosInstance.get(route.path, {
+      params: {
+        page: page,
+        status: status,
+      },
+    });
+
+    partners.value = response.data.data;
+    fieldNames.value = Object.keys(response.data.data[0])
+    console.log(fieldNames.value)
+    lastPage.value = response.data.last_page; // Adjust according to your API structure
+    currentPage.value = page;
+  } catch (error) {
+    console.error('Error fetching partners:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const updatePartner = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchClients(currentPage.value);
+  }
+};
+
+// Fetch data when component mounts
+onMounted(async () => {
+  await fetchClients().then(() => {
+    createObjectFromArray(fieldNames.value)
+  });
+});
 </script>
 
 <template>
@@ -79,9 +122,11 @@ const formatDateBasedOnFormat = (dateString) => {
     <BaseBlock title="Список партнёров" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updatePartner"
+          :title="'Добавить нового партнера'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button
               type="button"
