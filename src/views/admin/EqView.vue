@@ -1,12 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js';
 import EditButton from '@/components/buttons/EditButton.vue';
 import { status } from 'nprogress';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 
-// State for storing equipment data
 const equipments = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);

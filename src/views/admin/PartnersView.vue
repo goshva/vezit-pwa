@@ -20,7 +20,7 @@ const filterStatus = ref('');
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Fetch location data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchPartners = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(route.path, { 
@@ -48,12 +48,12 @@ function createObjectFromArray(fieldMapping) {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchPartners(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchPartners(page, filterStatus.value);
 };
 
 // Method to toggle date format
