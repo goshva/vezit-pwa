@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axiosInstance from '@/services/axios.js';
 import { formatRubles } from '@/services/priceConvert.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js';
@@ -7,6 +8,7 @@ import EditButton from "@/components/buttons/EditButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 
+const route = useRoute();
 const partners = ref([]);
 const loading = ref(false);
 const fieldNames = ref({});
@@ -29,15 +31,15 @@ const updatePartner = (updatedFields) => {
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchEquipments(currentPage.value);
+    await fetchPartners(currentPage.value);
   }
 };
 
 // Fetch location data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchPartners = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/partners`, { 
+    const response = await axiosInstance.get(route.path, { 
       params: {
         page: page,
         status: status,
@@ -58,20 +60,21 @@ const fetchEquipments = async (page = 1, status = '') => {
 
 // Fetch data when component mounts
 onMounted(async () => {
-  await fetchEquipments().then(() => {
+  await fetchPartners().then(() => {
     createObjectFromArray(fieldNames.value)
+    });
   });
-});
+
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchPartners(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchPartners(page, filterStatus.value);
 };
 
 // Method to toggle date format
@@ -82,7 +85,7 @@ const toggleDateFormat = () => {
 const editPartnerStatus = async (status, index, id) => {
   partners.value[index].status = status > 0 ? 0 : 1;
   try {
-    await axiosInstance.put(`/partners/${id}`, {
+    await axiosInstance.put( `${route.path}/${id}`, {
       status: partners.value[index].status})
   } catch(error) {
     console.error("Error updating ad:", error);
