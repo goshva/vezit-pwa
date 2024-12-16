@@ -30,7 +30,6 @@
             <div class="mb-4 px-2">
               <button
                 type="submit"
-                :disabled="!fieldNames.agreeToOffer"
                 class="btn w-100 btn-alt-primary"
                 @click="handleSubmit"
               >
@@ -45,12 +44,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted} from "vue";
+import { ref, onMounted } from "vue";
 import FormInput from "@/components/inputs/FormInput.vue";
 import axiosInstance from '@/services/axios.js';
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import inputGenerator from '@/services/inputGenerator.js';
 
+const router = useRouter();
 const route = useRoute();
 const formFields = ref([]);
 const errors = ref({});
@@ -118,6 +118,7 @@ const handleSubmit = async () => {
     }
     emit("submit", false);
   }
+  router.go(0)
 };
 
 onMounted(() => {

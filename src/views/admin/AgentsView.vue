@@ -73,7 +73,9 @@ onMounted(async () => {
           :fieldNames="fieldNames" 
           @update:fieldNames="updatePartner"
           :title="'Добавить нового агента'" 
-          @submit="handleSubmit" />
+          @submit="handleSubmit"
+          routeName=route.path
+          />
         </div>
       </template>
 
