@@ -61,6 +61,9 @@ const fieldsInfo ={
     "equipid": { id: "equipid", placeholder: "ID оборудования", type: "text", model: "equipid", rules: [(val) => val?.trim() !== ""] },
     "sid": { id: "sid", placeholder: "ID сервиса", type: "text", model: "sid", rules: [(val) => val?.trim() !== ""] },
     "apikey": { id: "apikey", placeholder: "API ключ", type: "text", model: "apikey", rules: [(val) => val?.trim() !== ""] },
+    "ver": { id: "ver", placeholder: "Версия", type: "text", model: "ver", rules: [(val) => val?.trim() !== ""] },
+    "dsc": { id: "dsc", placeholder: "Описание", type: "text", model: "dsc", rules: [(val) => val?.trim() !== ""] },
+    "listing": { id: "listing", placeholder: "Список", type: "text", model: "listing", rules: [(val) => val?.trim() !== ""] },
 }
 
 const inputGenerator = (fieldNames) => {

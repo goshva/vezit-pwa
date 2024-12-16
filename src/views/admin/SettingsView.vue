@@ -10,7 +10,6 @@ import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 const route = useRoute();
 const cfgupdates = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 const currentPage = ref(1);
 const lastPage = ref(1);
@@ -28,6 +27,7 @@ const fetchSettings = async (page = 1, status = '') => {
     });
     cfgupdates.value = response.data.data;
     fieldNames.value = Object.keys(response.data.data[0])
+    console.log(fieldNames.value)
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -53,7 +53,7 @@ const updatePartner = (updatedFields) => {
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchClients(currentPage.value);
+    await fetchSettings(currentPage.value);
   }
 };
 onMounted(async () => {
@@ -73,7 +73,7 @@ onMounted(async () => {
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
           @update:fieldNames="updatePartner"
-          :title="'Добавить нового партнера'" 
+          :title="'Добавить настройку'" 
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
