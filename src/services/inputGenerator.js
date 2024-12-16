@@ -51,13 +51,16 @@ const fieldsInfo ={
     "BIK": { id: "BIK", placeholder: "БИК", type: "text", model: "BIK", rules: [(val) => val?.trim().length <= 9] },
     "OGRN": { id: "OGRN", placeholder: "ОГРН", type: "text", model: "OGRN", rules: [(val) => val?.trim() !== "" ]},
     "bussines": { id: "bussines", placeholder: "Название компании", type: "text", model: "bussines", rules: [(val) => val?.trim() !== ""] },
-    "description": { id: "description", placeholder: "Описание компании", type: "text", model: "description", rules: [(val) => val?.trim() !== ""] },
+    "description": { id: "description", placeholder: "Описание", type: "text", model: "description", rules: [(val) => val?.trim() !== ""] },
     "contactName": { id: "contactName", placeholder: "Директор (ФИО)", type: "text", model: "contactName", rules: [(val) => val?.trim() !== ""] },
     "actualAddress": { id: "actualAddress", placeholder: "Фактический адрес", type: "text", model: "actualAddress", rules: [(val) => val?.trim().length <= 512] },
     "OKVED": { id: "OKVED", placeholder: "Вид деятельности", type: "text", model: "OKVED", rules: [(val) => val?.trim().length <= 512] },
     "contactTel": { id: "contactTel", placeholder: "Контактный телефон", type: "text", model: "contactTel", rules: [(val) => val?.trim() !== ""] },
     "contactEMail": { id: "contactEMail", placeholder: "Электронная почта", type: "email", model: "contactEMail", rules: [(val) => /^\S+@\S+\.\S+$/.test(val)] },
     "legalAddress": { id: "legalAddress", placeholder: "Юридический адрес", type: "text", model: "legalAddress", rules: [(val) => val?.trim().length <= 512] },
+    "equipid": { id: "equipid", placeholder: "ID оборудования", type: "text", model: "equipid", rules: [(val) => val?.trim() !== ""] },
+    "sid": { id: "sid", placeholder: "ID сервиса", type: "text", model: "sid", rules: [(val) => val?.trim() !== ""] },
+    "apikey": { id: "apikey", placeholder: "API ключ", type: "text", model: "apikey", rules: [(val) => val?.trim() !== ""] },
 }
 
 const inputGenerator = (fieldNames) => {

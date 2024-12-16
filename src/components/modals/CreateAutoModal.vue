@@ -3,7 +3,7 @@
     <i class="fa-solid fa-plus"></i>
   </button>
 
-  <div class="modal" ref="modalRef" id="modal-block-create" tabindex="-1" role="dialog" aria-labelledby="modal-block-create"
+  <div class="modal" id="modal-block-create" tabindex="-1" role="dialog" aria-labelledby="modal-block-create"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">

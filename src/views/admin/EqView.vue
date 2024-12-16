@@ -2,31 +2,28 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import axiosInstance from '@/services/axios.js';
-import { formatDate } from '@/services/dateFormatter.js';
+import { formatDate} from '@/services/dateFormatter.js';
 import EditButton from '@/components/buttons/EditButton.vue';
-import { status } from 'nprogress';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+
+const dateFormat = ref('elapsed');
 const route = useRoute();
 const equipments = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 const currentPage = ref(1);
 const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
-function createObjectFromArray(fieldMapping) {
-  Object.keys(fieldMapping).forEach((key) => {
-    fieldNames.value[fieldMapping[key]] = ""; // Initialize each field with an empty string
-  });
-}
+
 
 const editPartnerStatus = async (status, index, id) => {
-  partners.value[index].status = status > 0 ? 0 : 1;
+  equipments.value[index].status = status > 0 ? 0 : 1;
   try {
     await axiosInstance.put( `${route.path}/${id}`, {
-      status: partners.value[index].status})
+      status: equipments.value[index].status})
   } catch(error) {
     console.error("Error updating ad:", error);
   }
@@ -35,6 +32,8 @@ const editPartnerStatus = async (status, index, id) => {
 const toggleDateFormat = () => {
   dateFormat.value = dateFormat.value === 'elapsed' ? 'absolute' : 'elapsed';
 };
+
+
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
@@ -46,6 +45,7 @@ const fetchEquipments = async (page = 1, status = '') => {
     });
     equipments.value = response.data.data;
     fieldNames.value = Object.keys(response.data.data[0])
+    console.log(fieldNames.value)
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
