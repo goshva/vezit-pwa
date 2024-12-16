@@ -46,13 +46,6 @@ const fieldsInfo ={
         model: "planned_clients",
         rules: [(val) => !isNaN(Number(val)), (val) => val > 0, (val) => Number.isInteger(Number(val))]
     },
-    'agreeToOffer': {
-        id: "agreeToOffer",
-        placeholder: "Согласие с условиями",
-        type: "checkbox",
-        model: "agreeToOffer",
-        rules: [(val) => val === 'true']
-    }
 }
 
 const inputGenerator = (fieldNames) => {
@@ -67,8 +60,6 @@ const inputGenerator = (fieldNames) => {
         }
     })
 
-    // Добавляем поле согласия с условиями отдельно, так как оно не входит в объект выдаваемый при ответе от сервера
-    formFields.push(fieldsInfo['agreeToOffer'])
     return formFields
   }
   
