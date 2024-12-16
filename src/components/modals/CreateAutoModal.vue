@@ -27,7 +27,7 @@
               :error="errors[field.model]?.[0]"
             />
 
-            <div class="mb-4">
+            <div class="mb-4 px-2">
               <button
                 type="submit"
                 :disabled="!fieldNames.agreeToOffer"
