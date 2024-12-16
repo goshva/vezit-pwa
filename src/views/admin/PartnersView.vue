@@ -29,7 +29,6 @@ const fetchPartners = async (page = 1, status = '') => {
         status: status,
       },
     });
-    console.log(response);
     partners.value = response.data.data; // Adjust according to your API structure
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;

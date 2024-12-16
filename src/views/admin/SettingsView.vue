@@ -1,31 +1,33 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axiosInstance from '@/services/axios.js';
 import LoadSettingsModal from "@/components/LoadSettingsModal.vue";
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
-
-// State for storing cfgupdate data
+import { createObjectFromArray } from '@/services/obj.js';
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+const route = useRoute();
 const cfgupdates = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
-
-// Pagination and filtering state
+const fieldNames = ref({});
 const currentPage = ref(1);
 const lastPage = ref(1);
-const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
+const filterStatus = ref('');
 
 // Fetch cfgupdate data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchSettings = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/cfgupdates`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
       },
     });
-    cfgupdates.value = response.data.data; // Adjust according to your API structure
+    cfgupdates.value = response.data.data;
+    fieldNames.value = Object.keys(response.data.data[0])
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -35,30 +37,44 @@ const fetchEquipments = async (page = 1, status = '') => {
   }
 };
 
-// Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
-});
-
-// Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchSettings(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchSettings(page, filterStatus.value);
 };
+const updatePartner = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchClients(currentPage.value);
+  }
+};
+onMounted(async () => {
+  await fetchSettings();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
+});
 </script>
 <template>
   <div class="m-5 mb-0">
     <BaseBlock title="Изменение настроек оборудования" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updatePartner"
+          :title="'Добавить нового партнера'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -143,11 +159,8 @@ const changePage = (page) => {
             </table>
           </div>
         </div>
-        <PaginationComponent v-if="lastPage > 1"
-        :current-page="currentPage"
-        :last-page="lastPage"
-        @page-changed="changePage"
-        />
+        <PaginationComponent v-if="lastPage > 1" :current-page="currentPage" :last-page="lastPage"
+          @page-changed="changePage" />
       </template>
 
     </BaseBlock>
