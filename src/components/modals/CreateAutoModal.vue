@@ -72,7 +72,7 @@ const updateFieldValue = (field, value) => {
 const validateFields = () => {
   errors.value = {};
 
-  for (const field of props.formFields) {
+  for (const field of formFields.value) {
     for (const rule of field.rules) {
       if (!rule(props.fieldNames[field.model])) {
         errors.value[field.model] = [`${field.placeholder} не должно быть пустым или содержит ошибку`];
