@@ -74,9 +74,12 @@ const handleSubmit = async (success) => {
   }
 };
 onMounted(async () => {
-  await fetchEquipments().then(() => {
-    createObjectFromArray(fieldNames.value)
-  });
+  await fetchEquipments();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 </script>
 

@@ -7,6 +7,7 @@ import { formatDate } from '@/services/dateFormatter.js'; // Import the date for
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import { createObjectFromArray } from '@/services/obj.js';
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+
 const route = useRoute();
 const cfgupdates = ref([]);
 const loading = ref(false);

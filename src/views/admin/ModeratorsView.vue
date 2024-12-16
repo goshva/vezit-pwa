@@ -4,9 +4,13 @@ import axiosInstance from '@/services/axios.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
 import EditButton from '@/components/buttons/EditButton.vue';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+
 const moderators = ref([]);
 const loading = ref(false);
 const orderSearch = ref(false);
+const fieldNames = ref({});
 const currentPage = ref(1);
 const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
@@ -24,6 +28,8 @@ const fetchEquipments = async (page = 1, status = '') => {
         status: status,
       },
     });
+    fieldNames.value = Object.keys(response.data.data[0]);
+    console.log(fieldNames.value)
     moderators.value = response.data.data; // Adjust according to your API structure
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
@@ -35,8 +41,24 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
+const updatePartner = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchEquipments(currentPage.value);
+  }
+};
+
+onMounted(async () => {
+  await fetchEquipments();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
 // Handle filtering by status
@@ -66,9 +88,11 @@ const formatDateBasedOnFormat = (dateString) => {
     <BaseBlock title="Список модераторов" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updatePartner"
+          :title="'Добавить нового модератора'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button
                 type="button"
