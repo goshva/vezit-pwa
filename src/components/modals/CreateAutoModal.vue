@@ -23,7 +23,7 @@
               :type="field.type"
               :id="field.id"
               :rules="field.rules"
-              @update:modelValue="(value) => updatePartnerValue(field.model, value)"
+              @update:modelValue="(value) => updateFieldValue(field.model, value)"
               :error="errors[field.model]?.[0]"
             />
 
@@ -45,8 +45,16 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted} from "vue";
 import FormInput from "@/components/inputs/FormInput.vue";
+import axiosInstance from '@/services/axios.js';
+import { useRoute } from "vue-router";
+import inputGenerator from '@/services/inputGenerator.js';
+
+const route = useRoute();
+const formFields = ref([]);
+const errors = ref({});
+const emit = defineEmits(["update:fieldNames", "submit"]);
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -55,27 +63,13 @@ const props = defineProps({
     required: true,
     agreeToOffer: false,
   },
-  formFields: {
-    type: Array,
-    required: true,
-  },
 });
 
-const errors = ref({});
-
-const emit = defineEmits(["update:fieldNames", "submit"]);
-
-const updatePartnerValue = (field, value) => {
-  console.log(`updatePartnerValue called for field: ${field}, new value: ${value}`); //отладка
-
-  if (field === 'agreeToOffer') {
-    console.log("agreeToOffer updated:", value);
-  } // отладка
-
+const updateFieldValue = (field, value) => {
   emit("update:fieldNames", { ...props.fieldNames, [field]: value });
 };
 
-const validatePartner = () => {
+const validateFields = () => {
   errors.value = {};
 
   for (const field of props.formFields) {
@@ -90,13 +84,47 @@ const validatePartner = () => {
   return Object.keys(errors.value).length === 0;
 };
 
-const handleSubmit = () => {
-  if (!validatePartner()) {
+
+
+const generateFormFields = () => {
+  formFields.value = inputGenerator(props.fieldNames);
+}
+
+
+
+const handleSubmit = async () => {
+  const dataToSend = {};
+
+  if (!validateFields()) {
     console.log("Validation failed:", errors.value);
     return;
   }
-  emit("submit", props.fieldNames);
+  // Добавляем все поля в dataToSend
+  formFields.value.forEach(field => {
+  dataToSend[field.id] = props.fieldNames[field.model];
+  });
+
+  // Добавляем статус отдельно, так как он не входит в форму
+  dataToSend.status = 4;
+
+  try {
+    const response = await axiosInstance.post(route.path, dataToSend);
+    if (response.status === 200 || response.status === 201) {
+      emit("submit", true);
+    }
+  } catch (error) {
+    if (error.response?.data?.errors) {
+      console.error("Ошибки валидации:", error.response.data.errors);
+    }
+    emit("submit", false);
+  }
 };
+
+onMounted(() => {
+  // Генерируем поля формы
+  generateFormFields()
+})
+
 </script>
 
 <style lang="css">

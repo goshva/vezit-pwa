@@ -8,32 +8,22 @@ import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 
 const route = useRoute();
 const fieldNames = ref({});
-const formFields = [
-  { id: "name", placeholder: "Название", type: "text", model: "name", rules: [(val) => val?.trim() !== ""] },
-  { id: "INN", placeholder: "ИНН", type: "text", model: "INN", rules: [(val) => val?.trim().length <= 13] },
-  { id: "BIK", placeholder: "БИК", type: "text", model: "BIK", rules: [(val) => val?.trim().length <= 9] },
-  { id: "bussines", placeholder: "Название компании", type: "text", model: "bussines", rules: [(val) => val?.trim() !== ""] },
-  { id: "description", placeholder: "Описание компании", type: "text", model: "description", rules: [(val) => val?.trim() !== ""] },
-  { id: "contactName", placeholder: "Директор (ФИО)", type: "text", model: "contactName", rules: [(val) => val?.trim() !== ""] },
-  { id: "actualAddress", placeholder: "Фактический адрес", type: "text", model: "actualAddress", rules: [(val) => val?.trim().length <= 512] },
-  { id: "OKVED", placeholder: "Вид деятельности", type: "text", model: "OKVED", rules: [(val) => val?.trim().length <= 512] },
-  { id: "contactTel", placeholder: "Контактный телефон", type: "text", model: "contactTel", rules: [(val) => val?.trim() !== ""] },
-  { id: "contactEMail", placeholder: "Электронная почта", type: "email", model: "contactEMail", rules: [(val) => /^\S+@\S+\.\S+$/.test(val)] },
-  { id: "agreeToOffer", placeholder: "Согласие с условиями", type: "checkbox", model: "agreeToOffer", rules: [(val) => val === 'true'] },
-];
+
+
 function createObjectFromArray(fieldMapping) {
-  
   Object.keys(fieldMapping).forEach((key) => {
     fieldNames.value[fieldMapping[key]] = ""; // Initialize each field with an empty string
   });
-  
 }
+
 const agents = ref([]);
 const loading = ref(false);
 const currentPage = ref(1);
 const lastPage = ref(1);
+
 const fetchClients = async (page = 1, status = '') => {
   loading.value = true;
+
   try {
     const response = await axiosInstance.get(route.path, {
       params: {
@@ -41,6 +31,7 @@ const fetchClients = async (page = 1, status = '') => {
         status: status,
       },
     });
+
     agents.value = response.data.data.data;
     fieldNames.value = Object.keys(response.data.data.data[0])
     console.log(fieldNames.value)
@@ -53,18 +44,20 @@ const fetchClients = async (page = 1, status = '') => {
   }
 };
 
-const updatePartner = (updatedFieldNames) => {
-  console.log("Updated fieldNames:", updatedFieldNames);
-  fieldNames.value = updatedFieldNames;
+const updatePartner = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
 };
 
-const handleSubmit = (formData) => {
-  console.log("Отправка данных:", formData);
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchClients(currentPage.value);
+  }
 };
 
 // Fetch data when component mounts
-onMounted(() => {
-  fetchClients().then(() => {
+onMounted(async () => {
+  await fetchClients().then(() => {
     createObjectFromArray(fieldNames.value)
   });
 });
@@ -76,9 +69,8 @@ onMounted(() => {
     <BaseBlock title="Список агентов" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <CreateAutoModal 
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          :formFields="formFields" 
           @update:fieldNames="updatePartner"
           :title="'Добавить нового агента'" 
           @submit="handleSubmit" />
