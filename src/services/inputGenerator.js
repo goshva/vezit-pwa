@@ -46,6 +46,18 @@ const fieldsInfo ={
         model: "planned_clients",
         rules: [(val) => !isNaN(Number(val)), (val) => val > 0, (val) => Number.isInteger(Number(val))]
     },
+    "name": { id: "name", placeholder: "Название", type: "text", model: "name", rules: [(val) => val?.trim() !== ""] },
+    "INN": { id: "INN", placeholder: "ИНН", type: "text", model: "INN", rules: [(val) => val?.trim().length <= 13] },
+    "BIK": { id: "BIK", placeholder: "БИК", type: "text", model: "BIK", rules: [(val) => val?.trim().length <= 9] },
+    "OGRN": { id: "OGRN", placeholder: "ОГРН", type: "text", model: "OGRN", rules: [(val) => val?.trim() !== "" ]},
+    "bussines": { id: "bussines", placeholder: "Название компании", type: "text", model: "bussines", rules: [(val) => val?.trim() !== ""] },
+    "description": { id: "description", placeholder: "Описание компании", type: "text", model: "description", rules: [(val) => val?.trim() !== ""] },
+    "contactName": { id: "contactName", placeholder: "Директор (ФИО)", type: "text", model: "contactName", rules: [(val) => val?.trim() !== ""] },
+    "actualAddress": { id: "actualAddress", placeholder: "Фактический адрес", type: "text", model: "actualAddress", rules: [(val) => val?.trim().length <= 512] },
+    "OKVED": { id: "OKVED", placeholder: "Вид деятельности", type: "text", model: "OKVED", rules: [(val) => val?.trim().length <= 512] },
+    "contactTel": { id: "contactTel", placeholder: "Контактный телефон", type: "text", model: "contactTel", rules: [(val) => val?.trim() !== ""] },
+    "contactEMail": { id: "contactEMail", placeholder: "Электронная почта", type: "email", model: "contactEMail", rules: [(val) => /^\S+@\S+\.\S+$/.test(val)] },
+    "legalAddress": { id: "legalAddress", placeholder: "Юридический адрес", type: "text", model: "legalAddress", rules: [(val) => val?.trim().length <= 512] },
 }
 
 const inputGenerator = (fieldNames) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="m-5 mb-5">
     <BaseBlock title="Редактировать данные агента">
-      <template #content>
+      <template #content>а
         <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
           <div class="col-md-6 mb-3">
             <label for="bussines" class="form-label">Фамилия</label>

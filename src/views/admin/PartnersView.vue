@@ -5,16 +5,33 @@ import { formatRubles } from '@/services/priceConvert.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js';
 import EditButton from "@/components/buttons/EditButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 
 const partners = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
-
+const fieldNames = ref({});
 const currentPage = ref(1);
 const lastPage = ref(1);
 const filterStatus = ref('');
 
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
+
+function createObjectFromArray(fieldMapping) {
+  Object.keys(fieldMapping).forEach((key) => {
+    fieldNames.value[fieldMapping[key]] = ""; // Initialize each field with an empty string
+  });
+}
+
+const updatePartner = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchEquipments(currentPage.value);
+  }
+};
 
 // Fetch location data from API
 const fetchEquipments = async (page = 1, status = '') => {
@@ -27,7 +44,9 @@ const fetchEquipments = async (page = 1, status = '') => {
       },
     });
     console.log(response);
-    partners.value = response.data.data; // Adjust according to your API structure
+    partners.value = response.data.data;
+    fieldNames.value = Object.keys(response.data.data[0]) // Adjust according to your API structure
+    console.log(fieldNames.value)
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -38,8 +57,10 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
+onMounted(async () => {
+  await fetchEquipments().then(() => {
+    createObjectFromArray(fieldNames.value)
+  });
 });
 
 // Handle filtering by status
@@ -79,9 +100,12 @@ const formatDateBasedOnFormat = (dateString) => {
     <BaseBlock title="Список партнёров" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+            :fieldNames="fieldNames" 
+            @update:fieldNames="updatePartner"
+            :title="'Добавить нового партнера'" 
+            @submit="handleSubmit"
+            />
           <div class="dropdown d-inline-block">
             <button
               type="button"

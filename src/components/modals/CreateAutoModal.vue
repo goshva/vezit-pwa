@@ -3,7 +3,7 @@
     <i class="fa-solid fa-plus"></i>
   </button>
 
-  <div class="modal" id="modal-block-create" tabindex="-1" role="dialog" aria-labelledby="modal-block-create"
+  <div class="modal" ref="modalRef" id="modal-block-create" tabindex="-1" role="dialog" aria-labelledby="modal-block-create"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -47,14 +47,15 @@
 import { ref, onMounted } from "vue";
 import FormInput from "@/components/inputs/FormInput.vue";
 import axiosInstance from '@/services/axios.js';
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import inputGenerator from '@/services/inputGenerator.js';
+import * as bootstrap from 'bootstrap';
 
-const router = useRouter();
 const route = useRoute();
 const formFields = ref([]);
 const errors = ref({});
 const emit = defineEmits(["update:fieldNames", "submit"]);
+const modalRef = ref(null);
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -90,7 +91,17 @@ const generateFormFields = () => {
   formFields.value = inputGenerator(props.fieldNames);
 }
 
-
+const closeModal = () => {
+  const modal = bootstrap.Modal.getInstance(modalRef.value);
+  if (modal) {
+    modal.hide();
+    document.body.classList.remove('modal-open');
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.remove();
+    }
+  }
+};
 
 const handleSubmit = async () => {
   const dataToSend = {};
@@ -105,20 +116,21 @@ const handleSubmit = async () => {
   });
 
   // Добавляем статус отдельно, так как он не входит в форму
-  dataToSend.status = 4;
+  dataToSend.status = 0;
 
   try {
     const response = await axiosInstance.post(route.path, dataToSend);
     if (response.status === 200 || response.status === 201) {
       emit("submit", true);
     }
+    closeModal();
   } catch (error) {
     if (error.response?.data?.errors) {
       console.error("Ошибки валидации:", error.response.data.errors);
     }
     emit("submit", false);
   }
-  router.go(0)
+  
 };
 
 onMounted(() => {
