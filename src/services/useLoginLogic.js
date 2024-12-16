@@ -78,8 +78,8 @@ export default function useLoginLogic() {
           else if (user.status === 1) router.push("/mycars");
           else router.push("/about");
           break;
-        case "quest":
-          router.push("/guest");
+        case "agent":
+          router.push("/Agdashboard");
           break;
         case "support":
           router.push("/Sdashboard");
