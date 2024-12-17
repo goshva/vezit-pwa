@@ -1,32 +1,51 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axiosInstance from '@/services/axios.js';
-import { formatDate } from '@/services/dateFormatter.js';
+import { formatDate} from '@/services/dateFormatter.js';
 import EditButton from '@/components/buttons/EditButton.vue';
-import { status } from 'nprogress';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
 
-// State for storing equipment data
+const dateFormat = ref('elapsed');
+const route = useRoute();
 const equipments = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
-
-// Pagination and filtering state
+const fieldNames = ref({});
 const currentPage = ref(1);
 const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
-// Fetch equipment data from API
+
+
+const editPartnerStatus = async (status, index, id) => {
+  equipments.value[index].status = status > 0 ? 0 : 1;
+  try {
+    await axiosInstance.put( `${route.path}/${id}`, {
+      status: equipments.value[index].status})
+  } catch(error) {
+    console.error("Error updating ad:", error);
+  }
+}
+// Method to toggle date format
+const toggleDateFormat = () => {
+  dateFormat.value = dateFormat.value === 'elapsed' ? 'absolute' : 'elapsed';
+};
+
+
 const fetchEquipments = async (page = 1, status = '') => {
   loading.value = true;
   try {
-    const response = await axiosInstance.get(`/eq`, {
+    const response = await axiosInstance.get(route.path, {
       params: {
         page: page,
         status: status,
       },
     });
-    equipments.value = response.data.data; // Adjust according to your API structure
+    equipments.value = response.data.data;
+    fieldNames.value = Object.keys(response.data.data[0])
+    console.log(fieldNames.value)
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -36,12 +55,6 @@ const fetchEquipments = async (page = 1, status = '') => {
   }
 };
 
-// Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
-});
-
-// Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
   fetchEquipments(1, status); // Reset to first page when filtering
@@ -51,12 +64,23 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchEquipments(page, filterStatus.value);
 };
-
-// const openEditForm = () => {
-//     // Open the edit form modal or component
-//     const editFormModal = ref(null);
-//     editFormModal.value = true;
-//   };
+const updateEquipment = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchEquipments(currentPage.value);
+  }
+};
+onMounted(async () => {
+  await fetchEquipments();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
+});
 </script>
 
 <template>
@@ -64,9 +88,11 @@ const changePage = (page) => {
     <BaseBlock title="Оборудование" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateEquipment"
+          :title="'Добавить новое оборудование'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button
               type="button"
@@ -127,17 +153,9 @@ const changePage = (page) => {
                     <a class="fw-semibold" href="javascript:void(0)">{{ equipment.partner_name }}</a>
                     <p class="fs-sm fw-medium text-muted mb-0">{{ equipment.partner_role }}</p>
                   </td>
-                  <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
-                      :class="{
-                        'bg-success-light text-success': equipment.status === 'completed',
-                        'bg-info-light text-info': equipment.status === 'in-progress',
-                        'bg-warning-light text-warning': equipment.status === 'error'
-                      }"
-                    >
-                      {{ equipment.status === 1 ? 'В работе' : equipment.status === 0 ? 'Выключено' : 'Неизвестно' }}
-                    </span>
+                  <td class="d-none d-sm-table-cell text-end" @click="editPartnerStatus(equipment.status, partners.indexOf(partner), partner.id)">
+                    <i class="fa fa-fw fa-check text-success" v-if="parseInt(equipment.status) >0" title="Готово"></i>
+                    <i class="fas fa-spinner fa-spin" v-else title="В процессе"></i>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(equipment.created_at) }}

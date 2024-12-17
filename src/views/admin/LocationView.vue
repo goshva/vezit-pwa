@@ -4,13 +4,13 @@ import axiosInstance from '@/services/axios.js';
 import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js'; // Import the date formatter
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import EditButton from '@/components/buttons/EditButton.vue';
-
+import { createObjectFromArray } from '@/services/obj.js';
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 
 // State for storing location data
 const locations = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
-
+const fieldNames = ref({});
 // Pagination and filtering state
 const currentPage = ref(1);
 const lastPage = ref(1);
@@ -20,7 +20,7 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Fetch location data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchLocations = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/locations`, {
@@ -29,6 +29,8 @@ const fetchEquipments = async (page = 1, status = '') => {
         status: status,
       },
     });
+    fieldNames.value = Object.keys(response.data.data[0]);
+    console.log(fieldNames.value)
     locations.value = response.data.data; // Adjust according to your API structure
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
@@ -40,19 +42,35 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
+const updateLocation = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchLocations(currentPage.value);
+  }
+};
+
+onMounted(async () => {
+  await fetchLocations();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchLocations(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchLocations(page, filterStatus.value);
 };
 
 // Method to toggle date format
@@ -71,9 +89,11 @@ const formatDateBasedOnFormat = (dateString) => {
     <BaseBlock title="Список локаций" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateLocation"
+          :title="'Добавить новую локацию'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button
               type="button"

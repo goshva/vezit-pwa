@@ -1,6 +1,7 @@
 <template>
-    <div class="mb-4">
+    <div class="m-2">
       <input
+        v-if="type !== 'checkbox'"
         :type="type"
         :id="id"
         :placeholder="placeholder"
@@ -8,6 +9,18 @@
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
       />
+
+      <div v-else>
+        <input
+          type="checkbox"
+          :id="id"
+          class="form-check-input"
+          :value="modelValue"
+          @input="$emit('update:modelValue', $event.target.checked ? 'true' : 'false')"
+        />
+        <label class="form-check-label" :for="id">{{ placeholder }}</label>
+      </div>
+
       <div v-if="error" class="text-danger">{{ error }}</div>
     </div>
   </template>

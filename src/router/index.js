@@ -11,8 +11,8 @@ import AdminLayoutSidebarMiniNav from "@/layouts/variations/BackendSidebarMiniNa
 import PartnerLayout from "@/layouts/variations/PartnerLayout.vue";
 import ModeratorLayout from "@/layouts/variations/ModeratorLayout.vue";
 import SupportLayout from "@/layouts/variations/SupportLayout.vue";
+import AgentLayout from "@/layouts/variations/AgentLayout.vue";
 import ClientLayout from "@/layouts/variations/ClientLayout.vue";
-
 const BackendBoxedDashboard = () =>
   import("@/views/backend-boxed/DashboardView.vue");
 const BackendBoxedSimple1 = () =>
@@ -97,8 +97,11 @@ const SupportDashboardView = () =>
 const SupportSupportView = () => import("@/views/support/SupportView.vue");
 const ResultsSupportView = () => import("@/views/support/ResultsView.vue");
 
-//
-
+//agent views
+const AgentDashboardView = () => import("@/views/agent/DashboardView.vue");
+const AdvertisersView = () => import("@/views/agent/AdvertisersView.vue");
+const AddAdvertisersView = () => import("@/views/agent/AddAdvertisersView.vue");
+const AgentSupportView = () => import("@/views/agent/SupportView.vue");
 //client views
 const ClientDashboardView = () => import("@/views/client/DashboardView.vue");
 const ClientView = () => import("@/views/client/ClientView.vue");
@@ -352,7 +355,32 @@ const routes = [
 
     ],
   },
+  
+  {
+    path: "/",
+    component: AgentLayout,
+    children: [
 
+      {
+        path: "Agdashboard",
+        component: AgentDashboardView,
+      },
+      {
+        path: "advertisers",
+        component: AdvertisersView,
+      },
+      {
+        path: 'advertisers/:id',
+        name: 'ClientEditAd',
+        component: AddAdvertisersView,
+      },
+      {
+        path: "ask",
+        component: AgentSupportView,
+      },
+
+    ],
+  },
   {
     path: "/",
     component: PartnerLayout,

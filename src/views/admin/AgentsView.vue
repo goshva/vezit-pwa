@@ -2,35 +2,33 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from "vue-router";
 import axiosInstance from '@/services/axios.js';
-import { formatRubles } from '@/services/priceConvert.js';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
-import { toggleDateFormat, formatDateBasedOnFormat } from '@/services/dateFormatter.js';
 import EditButton from '@/components/buttons/EditButton.vue';
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+
 const route = useRoute();
+const fieldNames = ref([]);
+
 const agents = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
-
-// Pagination and filtering state
 const currentPage = ref(1);
 const lastPage = ref(1);
-const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
-// State for toggling date format
-const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
-
-// Fetch client data from API
-const fetchClients = async (page = 1, status = '') => {
+const fetchAgents = async (page = 1, status = '') => {
   loading.value = true;
+
   try {
     const response = await axiosInstance.get(route.path, {
-
       params: {
         page: page,
         status: status,
       },
     });
-    agents.value = response.data.data.data; // Adjust according to your API structure
+
+    agents.value = response.data.data.data;
+    fieldNames.value = Object.keys(response.data.data.data[0])
+    console.log(fieldNames.value)
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
   } catch (error) {
@@ -40,83 +38,40 @@ const fetchClients = async (page = 1, status = '') => {
   }
 };
 
+const updateAgent = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchAgents(currentPage.value);
+  }
+};
+
 // Fetch data when component mounts
-onMounted(() => {
-  fetchClients();
+onMounted(async () => {
+  await fetchAgents();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
-// Handle filtering by status
-const applyFilter = (status) => {
-  filterStatus.value = status;
-  fetchClients(1, status); // Reset to first page when filtering
-};
-
-// Handle pagination
-const changePage = (page) => {
-  fetchClients(page, filterStatus.value);
-};
-
-const editClientStatus = async (status, index, id) => {
-  agents.value[index].status = status > 0 ? 0 : 1;
-  try {
-    await axiosInstance.put(`/agents/${id}`, {
-      status: agents.value[index].status
-    })
-  } catch (error) {
-    console.error("Error updating ad:", error);
-  }
-}
-
-// Toggle date format using service
-const toggleFormat = () => {
-  toggleDateFormat(dateFormat); // Pass the dateFormat ref to toggleDateFormat
-};
-
-// Format date using service
-const formatClientDate = (dateString) => {
-  return formatDateBasedOnFormat(dateString, dateFormat); // Pass the dateFormat ref
-};
 </script>
 
 <template>
   <div class="m-5 mb-0">
     <BaseBlock title="Список агентов" class="mb-0">
       <template #options>
-        <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-            <i class="fa fa-plus"></i>
-          </button>
-          <div class="dropdown d-inline-block">
-            <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
-              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-fw fa-flask"></i>
-              Фильтр
-              <i class="fa fa-angle-down ms-1"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters">
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('')">
-                Все
-                <span class="badge bg-primary rounded-pill">{{ agents.length }}</span>
-              </a>
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('in-progress')">
-                В работе
-                <span class="badge bg-primary rounded-pill">72</span>
-              </a>
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('completed')">
-                Готово
-                <span class="badge bg-primary rounded-pill">890</span>
-              </a>
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('error')">
-                Ошибка
-                <span class="badge bg-primary rounded-pill">997</span>
-              </a>
-            </div>
-          </div>
+        <div class="space-x-4">
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateAgent"
+          :title="'Добавить нового агента'" 
+          @submit="handleSubmit"
+          />
         </div>
       </template>
 

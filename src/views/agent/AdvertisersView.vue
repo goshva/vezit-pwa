@@ -1,13 +1,19 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
-import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
+import DelButton from "@/components/buttons/DelButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import EditAutoModal from "@/components/modals/EditAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+import * as bootstrap from 'bootstrap';
 
 const route = useRoute();
-// State for storing video data
+const fieldNames = ref({});
+
+// State
 const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
@@ -18,7 +24,7 @@ const lastPage = ref(1);
 const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch video data from API
-const fetchVideos = async (page = 1, status = "") => {
+const fetchAdvertisers = async (page = 1, status = "") => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(route.path, {
@@ -27,11 +33,13 @@ const fetchVideos = async (page = 1, status = "") => {
         status: status,
       },
     });
+    fieldNames.value = Object.keys(response.data.data[0]);
+    console.log(fieldNames.value)
     videos.value = response.data.data;
+    console.log(videos.value)
     total.value = response.data.total;
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
-    
   } catch (error) {
     console.error("Error fetching video:", error);
   } finally {
@@ -39,32 +47,82 @@ const fetchVideos = async (page = 1, status = "") => {
   }
 };
 
+const isVideoModerated = (video) => {
+  return video.status === 1 || video.status === 0 && video.moderator
+}
+
 // Fetch data when component mounts
-onMounted(() => {
-  fetchVideos();
+const updateAdvertiser = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchAdvertisers(currentPage.value);
+  }
+};
+
+// Fetch data when component mounts
+onMounted(async () => {
+  await fetchAdvertisers();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchVideos(1, status); // Reset to first page when filtering
+  fetchAdvertisers(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchVideos(page, filterStatus.value);
+  fetchAdvertisers(page, filterStatus.value);
 };
 
+const selectedVideoId = ref(null);
+const showEditModal = ref(false);
 
+const openEditModal = (videoId) => {
+  selectedVideoId.value = videoId;
+  showEditModal.value = true;
+
+  nextTick(() => {
+    const modalElement = document.getElementById(`modal-block-edit-${videoId}`);
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  });
+};
+
+const closeEditModal = () => {
+  selectedVideoId.value = null;
+  showEditModal.value = false;
+};
 </script>
 
 <template>
   <div class="m-5 mb-0">
-    <BaseBlock title="Список рекламных компаний" class="mb-0">
+    <EditAutoModal 
+    v-if="showEditModal && selectedVideoId"
+    :id="selectedVideoId"
+    :fieldNames="fieldNames" 
+    :title="`Изменить видео`"
+    @close="closeEditModal"
+  />
+    <BaseBlock title="Список рекламодателей" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <UploadVideoModal />
-
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateAdvertiser"
+          :title="'Добавить нового рекламодателя'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,9 +138,9 @@ const changePage = (page) => {
                 Все
                 <span class="badge bg-primary rounded-pill">{{
                   total
-                }}</span>
+                  }}</span>
               </a>
-           
+
               <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                 href="javascript:void(0)" @click.prevent="applyFilter(1)">
                 Проверка
@@ -115,33 +173,46 @@ const changePage = (page) => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td class="d-xl-table-cell">{{ video.filename }}</td>
+                  <td class="d-xl-table-cell">
+                      <p class="fw-semibold">{{ video.name }}</p>
+                      <p class="fs-sm fw-medium text-muted mb-0">{{ video.description.slice(0, 120) + '...' }}</p>
+                  </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-success-light text-success': video.status === 1,
-                      'bg-info-light text-info': !video.moderator,
-                      'bg-danger-light text-danger': video.status === 0,
-                      'bg-warning-light text-warning': video.status === 2,
+                      'bg-success-light text-success': video.status === 0,
+                      'bg-info-light text-info': video.status === 1,
+                      'bg-danger-light text-danger': video.status === 2,
+                      'bg-warning-light text-warning': video.status === 3,
                       'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
 
                     }">
-                      {{ !video.moderator ? "Ожидание" : video.status === 1 ? "Включено" : video.status === 0 ? "Отключено" : "Ошибка" }}
+                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ?
+                        "Отключено" : "Ошибка" }}
                     </span>
 
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <p v-if="video.moderator_id" class="mb-0">{{ video.moderator.name }}</p>
+                    <p v-if="video.moderator" class="mb-0">{{ video.moderator.name }}</p>
                   </td>
                   <td class="d-none d-sm-table-cell fw-semibold text-muted text-end">
                     {{ formatDate(video.updated_at) }}
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link :to="{ name: 'AdminEditAd', params: { id: video.id } }">
+                      <router-link v-if="!isVideoModerated(video)"
+                        :to="{ name: 'ClientEditAd', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
+                      <button 
+                        v-if="isVideoModerated(video)" 
+                        class="btn btn-sm btn-alt-primary"
+                        @click="openEditModal(video.id)"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button> 
+                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
                     </div>
                   </td>
                 </tr>
@@ -149,6 +220,7 @@ const changePage = (page) => {
             </table>
           </div>
         </div>
+
         <PaginationComponent v-if="lastPage > 1"
         :current-page="currentPage"
         :last-page="lastPage"

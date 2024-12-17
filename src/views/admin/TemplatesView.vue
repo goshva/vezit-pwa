@@ -3,11 +3,14 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+
+const fieldNames = ref([]);
 
 // State for storing doc data
 const docs = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -17,7 +20,7 @@ const sortBy = ref('id'); // Колонка для сортировки
 const sortOrder = ref('asc'); // 'asc' - по возрастанию, 'desc' - по убыванию
 
 // Fetch doc data from API
-const fetchEquipments = async (page = 1, status = '', sortBy = 'id', sortOrder = 'asc') => {
+const fetchTemplates = async (page = 1, status = '', sortBy = 'id', sortOrder = 'asc') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/docs`, {
@@ -28,6 +31,7 @@ const fetchEquipments = async (page = 1, status = '', sortBy = 'id', sortOrder =
         sortOrder: sortOrder,
       },
     });
+    fieldNames.value = Object.keys(response.data.data[0]);
     docs.value = response.data.data; // Adjust according to your API structure
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
@@ -39,14 +43,31 @@ const fetchEquipments = async (page = 1, status = '', sortBy = 'id', sortOrder =
 };
 
 // Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
+const updateTemplate = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchTemplates(currentPage.value);
+  }
+};
+
+// Fetch data when component mounts
+onMounted(async () => {
+  await fetchTemplates();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status, sortBy.value, sortOrder.value); // Reset to first page when filtering
+  fetchTemplates(1, status, sortBy.value, sortOrder.value); // Reset to first page when filtering
 };
 
 // Функция для сортировки по колонке
@@ -59,12 +80,12 @@ const handleSort = (column) => {
     sortBy.value = column;
     sortOrder.value = 'asc';
   }
-  fetchEquipments(1, filterStatus.value, sortBy.value, sortOrder.value); // Сбрасываем на первую страницу при изменении сортировки
+  fetchTemplates(1, filterStatus.value, sortBy.value, sortOrder.value); // Сбрасываем на первую страницу при изменении сортировки
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchTemplates(page, filterStatus.value);
 };
 </script>
 
@@ -73,9 +94,11 @@ const changePage = (page) => {
     <BaseBlock title="Список шаблонов документов" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateTemplate"
+          :title="'Добавить новый шаблон'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button
               type="button"

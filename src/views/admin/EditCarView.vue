@@ -13,16 +13,10 @@
               required
             />
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="partner_id" class="form-label">ID партнера</label>
-            <input
-              type="number"
-              class="form-control"
-              id="partner_id"
-              v-model="car.partner_id"
-              required
-            />
-          </div>
+    <!-- We use PartnerDropdown to select a partner -->
+         <PartnerDropdown 
+            v-model="car.partner_id"  
+         />
           <div class="col-md-6 mb-3">
             <label for="carVIN" class="form-label">VIN автомобиля</label>
             <input
@@ -112,11 +106,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import RemoveData from "@/components/RemoveData.vue";
 import EditData from "@/components/EditData.vue";
+import PartnerDropdown from "@/components/PartnerDropdown.vue";
 const route = useRoute();
 
 const car = ref({
@@ -133,20 +128,28 @@ const car = ref({
   status: "ожидает",
 });
 
+
 const fetchCarDetails = async () => {
   try {
     const response = await axiosInstance.get(route.path);
-    car.value = response.data;
+    console.log("Данные с сервера:", response.data); // Логируем данные с сервера
+    car.value = { ...response.data }; 
+    // Проверяем, что partner_id пришел с сервера
+    console.log("partner_id из данных:", response.data.partner_id);
   } catch (error) {
-    console.error("Error fetching car details:", error);
+    console.error("Ошибка при загрузке данных автомобиля:", error);
   }
 };
+console.log("Текущее значение partner_id:", car.value.partner_id);
+
+watch(
+  () => car.value.partner_id,
+  (newValue) => {
+    console.log('car.partner_id изменился на:', newValue); // Для отладки
+  }
+);
 
 onMounted(() => {
   fetchCarDetails(route.params.id);
 });
 </script>
-
-<style lang="css">
-/* Add any additional styles if needed */
-</style>

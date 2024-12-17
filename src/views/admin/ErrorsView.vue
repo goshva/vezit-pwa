@@ -3,11 +3,13 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 
 // State for storing update_log data
 const cfgupdate_log = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
+const fieldNames = ref({});
 
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -15,7 +17,7 @@ const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch update_log data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchErrors = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/cfgupdate-logs`, {
@@ -24,6 +26,8 @@ const fetchEquipments = async (page = 1, status = '') => {
         status: status,
       },
     });
+    fieldNames.value = Object.keys(response.data.data[0]);
+    console.log(fieldNames.value)
     cfgupdate_log.value = response.data.data; // Adjust according to your API structure
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
@@ -35,19 +39,35 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-onMounted(() => {
-  fetchEquipments();
+const updateError = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchErrors(currentPage.value);
+  }
+};
+
+onMounted(async () => {
+  await fetchErrors();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchErrors(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchErrors(page, filterStatus.value);
 };
 </script>
 
@@ -56,9 +76,11 @@ const changePage = (page) => {
     <BaseBlock title="Список системных ошибок" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateError"
+          :title="'Добавить новую ошибку'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button
               type="button"
