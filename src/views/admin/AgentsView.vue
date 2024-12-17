@@ -6,7 +6,6 @@ import PaginationComponent from "@/components/pagination/PaginationComponent.vue
 import EditButton from '@/components/buttons/EditButton.vue';
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 import { createObjectFromArray } from '@/services/obj.js';
-import EditAutoModal from "@/components/modals/EditAutoModal.vue";
 
 const route = useRoute();
 const fieldNames = ref([]);
@@ -113,7 +112,7 @@ onMounted(async () => {
                     <p class="fs-sm fw-medium text-muted mb-0">{{ agent.planned_clients }}</p>
                   </td>
                   <td>
-                    <EditAutoModal :fieldNames="fieldNames" :title="'Редактировать агента'" />
+                    <EditButton :id="agent.id" routeName="AdminEditAgent" />
                   </td>
                 </tr>
               </tbody>
