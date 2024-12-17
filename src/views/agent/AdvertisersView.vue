@@ -34,6 +34,7 @@ const fetchAdvertisers = async (page = 1, status = "") => {
     fieldNames.value = Object.keys(response.data.data[0]);
     console.log(fieldNames.value)
     videos.value = response.data.data;
+    console.log(videos.value)
     total.value = response.data.total;
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
@@ -144,7 +145,10 @@ const changePage = (page) => {
               </thead>
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
-                  <td class="d-xl-table-cell">{{ video.adcampaign_name }}</td>
+                  <td class="d-xl-table-cell">
+                      <p class="fw-semibold">{{ video.name }}</p>
+                      <p class="fs-sm fw-medium text-muted mb-0">{{ video.description.slice(0, 120) + '...' }}</p>
+                  </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
                       'bg-success-light text-success': video.status === 0,
