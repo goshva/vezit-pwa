@@ -84,9 +84,7 @@ export const useUserStore = defineStore('user', {
           case 'guest':
             return 'Гость';
           case 'support':
-             return 'Тех. поддержка';  
-          case 'agent':
-            return 'Агент';
+             return 'Тех. поддержка';            
           default:
             return 'Unknown'; // Fallback if userRole is not one of the expected values
         }

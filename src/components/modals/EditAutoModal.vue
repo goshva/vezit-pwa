@@ -1,7 +1,9 @@
 <template>
-  <button type="button" class="btn btn-primary push" data-bs-toggle="modal" data-bs-target="#modal-block-create">
-    <i class="fa-solid fa-plus"></i>
-  </button>
+  <div class="d-flex justify-content-evenly">
+        <button class="btn btn-sm btn-alt-primary">
+            <i class="fa fa-edit"></i>
+        </button>
+    </div>
 
   <div class="modal" id="modal-block-create" tabindex="-1" role="dialog" aria-labelledby="modal-block-create"
     aria-hidden="true">
@@ -45,36 +47,39 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import axiosInstance from "@/services/axios.js";
 import FormInput from "@/components/inputs/FormInput.vue";
-import axiosInstance from '@/services/axios.js';
-import { useRoute } from "vue-router";
+import RemoveData from "@/components/RemoveData.vue";
 import inputGenerator from '@/services/inputGenerator.js';
-import * as bootstrap from 'bootstrap';
 
 const route = useRoute();
+const router = useRouter();
 const formFields = ref([]);
+const formData = ref({});
 const errors = ref({});
-const emit = defineEmits(["update:fieldNames", "submit"]);
-const modalRef = ref(null);
 
 const props = defineProps({
-  title: { type: String, required: true },
   fieldNames: {
-    type: Object,
-    required: true,
+    type: Array,
+    required: true
   },
+  title: {
+    type: String,
+    required: true
+  }
 });
 
 const updateFieldValue = (field, value) => {
-  emit("update:fieldNames", { ...props.fieldNames, [field]: value });
+  formData.value[field] = value;
 };
 
 const validateFields = () => {
   errors.value = {};
-
+  
   for (const field of formFields.value) {
     for (const rule of field.rules) {
-      if (!rule(props.fieldNames[field.model])) {
+      if (!rule(formData.value[field.model])) {
         errors.value[field.model] = [`${field.placeholder} не должно быть пустым или содержит ошибку`];
         break;
       }
@@ -84,61 +89,41 @@ const validateFields = () => {
   return Object.keys(errors.value).length === 0;
 };
 
-
-
-const generateFormFields = () => {
-  formFields.value = inputGenerator(props.fieldNames);
-}
-
-const closeModal = () => {
-  const modal = bootstrap.Modal.getInstance(modalRef.value);
-  if (modal) {
-    modal.hide();
-    document.body.classList.remove('modal-open');
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop) {
-      backdrop.remove();
-    }
-  }
-};
-
 const handleSubmit = async () => {
-  const dataToSend = {};
-
   if (!validateFields()) {
     console.log("Validation failed:", errors.value);
     return;
   }
-  // Добавляем все поля в dataToSend
-  formFields.value.forEach(field => {
-  dataToSend[field.id] = props.fieldNames[field.model];
-  });
-
-  // Добавляем статус отдельно, так как он не входит в форму
-  dataToSend.status = 0;
 
   try {
-    const response = await axiosInstance.post(route.path, dataToSend);
-    if (response.status === 200 || response.status === 201) {
-      emit("submit", true);
+    const response = await axiosInstance.put(`${route.path}`, formData.value);
+    if (response.status === 200) {
+      router.back();
     }
-    closeModal();
   } catch (error) {
     if (error.response?.data?.errors) {
-      console.error("Ошибки валидации:", error.response.data.errors);
+      errors.value = error.response.data.errors;
     }
-    emit("submit", false);
+    console.error("Error updating data:", error);
   }
-  
+};
+
+const handleDelete = () => {
+  router.back();
+};
+
+const fetchData = async () => {
+  try {
+    const response = await axiosInstance.get(route.path);
+    formData.value = response.data;
+    formFields.value = inputGenerator(response.data);
+    title.value = route.name.replace('AdminEdit', '');
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 };
 
 onMounted(() => {
-  // Генерируем поля формы
-  generateFormFields()
-})
-
+  // fetchData();
+});
 </script>
-
-<style lang="css">
-/* Add any additional styles if needed */
-</style>

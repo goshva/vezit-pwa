@@ -4,17 +4,16 @@ import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
 import DelButton from "@/components/buttons/DelButton.vue";
+import UploadVideoModal from "@/components/modals/UploadVideoModal.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
-import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
-import { createObjectFromArray } from '@/services/obj.js';
 
 const route = useRoute();
-const fieldNames = ref({});
 
 // State
 const videos = ref([]);
 const total = ref(0);
 const loading = ref(false);
+const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -22,7 +21,7 @@ const lastPage = ref(1);
 const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch video data from API
-const fetchAdvertisers = async (page = 1, status = "") => {
+const fetchEquipments = async (page = 1, status = "") => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(route.path, {
@@ -31,8 +30,6 @@ const fetchAdvertisers = async (page = 1, status = "") => {
         status: status,
       },
     });
-    fieldNames.value = Object.keys(response.data.data[0]);
-    console.log(fieldNames.value)
     videos.value = response.data.data;
     total.value = response.data.total;
     lastPage.value = response.data.last_page; // Adjust according to your API structure
@@ -49,36 +46,19 @@ const isVideoModerated = (video) => {
 }
 
 // Fetch data when component mounts
-const updateAdvertiser = (updatedFields) => {
-  console.log("Updated fieldNames:", updatedFields);
-  fieldNames.value = updatedFields;
-};
-
-const handleSubmit = async (success) => {
-  if (success) {
-    await fetchAdvertisers(currentPage.value);
-  }
-};
-
-// Fetch data when component mounts
-onMounted(async () => {
-  await fetchAdvertisers();
-  if (fieldNames.value && fieldNames.value.length > 0) {
-    createObjectFromArray(fieldNames.value);
-  } else {
-    console.warn("fieldNames is empty or undefined");
-  }
+onMounted(() => {
+  fetchEquipments();
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchAdvertisers(1, status); // Reset to first page when filtering
+  fetchEquipments(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchAdvertisers(page, filterStatus.value);
+  fetchEquipments(page, filterStatus.value);
 };
 
 
@@ -89,11 +69,8 @@ const changePage = (page) => {
     <BaseBlock title="Список рекламодателей" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
-          :fieldNames="fieldNames" 
-          @update:fieldNames="updateAdvertiser"
-          :title="'Добавить нового рекламодателя'" 
-          @submit="handleSubmit" />
+          <UploadVideoModal @created="fetchEquipments"/>
+
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
