@@ -145,28 +145,59 @@ const routes = [
         component: AdsView,
       },
       {
+        path: 'allvideo/:id',
+        name: 'AdminEditAd',
+        component: () => import('@/views/admin/EditAdView.vue'),
+      },
+      {
         path: "eq",
         component: EqView,
+      },
+      {
+        path: "eq/:id",
+        name: 'AdminEditEq',
+        component: () => import('@/views/admin/EditEqView.vue'),
       },
       {
         path: "clients",
         component: ClientsView,
       },
       {
+        path: 'clients/:id',
+        name: 'AdminEditClient',
+        component: () => import('@/views/admin/EditClientView.vue'),
+      },
+      {
         path: "agents",
         component: AgentsView,
       },
       {
-        path: 'partners',
-        component: PartnersView,
+        path: 'agents/:id',
+        name: 'AdminEditAgent',
+        component: () => import('@/views/admin/EditAgentView.vue'),
+      },      
+      {
+        path: 'partners/:id',
+        name: 'AdminEditPartner',
+        component: () => import('@/views/admin/EditPartnerView.vue'),
       },
       {
         path: "moderators",
         component: ModeratorsView,
       },
+      {
+        path: "moderators/:id/:status",
+        name: 'AdminEditModerator',
+        component: () => import('@/views/admin/EditModeratorView.vue'),
+      },
       { path: "partners", component: PartnersView },
       {
         path: "cars", component: AdminCarsView
+      },
+      {
+        path: 'cars/:id',
+        name: 'AdminEditCar',
+        component: () => import('@/views/admin/EditCarView.vue'),
       },
       {
         path: "error",
@@ -181,12 +212,27 @@ const routes = [
         component: ControlView,
       },
       {
+        path: 'control/:id',
+        name: 'EditUserView',
+        component: () => import('@/views/admin/EditUserView.vue'),
+      },
+      {
         path: "finances",
         component: FinancesView,
       },
       {
+        path: "finances/:id",
+        name: 'AdminEditFinance',
+        component: () => import('@/views/admin/EditFinanceView.vue'),
+      },
+      {
         path: "documents",
         component: DocumentsView,
+      },
+      {
+        path: "docs/:id",
+        name: 'AdminEditDocument',
+        component: () => import('@/views/admin/EditDocumentView.vue'),
       },
       {
         path: "templates",
@@ -195,14 +241,29 @@ const routes = [
       {
         path: "tiketsupport",
         component: AdminSupportView,
-      },  
+      },
+      {
+        path: "messages/:id",
+        name: 'AdminEditSupport',
+        component: () => import('@/views/admin/EditSupportView.vue'),
+      },
       {
         path: "locations",
         component: LocationView,
       },
       {
+        path: "locations/:id",
+        name: 'AdminEditLocation',
+        component: () => import('@/views/admin/EditLocationView.vue'),
+      },
+      {
         path: "tariffs",
         component: TariffView,
+      },
+      {
+        path: "tariffs/:id",
+        name: 'AdminEditTariff',
+        component: () => import('@/views/admin/EditTariffView.vue'),
       },
     ],
   },
@@ -261,6 +322,7 @@ const routes = [
     path: "/",
     component: ClientLayout,
     children: [
+
       {
         path: "Cdashboard",
         component: ClientDashboardView,
@@ -298,6 +360,7 @@ const routes = [
     path: "/",
     component: AgentLayout,
     children: [
+
       {
         path: "Agdashboard",
         component: AgentDashboardView,
@@ -322,6 +385,7 @@ const routes = [
     path: "/",
     component: PartnerLayout,
     children: [
+
       {
         path: "Pdashboard",
         component: PartnerDashboardView,
