@@ -3,6 +3,10 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/services/axios.js';
 import { formatDate } from '@/services/dateFormatter.js'; // Import the date formatter
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
+import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+
+const fieldNames = ref([]);
 
 // State for storing doc data
 const docs = ref([]);
@@ -27,6 +31,7 @@ const fetchTemplates = async (page = 1, status = '', sortBy = 'id', sortOrder = 
         sortOrder: sortOrder,
       },
     });
+    fieldNames.value = Object.keys(response.data.data[0]);
     docs.value = response.data.data; // Adjust according to your API structure
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
@@ -38,8 +43,25 @@ const fetchTemplates = async (page = 1, status = '', sortBy = 'id', sortOrder = 
 };
 
 // Fetch data when component mounts
-onMounted(() => {
-  fetchTemplates();
+const updateTemplate = (updatedFields) => {
+  console.log("Updated fieldNames:", updatedFields);
+  fieldNames.value = updatedFields;
+};
+
+const handleSubmit = async (success) => {
+  if (success) {
+    await fetchTemplates(currentPage.value);
+  }
+};
+
+// Fetch data when component mounts
+onMounted(async () => {
+  await fetchTemplates();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
 // Handle filtering by status
@@ -72,9 +94,11 @@ const changePage = (page) => {
     <BaseBlock title="Список шаблонов документов" class="mb-0">
       <template #options>
         <div class="space-x-1">
-          <button type="button" class="btn btn-primary push" style="margin-right: 20px">
-          <i class="fa fa-plus"></i>
-          </button>
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateTemplate"
+          :title="'Добавить новый шаблон'" 
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button
               type="button"
