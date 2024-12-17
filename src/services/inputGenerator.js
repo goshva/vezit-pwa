@@ -68,7 +68,7 @@ const fieldsInfo ={
     "companyrole": { id: "companyrole", placeholder: "Роль в компании", type: "text", model: "companyrole", rules: [(val) => val?.trim() !== ""] },
     "fullusername": { id: "fullusername", placeholder: "ФИО", type: "text", model: "fullusername", rules: [(val) => val?.trim() !== ""] },
     "password": { id: "password", placeholder: "Пароль", type: "password", model: "password", rules: [(val) => val?.trim() !== ""] },
-    "filename": { id: "filename", placeholder: "Название файла", type: "text", model: "filename", rules: [(val) => val?.trim() !== ""] },
+    "filename": { id: "filename", placeholder: "Название файла", type: "file", model: "filename", rules: [(val) => val?.trim() !== ""] },
     "serverfilename": { id: "serverfilename", placeholder: "Название файла на сервере", type: "text", model: "serverfilename", rules: [(val) => val?.trim() !== ""] },
     "url": { id: "url", placeholder: "URL", type: "text", model: "url", rules: [(val) => val?.trim() !== ""] },
     "annotation": { id: "annotation", placeholder: "Аннотация", type: "text", model: "annotation", rules: [(val) => val?.trim() !== ""] },
@@ -81,6 +81,9 @@ const fieldsInfo ={
     "view_cost": { id: "view_cost", placeholder: "Стоимость просмотра", type: "number", model: "view_cost", rules: [(val) => !isNaN(Number(val)), (val) => val > 0, (val) => Number.isInteger(Number(val))] },
     "link_cost": { id: "link_cost", placeholder: "Стоимость ссылки", type: "number", model: "link_cost", rules: [(val) => !isNaN(Number(val)), (val) => val > 0, (val) => Number.isInteger(Number(val))] },
     "currency": { id: "currency", placeholder: "Валюта", type: "text", model: "currency", rules: [(val) => val?.trim() !== ""] },
+    "director_name": { id: "director_name", placeholder: "ФИО директора", type: "text", model: "director_name", rules: [(val) => val?.trim() !== ""] },
+    "director_tel": { id: "director_tel", placeholder: "Телефон директора", type: "text", model: "director_tel", rules: [(val) => val?.trim() !== ""] },
+    "balance": { id: "balance", placeholder: "Баланс", type: "number", model: "balance", rules: [(val) => !isNaN(Number(val)), (val) => val > 0, (val) => Number.isInteger(Number(val))] },
 }
 
 const inputGenerator = (fieldNames) => {

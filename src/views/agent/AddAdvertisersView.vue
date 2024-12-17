@@ -4,7 +4,7 @@ import QrcodeVue from "qrcode.vue";
 <template>
   <BaseBlock title="Данные о рекдамодателе" class="m-5">
     <div>
-      <!-- Sign In Form -->
+      <!-- Sign In Form -->е
       <div class="mb-4">
         <input
           type="text"
