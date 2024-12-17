@@ -55,7 +55,6 @@ const route = useRoute();
 const formFields = ref([]);
 const errors = ref({});
 const emit = defineEmits(["update:fieldNames", "submit"]);
-const modalRef = ref(null);
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -65,10 +64,12 @@ const props = defineProps({
   },
 });
 
+//Функция обновления значения поля формы
 const updateFieldValue = (field, value) => {
   emit("update:fieldNames", { ...props.fieldNames, [field]: value });
 };
 
+//Функция валидации полей формы
 const validateFields = () => {
   errors.value = {};
 
@@ -84,24 +85,23 @@ const validateFields = () => {
   return Object.keys(errors.value).length === 0;
 };
 
-
-
+//Функция генерации полей формы
 const generateFormFields = () => {
   formFields.value = inputGenerator(props.fieldNames);
 }
 
+//Функция закрытия модального окна
 const closeModal = () => {
-  const modal = bootstrap.Modal.getInstance(modalRef.value);
-  if (modal) {
-    modal.hide();
-    document.body.classList.remove('modal-open');
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop) {
-      backdrop.remove();
+  const modalElement = document.getElementById('modal-block-create');
+  if (modalElement) {
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    if (modal) {
+      modal.hide();
     }
   }
 };
 
+//Функция отправки данных на сервер
 const handleSubmit = async () => {
   const dataToSend = {};
 

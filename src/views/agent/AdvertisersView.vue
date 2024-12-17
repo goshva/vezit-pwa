@@ -1,12 +1,14 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
 import DelButton from "@/components/buttons/DelButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import EditAutoModal from "@/components/modals/EditAutoModal.vue";
 import { createObjectFromArray } from '@/services/obj.js';
+import * as bootstrap from 'bootstrap';
 
 const route = useRoute();
 const fieldNames = ref({});
@@ -82,11 +84,37 @@ const changePage = (page) => {
   fetchAdvertisers(page, filterStatus.value);
 };
 
+const selectedVideoId = ref(null);
+const showEditModal = ref(false);
 
+const openEditModal = (videoId) => {
+  selectedVideoId.value = videoId;
+  showEditModal.value = true;
+
+  nextTick(() => {
+    const modalElement = document.getElementById(`modal-block-edit-${videoId}`);
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  });
+};
+
+const closeEditModal = () => {
+  selectedVideoId.value = null;
+  showEditModal.value = false;
+};
 </script>
 
 <template>
   <div class="m-5 mb-0">
+    <EditAutoModal 
+    v-if="showEditModal && selectedVideoId"
+    :id="selectedVideoId"
+    :fieldNames="fieldNames" 
+    :title="`Изменить видео`"
+    @close="closeEditModal"
+  />
     <BaseBlock title="Список рекламодателей" class="mb-0">
       <template #options>
         <div class="space-x-4">
@@ -177,7 +205,14 @@ const changePage = (page) => {
                           <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
-                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchEquipments"/>
+                      <button 
+                        v-if="isVideoModerated(video)" 
+                        class="btn btn-sm btn-alt-primary"
+                        @click="openEditModal(video.id)"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button> 
+                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
                     </div>
                   </td>
                 </tr>
