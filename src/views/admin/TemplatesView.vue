@@ -7,7 +7,6 @@ import PaginationComponent from "@/components/pagination/PaginationComponent.vue
 // State for storing doc data
 const docs = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -17,7 +16,7 @@ const sortBy = ref('id'); // Колонка для сортировки
 const sortOrder = ref('asc'); // 'asc' - по возрастанию, 'desc' - по убыванию
 
 // Fetch doc data from API
-const fetchEquipments = async (page = 1, status = '', sortBy = 'id', sortOrder = 'asc') => {
+const fetchTemplates = async (page = 1, status = '', sortBy = 'id', sortOrder = 'asc') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/docs`, {
@@ -40,13 +39,13 @@ const fetchEquipments = async (page = 1, status = '', sortBy = 'id', sortOrder =
 
 // Fetch data when component mounts
 onMounted(() => {
-  fetchEquipments();
+  fetchTemplates();
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status, sortBy.value, sortOrder.value); // Reset to first page when filtering
+  fetchTemplates(1, status, sortBy.value, sortOrder.value); // Reset to first page when filtering
 };
 
 // Функция для сортировки по колонке
@@ -59,12 +58,12 @@ const handleSort = (column) => {
     sortBy.value = column;
     sortOrder.value = 'asc';
   }
-  fetchEquipments(1, filterStatus.value, sortBy.value, sortOrder.value); // Сбрасываем на первую страницу при изменении сортировки
+  fetchTemplates(1, filterStatus.value, sortBy.value, sortOrder.value); // Сбрасываем на первую страницу при изменении сортировки
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchTemplates(page, filterStatus.value);
 };
 </script>
 

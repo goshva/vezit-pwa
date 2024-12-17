@@ -10,7 +10,6 @@ import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 // State for storing message data
 const messages = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -18,7 +17,7 @@ const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch message data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchSupport = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/tiketsupport`, {
@@ -40,19 +39,19 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-const updatePartner = (updatedFields) => {
+const updateSupport = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchEquipments(currentPage.value);
+    await fetchSupport(currentPage.value);
   }
 };
 
 onMounted(async () => {
-  await fetchEquipments();
+  await fetchSupport();
   if (fieldNames.value && fieldNames.value.length > 0) {
     createObjectFromArray(fieldNames.value);
   } else {
@@ -63,12 +62,12 @@ onMounted(async () => {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchSupport(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchSupport(page, filterStatus.value);
 };
 </script>
 <template>
@@ -78,7 +77,7 @@ const changePage = (page) => {
         <div class="space-x-1">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateSupport"
           :title="'Добавить новый шаблон'" 
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">

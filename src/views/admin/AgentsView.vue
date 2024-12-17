@@ -5,23 +5,17 @@ import axiosInstance from '@/services/axios.js';
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import EditButton from '@/components/buttons/EditButton.vue';
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
 
 const route = useRoute();
-const fieldNames = ref({});
-
-
-function createObjectFromArray(fieldMapping) {
-  Object.keys(fieldMapping).forEach((key) => {
-    fieldNames.value[fieldMapping[key]] = ""; // Initialize each field with an empty string
-  });
-}
+const fieldNames = ref([]);
 
 const agents = ref([]);
 const loading = ref(false);
 const currentPage = ref(1);
 const lastPage = ref(1);
 
-const fetchClients = async (page = 1, status = '') => {
+const fetchAgents = async (page = 1, status = '') => {
   loading.value = true;
 
   try {
@@ -44,22 +38,25 @@ const fetchClients = async (page = 1, status = '') => {
   }
 };
 
-const updatePartner = (updatedFields) => {
+const updateAgent = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchClients(currentPage.value);
+    await fetchAgents(currentPage.value);
   }
 };
 
 // Fetch data when component mounts
 onMounted(async () => {
-  await fetchClients().then(() => {
-    createObjectFromArray(fieldNames.value)
-  });
+  await fetchAgents();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
 });
 
 </script>
@@ -71,7 +68,7 @@ onMounted(async () => {
         <div class="space-x-4">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateAgent"
           :title="'Добавить нового агента'" 
           @submit="handleSubmit"
           />

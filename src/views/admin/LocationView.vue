@@ -10,7 +10,6 @@ import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 // State for storing location data
 const locations = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -21,7 +20,7 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Fetch location data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchLocations = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/locations`, {
@@ -43,19 +42,19 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-const updatePartner = (updatedFields) => {
+const updateLocation = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchEquipments(currentPage.value);
+    await fetchLocations(currentPage.value);
   }
 };
 
 onMounted(async () => {
-  await fetchEquipments();
+  await fetchLocations();
   if (fieldNames.value && fieldNames.value.length > 0) {
     createObjectFromArray(fieldNames.value);
   } else {
@@ -66,12 +65,12 @@ onMounted(async () => {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchLocations(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchLocations(page, filterStatus.value);
 };
 
 // Method to toggle date format
@@ -92,7 +91,7 @@ const formatDateBasedOnFormat = (dateString) => {
         <div class="space-x-1">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateLocation"
           :title="'Добавить новую локацию'" 
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">

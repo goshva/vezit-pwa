@@ -7,6 +7,8 @@ import { formatDate, formatTimeElapsed } from '@/services/dateFormatter.js';
 import EditButton from "@/components/buttons/EditButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
+import { createObjectFromArray } from '@/services/obj.js';
+
 
 const route = useRoute();
 const partners = ref([]);
@@ -17,12 +19,6 @@ const lastPage = ref(1);
 const filterStatus = ref('');
 
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
-
-function createObjectFromArray(fieldMapping) {
-  Object.keys(fieldMapping).forEach((key) => {
-    fieldNames.value[fieldMapping[key]] = ""; // Initialize each field with an empty string
-  });
-}
 
 const updatePartner = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
@@ -60,10 +56,13 @@ const fetchPartners = async (page = 1, status = '') => {
 
 // Fetch data when component mounts
 onMounted(async () => {
-  await fetchPartners().then(() => {
-    createObjectFromArray(fieldNames.value)
-    });
-  });
+  await fetchPartners();
+  if (fieldNames.value && fieldNames.value.length > 0) {
+    createObjectFromArray(fieldNames.value);
+  } else {
+    console.warn("fieldNames is empty or undefined");
+  }
+});
 
 
 // Handle filtering by status

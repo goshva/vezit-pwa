@@ -18,7 +18,7 @@ const lastPage = ref(1);
 const filterStatus = ref(""); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch video data from API
-const fetchEquipments = async (page = 1, status = "") => {
+const fetchVideos = async (page = 1, status = "") => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(route.path, {
@@ -41,18 +41,18 @@ const fetchEquipments = async (page = 1, status = "") => {
 
 // Fetch data when component mounts
 onMounted(() => {
-  fetchEquipments();
+  fetchVideos();
 });
 
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchVideos(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchVideos(page, filterStatus.value);
 };
 
 

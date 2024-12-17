@@ -9,7 +9,6 @@ import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 // State for storing update_log data
 const cfgupdate_log = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 
 // Pagination and filtering state
@@ -18,7 +17,7 @@ const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch update_log data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchErrors = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/cfgupdate-logs`, {
@@ -40,19 +39,19 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-const updatePartner = (updatedFields) => {
+const updateError = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchEquipments(currentPage.value);
+    await fetchErrors(currentPage.value);
   }
 };
 
 onMounted(async () => {
-  await fetchEquipments();
+  await fetchErrors();
   if (fieldNames.value && fieldNames.value.length > 0) {
     createObjectFromArray(fieldNames.value);
   } else {
@@ -63,12 +62,12 @@ onMounted(async () => {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchErrors(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchErrors(page, filterStatus.value);
 };
 </script>
 
@@ -79,7 +78,7 @@ const changePage = (page) => {
         <div class="space-x-1">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateError"
           :title="'Добавить новую ошибку'" 
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">

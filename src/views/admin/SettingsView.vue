@@ -47,7 +47,7 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchSettings(page, filterStatus.value);
 };
-const updatePartner = (updatedFields) => {
+const updateSettings = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
@@ -73,7 +73,7 @@ onMounted(async () => {
         <div class="space-x-1">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateSettings"
           :title="'Добавить настройку'" 
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">

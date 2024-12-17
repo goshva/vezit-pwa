@@ -9,7 +9,6 @@ import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 
 const moderators = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 const currentPage = ref(1);
 const lastPage = ref(1);
@@ -19,7 +18,7 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Fetch location data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchModerators = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/moderators`, {
@@ -41,19 +40,19 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-const updatePartner = (updatedFields) => {
+const updateModerator = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchEquipments(currentPage.value);
+    await fetchModerators(currentPage.value);
   }
 };
 
 onMounted(async () => {
-  await fetchEquipments();
+  await fetchModerators();
   if (fieldNames.value && fieldNames.value.length > 0) {
     createObjectFromArray(fieldNames.value);
   } else {
@@ -64,12 +63,12 @@ onMounted(async () => {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchModerators(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchModerators(page, filterStatus.value);
 };
 
 // Method to toggle date format
@@ -90,7 +89,7 @@ const formatDateBasedOnFormat = (dateString) => {
         <div class="space-x-1">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateModerator"
           :title="'Добавить нового модератора'" 
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">

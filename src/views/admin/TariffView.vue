@@ -11,7 +11,6 @@ import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 // State for storing tariff data
 const tariffs = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 // Pagination and filtering state
 const currentPage = ref(1);
@@ -22,7 +21,7 @@ const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error'
 const dateFormat = ref('elapsed'); // 'elapsed' or 'absolute'
 
 // Fetch tariff data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchTariffs = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`/tariffs`, {
@@ -44,19 +43,19 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-const updatePartner = (updatedFields) => {
+const updateTariff = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchEquipments(currentPage.value);
+    await fetchTariffs(currentPage.value);
   }
 };
 
 onMounted(async () => {
-  await fetchEquipments();
+  await fetchTariffs();
   if (fieldNames.value && fieldNames.value.length > 0) {
     createObjectFromArray(fieldNames.value);
   } else {
@@ -67,12 +66,12 @@ onMounted(async () => {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchTariffs(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchTariffs(page, filterStatus.value);
 };
 
 // Method to toggle date format
@@ -93,7 +92,7 @@ const formatDateBasedOnFormat = (dateString) => {
         <div class="space-x-4">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateTariff"
           :title="'Добавить новый тариф'" 
           @submit="handleSubmit"
           />

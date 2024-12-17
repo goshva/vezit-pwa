@@ -10,7 +10,6 @@ const route = useRoute();
 // State for storing user data
 const users = ref([]);
 const loading = ref(false);
-const orderSearch = ref(false);
 const fieldNames = ref({});
 
 // Pagination and filtering state
@@ -19,7 +18,7 @@ const lastPage = ref(1);
 const filterStatus = ref(''); // '' for all, 'in-progress', 'completed', 'error', etc.
 
 // Fetch user data from API
-const fetchEquipments = async (page = 1, status = '') => {
+const fetchControl = async (page = 1, status = '') => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(route.path, {
@@ -42,19 +41,19 @@ const fetchEquipments = async (page = 1, status = '') => {
 };
 
 // Fetch data when component mounts
-const updatePartner = (updatedFields) => {
+const updateControl = (updatedFields) => {
   console.log("Updated fieldNames:", updatedFields);
   fieldNames.value = updatedFields;
 };
 
 const handleSubmit = async (success) => {
   if (success) {
-    await fetchEquipments(currentPage.value);
+    await fetchControl(currentPage.value);
   }
 };
 
 onMounted(async () => {
-  await fetchEquipments();
+  await fetchControl();
   if (fieldNames.value && fieldNames.value.length > 0) {
     createObjectFromArray(fieldNames.value);
   } else {
@@ -65,12 +64,12 @@ onMounted(async () => {
 // Handle filtering by status
 const applyFilter = (status) => {
   filterStatus.value = status;
-  fetchEquipments(1, status); // Reset to first page when filtering
+  fetchControl(1, status); // Reset to first page when filtering
 };
 
 // Handle pagination
 const changePage = (page) => {
-  fetchEquipments(page, filterStatus.value);
+  fetchControl(page, filterStatus.value);
 };
 </script>
 
@@ -81,7 +80,7 @@ const changePage = (page) => {
         <div class="space-x-1">
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
-          @update:fieldNames="updatePartner"
+          @update:fieldNames="updateControl"
           :title="'Добавить нового пользователя'" 
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
