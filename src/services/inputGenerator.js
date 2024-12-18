@@ -30,7 +30,7 @@ const fieldsInfo ={
         placeholder: "Контактный телефон",
         type: "text",
         model: "phone",
-        rules: [(val) => /^\d{10}$/.test(val)]
+        rules: [(val) => val?.trim() !== ""]
     },
     'city': {
         id: "city",

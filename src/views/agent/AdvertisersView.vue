@@ -121,7 +121,7 @@ const closeEditModal = () => {
           <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
           :fieldNames="fieldNames" 
           @update:fieldNames="updateAdvertiser"
-          :title="'Добавить нового рекламодателя'" 
+          :title="'Добавить нового рекламодателя'"
           @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
