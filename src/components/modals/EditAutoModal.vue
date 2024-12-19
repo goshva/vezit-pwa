@@ -107,6 +107,7 @@ const handleSubmit = async () => {
   try {
     const response = await axiosInstance.put(`${route.path}/${props.id}`, formData.value);
     if (response.status === 200 || response.status === 201) {
+      window.location.reload();
       emit("submit", true);
     }
     closeModal();
