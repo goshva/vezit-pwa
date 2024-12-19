@@ -87,8 +87,20 @@ const validateFields = () => {
 
 //Функция генерации полей формы
 const generateFormFields = () => {
-  formFields.value = inputGenerator(props.fieldNames);
-}
+  formFields.value = [
+    ...inputGenerator(props.fieldNames).filter(field => field.model !== 'balance'),
+    {
+      id: "password",
+      model: "password",
+      placeholder: "Пароль",
+      type: "password",
+      rules: [
+        (val) => val?.trim() !== "" || "Пароль не может быть пустым",
+        (val) => val?.length >= 6 || "Пароль должен содержать минимум 6 символов",
+      ],
+    },
+  ];
+};
 
 //Функция закрытия модального окна
 const closeModal = () => {
