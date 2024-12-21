@@ -96,7 +96,7 @@ const fetchAdvertiser = async (id) => {
 
 //Функция генерации полей формы
 const generateFormFields = () => {
-  formFields.value = inputGenerator(props.fieldNames);
+  formFields.value = [...inputGenerator(props.fieldNames)];
 }
 
 const handleSubmit = async () => {
