@@ -121,31 +121,6 @@ const sendToClient = async () => {
           placeholder="Пароль"
         />
       </div>
-      <div class="mb-4">
-        <label class="form-label ml-2" for="example-file-input">Добавить видео</label>
-        <input
-          class="form-control form-control-alt form-control-lg"
-          type="file"
-          id="example-file-input"
-        />
-      </div>
-
-      <div class="mb-4">
-        <qrcode-vue value="https://example.com" size="100" level="H" />
-      </div>
-
-      <div class="mb-4">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="login-remember"
-            name="login-remember"
-          />
-          <label class="form-check-label" for="login-remember">Создать договор</label>
-        </div>
-      </div>
 
       <div class="mb-4">
         <button type="submit" class="btn w-100 btn-alt-primary">

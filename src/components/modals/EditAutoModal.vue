@@ -1,11 +1,22 @@
 <template>
-    <div class="modal" :id="`modal-block-edit-${props.id}`" tabindex="-1" role="dialog" 
-    aria-hidden="true">
+  <div
+    class="modal"
+    :id="`modal-block-edit-${props.id}`"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <BaseBlock :title="title" transparent class="mb-0">
           <template #options>
-            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close" @click="closeModal">
+            <button
+              type="button"
+              class="btn-block-option"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="closeModal"
+            >
               <i class="fa fa-fw fa-times"></i>
             </button>
           </template>
@@ -43,10 +54,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import EditInput from "@/components/inputs/EditInput.vue";
-import axiosInstance from '@/services/axios.js';
+import axiosInstance from "@/services/axios.js";
 import { useRoute } from "vue-router";
-import inputGenerator from '@/services/inputGenerator.js';
-import * as bootstrap from 'bootstrap';
+import inputGenerator from "@/services/inputGenerator.js";
+import * as bootstrap from "bootstrap";
 
 const route = useRoute();
 const formFields = ref([]);
@@ -66,6 +77,7 @@ const props = defineProps({
 //Функция обновления значения поля формы
 const updateFieldValue = (field, value) => {
   formData.value[field] = value;
+  console.log(`Updated ${field} to ${value}`);
 };
 
 //Функция валидации полей формы
@@ -75,11 +87,15 @@ const validateFields = () => {
   for (const field of formFields.value) {
     for (const rule of field.rules) {
       if (!rule(formData.value[field.model])) {
-        errors.value[field.model] = [`${field.placeholder} не должно быть пустым или содержит ошибку`];
+        errors.value[field.model] = [
+          `${field.placeholder} не должно быть пустым или содержит ошибку`,
+        ];
         break;
       }
     }
   }
+
+  console.log("Validation errors:", errors.value);
 
   return Object.keys(errors.value).length === 0;
 };
@@ -87,25 +103,46 @@ const validateFields = () => {
 //Функция загрузки данных из базы
 const fetchAdvertiser = async (id) => {
   try {
+    console.log(`Fetching data for id: ${id}`); // Логируем ID для запроса
     const response = await axiosInstance.get(`${route.path}/${id}`);
-    formData.value = response.data;
+    console.log("Response data from server:", response.data); // Логируем ответ от сервера
+
+    const serverData = response.data;
+
+    // Создаем новый объект для formData
+    const updatedFormData = {};
+
+    // Применяем данные с сервера к новому объекту
+    formFields.value.forEach((field) => {
+      if (Object.prototype.hasOwnProperty.call(serverData, field.model)) {
+        updatedFormData[field.model] = serverData[field.model] || "";
+      }
+    });
+
+    // Присваиваем новый объект formData
+    formData.value = { ...updatedFormData };
+
+    console.log("Form data after fetching:", formData.value); // Логируем данные после их обновления
   } catch (error) {
-    console.error("Error fetching video:", error);
+    console.error("Ошибка при получении данных:", error);
   }
 };
 
 //Функция генерации полей формы
 const generateFormFields = () => {
-  formFields.value = [...inputGenerator(props.fieldNames)];
-}
+  formFields.value = inputGenerator(props.fieldNames);
+  console.log("Generated form fields:", formFields.value); // Логируем сгенерированные поля
+};
 
 const handleSubmit = async () => {
+  console.log("Form data before submit:", formData.value); // Логируем данные формы перед отправкой
   if (!validateFields()) {
     console.log("Validation failed:", errors.value);
     return;
   }
   try {
     const response = await axiosInstance.put(`${route.path}/${props.id}`, formData.value);
+    console.log("Server response after submit:", response); // Логируем ответ от сервера после отправки данных
     if (response.status === 200 || response.status === 201) {
       window.location.reload();
       emit("submit", true);
@@ -117,7 +154,6 @@ const handleSubmit = async () => {
     }
     emit("submit", false);
   }
-  
 };
 
 onMounted(() => {
@@ -128,7 +164,7 @@ onMounted(() => {
   if (props.id) {
     fetchAdvertiser(props.id);
   }
-})
+});
 
 //Функция закрытия модального окна
 const closeModal = () => {
@@ -139,9 +175,8 @@ const closeModal = () => {
       modal.hide();
     }
   }
-  emit('close');
+  emit("close");
 };
-
 </script>
 
 <style lang="css">

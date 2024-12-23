@@ -3,7 +3,7 @@
 // поле должно содержать id, placeholder, type, model, rules
 
 
-const fieldsInfo ={
+const fieldsInfo = {
     'last_name': {
         id: "last_name",
         placeholder: "Фамилия",
@@ -49,7 +49,7 @@ const fieldsInfo ={
     "name": { id: "name", placeholder: "Название", type: "text", model: "name", rules: [(val) => val?.trim() !== ""] },
     "INN": { id: "INN", placeholder: "ИНН", type: "text", model: "INN", rules: [(val) => val?.trim().length <= 13] },
     "BIK": { id: "BIK", placeholder: "БИК", type: "text", model: "BIK", rules: [(val) => val?.trim().length <= 9] },
-    "OGRN": { id: "OGRN", placeholder: "ОГРН", type: "text", model: "OGRN", rules: [(val) => val?.trim() !== "" ]},
+    "OGRN": { id: "OGRN", placeholder: "ОГРН", type: "text", model: "OGRN", rules: [(val) => val?.trim() !== ""] },
     "bussines": { id: "bussines", placeholder: "Название компании", type: "text", model: "bussines", rules: [(val) => val?.trim() !== ""] },
     "description": { id: "description", placeholder: "Описание", type: "text", model: "description", rules: [(val) => val?.trim() !== ""] },
     "contactName": { id: "contactName", placeholder: "ФИО", type: "text", model: "contactName", rules: [(val) => val?.trim() !== ""] },
@@ -93,14 +93,14 @@ const inputGenerator = (fieldNames) => {
     const fields = Array.isArray(fieldNames) ? fieldNames : Object.keys(fieldNames);
 
     fields.forEach(field => {
-        if (fieldsInfo[field] && 
+        if (fieldsInfo[field] &&
             !['id', 'created_at', 'updated_at', 'deleted_at'].includes(field)) {
             formFields.push(fieldsInfo[field])
         }
     })
 
     return formFields
-  }
-  
+}
+
 
 export default inputGenerator;
