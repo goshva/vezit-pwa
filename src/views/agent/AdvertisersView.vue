@@ -7,8 +7,8 @@ import DelButton from "@/components/buttons/DelButton.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import CreateAutoModal from "@/components/modals/CreateAutoModal.vue";
 import EditAutoModal from "@/components/modals/EditAutoModal.vue";
-import { createObjectFromArray } from "@/services/obj.js";
-import * as bootstrap from "bootstrap";
+import { createObjectFromArray } from '@/services/obj.js';
+import * as bootstrap from 'bootstrap';
 
 const route = useRoute();
 const fieldNames = ref({});
@@ -34,9 +34,9 @@ const fetchAdvertisers = async (page = 1, status = "") => {
       },
     });
     fieldNames.value = Object.keys(response.data.data[0]);
-    console.log(fieldNames.value);
+    console.log(fieldNames.value)
     videos.value = response.data.data;
-    console.log(videos.value);
+    console.log(videos.value)
     total.value = response.data.total;
     lastPage.value = response.data.last_page; // Adjust according to your API structure
     currentPage.value = page;
@@ -48,8 +48,8 @@ const fetchAdvertisers = async (page = 1, status = "") => {
 };
 
 const isVideoModerated = (video) => {
-  return video.status === 1 || (video.status === 0 && video.moderator);
-};
+  return video.status === 1 || video.status === 0 && video.moderator
+}
 
 // Fetch data when component mounts
 const updateAdvertiser = (updatedFields) => {
@@ -108,63 +108,46 @@ const closeEditModal = () => {
 
 <template>
   <div class="m-5 mb-0">
-    <EditAutoModal
-      v-if="showEditModal && selectedVideoId"
-      :id="selectedVideoId"
-      :fieldNames="fieldNames"
-      :title="`Изменить видео`"
-      @close="closeEditModal"
-    />
+    <EditAutoModal 
+    v-if="showEditModal && selectedVideoId"
+    :id="selectedVideoId"
+    :fieldNames="fieldNames" 
+    :title="`Изменить видео`"
+    @close="closeEditModal"
+  />
     <BaseBlock title="Список рекламодателей" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <CreateAutoModal
-            v-if="Object.keys(fieldNames).length > 0"
-            :fieldNames="fieldNames"
-            @update:fieldNames="updateAdvertiser"
-            :title="'Добавить нового рекламодателя'"
-            @submit="handleSubmit"
-          />
+          <CreateAutoModal v-if="Object.keys(fieldNames).length > 0"
+          :fieldNames="fieldNames" 
+          @update:fieldNames="updateAdvertiser"
+          :title="'Добавить нового рекламодателя'"
+          @submit="handleSubmit" />
           <div class="dropdown d-inline-block">
-            <button
-              type="button"
-              class="btn btn-sm btn-alt-secondary"
-              id="dropdown-recent-orders-filters"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+            <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-fw fa-flask"></i>
               Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
 
-            <div
-              class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters"
-            >
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-                @click.prevent="applyFilter('')"
-              >
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
+              aria-labelledby="dropdown-recent-orders-filters">
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)" @click.prevent="applyFilter('')">
                 Все
-                <span class="badge bg-primary rounded-pill">{{ total }}</span>
+                <span class="badge bg-primary rounded-pill">{{
+                  total
+                  }}</span>
               </a>
 
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-                @click.prevent="applyFilter(1)"
-              >
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)" @click.prevent="applyFilter(1)">
                 Проверка
               </a>
 
-              <a
-                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-                @click.prevent="applyFilter(2)"
-              >
+              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)" @click.prevent="applyFilter(2)">
                 Ошибка
               </a>
             </div>
@@ -191,33 +174,22 @@ const closeEditModal = () => {
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
                   <td class="d-xl-table-cell">
-                    <p class="fw-semibold">{{ video.name }}</p>
-                    <p class="fs-sm fw-medium text-muted mb-0">
-                      {{ video.description.slice(0, 120) + "..." }}
-                    </p>
+                      <p class="fw-semibold">{{ video.name }}</p>
+                      <p class="fs-sm fw-medium text-muted mb-0">{{ video.description.slice(0, 120) + '...' }}</p>
                   </td>
                   <td>
-                    <span
-                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
-                      :class="{
-                        'bg-success-light text-success': video.status === 0,
-                        'bg-info-light text-info': video.status === 1,
-                        'bg-danger-light text-danger': video.status === 2,
-                        'bg-warning-light text-warning': video.status === 3,
-                        'bg-light':
-                          video.status === 4 || video.status === 5 || video.status === 6,
-                      }"
-                    >
-                      {{
-                        video.status === 0
-                          ? "Включено"
-                          : video.status === 1
-                          ? "Ожидание"
-                          : video.status === 3
-                          ? "Отключено"
-                          : "Ошибка"
-                      }}
+                    <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
+                      'bg-success-light text-success': video.status === 0,
+                      'bg-info-light text-info': video.status === 1,
+                      'bg-danger-light text-danger': video.status === 2,
+                      'bg-warning-light text-warning': video.status === 3,
+                      'bg-light': video.status === 4 || video.status === 5 || video.status === 6,
+
+                    }">
+                      {{ video.status === 0 ? "Включено" : video.status === 1 ? "Ожидание" : video.status === 3 ?
+                        "Отключено" : "Ошибка" }}
                     </span>
+
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
                     <p v-if="video.moderator" class="mb-0">{{ video.moderator.name }}</p>
@@ -227,18 +199,13 @@ const closeEditModal = () => {
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <button
-                        class="btn btn-sm btn-alt-primary"
-                        @click.prevent="openEditModal(video.id)"
-                      >
-                        <i class="fa fa-edit"></i>
-                      </button>
-                      <DelButton
-                        v-if="isVideoModerated(video)"
-                        :id="video.id"
-                        :path="route.path"
-                        @deleted="fetchAdvertisers"
-                      />
+                      <router-link
+                        :to="{ name: 'ClientEditAd', params: { id: video.id } }">
+                        <button class="btn btn-sm btn-alt-primary">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                      </router-link>
+                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
                     </div>
                   </td>
                 </tr>
@@ -247,12 +214,12 @@ const closeEditModal = () => {
           </div>
         </div>
 
-        <PaginationComponent
-          v-if="lastPage > 1"
-          :current-page="currentPage"
-          :last-page="lastPage"
-          @page-changed="changePage"
+        <PaginationComponent v-if="lastPage > 1"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @page-changed="changePage"
         />
+
       </template>
     </BaseBlock>
   </div>
