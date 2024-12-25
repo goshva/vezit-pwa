@@ -1,15 +1,31 @@
 <template>
-  <button type="button" class="btn btn-primary push" data-bs-toggle="modal" data-bs-target="#modal-block-create">
+  <button
+    type="button"
+    class="btn btn-primary push"
+    data-bs-toggle="modal"
+    data-bs-target="#modal-block-create"
+  >
     <i class="fa-solid fa-plus"></i>
   </button>
 
-  <div class="modal" id="modal-block-create" tabindex="-1" role="dialog" aria-labelledby="modal-block-create"
-    aria-hidden="true">
+  <div
+    class="modal"
+    id="modal-block-create"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modal-block-create"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <BaseBlock :title=title transparent class="mb-0">
+        <BaseBlock :title="title" transparent class="mb-0">
           <template #options>
-            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="btn-block-option"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
               <i class="fa fa-fw fa-times"></i>
             </button>
           </template>
@@ -26,7 +42,7 @@
               @update:modelValue="(value) => updateFieldValue(field.model, value)"
               :error="errors[field.model]?.[0]"
             />
-
+           
             <div class="mb-4 px-2">
               <button
                 type="submit"
@@ -46,10 +62,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import FormInput from "@/components/inputs/FormInput.vue";
-import axiosInstance from '@/services/axios.js';
+import axiosInstance from "@/services/axios.js";
 import { useRoute } from "vue-router";
-import inputGenerator from '@/services/inputGenerator.js';
-import * as bootstrap from 'bootstrap';
+import inputGenerator from "@/services/inputGenerator.js";
+import * as bootstrap from "bootstrap";
 
 const route = useRoute();
 const formFields = ref([]);
@@ -74,6 +90,15 @@ const validateFields = () => {
   errors.value = {};
 
   for (const field of formFields.value) {
+    // Валидация для пароля
+    if (field.model === 'password') {
+      if (!props.fieldNames[field.model] || props.fieldNames[field.model].length < 8) {
+        errors.value[field.model] = [`Пароль должен содержать хотя бы 8 символов`];
+        break;
+      }
+    }
+
+    // Общая валидация
     for (const rule of field.rules) {
       if (!rule(props.fieldNames[field.model])) {
         errors.value[field.model] = [`${field.placeholder} не должно быть пустым или содержит ошибку`];
@@ -88,11 +113,11 @@ const validateFields = () => {
 //Функция генерации полей формы
 const generateFormFields = () => {
   formFields.value = inputGenerator(props.fieldNames);
-}
+};
 
 //Функция закрытия модального окна
 const closeModal = () => {
-  const modalElement = document.getElementById('modal-block-create');
+  const modalElement = document.getElementById("modal-block-create");
   if (modalElement) {
     const modal = bootstrap.Modal.getInstance(modalElement);
     if (modal) {
@@ -110,8 +135,8 @@ const handleSubmit = async () => {
     return;
   }
   // Добавляем все поля в dataToSend
-  formFields.value.forEach(field => {
-  dataToSend[field.id] = props.fieldNames[field.model];
+  formFields.value.forEach((field) => {
+    dataToSend[field.id] = props.fieldNames[field.model];
   });
 
   // Добавляем статус отдельно, так как он не входит в форму
@@ -129,14 +154,12 @@ const handleSubmit = async () => {
     }
     emit("submit", false);
   }
-  
 };
 
 onMounted(() => {
   // Генерируем поля формы
-  generateFormFields()
-})
-
+  generateFormFields();
+});
 </script>
 
 <style lang="css">

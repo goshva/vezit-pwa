@@ -212,7 +212,9 @@ const closeEditModal = () => {
                       >
                         <i class="fa fa-edit"></i>
                       </button> 
-                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
+                      <DelButton 
+                      v-if="isVideoModerated(video)" 
+                      :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
                     </div>
                   </td>
                 </tr>
