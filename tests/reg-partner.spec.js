@@ -16,4 +16,4 @@ test.describe(`Registration functionality ${role}`, () => {
             ]);
             expect(response.ok()).toBeTruthy();
         })
-})
+}) 
