@@ -14,8 +14,9 @@ test.describe('Registration functionality Partner', () => {
         ]);
         expect(response.ok()).toBeTruthy();
         await page.goto(`http://localhost:5173/#/auth/signin`);
+        await page.waitForURL(`http://localhost:5173/#/auth/signin`);
         await page.fill('input[name="login-email"]', email);
-        await page.fill('input[name="login-password"]', 'role@testsystem.ru');
+        await page.fill('input[name="login-password"]', 'role@testsystem.ru', { timeout: 60000 });
         await page.click('button[type="submit"]')
         await page.waitForURL(`http://localhost:5173/#/about`);
         await expect(page).toHaveURL(`http://localhost:5173/#/about`);

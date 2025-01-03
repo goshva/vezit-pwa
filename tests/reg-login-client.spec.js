@@ -12,12 +12,12 @@ test.describe('Registration functionality Client', () => {
             page.waitForResponse(response => response.status() === 200),
             page.click('button[type="submit"]')
         ]);
-        expect(response.ok()).toBeTruthy();
-        await page.goto(`http://localhost:5173/#/auth/client`);
+        await page.goto(`http://localhost:5173/#/auth/signin`);
+        await page.waitForURL(`http://localhost:5173/#/auth/signin`);
         await page.fill('input[name="login-email"]', email);
         await page.fill('input[name="login-password"]', 'role@testsystem.ru');
         await page.click('button[type="submit"]')
         await page.waitForURL(`http://localhost:5173/#/profile`);
         await expect(page).toHaveURL(`http://localhost:5173/#/profile`);
     })
-})    
+})

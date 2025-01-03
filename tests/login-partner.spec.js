@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const role = {name: "partner", firstURL: "about", password: "123456", email: "partner34@partner34.ru"}
+const role = {name: "partner", firstURL: "about", password: "123456", email: "parner34@parner34.ru"}
 
 test.describe('Login functionality', () => {
     test.beforeEach(async ({ page }) => {
