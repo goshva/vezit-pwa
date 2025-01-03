@@ -8,15 +8,35 @@ test.describe('Registration functionality Partner', () => {
         await page.fill('input[name="signup-password"]', 'role@testsystem.ru');
         await page.fill('input[name="signup-password-confirm"]', 'role@testsystem.ru');
         await page.click('div[class="form-check"]');
-        const [response] = await Promise.all([
+        await Promise.all([
             page.waitForResponse(response => response.status() === 200),
             page.click('button[type="submit"]')
         ]);
-        expect(response.ok()).toBeTruthy();
-        await page.goto(`http://localhost:5173/#/auth/signin`);
-        await page.waitForURL(`http://localhost:5173/#/auth/signin`);
-        await page.fill('input[name="login-email"]', email);
-        await page.fill('input[name="login-password"]', 'role@testsystem.ru', { timeout: 60000 });
+
+        
+        await page.waitForTimeout(2000);
+
+        await Promise.all([
+            page.waitForURL('http://localhost:5173/#/auth/signin'),
+            page.goto(`http://localhost:5173/#/auth/signin`, {timeout: 20000})
+        ]);
+
+
+        try {
+            const emailInput = page.locator('input[name="login-email"]');
+            await emailInput.waitFor({ state: 'visible', timeout: 5000 });
+            await emailInput.fill(email);
+        } catch (error) {
+            throw new Error(`Failed to fill email input: ${error.message}`);
+        }
+
+        try {
+            const passwordInput = page.locator('input[name="login-password"]');
+            await passwordInput.waitFor({ state: 'visible', timeout: 5000 });
+            await passwordInput.fill('role@testsystem.ru');
+        } catch (error) {
+            throw new Error(`Failed to fill email input: ${error.message}`);
+        }
         await page.click('button[type="submit"]')
         await page.waitForURL(`http://localhost:5173/#/about`);
         await expect(page).toHaveURL(`http://localhost:5173/#/about`);
