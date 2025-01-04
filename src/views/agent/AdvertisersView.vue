@@ -207,7 +207,7 @@ const closeEditModal = () => {
                       </router-link>
                       <button 
                         v-if="isVideoModerated(video)" 
-                        class="btn btn-sm btn-alt-primary"
+                        class="btn btn-sm btn-alt-primary isModerated"
                         @click="openEditModal(video.id)"
                       >
                         <i class="fa fa-edit"></i>
