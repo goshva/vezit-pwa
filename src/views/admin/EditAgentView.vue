@@ -4,62 +4,63 @@
       <template #content>
         <form @submit.prevent="handleSubmit" class="row g-3 m-2 mb-5">
           <div class="col-md-6 mb-3">
-            <label for="bussines" class="form-label">Фамилия</label>
+            <label for="last_name" class="form-label">Фамилия</label>
             <input
               type="text"
               class="form-control"
-              id="bussines"
-              v-model="company.bussines"
+              id="last_name"
+              v-model="company.last_name"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="description" class="form-label">Имя</label>
+            <label for="first_name" class="form-label">Имя</label>
             <input
               type="text"
               class="form-control"
-              id="description"
-              v-model="company.description"
+              id="first_name"
+              v-model="company.first_name"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="OGRN" class="form-label">Телефон</label>
+            <label for="phone" class="form-label">Телефон</label>
             <input
               type="text"
               class="form-control"
-              id="OGRN"
-              v-model="company.OGRN"
+              id="phone"
+              v-model="company.phone"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="contactEMail" class="form-label">Электронная почта</label>
+            <label for="email" class="form-label">Электронная почта</label>
             <input
               type="email"
               class="form-control"
-              id="contactEMail"
-              v-model="company.contactEMail"
+              id="email"
+              v-model="company.email"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="contactName" class="form-label">Город</label>
+            <label for="city" class="form-label">Город</label>
             <input
               type="text"
               class="form-control"
-              id="contactName"
-              v-model="company.contactName"
+              id="city"
+              v-model="company.city"
               required
             />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="contactTel" class="form-label">Планируемое количество клиентов</label>
+            <label for="planned_clients" class="form-label"
+              >Планируемое количество клиентов</label>
             <input
               type="number"
               class="form-control"
-              id="contactTel"
-              v-model="company.contactTel"
+              id="planned_clients"
+              v-model="company.planned_clients"
               required
             />
           </div>
@@ -106,15 +107,20 @@ const company = ref({
 
 const fetchCompanyDetails = async () => {
   try {
-    const response = await axiosInstance.get(route.path);
-    company.value = response.data;
+    const response = await axiosInstance.get(`/agents/${route.params.id}`);
+    company.value = response.data.data;
+    console.log("Company object:", company.value);
   } catch (error) {
     console.error("Error fetching client details:", error);
   }
 };
 
 onMounted(() => {
-  fetchCompanyDetails(route.params.id);
+  if (route.params.id) {
+    fetchCompanyDetails();
+  } else {
+    console.error("Agent ID is missing in route parameters");
+  }
 });
 </script>
 

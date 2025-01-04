@@ -206,6 +206,7 @@ const closeEditModal = () => {
                         </button>
                       </router-link>
                       <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
+
                     </div>
                   </td>
                 </tr>

@@ -83,7 +83,7 @@ const fieldsInfo = {
     "currency": { id: "currency", placeholder: "Валюта", type: "text", model: "currency", rules: [(val) => val?.trim() !== ""] },
     "director_name": { id: "director_name", placeholder: "ФИО директора", type: "text", model: "director_name", rules: [(val) => val?.trim() !== ""] },
     "director_tel": { id: "director_tel", placeholder: "Телефон директора", type: "text", model: "director_tel", rules: [(val) => val?.trim() !== ""] },
-    "balance": { id: "balance", placeholder: "Баланс", type: "number", model: "balance", rules: [(val) => !isNaN(Number(val)), (val) => val > 0, (val) => Number.isInteger(Number(val))] },
+    // "balance": { id: "balance", placeholder: "Баланс", type: "number", model: "balance", rules: [(val) => !isNaN(Number(val)), (val) => val > 0, (val) => Number.isInteger(Number(val))] },
     "BANK": { id: "BANK", placeholder: "Банк", type: "text", model: "BANK", rules: [(val) => val?.trim() !== ""] },
 }
 
