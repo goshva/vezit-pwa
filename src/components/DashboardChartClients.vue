@@ -32,7 +32,7 @@ const earningsOptions = reactive({
         tooltip: {
             callbacks: {
                 label: function (context) {
-                    return ' $' + context.raw;
+                    return context.raw;
                 },
             },
         },
