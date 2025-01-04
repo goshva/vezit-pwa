@@ -1,5 +1,8 @@
 .env.development
 .env
+#test
+/playwright-report
+/test-results
 # Logs
 logs
 *.log

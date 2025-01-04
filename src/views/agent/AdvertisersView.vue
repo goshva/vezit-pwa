@@ -199,12 +199,13 @@ const closeEditModal = () => {
                   </td>
                   <td class="d-none d-sm-table-cell text-end">
                     <div class="d-flex justify-content-evenly">
-                      <router-link v-if="!isVideoModerated(video)"
+                      <router-link
                         :to="{ name: 'ClientEditAd', params: { id: video.id } }">
                         <button class="btn btn-sm btn-alt-primary">
                           <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
+
                       <button 
                         v-if="isVideoModerated(video)" 
                         class="btn btn-sm btn-alt-primary isModerated"
@@ -215,6 +216,7 @@ const closeEditModal = () => {
                       <DelButton 
                       v-if="isVideoModerated(video)" 
                       :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
+                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
                     </div>
                   </td>
                 </tr>

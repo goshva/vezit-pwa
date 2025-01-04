@@ -88,7 +88,7 @@ onMounted(async () => {
                   <th class="d-none d-sm-table-cell text-center">Телефон</th>
                   <th class="d-none d-sm-table-cell text-end">Почта</th>
                   <th class="d-none d-sm-table-cell text-end">Город</th>
-                  <th class="d-none d-sm-table-cell text-end"><small>Кол-во клиентов в плане</small></th>
+                  <th class="d-none d-sm-table-cell text-center"><small>Клиенты</small></th>
                   <th class="d-none d-sm-table-cell"></th>
                 </tr>
               </thead>
@@ -108,8 +108,8 @@ onMounted(async () => {
                   <td class="d-none d-sm-table-cell text-end">
                     <p class="fs-sm fw-medium text-muted mb-0">{{ agent.city }}</p>
                   </td>
-                  <td class="d-none d-sm-table-cell text-end">
-                    <p class="fs-sm fw-medium text-muted mb-0">{{ agent.planned_clients }}</p>
+                  <td class="d-none d-sm-table-cell text-center">
+                    <p class="fs-sm fw-medium text-muted mb-0">{{ agent.planned_clients }}/<b>{{ agent.clients || 0 }}</b></p>
                   </td>
                   <td>
                     <EditButton :id="agent.id" routeName="AdminEditAgent" />

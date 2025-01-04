@@ -6,12 +6,8 @@
           <!-- Existing Fields -->
           <div class="col-md-6 mb-3">
             <label for="equipid" class="form-label">ID оборудования</label>
-            <input
-              type="text"
-              class="form-control"
-              id="equipid"
+            <CarEqDropdown
               v-model="equipment.id"
-              required
             />
           </div>
           <div class="col-md-6 mb-3">
@@ -99,8 +95,9 @@
 import RemoveData from "@/components/RemoveData.vue";
 import EditData from "@/components/EditData.vue";
 import axiosInstance from "@/services/axios.js";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import CarEqDropdown from "@/components/CarEqDropdown.vue"
 
 export default {
   name: "EditEqView",
@@ -113,6 +110,7 @@ export default {
   components: {
     RemoveData,
     EditData,
+    CarEqDropdown
   },
   setup(props) {
     const route = useRoute();
@@ -139,6 +137,15 @@ export default {
         console.error("Error fetching equipment details:", error);
       }
     };
+
+      // Наблюдаем за изменением equipment.id
+  watch(
+    () => equipment.value.id,
+    (newId) => {
+      fetchEquipmentDetails(newId);
+    }
+  );
+
 
     onMounted(() => {
       fetchEquipmentDetails(route.params.id);
