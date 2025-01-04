@@ -205,8 +205,18 @@ const closeEditModal = () => {
                           <i class="fa fa-edit"></i>
                         </button>
                       </router-link>
-                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
 
+                      <button 
+                        v-if="isVideoModerated(video)" 
+                        class="btn btn-sm btn-alt-primary isModerated"
+                        @click="openEditModal(video.id)"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button> 
+                      <DelButton 
+                      v-if="isVideoModerated(video)" 
+                      :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
+                      <DelButton v-if="isVideoModerated(video)" :id="video.id" :path="route.path" @deleted="fetchAdvertisers"/>
                     </div>
                   </td>
                 </tr>
