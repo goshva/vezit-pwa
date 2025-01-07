@@ -4,7 +4,7 @@ import { test, expect} from '@playwright/test';
 const role = {name: "agent", firstURL: "Agdashboard", password: "agent@testsystem.ru", email: "agent@testsystem.ru"}
 
 test.describe('Agent add advertiser functionality', () => {
-    test('should successfully add advertiser on /advertisers', async ({page}) => {
+    test('should successfully edit advertiser on /advertisers', async ({page}) => {
         // Заполняем форму входда и входим
         await page.goto(`http://localhost:5173/#/auth/signin`);
         await page.fill('input[name="login-email"]', role.email);
