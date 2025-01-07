@@ -4,22 +4,21 @@ import { test, expect} from '@playwright/test';
 const role = {name: "agent", firstURL: "Agdashboard", password: "agent@testsystem.ru", email: "agent@testsystem.ru"}
 
 test.describe('Agent add advertiser functionality', () => {
+
+    test.beforeEach(async ({ page }) => {
+            await page.goto('http://localhost:5173/#/auth/signin');
+            await page.fill('input[name="login-email"]', role.email);
+            await page.fill('input[name="login-password"]', role.password);
+            await page.click('button[type="submit"]');
+            await expect(page).toHaveURL(`http://localhost:5173/#/${role.firstURL}`);
+            await page.goto('http://localhost:5173/#/advertisers')
+            await expect(page).toHaveURL('http://localhost:5173/#/advertisers')
+        });
+
     test('should successfully add advertiser on /advertisers', async ({page}) => {
-        // Заполняем форму входда и входим
-        await page.goto(`http://localhost:5173/#/auth/signin`);
-        await page.fill('input[name="login-email"]', role.email);
-        await page.fill('input[name="login-password"]', role.password);
-        await page.click('button[type="submit"]');
-
-
-        await page.waitForURL(`http://localhost:5173/#/${role.firstURL}`); 
-        await expect(page).toHaveURL(`http://localhost:5173/#/${role.firstURL}`); // Проверяем, на первой странице ли мы, удачно ли вошли
-
-        // Если да то пойдем на страницу с рекламами
-        await page.goto(`http://localhost:5173/#/advertisers`);
         await expect(page).toHaveURL(`http://localhost:5173/#/advertisers`);
-        await page.waitForResponse(response => response.status() === 200);
-        await expect(page.locator('.push')).toBeVisible(); // Если все окей жмем кнопку добавления
+        
+        await expect(page.locator('.push')).toBeVisible();
         await page.click('.push');
 
         // Заполняем форму нового рекламодателя
