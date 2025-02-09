@@ -1,7 +1,8 @@
 <script setup>
 import useLoginLogic from "@/services/useLoginLogic";
 import { useTemplateStore } from "@/stores/template";
-
+const VITE_APP_NAME = import.meta.env.VITE_APP_NAME;
+const VITE_APP_NAME_V2 = import.meta.env.VITE_APP_NAME_V2;
 const { state, v$, onSubmit } = useLoginLogic();
 const store = useTemplateStore();
 </script>
@@ -13,7 +14,7 @@ const store = useTemplateStore();
         <div class="col-md-8 col-lg-6 col-xl-4">
           <BaseBlock title="Вход" class="mb-0">
             <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-              <h1 class="h2 mb-1">Olhar Media</h1>
+              <h1 class="h2 mb-1">{{VITE_APP_NAME}}</h1>
               <p class="fw-medium text-muted">Приветствует Вас!</p>
               <div v-if="state.errorMessage" class="alert alert-danger">
                 {{ state.errorMessage }}
@@ -66,7 +67,7 @@ const store = useTemplateStore();
         </div>
       </div>
       <div class="fs-sm text-muted text-center">
-        <strong>{{ store?.app?.name || "App Name" }} {{ store?.app?.version || "1.0" }}</strong>
+        <strong>{{ VITE_APP_NAME_V2 }} {{ store?.app?.version || "1.0" }}</strong>
         &copy; {{ store?.app?.copyright || "2024" }}
       </div>
     </div>
