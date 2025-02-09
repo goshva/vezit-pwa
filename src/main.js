@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
-
+import "./main.css"
 // You can use the following starter router instead of the default one as a clean starting point
 // import router from "./router/starter";
 import router from "./router";

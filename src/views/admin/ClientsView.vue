@@ -85,7 +85,7 @@ const formatClientDate = (dateString) => {
 </script>
 
 <template>
-  <div class="m-5 mb-0">
+  <div class="sm:m-3 lg:m-5 mb-3">
     <BaseBlock title="Список рекламодателей" class="mb-0">
       <template #options>
         <div class="space-x-1">
