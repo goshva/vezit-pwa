@@ -5,14 +5,27 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    sourcemap: true,
+  define: {
+    __DEFINES__: JSON.stringify({}),
+    __WS_TOKEN__: JSON.stringify('development-token'),
+    __HMR_ENABLE_OVERLAY__: 'true',
+    __HMR_ENABLE_ERROR_OVERLAY__: 'true',
+    __HMR_PORT__: '5173',
+    __HMR_TIMEOUT__: '30000',
+    __HMR_HOSTNAME__: JSON.stringify('localhost'),
+    __HMR_BASE__: JSON.stringify('/'),
+    __HMR_PROTOCOL__: JSON.stringify('ws'),
+    __HMR_CLIENT_PORT__: '5173',
+    __HMR_CONFIG_NAME__: JSON.stringify('vite-hmr-config'),
+    __BASE__: JSON.stringify('/'),
+    __SERVER_HOST__: JSON.stringify('http://localhost:5173'),
+    __HMR_DIRECT_TARGET__: 'true'
   },
   plugins: [
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
         name: 'My Vue App',
         short_name: 'VueApp',
@@ -20,12 +33,12 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: '/pwa-192x192.png',
+            src: 'pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/pwa-512x512.png',
+            src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
@@ -57,6 +70,16 @@ export default defineConfig({
     },
   },
   server: {
-    host: true,
+    host: 'localhost',
+    port: 5173,
+    strictPort: true,
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      port: 5173,
+      clientPort: 5173,
+      timeout: 30000,
+      overlay: true
+    }
   },
 });
