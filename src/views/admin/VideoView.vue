@@ -107,6 +107,14 @@ const changePage = (page) => {
               <thead>
                 <tr>
                   <th class="d-xl-table-cell">Название</th>
+                  <th class="d-none d-sm-table-cell text-center">
+                  <img
+                    src="/stats-icon.png"
+                    alt="Статистика"
+                    width="50"
+                    height="30"
+                  />
+                  </th>
                   <th>Статус</th>
                   <th class="d-none d-sm-table-cell text-center">Модератор</th>
                   <th class="d-none d-sm-table-cell text-end">Дата</th>
@@ -116,6 +124,9 @@ const changePage = (page) => {
               <tbody class="fs-sm">
                 <tr v-for="video in videos" :key="video.id">
                   <td class="d-xl-table-cell">{{ video.filename }}</td>
+                  <td class="d-none d-sm-table-cell text-center">
+                  {{ video.video_views_count }} / {{video.video_clicks_count }}
+                  </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
                       'bg-success-light text-success': video.status === 1,
