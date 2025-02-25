@@ -5,7 +5,8 @@ import axiosInstance from "@/services/axios.js";
 import { formatDate } from "@/services/dateFormatter.js";
 import UploadCarModal from "@/components/modals/UploadCarModal.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
-import EditButton from '@/components/buttons/EditButton.vue';
+import EditButton from "@/components/buttons/EditButton.vue";
+import CarPlateColumn from "@/components/CarPlateColumn.vue";
 
 const route = useRoute();
 const cars = ref([]);
@@ -52,8 +53,6 @@ const applyFilter = (status) => {
 const changePage = (page) => {
   fetchCars(page, filterStatus.value);
 };
-
-
 </script>
 
 <template>
@@ -61,33 +60,48 @@ const changePage = (page) => {
     <BaseBlock title="Список автомобилей в парке" class="mb-0">
       <template #options>
         <div class="space-x-4">
-          <UploadCarModal @uploadedCSV="fetchCars"/>
+          <UploadCarModal @uploadedCSV="fetchCars" />
 
           <div class="dropdown d-inline-block">
-            <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
-              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button
+              type="button"
+              class="btn btn-sm btn-alt-secondary"
+              id="dropdown-recent-orders-filters"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <i class="fa fa-fw fa-flask"></i>
               Фильтр
               <i class="fa fa-angle-down ms-1"></i>
             </button>
 
-            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-              aria-labelledby="dropdown-recent-orders-filters">
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter('')">
+            <div
+              class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
+              aria-labelledby="dropdown-recent-orders-filters"
+            >
+              <a
+                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)"
+                @click.prevent="applyFilter('')"
+              >
                 Все
-                <span class="badge bg-primary rounded-pill">{{
-                  total
-                  }}</span>
+                <span class="badge bg-primary rounded-pill">{{ total }}</span>
               </a>
 
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter(1)">
+              <a
+                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)"
+                @click.prevent="applyFilter(1)"
+              >
                 Проверка
               </a>
 
-              <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                href="javascript:void(0)" @click.prevent="applyFilter(2)">
+              <a
+                class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                href="javascript:void(0)"
+                @click.prevent="applyFilter(2)"
+              >
                 Ошибка
               </a>
             </div>
@@ -116,22 +130,29 @@ const changePage = (page) => {
               <tbody class="fs-sm">
                 <tr v-for="car in cars" :key="car.id">
                   <td class="d-xl-table-cell">{{ car.carModel }}</td>
-                  <td class="d-none d-sm-table-cell text-start">
-                    <p v-if="car.carVIN" class="mb-0">{{ car.carVIN }}</p>
-                  </td>
+                  <CarPlateColumn :plate="car.carPlate" />
                   <td>
-                    <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
-                      'bg-warning-light text-warning': car.status === 0,
-                      'bg-success-light text-success': car.status === 1,
-                      'bg-danger-light text-danger': car.status === 2,
-                      'bg-info-light text-info': car.status === 3,
-                      'bg-light': car.status === 4 || car.status === 5 || car.status === 6,
-
-                    }">
-                      {{ car.status === 0 ? "Ожидание" : car.status === 1 ? "Включено" : car.status === 3 ? "Неизвесно"
-                      : "Ошибка" }}
+                    <span
+                      class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill"
+                      :class="{
+                        'bg-warning-light text-warning': car.status === 0,
+                        'bg-success-light text-success': car.status === 1,
+                        'bg-danger-light text-danger': car.status === 2,
+                        'bg-info-light text-info': car.status === 3,
+                        'bg-light':
+                          car.status === 4 || car.status === 5 || car.status === 6,
+                      }"
+                    >
+                      {{
+                        car.status === 0
+                          ? "Ожидание"
+                          : car.status === 1
+                          ? "Включено"
+                          : car.status === 3
+                          ? "Неизвесно"
+                          : "Ошибка"
+                      }}
                     </span>
-
                   </td>
                   <td class="d-none d-sm-table-cell text-start">
                     <p class="mb-0">{{ car.partner?.name }}</p>
@@ -146,17 +167,17 @@ const changePage = (page) => {
 
                   <td class="d-none d-sm-table-cell text-end">
                     <EditButton :id="car.id" routeName="PartnerEditCar" />
-
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <PaginationComponent v-if="lastPage > 1"
-        :current-page="currentPage"
-        :last-page="lastPage"
-        @page-changed="changePage"
+        <PaginationComponent
+          v-if="lastPage > 1"
+          :current-page="currentPage"
+          :last-page="lastPage"
+          @page-changed="changePage"
         />
       </template>
     </BaseBlock>

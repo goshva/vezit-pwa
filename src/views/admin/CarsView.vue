@@ -6,6 +6,7 @@ import { formatDate } from "@/services/dateFormatter.js"; // Import the date for
 import UploadCarModal from "@/components/modals/UploadCarModal.vue";
 import PaginationComponent from "@/components/pagination/PaginationComponent.vue";
 import EditButton from '@/components/buttons/EditButton.vue';
+import CarPlateColumn from '@/components/CarPlateColumn.vue';
 
 const route = useRoute();
 // State for storing video data
@@ -119,9 +120,7 @@ const changePage = (page) => {
               <tbody class="fs-sm">
                 <tr v-for="car in cars" :key="car.id">
                   <td class="d-xl-table-cell">{{ car.carModel }}</td>
-                  <td class="d-none d-sm-table-cell text-start">
-                    <p v-if="car.carPlate" class="mb-0">{{ car.carPlate }}</p>
-                  </td>
+                   <CarPlateColumn :plate="car.carPlate" />
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
                       'bg-success-light text-success': car.status === 0,
@@ -166,4 +165,5 @@ const changePage = (page) => {
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+</style>
