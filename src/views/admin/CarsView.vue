@@ -120,7 +120,7 @@ const changePage = (page) => {
                 <tr v-for="car in cars" :key="car.id">
                   <td class="d-xl-table-cell">{{ car.carModel }}</td>
                   <td class="d-none d-sm-table-cell text-start">
-                    <p v-if="car.carVIN" class="mb-0">{{ car.carVIN }}</p>
+                    <p v-if="car.carPlate" class="mb-0">{{ car.carPlate }}</p>
                   </td>
                   <td>
                     <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill" :class="{
